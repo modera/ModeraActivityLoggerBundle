@@ -28,6 +28,8 @@ class EntityNotFoundException extends \RuntimeException
      */
     private $query;
 
+    private $queryParams = array();
+
     /**
      * @param mixed $query
      */
@@ -58,5 +60,15 @@ class EntityNotFoundException extends \RuntimeException
     public function getEntityClass()
     {
         return $this->entityClass;
+    }
+
+    public function setQueryParams(array $queryParams)
+    {
+        $this->queryParams = $queryParams;
+    }
+
+    public function getQueryParams()
+    {
+        return $this->queryParams;
     }
 }
