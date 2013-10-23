@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ModeraJSRuntimeIntegrationExtension extends Extension
 {
+    const CONFIG_KEY = 'mf.jsruntimeintegration.config';
+
     /**
      * {@inheritDoc}
      */
@@ -21,6 +23,8 @@ class ModeraJSRuntimeIntegrationExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+
+        $container->setParameter(self::CONFIG_KEY, $config);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
