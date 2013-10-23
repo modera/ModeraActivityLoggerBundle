@@ -1,0 +1,22 @@
+{
+    "name": "modera/security-aware-js-runtime-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org",
+            "homepage": "http://sergei.lissovski.org/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/framework-bundle": "~2.0",
+        "modera/js-runtime-integration-bundle": "@dev"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\SecurityAwareJSRuntimeBundle": "" }
+    },
+    "target-dir": "Modera\\SecurityAwareJSRuntimeBundle"
+}
