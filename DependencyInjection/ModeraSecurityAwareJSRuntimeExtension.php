@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ModeraSecurityAwareJSRuntimeExtension extends Extension
 {
+    const CONFIG_KEY = 'mf.securityawarejsruntime.config';
+
     /**
      * {@inheritDoc}
      */
@@ -21,6 +23,12 @@ class ModeraSecurityAwareJSRuntimeExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+
+        if (count($config, true) == 0) {
+            throw new \RuntimeException('Bundle "ModeraSecurityAwareJSRuntimeBundle" must be configured in config.yml!');
+        }
+
+        $container->setParameter(self::CONFIG_KEY, $config);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');

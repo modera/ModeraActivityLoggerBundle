@@ -1,0 +1,88 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ config.extjs_path }}/resources/ext-theme-neptune/ext-theme-neptune-all-debug.css" />
+    <script type="text/javascript" src="{{ config.extjs_path }}/ext-all-debug-w-comments.js"></script>
+    <script type="text/javascript" src="{{ config.extjs_path }}/ext-theme-neptune.js"></script>
+</head>
+
+<body>
+
+<script type="text/javascript">
+    Ext.application({
+        name: 'MF',
+        appFolder: '{{ config.runtime_path }}/MF',
+
+        requires: [
+            'MF.Util',
+            'MF.runtime.applications.authenticationaware.controller.Workbench'
+        ],
+
+        loadController: function(clazz) {
+            return this.getController(clazz);
+        },
+
+        /**
+         * @final
+         * @returns {MF.container.Container}
+         */
+        getContainer: function() {
+            if (!this.container) {
+                var definitions = this.getContainerServiceDefinitions();
+                this.modifyContainerServiceDefinitions(definitions);
+
+                this.container = Ext.create('MF.dependencyinjection.Container', {
+                    application: this,
+                    definitions: definitions
+                });
+
+                this.container.setParameter(
+                    'runtime.workbench_controller_class',
+                    MF.runtime.applications.authenticationaware.controller.Workbench.$className
+                );
+            }
+
+            return this.container;
+        },
+
+        /**
+         * @return {Object}
+         */
+        getWorkbenchController: function() {
+            return this.loadController(this.getContainer().getParameter('runtime.workbench_controller_class'));
+        },
+
+        // private
+        getContainerServiceDefinitions: function() {
+{% autoescape false %}
+            return {{ container_services|json_encode(constant('JSON_PRETTY_PRINT'))|mf_prepend_every_line(12, ' ', true) }};
+{% endautoescape %}
+        },
+
+        /**
+         * TEMPLATE-METHOD
+         *
+         * @protected
+         */
+        modifyContainerServiceDefinitions: function() {
+        },
+
+        // override
+        launch: function() {
+            var me = this;
+
+            Ext.each(['Viewport', 'Workbench'], function(clazz) {
+                me.loadController('MF.runtime.applications.authenticationaware.controller.' + clazz);
+            });
+
+            this.getContainer().get('root_execution_context').bootstrap(function() {
+                Ext.create('{{ config.viewport_class }}', {});
+            });
+        }
+    });
+</script>
+
+<script type="text/javascript" src="{{ config.runtime_path }}/../prototyping.js"></script>
+
+</body>
+</html>

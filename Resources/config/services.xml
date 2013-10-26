@@ -4,17 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
-    <parameters>
-        <parameter key="modera_security_aware_js_runtime.example.class">Modera\SecurityAwareJSRuntimeBundle\Example</parameter>
-    </parameters>
-
     <services>
-        <service id="modera_security_aware_js_runtime.example" class="%modera_security_aware_js_runtime.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="mf.securityawarejsruntime.contributions.service_definitions_provider"
+                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\ServiceDefinitionsProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="mf.jsruntimeintegration.csdi.service_definitions_provider" />
         </service>
     </services>
-    -->
 </container>
