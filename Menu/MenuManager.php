@@ -23,7 +23,7 @@ class MenuManager
     }
 
     /**
-     * @return MenuItemInterface{]
+     * @return MenuItemInterface[]
      */
     public function getAll()
     {

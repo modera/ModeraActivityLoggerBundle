@@ -42,7 +42,7 @@ interface MenuItemInterface
     /**
      * @return string  A short string which will be used to reference a section represented by this menu item.
      */
-    public function getUrlToken();
+    public function getId();
 
     /**
      * @return array  Optional additional metadata that may be used by some server-side/client-side runtime

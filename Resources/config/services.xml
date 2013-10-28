@@ -4,17 +4,39 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
-    <parameters>
-        <parameter key="modera_js_runtime_integration.example.class">Modera\JSRuntimeIntegrationBundle\Example</parameter>
-    </parameters>
-
     <services>
-        <service id="modera_js_runtime_integration.example" class="%modera_js_runtime_integration.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="mf.jsruntimeintegration.menu.menu_manager"
+                 class="Modera\JSRuntimeIntegrationBundle\Menu\MenuManager">
+
+            <argument type="service" id="mf.jsruntimeintegration.menu.menu_items_provider" />
+        </service>
+
+        <service id="mf.jsruntimeintegrationbundle.contributions.config.standard_config_provider"
+                 class="Modera\JSRuntimeIntegrationBundle\Contributions\Config\StandardConfigMergersProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
+        </service>
+
+        <service id="mf.jsruntimeintegrationbundle.csdi.service_definitions_manager"
+                 class="Modera\JSRuntimeIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager">
+
+            <argument type="service" id="mf.jsruntimeintegration.csdi.service_definitions_provider" />
+        </service>
+
+        <service id="mf.jsruntimeintegrationbundle.contributions.service_definitions_provider"
+                 class="Modera\JSRuntimeIntegrationBundle\Contributions\ServiceDefinitionsProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="mf.jsruntimeintegration.csdi.service_definitions_provider" />
+        </service>
+
+        <service id="mf.jsruntimeintegration.config.config_manager"
+                 class="Modera\JSRuntimeIntegrationBundle\Config\ConfigManager">
+
+            <argument type="service" id="mf.jsruntimeintegration.config.config_mergers_provider" />
         </service>
     </services>
-    -->
 </container>

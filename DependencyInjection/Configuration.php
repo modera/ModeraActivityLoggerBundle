@@ -22,7 +22,33 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('home_section')->cannotBeEmpty()->end()
+                ->scalarNode('home_section')
+                    ->defaultValue('home')
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('extjs_path') // web accessible path to extjs library
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                    ->defaultValue('/extjs')
+                ->end()
+                ->scalarNode('runtime_path')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                    ->defaultValue('/modera/js-runtime/src')
+                ->end()
+                ->scalarNode('viewport_class')
+                    ->isRequired()
+                    ->defaultValue('MF.runtime.applications.authenticationaware.view.Viewport')
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('server_config_provider_service')
+                    ->cannotBeEmpty()
+                ->end()
+                ->scalarNode('client_runtime_config_provider_url')
+                    ->isRequired()
+                    ->cannotBeEmpty()
+                    ->defaultValue('get-config')
+                ->end()
             ->end();
 
         return $treeBuilder;

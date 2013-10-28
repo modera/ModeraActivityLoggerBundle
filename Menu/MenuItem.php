@@ -12,20 +12,20 @@ class MenuItem implements MenuItemInterface
 {
     private $label;
     private $controller;
-    private $urlToken;
+    private $id;
     private $metadata = array();
 
     /**
      * @param string $label
      * @param string $controller
-     * @param string $urlToken
+     * @param string $id
      * @param array  $metadata
      */
-    public function __construct($label, $controller, $urlToken, array $metadata = array())
+    public function __construct($label, $controller, $id, array $metadata = array())
     {
         $this->label = $label;
         $this->controller = $controller;
-        $this->urlToken = $urlToken;
+        $this->id = $id;
         $this->metadata = $metadata;
     }
 
@@ -48,9 +48,9 @@ class MenuItem implements MenuItemInterface
     /**
      * @return string
      */
-    public function getUrlToken()
+    public function getId()
     {
-        return $this->urlToken;
+        return $this->id;
     }
 
     /**
