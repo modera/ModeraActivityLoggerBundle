@@ -24,9 +24,11 @@ class StandardConfigMergersProvider implements ContributorInterface
     {
         /* @var MenuManager $menuMgr */
         $menuMgr = $container->get('mf.jsruntimeintegration.menu.menu_manager');
+        /* @var ContributorInterface $sectionsProvider */
+        $sectionsProvider = $container->get('mf.jsruntimeintegration.sections_provider');
 
         $this->items = array(
-            new ConfigMerger($container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY), $menuMgr)
+            new ConfigMerger($container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY), $menuMgr, $sectionsProvider)
         );
     }
 
