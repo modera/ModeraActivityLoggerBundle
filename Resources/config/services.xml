@@ -16,5 +16,11 @@
 
             <tag name="mf.jsruntimeintegration.sections_provider" />
         </service>
+
+        <service id="modera_backend_module.contributions.css_resources_provider"
+                 class="Modera\BackendModuleBundle\Contributions\CssResourcesProvider">
+
+            <tag name="mf.jsruntimeintegration.css_resources_provider" />
+        </service>
     </services>
 </container>
