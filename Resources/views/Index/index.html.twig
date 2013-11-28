@@ -5,6 +5,10 @@
     <script type="text/javascript" src="{{ config.extjs_path }}/ext-all-debug-w-comments.js"></script>
     <script type="text/javascript" src="{{ config.extjs_path }}/ext-theme-neptune.js"></script>
     <script type="text/javascript" src="{{ url('api')}}"></script>
+
+{% for resource in css_resources %}
+    <link src="{{ resource }}" rel="stylesheet"></link>
+{% endfor %}
 </head>
 
 <body>
@@ -20,6 +24,7 @@
         ],
 
         loadController: function(clazz) {
+
             return this.getController(clazz);
         },
 
