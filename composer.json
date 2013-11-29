@@ -8,6 +8,10 @@
             "name": "Sergei Lissovski",
             "email": "sergei.lissovski@modera.org",
             "homepage": "http://sergei.lissovski.org/"
+        },
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
         }
     ],
     "require": {
@@ -15,7 +19,8 @@
         "symfony/framework-bundle": "~2.0",
         "modera/js-runtime": "@dev",
         "modera/backend-tools-bundle": "@dev",
-        "modera/js-runtime-integration-bundle": "@dev"
+        "modera/js-runtime-integration-bundle": "@dev",
+        "modera/module": "@dev"
     },
     "autoload": {
         "psr-0": { "Modera\\BackendModuleBundle": "" }

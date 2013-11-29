@@ -1,5 +1,6 @@
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
+ * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 Ext.define('Modera.backend.module.toolscontribution.runtime.AvailableModulesListView', {
     extend: 'MF.viewsmanagement.views.AbstractView',
@@ -13,31 +14,17 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.AvailableModulesList
     },
 
     // override
+    init: function(executionContext) {
+        this.callParent(arguments);
+
+        executionContext.getApplication().loadController('Modera.backend.module.toolscontribution.controller.AvailableModulesList');
+    },
+
+    // override
     doCreateUi: function(params, onReadyCallback) {
-        var me = this;
+        var panel = Ext.create('Modera.backend.module.toolscontribution.view.AvailableModulesList', {});
 
-        var store = Ext.create('Ext.data.DirectStore', {
-            fields: [
-                'id', 'name'
-            ],
-            proxy: {
-                type: 'direct',
-                directFn: Actions.ModeraBackendModule_Default.getAvailableModules
-            }
-        });
-
-        var panel = Ext.create('Ext.grid.Panel', {
-            columns: [
-                {
-                    name: 'Name',
-                    dataIndex: 'name',
-                    flex: 1
-                }
-            ],
-            store: store
-        });
-
-        store.load({
+        panel.getStore().load({
             callback: function() {
                 onReadyCallback(panel);
             }

@@ -1,45 +1,61 @@
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
+ * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 Ext.define('Modera.backend.module.toolscontribution.view.InstalledModulesList', {
     extend: 'Ext.grid.Panel',
     alias: 'widget.modera-backend-module-installedmoduleslist',
 
+    requires: [
+        'Modera.backend.module.toolscontribution.store.InstalledModules'
+    ],
+
+    // l10n
+    showAvailableModulesText: 'Browse module market',
+
     // override
     constructor: function(config) {
-        // TODO temporary
-        var store = Ext.create('Ext.data.DirectStore', {
-            fields: [
-                'id', 'name'
-            ],
-            proxy: {
-                type: 'direct',
-                directFn: Actions.ModeraBackendModule_Default.getInstalledModules
-            }
-        });
-
+        var me = this;
         var defaults = {
+            hideHeaders: true,
             columns: [
                 {
-                    name: 'Name',
                     dataIndex: 'name',
+                    flex: 2
+                },
+                {
+                    dataIndex: 'description',
                     flex: 1
+                },
+                {
+                    dataIndex: 'license'
+                },
+                {
+                    dataIndex: 'lastVersion',
+                    renderer: function(lastVersion, p, record) {
+                        var resp = lastVersion;
+                        if (record.get('currentVersion') && lastVersion !== record.get('currentVersion')) {
+                            resp += ' <i>(' + record.get('currentVersion') + ')</i>'
+                        }
+
+                        return resp;
+                    }
                 }
             ],
-            store: store,
+            store: Ext.create('Modera.backend.module.toolscontribution.store.InstalledModules'),
             tbar: [
                 '->',
                 {
                     itemId: 'showAvailableModules',
-                    text: 'Browse module market'
+                    text: me.showAvailableModulesText
                 }
             ]
         };
 
-        this.config = Ext.apply(defaults, config || {});
-        this.callParent([this.config]);
+        me.config = Ext.apply(defaults, config || {});
+        me.callParent([me.config]);
 
-        this.addEvents(
+        me.addEvents(
             /**
              * @event showmoduledetails
              * @param {Modera.backend.module.toolscontribution.view.InstalledModulesList} me
@@ -53,7 +69,7 @@ Ext.define('Modera.backend.module.toolscontribution.view.InstalledModulesList', 
             'showavailablemodules'
         );
 
-        this.assignListeners();
+        me.assignListeners();
     },
 
     // private

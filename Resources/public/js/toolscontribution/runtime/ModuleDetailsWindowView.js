@@ -15,10 +15,25 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
     // override
     doCreateUi: function(params, callback) {
         Actions.ModeraBackendModule_Default.getModuleDetails({ id: params.id }, function(response) {
+            var items = [];
+            Ext.iterate(response, function(key, val) {
+                items.push({
+                    xtype: 'displayfield',
+                    fieldLabel: key,
+                    value: val
+                });
+            });
+
             var w = Ext.create('Ext.window.Window', {
-                title: 'Modules details: ' + response.name,
-                width: 400,
-                height: 250
+                title: response.name,
+                width: 900,
+                height: 400,
+                modal: true,
+                items: {
+                    xtype: 'form',
+                    bodyPadding: 20,
+                    items: items
+                }
             });
 
             w.show();

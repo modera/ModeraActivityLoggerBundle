@@ -24,11 +24,8 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.InstalledModulesList
         executionContext.getApplication().loadController('Modera.backend.module.toolscontribution.controller.InstalledModulesList');
     },
 
-
     // override
     doCreateUi: function(params, onReadyCallback) {
-        var me = this;
-
         var panel = Ext.create('Modera.backend.module.toolscontribution.view.InstalledModulesList', {});
 
         panel.getStore().load({
