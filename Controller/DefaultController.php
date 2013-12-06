@@ -16,6 +16,14 @@ class DefaultController extends Controller
     }
 
     /**
+     * @return int
+     */
+    protected function getModuleServerPort()
+    {
+        return 8020; //TODO: move to config
+    }
+
+    /**
      * @param array $versions
      * @return \Packagist\Api\Result\Package\Version
      */
@@ -134,7 +142,8 @@ class DefaultController extends Controller
             );
             $params = $response['status'];
             try {
-                $this->getModuleRepository()->connect(8080, function($remote, $connection) use ($params, &$response) {
+                $port = $this->getModuleServerPort();
+                $this->getModuleRepository()->connect($port, function($remote, $connection) use ($params, &$response) {
                     $remote->call($params, function($resp) use ($connection, &$response) {
                         $connection->end();
                         $response = array_merge($response, (array) $resp);
@@ -163,7 +172,8 @@ class DefaultController extends Controller
         );
         $params = $response['status'];
         try {
-            $this->getModuleRepository()->connect(8080, function($remote, $connection) use ($params, &$response) {
+            $port = $this->getModuleServerPort();
+            $this->getModuleRepository()->connect($port, function($remote, $connection) use ($params, &$response) {
                 $remote->call($params, function($resp) use ($connection, &$response) {
                     $connection->end();
                     $response = array_merge($response, (array) $resp);
@@ -189,7 +199,8 @@ class DefaultController extends Controller
             'msg'     => '',
         );
         try {
-            $this->getModuleRepository()->connect(8080, function($remote, $connection) use ($params, &$response) {
+            $port = $this->getModuleServerPort();
+            $this->getModuleRepository()->connect($port, function($remote, $connection) use ($params, &$response) {
                 $remote->status($params, function($resp) use ($connection, &$response) {
                     $connection->end();
                     $response = array_merge($response, (array) $resp);
