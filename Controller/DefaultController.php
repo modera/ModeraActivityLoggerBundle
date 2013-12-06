@@ -114,4 +114,79 @@ class DefaultController extends Controller
     {
         return $this->getModuleInfo($params['id']);
     }
+
+    /**
+     * @Remote
+     *
+     * @param array $params
+     */
+    public function requireAction(array $params)
+    {
+        $response = array('success' => false, 'msg' => 'Error', 'status' => array());
+
+        $package = $this->getModuleRepository()->getPackage($params['id']);
+        if ($package) {
+            $latest = $this->getPackageLatestVersion($package->getVersions());
+            $response['status'] = array(
+                'method'  => 'require',
+                'name'    => $latest->getName(),
+                'version' => $latest->getVersion(),
+            );
+            $params = $response['status'];
+            $this->getModuleRepository()->connect(8082, function($remote, $connection) use ($params, &$response) {
+                $remote->call($params, function($resp) use ($connection, &$response) {
+                    $connection->end();
+                    $response = array_merge($response, (array) $resp);
+                });
+            });
+        }
+
+        return $response;
+    }
+
+    /**
+     * @Remote
+     *
+     * @param array $params
+     */
+    public function removeAction(array $params)
+    {
+        $response = array('success' => false, 'msg' => 'Error', 'status' => array());
+
+        $response['status'] = array(
+            'method'  => 'remove',
+            'name'    => $params['id'],
+        );
+        $params = $response['status'];
+        $this->getModuleRepository()->connect(8082, function($remote, $connection) use ($params, &$response) {
+            $remote->call($params, function($resp) use ($connection, &$response) {
+                $connection->end();
+                $response = array_merge($response, (array) $resp);
+            });
+        });
+
+        return $response;
+    }
+
+    /**
+     * @Remote
+     *
+     * @param array $params
+     */
+    public function statusAction(array $params)
+    {
+        $response = array(
+            'success' => false,
+            'working' => false,
+            'msg'     => '',
+        );
+        $this->getModuleRepository()->connect(8082, function($remote, $connection) use ($params, &$response) {
+            $remote->status($params, function($resp) use ($connection, &$response) {
+                $connection->end();
+                $response = array_merge($response, (array) $resp);
+            });
+        });
+
+        return $response;
+    }
 }
