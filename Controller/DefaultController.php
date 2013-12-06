@@ -133,12 +133,16 @@ class DefaultController extends Controller
                 'version' => $latest->getVersion(),
             );
             $params = $response['status'];
-            $this->getModuleRepository()->connect(8082, function($remote, $connection) use ($params, &$response) {
-                $remote->call($params, function($resp) use ($connection, &$response) {
-                    $connection->end();
-                    $response = array_merge($response, (array) $resp);
+            try {
+                $this->getModuleRepository()->connect(8080, function($remote, $connection) use ($params, &$response) {
+                    $remote->call($params, function($resp) use ($connection, &$response) {
+                        $connection->end();
+                        $response = array_merge($response, (array) $resp);
+                    });
                 });
-            });
+            } catch (\Exception $e) {
+                $response['msg'] = $e->getMessage();
+            }
         }
 
         return $response;
@@ -158,12 +162,16 @@ class DefaultController extends Controller
             'name'    => $params['id'],
         );
         $params = $response['status'];
-        $this->getModuleRepository()->connect(8082, function($remote, $connection) use ($params, &$response) {
-            $remote->call($params, function($resp) use ($connection, &$response) {
-                $connection->end();
-                $response = array_merge($response, (array) $resp);
+        try {
+            $this->getModuleRepository()->connect(8080, function($remote, $connection) use ($params, &$response) {
+                $remote->call($params, function($resp) use ($connection, &$response) {
+                    $connection->end();
+                    $response = array_merge($response, (array) $resp);
+                });
             });
-        });
+        } catch (\Exception $e) {
+            $response['msg'] = $e->getMessage();
+        }
 
         return $response;
     }
@@ -180,12 +188,16 @@ class DefaultController extends Controller
             'working' => false,
             'msg'     => '',
         );
-        $this->getModuleRepository()->connect(8082, function($remote, $connection) use ($params, &$response) {
-            $remote->status($params, function($resp) use ($connection, &$response) {
-                $connection->end();
-                $response = array_merge($response, (array) $resp);
+        try {
+            $this->getModuleRepository()->connect(8080, function($remote, $connection) use ($params, &$response) {
+                $remote->status($params, function($resp) use ($connection, &$response) {
+                    $connection->end();
+                    $response = array_merge($response, (array) $resp);
+                });
             });
-        });
+        } catch (\Exception $e) {
+            $response['msg'] = $e->getMessage();
+        }
 
         return $response;
     }
