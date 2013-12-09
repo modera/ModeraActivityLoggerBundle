@@ -38,9 +38,9 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                 },
                 bbar: [
                     {
-                        disabled: (response.installed && response.lastVersion == response.currentVersion),
+                        disabled: (response.installed && !response.updateAvailable),
                         xtype: 'button',
-                        text: (response.installed && response.lastVersion != response.currentVersion ? 'Update' : 'Install'),
+                        text: (response.updateAvailable ? 'Update' : 'Install'),
                         handler: function() {
                             w.close();
                             me.callMethod(params.id, 'require');

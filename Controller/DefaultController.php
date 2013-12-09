@@ -124,34 +124,23 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Remote
-     *
+     * @param string $method
      * @param array $params
+     * @return array
      */
-    public function requireAction(array $params)
+    protected function remote($method, array $params)
     {
-        $response = array('success' => false, 'msg' => 'Error', 'status' => array());
-
-        $package = $this->getModuleRepository()->getPackage($params['id']);
-        if ($package) {
-            $latest = $this->getPackageLatestVersion($package->getVersions());
-            $response['status'] = array(
-                'method'  => 'require',
-                'name'    => $latest->getName(),
-                'version' => $latest->getVersion(),
-            );
-            $params = $response['status'];
-            try {
-                $port = $this->getModuleServerPort();
-                $this->getModuleRepository()->connect($port, function($remote, $connection) use ($params, &$response) {
-                    $remote->call($params, function($resp) use ($connection, &$response) {
-                        $connection->end();
-                        $response = array_merge($response, (array) $resp);
-                    });
+        $response = array();
+        try {
+            $port = $this->getModuleServerPort();
+            $this->getModuleRepository()->connect($port, function($remote, $connection) use ($method, $params, &$response) {
+                $remote->{$method}($params, function($resp) use ($connection, &$response) {
+                    $connection->end();
+                    $response = array_merge($response, (array) $resp);
                 });
-            } catch (\Exception $e) {
-                $response['msg'] = $e->getMessage();
-            }
+            });
+        } catch (\Exception $e) {
+            $response['msg'] = $e->getMessage();
         }
 
         return $response;
@@ -162,28 +151,34 @@ class DefaultController extends Controller
      *
      * @param array $params
      */
+    public function requireAction(array $params)
+    {
+        $response = array('success' => false, 'msg' => 'Error', 'status' => array());
+        $package = $this->getModuleRepository()->getPackage($params['id']);
+        if ($package) {
+            $latest = $this->getPackageLatestVersion($package->getVersions());
+            $response['status'] = array(
+                'method'  => 'require',
+                'name'    => $latest->getName(),
+                'version' => $latest->getVersion(),
+            );
+        }
+        return array_merge($response, $this->remote('call', $response['status']));
+    }
+
+    /**
+     * @Remote
+     *
+     * @param array $params
+     */
     public function removeAction(array $params)
     {
         $response = array('success' => false, 'msg' => 'Error', 'status' => array());
-
         $response['status'] = array(
             'method'  => 'remove',
             'name'    => $params['id'],
         );
-        $params = $response['status'];
-        try {
-            $port = $this->getModuleServerPort();
-            $this->getModuleRepository()->connect($port, function($remote, $connection) use ($params, &$response) {
-                $remote->call($params, function($resp) use ($connection, &$response) {
-                    $connection->end();
-                    $response = array_merge($response, (array) $resp);
-                });
-            });
-        } catch (\Exception $e) {
-            $response['msg'] = $e->getMessage();
-        }
-
-        return $response;
+        return array_merge($response, $this->remote('call', $response['status']));
     }
 
     /**
@@ -198,18 +193,6 @@ class DefaultController extends Controller
             'working' => false,
             'msg'     => '',
         );
-        try {
-            $port = $this->getModuleServerPort();
-            $this->getModuleRepository()->connect($port, function($remote, $connection) use ($params, &$response) {
-                $remote->status($params, function($resp) use ($connection, &$response) {
-                    $connection->end();
-                    $response = array_merge($response, (array) $resp);
-                });
-            });
-        } catch (\Exception $e) {
-            $response['msg'] = $e->getMessage();
-        }
-
-        return $response;
+        return array_merge($response, $this->remote('status', $params));
     }
 }
