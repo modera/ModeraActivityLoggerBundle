@@ -35,7 +35,5 @@ Ext.define('Modera.backend.tools.runtime.ListView', {
                 callback(panel);
             }
         });
-
-        return panel;
     }
 });

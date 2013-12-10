@@ -13,6 +13,11 @@ interface SectionInterface
     /**
      * @return string
      */
+    public function getGlyph();
+
+    /**
+     * @return string
+     */
     public function getIconClass();
 
     /**

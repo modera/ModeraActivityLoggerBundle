@@ -11,6 +11,7 @@ namespace Modera\BackendToolsBundle\Section;
 class Section implements SectionInterface
 {
     private $iconClass;
+    private $glyph;
     private $name;
     private $description;
     private $meta;
@@ -23,11 +24,12 @@ class Section implements SectionInterface
      * @param string $iconClass
      * @param array  $meta
      */
-    public function __construct($name, $section, $description = '', $iconClass = '', array $sectionActivationParams = array(),array $meta = array())
+    public function __construct($name, $section, $description = '', $glyph = '', $iconClass = '', array $sectionActivationParams = array(),array $meta = array())
     {
         $this->name = $name;
         $this->section = $section;
         $this->description = $description;
+        $this->glyph = $glyph;
         $this->iconClass = $iconClass;
         $this->sectionActivationParams = $sectionActivationParams;
         $this->meta = $meta;
@@ -39,6 +41,14 @@ class Section implements SectionInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGlyph()
+    {
+        return $this->glyph;
     }
 
     /**

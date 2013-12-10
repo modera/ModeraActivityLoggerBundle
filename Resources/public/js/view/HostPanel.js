@@ -2,7 +2,7 @@
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
 Ext.define('Modera.backend.tools.view.HostPanel', {
-    extend: 'Ext.grid.Panel',
+    extend: 'Ext.panel.Panel',
     alias: 'widget.modera-backend-tools-hostpanel',
 
     requires: [
@@ -10,16 +10,75 @@ Ext.define('Modera.backend.tools.view.HostPanel', {
     ],
 
     // l10n
-    titleText: 'Tools',
+    nothingToDisplayText: 'Nothing to display',
 
     // override
     constructor: function(config) {
+        var me = this;
         var defaults = {
-            store: Ext.create('Modera.backend.tools.store.Sections'),
             border: false,
-            columns: [
-                { text: 'Name', dataIndex: 'name', flex: 1 }
-            ]
+            ui: 'rounded',
+            cls: 'x-panel-box-shadow',
+            layout: 'fit',
+            bodyPadding: 10,
+            items: {
+                xtype: 'dataview',
+                multiSelect: false,
+                singleSelect: true,
+                cls: 'modera-backend-tools',
+                tpl: new Ext.XTemplate(
+                    '<tpl if="values.length &gt; 1">',
+                    '<ul>',
+                        '<tpl for=".">',
+                            '<li>',
+                                '<table class="container">',
+                                    '<tr><td>',
+                                        '{[this.renderIcon(values)]}',
+                                    '</td><td>',
+                                        '<h2>{name}</h2>',
+                                        '<p>{description}</p>',
+                                    '</td></tr>',
+                                '</table>',
+                            '</li>',
+                        '</tpl>',
+                    '</ul>',
+                    '<tpl else>',
+                        '<table class="empty"><tr><td>',
+                            '<p>' + me.nothingToDisplayText + '</p>',
+                        '</td></tr></table>',
+                    '</tpl>', {
+                        renderIcon: function(values) {
+                            var iconCls = '';
+                            if (values.iconCls && values.iconCls.length) {
+                                iconCls = values.iconCls;
+                            }
+                            var glyph = '';
+                            if (values.glyph && values.glyph.length) {
+                                glyph = values.glyph;
+                            }
+                            //glyph = 'xe807@mf-theme-header-icon';
+
+                            if (glyph) {
+                                var nid = Ext.id();
+                                Ext.Function.defer(function(glyph, id) {
+                                    Ext.widget({
+                                        xtype: 'image',
+                                        glyph: glyph,
+                                        renderTo: id
+                                    });
+                                }, 100, me, [glyph, nid]);
+                                return '<div class="glyph-el ' + iconCls + '" id="' + nid + '"></div>';
+                            } else if (iconCls) {
+                                return '<div class="icon-el ' + iconCls + '"></div>';
+                            } else {
+                                return '';
+                            }
+                        }
+                    }
+                ),
+                itemSelector: 'li',
+                store: Ext.create('Modera.backend.tools.store.Sections')
+            }
         };
         this.config = Ext.apply(defaults, config || {});
         this.callParent([this.config]);
@@ -35,12 +94,19 @@ Ext.define('Modera.backend.tools.view.HostPanel', {
         this.assignListeners();
     },
 
+    getStore: function() {
+        var me = this;
+        return me.down('dataview').getStore();
+    },
+
     // private
     assignListeners: function() {
         var me = this;
-
-        this.on('itemclick', function(sm, record) {
-            me.fireEvent('changesection', me, record);
+        me.down('dataview').on('selectionchange', function(dataView, selections) {
+            if (selections.length) {
+                var record = selections[0];
+                me.fireEvent('changesection', me, record);
+            }
         });
     }
 });

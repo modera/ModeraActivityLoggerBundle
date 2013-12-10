@@ -30,6 +30,7 @@ class DefaultController extends AbstractBaseController
             /* @var Section $section */
             $result[] = array(
                 'name' => $section->getName(),
+                'glyph' => $section->getGlyph(),
                 'iconClass' => $section->getIconClass(),
                 'description' => $section->getDescription(),
                 'section' => $section->getSection(),
