@@ -19,10 +19,13 @@ class Section implements SectionInterface
     private $sectionActivationParams;
 
     /**
-     * @param string $name
+     * @param $name
+     * @param $section
      * @param string $description
+     * @param string $glyph
      * @param string $iconClass
-     * @param array  $meta
+     * @param array $sectionActivationParams
+     * @param array $meta
      */
     public function __construct($name, $section, $description = '', $glyph = '', $iconClass = '', array $sectionActivationParams = array(),array $meta = array())
     {

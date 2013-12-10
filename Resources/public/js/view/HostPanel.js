@@ -56,7 +56,9 @@ Ext.define('Modera.backend.tools.view.HostPanel', {
                             if (values.glyph && values.glyph.length) {
                                 glyph = values.glyph;
                             }
-                            //glyph = 'xe807@mf-theme-header-icon';
+                            if (!iconCls && !glyph) {
+                                glyph = 'xe807@mf-theme-header-icon';
+                            }
 
                             if (glyph) {
                                 var nid = Ext.id();
