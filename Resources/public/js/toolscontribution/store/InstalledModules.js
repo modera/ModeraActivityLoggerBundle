@@ -7,10 +7,10 @@ Ext.define('Modera.backend.module.toolscontribution.store.InstalledModules', {
     constructor: function() {
         this.config = {
             fields: [
-                'id', 'name', 'description', 'license',
+                'id', 'logo', 'name', 'description', 'license',
                 'lastVersion', 'currentVersion',
-                { name: 'installed', type: 'object' },
-                { name: 'updateAvailable', type: 'object' }
+                { name: 'installed', type: 'boolean' },
+                { name: 'updateAvailable', type: 'boolean' }
             ],
             proxy: {
                 type: 'direct',

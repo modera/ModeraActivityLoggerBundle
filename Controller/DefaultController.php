@@ -23,6 +23,11 @@ class DefaultController extends Controller
         return 8020; //TODO: move to config
     }
 
+    protected function getDefaultLogo()
+    {
+        return '/bundles/moderabackendmodule/images/default.png';
+    }
+
     /**
      * @param array $versions
      * @return \Packagist\Api\Result\Package\Version
@@ -59,6 +64,7 @@ class DefaultController extends Controller
 
         $result = array(
             'id'                 => $latest->getName(),
+            'logo'               => $this->getDefaultLogo(),
             'name'               => $latest->getName(),
             'description'        => $latest->getDescription(),
             'license'            => $latest->getLicense(),

@@ -1,0 +1,37 @@
+.modera-backend-module-grid {
+
+    .x-panel-body {
+        .title {
+            color: #457d97;
+            font-weight: bold;
+            font-size: 13pt;
+        }
+
+        .info {
+
+        }
+
+        .x-grid-cell {
+            border-bottom:thin solid #EEE;
+            padding: 5px;
+        }
+
+        .x-grid-row {
+            div {
+                cursor: pointer;
+            }
+
+            &.x-grid-row-selected {
+                .x-grid-td {
+                   background-color: transparent;
+                }
+            }
+
+            &.x-grid-row-over {
+                .x-grid-td {
+                    background-color: #EEEEEE !important;
+                }
+            }
+        }
+    }
+}

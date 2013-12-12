@@ -5,6 +5,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
     extend: 'MF.viewsmanagement.views.AbstractView',
 
     requires: [
+        'MFC.container.Header'
     ],
 
     // override
@@ -27,10 +28,19 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
             });
 
             var w = Ext.create('Ext.window.Window', {
-                title: response.name,
-                width: 900,
-                height: 400,
+                width: 960,
+                height: 480,
                 modal: true,
+                header: false,
+                tbar: {
+                    xtype: 'mfc-header',
+                    title: response.name,
+                    iconSrc: response.logo,
+                    closeBtn: true,
+                    closeCallback: function() {
+                        w.close();
+                    }
+                },
                 items: {
                     xtype: 'form',
                     bodyPadding: 20,
@@ -43,7 +53,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                         text: (response.updateAvailable ? 'Update' : 'Install'),
                         handler: function() {
                             w.close();
-                            me.callMethod(params.id, 'require');
+                            me.callMethod(response, 'require');
                         }
                     },
                     '->',
@@ -53,7 +63,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                         text: 'Remove',
                         handler: function() {
                             w.close();
-                            me.callMethod(params.id, 'remove');
+                            me.callMethod(response, 'remove');
                         }
                     }
                 ]
@@ -66,32 +76,40 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
     },
 
     //temp
-    callMethod: function(id, method) {
-        Actions.ModeraBackendModule_Default[method]({ id: id }, function(response) {
-            var title = 'Error';
-            if (response.success) {
-                title = method + ': ' + response.status['name'];
-                if ('require' == method) {
-                    title += ':' + response.status['version'];
+    callMethod: function(params, method) {
+        var w = Ext.create('Ext.window.Window', {
+            width: 960,
+            height: 480,
+            modal: true,
+            header: false,
+            tbar: {
+                xtype: 'mfc-header',
+                margin: '0 0 9 0',
+                title: params.name,
+                iconSrc: params.logo,
+                closeBtn: true,
+                closeCallback: function() {
+                    w.close();
+                }
+            },
+            layout: 'fit',
+            items: {
+                xtype: 'panel',
+                bodyPadding: 20,
+                border: true,
+                autoScroll: true,
+                items: {
+                    itemId: 'status',
+                    html: ''
                 }
             }
+        });
+        w.show();
+        w.down('panel').setLoading(true);
 
-            var w = Ext.create('Ext.window.Window', {
-                title: title,
-                width: 500,
-                height: 400,
-                modal: true,
-                items: {
-                    xtype: 'panel',
-                    bodyPadding: 20,
-                    items: {
-                        itemId: 'status',
-                        html: response.msg
-                    }
-                }
-            });
-            w.show();
-
+        Actions.ModeraBackendModule_Default[method]({ id: params.id }, function(response) {
+            w.down('panel').setLoading(false);
+            w.down('#status').update(response.msg);
             var status = function() {
                 Actions.ModeraBackendModule_Default.status(response.status, function(resp) {
                     var html = resp.msg;

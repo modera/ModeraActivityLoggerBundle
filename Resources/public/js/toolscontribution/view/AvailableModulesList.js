@@ -3,53 +3,42 @@
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 Ext.define('Modera.backend.module.toolscontribution.view.AvailableModulesList', {
-    extend: 'Ext.grid.Panel',
+    extend: 'Modera.backend.module.toolscontribution.view.AbstractModulesList',
     alias: 'widget.modera-backend-module-availablemoduleslist',
 
     requires: [
-        'Modera.backend.module.toolscontribution.store.AvailableModules'
+        'Modera.backend.module.toolscontribution.store.AvailableModules',
+        'MFC.container.Header'
     ],
 
     // l10n
+    headerTitleText: 'Module market',
     showInstalledModulesText: 'Back',
+    emptyText: 'No available modules.',
 
     // override
     constructor: function(config) {
         var me = this;
         var defaults = {
-            hideHeaders: true,
-            columns: [
-                {
-                    dataIndex: 'name',
-                    flex: 2
-                },
-                {
-                    dataIndex: 'description',
-                    flex: 1
-                },
-                {
-                    dataIndex: 'license'
-                },
-                {
-                    dataIndex: 'lastVersion',
-                    renderer: function(lastVersion, p, record) {
-                        var resp = lastVersion;
-                        if (record.get('currentVersion') && lastVersion !== record.get('currentVersion')) {
-                            resp += ' <i>(' + record.get('currentVersion') + ')</i>'
-                        }
-
-                        return resp;
-                    }
-                }
-            ],
+            emptyText: me.emptyText,
             store: Ext.create('Modera.backend.module.toolscontribution.store.AvailableModules'),
-            tbar: [
-                '->',
-                {
-                    itemId: 'showInstalledModules',
-                    text: me.showInstalledModulesText
-                }
-            ]
+            tbar: {
+                xtype: 'mfc-header',
+                title: me.headerTitleText,
+                margin: '0 0 9 0',
+                items: [
+//                    {
+//                        text: 'Refresh',
+//                        scale: 'medium'
+//                    },
+                    '->',
+                    {
+                        itemId: 'showInstalledModules',
+                        text: me.showInstalledModulesText,
+                        scale: 'medium'
+                    }
+                ]
+            }
         };
 
         me.config = Ext.apply(defaults, config || {});
@@ -69,7 +58,7 @@ Ext.define('Modera.backend.module.toolscontribution.view.AvailableModulesList', 
             'showinstalledmodules'
         );
 
-        this.assignListeners();
+        me.assignListeners();
     },
 
     // private

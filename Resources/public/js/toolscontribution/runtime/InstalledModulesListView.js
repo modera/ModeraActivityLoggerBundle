@@ -31,6 +31,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.InstalledModulesList
         panel.getStore().load({
             callback: function() {
                 onReadyCallback(panel);
+                panel.view.refresh();
             }
         });
     }

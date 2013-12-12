@@ -12,8 +12,16 @@ Ext.define('Modera.backend.module.toolscontribution.controller.InstalledModulesL
             'modera-backend-module-installedmoduleslist': {
                 showmoduledetails: this.showModuleDetails,
                 showavailablemodules: this.showAvailableModules
+            },
+            'modera-backend-module-installedmoduleslist mfc-header': {
+                close: this.onClose
             }
         });
+    },
+
+    // private
+    onClose: function() {
+        this.application.getContainer().get('workbench').activateSection('tools');
     },
 
     // private
