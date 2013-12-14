@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_admin_generator.contributions.sections_provider"
+                 class="Modera\AdminGeneratorBundle\Contributions\SectionsProvider">
+
+            <argument type="service" id="modera_admin_generator.sections_provider" />
+
+            <tag name="mf.jsruntimeintegration.sections_provider" />
+        </service>
+
+        <service id="modera_admin_generator.generation.twig"
+                 class="Twig_Environment"
+                 factory-class="Modera\AdminGeneratorBundle\Generation\TwigFactory"
+                 factory-method="create"
+        />
+    </services>
+</container>

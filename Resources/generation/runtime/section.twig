@@ -1,0 +1,55 @@
+Ext.define('{{ class_name }} ', {
+    extend: 'MF.runtime.Section',
+
+    requires: [
+{% for rv in runtime_views %}
+        '{{ rv.class_name }}',
+{% endfor %}
+    ],
+
+    // protected
+    getViews: function() {
+        return {
+            // role ( action ) : instance of runtime view
+{% for rv in runtime_views %}
+            {{ rv.activation_event_name }}: Ext.create('{{ rv.class_name }}', { section: this }),
+{% endfor %}
+        }
+    },
+
+    // override
+    activate: function(workbench, callback) {
+        var me = this;
+
+        var views = this.getViews();
+
+        this.registerViewsManager(workbench, Ext.Object.getValues(views));
+
+        callback(function() {
+            workbench.getViewsManager().iterateViews(function(view) {
+                if (view['onSectionLoaded'] && Ext.isFunction(view.onSectionLoaded)) {
+                    view.onSectionLoaded(me);
+                }
+            });
+        });
+
+        this.configureFlows(workbench, views);
+    },
+
+    // protected
+    configureFlows: function(workbench, views) {
+        if (!this.flowsConfigured) {
+            this.on('handleaction', function(sourceComponent, actionName, params) {
+                if (views[actionName]) {
+                    workbench.activateView(views[actionName].getId(), params || {});
+                }
+            });
+
+            this.on('showhome', function() {
+                workbench.activateView(workbench.getViewsManager().getHomeView().getId());
+            });
+
+            this.flowsConfigured = true;
+        }
+    }
+});
