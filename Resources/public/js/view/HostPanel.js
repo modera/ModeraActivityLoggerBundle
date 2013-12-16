@@ -18,7 +18,7 @@ Ext.define('Modera.backend.tools.view.HostPanel', {
         var defaults = {
             border: false,
             ui: 'rounded',
-            cls: 'x-panel-box-shadow',
+            boxShadow: true,
             layout: 'fit',
             bodyPadding: 10,
             items: {
