@@ -38,5 +38,9 @@ class ModeraJSRuntimeIntegrationBundle extends Bundle
         $container->addCompilerPass(
             new CompositeContributorsProviderCompilerPass('mf.jsruntimeintegration.css_resources_provider')
         );
+
+        $container->addCompilerPass(
+            new CompositeContributorsProviderCompilerPass('mf.jsruntimeintegration.js_resources_provider')
+        );
     }
 }

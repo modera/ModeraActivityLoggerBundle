@@ -38,5 +38,11 @@
 
             <argument type="service" id="mf.jsruntimeintegration.config.config_mergers_provider" />
         </service>
+
+        <service id="mf.jsruntimeintegration.contributions.js_resources_provider"
+                 class="Modera\JSRuntimeIntegrationBundle\Contributions\JsResourcesProvider">
+
+            <tag name="mf.jsruntimeintegration.js_resources_provider" />
+        </service>
     </services>
 </container>
