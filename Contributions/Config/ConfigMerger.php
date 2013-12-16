@@ -18,16 +18,20 @@ class ConfigMerger implements ConfigMergerInterface
     private $bundleConfig;
     private $menuMgr;
     private $sectionsProvider;
+    private $classLoaderMappingsProvider;
 
     /**
      * @param array       $bundleConfig
      * @param MenuManager $menuMgr
      */
-    public function __construct(array $bundleConfig, MenuManager $menuMgr, ContributorInterface $sectionsProvider)
+    public function __construct(
+        array $bundleConfig, MenuManager $menuMgr, ContributorInterface $sectionsProvider, ContributorInterface $classLoaderMappingsProvider
+    )
     {
         $this->bundleConfig = $bundleConfig;
         $this->menuMgr = $menuMgr;
         $this->sectionsProvider = $sectionsProvider;
+        $this->classLoaderMappingsProvider = $classLoaderMappingsProvider;
     }
 
     /**
@@ -58,7 +62,8 @@ class ConfigMerger implements ConfigMergerInterface
         return array_merge($existingConfig, array(
             'homeSection' => $this->bundleConfig['home_section'],
             'sections' => $sections, // backend sections
-            'menuItems' => $menuItems
+            'menuItems' => $menuItems,
+            'classLoaderMappings' => $this->classLoaderMappingsProvider->getItems()
         ));
     }
 }
