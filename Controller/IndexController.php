@@ -16,11 +16,18 @@ use Modera\JSRuntimeIntegrationBundle\Sections\SectionInterface;
  */
 class IndexController extends AbstractBaseController
 {
-    /**
-     * @Route("/crud/{className}.js", requirements={"className"=".+"})
-     */
-    public function indexAction($className)
+    private function convertPathToClass($path)
     {
+        return implode('.', explode('/', $path));
+    }
+
+    /**
+     * @Route("/crud/{path}.js", requirements={"path"=".+"})
+     */
+    public function indexAction($path)
+    {
+        $className = $this->convertPathToClass($path);
+
         /* @var ContributorInterface $sectionsProvider */
         $sectionsProvider = $this->get('mf.jsruntimeintegration.sections_provider');
 

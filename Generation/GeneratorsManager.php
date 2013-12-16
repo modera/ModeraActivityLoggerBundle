@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Modera\AdminGeneratorBundle\Generation\Generators\GridPanel;
 use Modera\AdminGeneratorBundle\Generation\Generators\ListStore;
 use Modera\AdminGeneratorBundle\Generation\Generators\ListView;
+use Modera\AdminGeneratorBundle\Generation\Generators\NewRecordWindow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -36,7 +37,8 @@ class GeneratorsManager
         $this->viewGenerators[$listView->getId()] = $listView;
 
         $this->uiGenerators = array(
-            'list' => new GridPanel($twig, $this, $em->getMetadataFactory())
+            'list' => new GridPanel($twig, $this, $em->getMetadataFactory()),
+            'new-record-window' => new NewRecordWindow($twig, $this, $em->getMetadataFactory())
         );
 
         $this->storeGenerators = array(
@@ -48,6 +50,8 @@ class GeneratorsManager
     {
         if ('list' == $role && $view instanceof ListView) {
             return $this->uiGenerators['list'];
+        } else if ('new-record-window' == $role) {
+            return $this->uiGenerators['new-record-window'];
         }
     }
 

@@ -15,6 +15,8 @@ Ext.define('{{ class_name }}', {
 
     // override
     constructor: function(config) {
+        var store = Ext.create('{{ store_class_name }}');
+
         var defaults = {
             ui: 'rounded',
             boxShadow: true,
@@ -29,7 +31,7 @@ Ext.define('{{ class_name }}', {
                 },
 {% endfor %}{# /forColumns #}
             ],
-            store: Ext.create('{{ store_class_name }}'),
+            store: store,
             dockedItems: [
                 {
                     xtype: 'toolbar',
@@ -48,6 +50,12 @@ Ext.define('{{ class_name }}', {
                             text: this.deleteBtnText
                         }
                     ]
+                },
+                {
+                    xtype: 'pagingtoolbar',
+                    store: store,
+                    dock: 'bottom',
+                    displayInfo: true
                 }
             ]
         };
