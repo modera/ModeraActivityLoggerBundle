@@ -6,6 +6,7 @@ Ext.define('Modera.backend.module.toolscontribution.view.AbstractModulesList', {
 
     tplIcon: '<img src="{0}" width="32" height="32" alt="" />',
     tplTitle: '<div class="title">{0}</div>{1}',
+    tplStatus: '<div class="modera-backend-module-box-status mfc-box-status {0}">{1}</div>',
     tplInfo: '<div class="info">{0}</div>',
 
     // override
@@ -40,10 +41,10 @@ Ext.define('Modera.backend.module.toolscontribution.view.AbstractModulesList', {
                     renderer: function(value, p, record) {
                         var status = '';
                         if (record.get('updateAvailable')) {
-                            status = 'update';
+                            status = Ext.String.format(this.tplStatus, 'warning', 'update');
                         }
                         else if (record.get('installed')) {
-                            status = 'installed';
+                            status = Ext.String.format(this.tplStatus, 'success', 'installed');
                         }
 
                         return Ext.String.format(this.tplInfo, status);

@@ -5,7 +5,8 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
     extend: 'MF.viewsmanagement.views.AbstractView',
 
     requires: [
-        'MFC.container.Header'
+        'MFC.container.Header',
+        'Modera.backend.module.toolscontribution.view.ModuleDetails'
     ],
 
     // override
@@ -18,15 +19,6 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
         var me = this;
 
         Actions.ModeraBackendModule_Default.getModuleDetails({ id: params.id }, function(response) {
-            var items = [];
-            Ext.iterate(response, function(key, val) {
-                items.push({
-                    xtype: 'displayfield',
-                    fieldLabel: key,
-                    value: val
-                });
-            });
-
             var w = Ext.create('Ext.window.Window', {
                 width: 960,
                 height: 480,
@@ -34,6 +26,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                 header: false,
                 tbar: {
                     xtype: 'mfc-header',
+                    margin: '0 0 9 0',
                     title: response.name,
                     iconSrc: response.logo,
                     closeBtn: true,
@@ -41,41 +34,32 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                         w.close();
                     }
                 },
+                layout: 'fit',
                 items: {
-                    xtype: 'form',
-                    bodyPadding: 20,
-                    items: items
-                },
-                bbar: [
-                    {
-                        disabled: (response.installed && !response.updateAvailable),
-                        xtype: 'button',
-                        text: (response.updateAvailable ? 'Update' : 'Install'),
-                        handler: function() {
+                    xtype: 'modera-backend-module-moduledetails',
+                    dto: response,
+                    listeners: {
+                        requiremodule: function(con, dto) {
                             w.close();
-                            me.callMethod(response, 'require');
-                        }
-                    },
-                    '->',
-                    {
-                        disabled: !response.installed,
-                        xtype: 'button',
-                        text: 'Remove',
-                        handler: function() {
+                            me.callMethod(dto, 'require');
+                        },
+                        removemodule: function(con, dto) {
                             w.close();
-                            me.callMethod(response, 'remove');
+                            me.callMethod(dto, 'remove');
                         }
                     }
-                ]
+                }
             });
-
             w.show();
 
             callback(w);
         });
     },
 
-    //temp
+    /**
+     * @param params
+     * @param method
+     */
     callMethod: function(params, method) {
         var w = Ext.create('Ext.window.Window', {
             width: 960,
@@ -116,7 +100,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                     if (true == resp.working) {
                         setTimeout(function() {
                             status();
-                        }, 500);
+                        }, 1000);
                         html += 'Loading ...';
                     }
 

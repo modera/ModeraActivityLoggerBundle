@@ -1,3 +1,44 @@
+.modera-backend-module-box-status {
+    &.mfc-box-status {
+        display: inline-block;
+        background-position: 6px 3px;
+        background-repeat: no-repeat;
+
+        &.success {
+            padding-left: 26px;
+            background-image: url(../images/tick.png);
+        }
+
+        &.warning {
+            font-weight: bold;
+            padding-left: 26px;
+            background-image: url(../images/exclamation.png);
+            background-position: 8px 3px;
+        }
+
+        &.error {
+            padding-left: 26px;
+            background-image: url(../images/cross.png);
+        }
+    }
+}
+
+.modera-backend-module-details {
+
+    .info {
+        background-color:#fff;
+        border-top-width: 1px;
+        border-top-style: dashed;
+        border-top-color: #EEE;
+    }
+
+    .description {
+        .x-panel-body-default {
+            font-size:18px;
+        }
+    }
+}
+
 .modera-backend-module-grid {
 
     .x-panel-body {

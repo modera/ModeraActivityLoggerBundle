@@ -23,6 +23,9 @@ class DefaultController extends Controller
         return 8020; //TODO: move to config
     }
 
+    /**
+     * @return string
+     */
     protected function getDefaultLogo()
     {
         return '/bundles/moderabackendmodule/images/default.png';
@@ -75,7 +78,16 @@ class DefaultController extends Controller
         );
 
         if ($extended) {
-            //TODO
+            $authors = array();
+            foreach ($latest->getAuthors() as $author) {
+                $authors[] = $author->getName();
+            }
+            $createdAt = new \DateTime($latest->getTime());
+
+            $result += array(
+                'authors'   => count($authors) ? implode(", ", $authors) : null,
+                'createdAt' => $createdAt->format(\DateTime::RFC1123),
+            );
         }
 
         return $result;
@@ -126,7 +138,7 @@ class DefaultController extends Controller
      */
     public function getModuleDetailsAction(array $params)
     {
-        return $this->getModuleInfo($params['id']);
+        return $this->getModuleInfo($params['id'], true);
     }
 
     /**
