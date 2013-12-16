@@ -12,6 +12,10 @@
 {% for resource in css_resources %}
     <link href="{{ resource }}" rel="stylesheet" />
 {% endfor %}
+
+{% for resource in js_resources %}
+    <script src="{{ resource }}" type="text/javascript"></script>
+{% endfor %}
 </head>
 
 <body>

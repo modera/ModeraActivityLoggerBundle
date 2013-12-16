@@ -34,10 +34,14 @@ class IndexController extends Controller
         /* @var ContributorInterface $cssResourcesProvider */
         $cssResourcesProvider = $this->get('mf.jsruntimeintegration.css_resources_provider');
 
+        /* @var ContributorInterface $cssResourcesProvider */
+        $jsResourcesProvider = $this->get('mf.jsruntimeintegration.js_resources_provider');
+
         return [
             'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
             'container_services' => $definitionsMgr->getDefinitions(),
-            'css_resources' => $cssResourcesProvider->getItems()
+            'css_resources' => $cssResourcesProvider->getItems(),
+            'js_resources' => $jsResourcesProvider->getItems()
         ];
     }
 }
