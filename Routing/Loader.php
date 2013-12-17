@@ -2,14 +2,16 @@
 
 namespace Modera\RoutingBundle\Routing;
 
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Routing\RouteCollection;
+use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
+ * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2013 Modera Foundation
- * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 class Loader implements LoaderInterface
 {
@@ -19,6 +21,16 @@ class Loader implements LoaderInterface
     private $container;
 
     /**
+     * @var ContributorInterface
+     */
+    protected $resourcesProvider;
+
+    /**
+     * @var FileLocatorInterface
+     */
+    private $locator;
+
+    /**
      * @var bool
      */
     private $loaded = false;
@@ -26,9 +38,19 @@ class Loader implements LoaderInterface
     /**
      * @param ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, ContributorInterface $resourcesProvider, FileLocatorInterface $locator)
     {
         $this->container = $container;
+        $this->resourcesProvider = $resourcesProvider;
+        $this->locator = $locator;
+    }
+
+    /**
+     * @return LoaderInterface
+     */
+    private function getLoader()
+    {
+        return $this->container->get('routing.loader');
     }
 
     /**
@@ -44,21 +66,16 @@ class Loader implements LoaderInterface
         }
 
         $collection = new RouteCollection();
+        $resources = $this->resourcesProvider->getItems();
 
-        $kernel = $this->container->get('kernel');
-        $loader = $this->container->get('routing.loader');
-        foreach ($kernel->getBundles() as $bundle) {
-            if (!($bundle instanceof RoutingInterface)) {
-                continue;
-            }
-            $resource = $bundle->getRoutingResource();
+        foreach ($resources as $resource) {
             try {
-                $resource = $this->container->get('file_locator')->locate($resource);
+                $resource = $this->locator->locate($resource);
             } catch (\Exception $e) { // the conventionally located file doesn't exist
                 continue;
             }
 
-            $collection->addCollection($loader->load($resource));
+            $collection->addCollection($this->getLoader()->load($resource));
         }
 
         $this->loaded = true;
