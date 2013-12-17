@@ -69,12 +69,7 @@ class Loader implements LoaderInterface
         $resources = $this->resourcesProvider->getItems();
 
         foreach ($resources as $resource) {
-            try {
-                $resource = $this->locator->locate($resource);
-            } catch (\Exception $e) { // the conventionally located file doesn't exist
-                continue;
-            }
-
+            $resource = $this->locator->locate($resource);
             $collection->addCollection($this->getLoader()->load($resource));
         }
 

@@ -5,11 +5,11 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="modera_routing.routing_loader"
+        <service id="modera_routing.routing.loader"
                  class="Modera\RoutingBundle\Routing\Loader" public="false">
 
             <argument type="service" id="service_container" />
-            <argument type="service" id="modera.routing.routing_resources_provider" />
+            <argument type="service" id="modera_routing.routing_resources_provider" />
             <argument type="service" id="file_locator" />
 
             <tag name="routing.loader" />

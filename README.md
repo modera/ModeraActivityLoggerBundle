@@ -50,7 +50,7 @@ Modera\ExampleBundle\Resurces\config\services.xml
     <service id="modera_example.contributions.routing_resources_provider"
          class="Modera\ExampleBundle\Contributions\RoutingResourcesProvider">
 
-    <tag name="modera.routing.routing_resources_provider" />
+    <tag name="modera_routing.routing_resources_provider" />
 
 ...
 

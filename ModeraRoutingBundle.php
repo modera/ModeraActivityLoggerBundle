@@ -18,7 +18,7 @@ class ModeraRoutingBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('modera.routing.routing_resources_provider')
+            new CompositeContributorsProviderCompilerPass('modera_routing.routing_resources_provider')
         );
     }
 }
