@@ -31,6 +31,7 @@ Ext.define('Modera.backend.module.toolscontribution.view.InstalledModulesList', 
                     '->',
                     {
                         itemId: 'showAvailableModules',
+                        iconCls: 'modera-backend-module-icon market24',
                         text: me.showAvailableModulesText,
                         scale: 'medium'
                     }

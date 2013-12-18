@@ -23,6 +23,22 @@
     }
 }
 
+.modera-backend-module-icon {
+
+    &.install24 {
+        background-image: url(../images/install_24x24.png);
+    }
+    &.update24 {
+        background-image: url(../images/update_22x22.png);
+    }
+    &.remove24 {
+        background-image: url(../images/remove_22x22.png);
+    }
+    &.market24 {
+        background-image: url(../images/market_24x24.png);
+    }
+}
+
 .modera-backend-module-details {
 
     .info {

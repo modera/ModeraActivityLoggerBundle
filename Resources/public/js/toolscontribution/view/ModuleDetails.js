@@ -93,12 +93,14 @@ Ext.define('Modera.backend.module.toolscontribution.view.ModuleDetails', {
                         items: [
                             {
                                 itemId: 'requireBtn',
+                                iconCls: 'modera-backend-module-icon ' + (me.config.dto.updateAvailable ? 'update24' : 'install24'),
                                 hidden: (me.config.dto.installed && !me.config.dto.updateAvailable),
                                 xtype: 'button',
                                 text: (me.config.dto.updateAvailable ? me.updateBtnText : me.installBtnText)
                             },
                             {
                                 itemId: 'removeBtn',
+                                iconCls: 'modera-backend-module-icon remove24',
                                 hidden: !me.config.dto.installed,
                                 xtype: 'button',
                                 text: me.removeBtnText
