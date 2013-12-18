@@ -18,6 +18,11 @@ interface SectionInterface
     /**
      * @return string
      */
+    public function getIconSrc();
+
+    /**
+     * @return string
+     */
     public function getIconClass();
 
     /**

@@ -7,7 +7,7 @@ Ext.define('Modera.backend.tools.store.Sections', {
     constructor: function() {
         this.config = {
             fields: [
-                'name', 'glyph', 'iconClass', 'description', 'section', { name: 'activationParams', type: 'object' }
+                'name', 'glyph', 'iconSrc', 'iconCls', 'description', 'section', { name: 'activationParams', type: 'object' }
             ],
             proxy: {
                 type: 'direct',

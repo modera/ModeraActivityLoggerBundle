@@ -10,8 +10,9 @@ namespace Modera\BackendToolsBundle\Section;
  */
 class Section implements SectionInterface
 {
-    private $iconClass;
     private $glyph;
+    private $iconSrc;
+    private $iconClass;
     private $name;
     private $description;
     private $meta;
@@ -27,12 +28,13 @@ class Section implements SectionInterface
      * @param array $sectionActivationParams
      * @param array $meta
      */
-    public function __construct($name, $section, $description = '', $glyph = '', $iconClass = '', array $sectionActivationParams = array(),array $meta = array())
+    public function __construct($name, $section, $description = '', $glyph = '', $iconSrc = '', $iconClass = '', array $sectionActivationParams = array(),array $meta = array())
     {
         $this->name = $name;
         $this->section = $section;
         $this->description = $description;
         $this->glyph = $glyph;
+        $this->iconSrc = $iconSrc;
         $this->iconClass = $iconClass;
         $this->sectionActivationParams = $sectionActivationParams;
         $this->meta = $meta;
@@ -52,6 +54,14 @@ class Section implements SectionInterface
     public function getGlyph()
     {
         return $this->glyph;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconSrc()
+    {
+        return $this->iconSrc;
     }
 
     /**

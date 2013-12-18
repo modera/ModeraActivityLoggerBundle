@@ -52,11 +52,15 @@ Ext.define('Modera.backend.tools.view.HostPanel', {
                             if (values.iconCls && values.iconCls.length) {
                                 iconCls = values.iconCls;
                             }
+                            var iconSrc = '';
+                            if (values.iconSrc && values.iconSrc.length) {
+                                iconSrc = values.iconSrc;
+                            }
                             var glyph = '';
                             if (values.glyph && values.glyph.length) {
                                 glyph = values.glyph;
                             }
-                            if (!iconCls && !glyph) {
+                            if (!iconCls && !glyph && !iconSrc) {
                                 glyph = 'xe807@mf-theme-header-icon';
                             }
 
@@ -70,6 +74,16 @@ Ext.define('Modera.backend.tools.view.HostPanel', {
                                     });
                                 }, 100, me, [glyph, nid]);
                                 return '<div class="glyph-el ' + iconCls + '" id="' + nid + '"></div>';
+                            } else if (iconSrc) {
+                                var nid = Ext.id();
+                                Ext.Function.defer(function(iconSrc, id) {
+                                    Ext.widget({
+                                        xtype: 'image',
+                                        src: iconSrc,
+                                        renderTo: id
+                                    });
+                                }, 100, me, [iconSrc, nid]);
+                                return '<div class="icon-el ' + iconCls + '" id="' + nid + '"></div>';
                             } else if (iconCls) {
                                 return '<div class="icon-el ' + iconCls + '"></div>';
                             } else {

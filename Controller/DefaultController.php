@@ -31,7 +31,8 @@ class DefaultController extends AbstractBaseController
             $result[] = array(
                 'name' => $section->getName(),
                 'glyph' => $section->getGlyph(),
-                'iconClass' => $section->getIconClass(),
+                'iconSrc' => $section->getIconSrc(),
+                'iconCls' => $section->getIconClass(),
                 'description' => $section->getDescription(),
                 'section' => $section->getSection(),
                 'activationParams' => $section->getSectionActivationParams()
