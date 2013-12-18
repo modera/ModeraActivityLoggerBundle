@@ -22,7 +22,7 @@ class ToolsSectionsProvider implements ContributorInterface
                 'Modules',
                 'tools.modules',
                 'Modules management.',
-                '',
+                '', '',
                 'modera-backend-module-tools-icon'
             )
         );
