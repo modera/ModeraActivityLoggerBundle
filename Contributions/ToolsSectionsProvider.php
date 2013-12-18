@@ -18,7 +18,13 @@ class ToolsSectionsProvider implements ContributorInterface
     public function __construct()
     {
         $this->items = array(
-            new Section('Modules', 'tools.modules')
+            new Section(
+                'Modules',
+                'tools.modules',
+                'Modules management.',
+                '',
+                'modera-backend-module-tools-icon'
+            )
         );
     }
 
