@@ -23,6 +23,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                 width: 960,
                 height: 480,
                 modal: true,
+                resizable: false,
                 header: false,
                 tbar: {
                     xtype: 'mfc-header',
@@ -65,6 +66,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
             width: 960,
             height: 480,
             modal: true,
+            resizable: false,
             header: false,
             tbar: {
                 xtype: 'mfc-header',

@@ -66,18 +66,44 @@ class DefaultController extends Controller
         }
 
         $result = array(
-            'id'                 => $latest->getName(),
-            'logo'               => $this->getDefaultLogo(),
-            'name'               => $latest->getName(),
-            'description'        => $latest->getDescription(),
-            'license'            => $latest->getLicense(),
-            'lastVersion'        => $lastVersion,
-            'currentVersion'     => $currentVersion,
-            'installed'          => $installed ? true : false,
-            'updateAvailable'    => $updateAvailable,
+            'id'              => $latest->getName(),
+            'logo'            => $this->getDefaultLogo(),
+            'name'            => $latest->getName(),
+            'description'     => $latest->getDescription(),
+            'license'         => $latest->getLicense(),
+            'lastVersion'     => $lastVersion,
+            'currentVersion'  => $currentVersion,
+            'installed'       => $installed ? true : false,
+            'updateAvailable' => $updateAvailable,
         );
 
         if ($extended) {
+            $extra = $latest->getExtra();
+            $extra = $extra['modera-module'];
+
+            $screenshots = array();
+            if (isset($extra['screenshots']) && is_array($extra['screenshots'])) {
+                foreach($extra['screenshots'] as $key => $screenshot) {
+                    if (!is_array($screenshot)) {
+                        $screenshot = array(
+                            'thumbnail' => $screenshot,
+                            'src'       => $screenshot,
+                        );
+                    }
+                    $screenshots[] = $screenshot;
+                }
+            }
+
+            $longDescription = '';
+            if (isset($extra['description'])) {
+                $longDescription = $extra['description'];
+                if (is_array($longDescription)) {
+                    $longDescription = implode("\n", $longDescription);
+                }
+                $longDescription = strip_tags($longDescription);
+                $longDescription = str_replace("\n", "<br />", $longDescription);
+            }
+
             $authors = array();
             foreach ($latest->getAuthors() as $author) {
                 $authors[] = $author->getName();
@@ -85,8 +111,10 @@ class DefaultController extends Controller
             $createdAt = new \DateTime($latest->getTime());
 
             $result += array(
-                'authors'   => count($authors) ? implode(", ", $authors) : null,
-                'createdAt' => $createdAt->format(\DateTime::RFC1123),
+                'authors'         => count($authors) ? implode(", ", $authors) : null,
+                'createdAt'       => $createdAt->format(\DateTime::RFC1123),
+                'longDescription' => $longDescription,
+                'screenshots'     => $screenshots,
             );
         }
 

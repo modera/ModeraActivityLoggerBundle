@@ -19,6 +19,8 @@ Ext.define('Modera.backend.module.toolscontribution.view.ModuleDetails', {
     installBtnText: 'Install the module',
     updateBtnText: 'Install update',
     removeBtnText: 'Uninstall',
+    overviewTabText: 'Overview',
+    screenshotsTabText: 'Screenshots',
 
     // override
     constructor: function(config) {
@@ -114,23 +116,97 @@ Ext.define('Modera.backend.module.toolscontribution.view.ModuleDetails', {
                 frame: true,
                 layout: 'fit',
                 xtype: 'tabpanel',
+                cls: 'rounded-top',
                 defaults: {
                     autoScroll: true
                 },
                 items: [
                     {
-                        title: 'Overview',
-                        bodyPadding: 20,
+                        title: me.overviewTabText,
+                        bodyPadding: 0,
                         items: [
                             {
                                 cls: 'description',
+                                bodyPadding: 20,
                                 html: me.config.dto.description
+                            },
+                            {
+                                xtype: 'container',
+                                hidden: (me.config.dto.screenshots.length ? false : true),
+                                items: {
+                                    itemId: 'thumbnails',
+                                    xtype: 'dataview',
+                                    multiSelect: false,
+                                    singleSelect: true,
+                                    autoScroll: false,
+                                    cls: 'thumbnails',
+                                    store: Ext.create('Ext.data.Store', {
+                                        autoDestroy: true,
+                                        idIndex: 0,
+                                        fields: [
+                                            'thumbnail', 'src'
+                                        ],
+                                        data: me.config.dto.screenshots.slice(0, 3)
+                                    }),
+                                    border: 0,
+                                    tpl: new Ext.XTemplate(
+                                        '<ul>',
+                                            '<tpl for=".">',
+                                                '<li>',
+                                                    '<span>',
+                                                        '<img src="{thumbnail}" />',
+                                                    '</span>',
+                                                '</li>',
+                                            '</tpl>',
+                                        '</ul>',
+                                        '<div class="more">',
+                                            '<div id="moreButton">...</div>',
+                                        '</div>'
+                                    ),
+                                    itemSelector: 'li'
+                                }
+                            },
+                            {
+                                cls: 'longDescription',
+                                bodyPadding: 20,
+                                html: me.config.dto.longDescription
                             }
                         ]
                     },
                     {
+                        itemId: 'screenshotsTab',
+                        hidden: (me.config.dto.screenshots.length ? false : true),
+                        title: me.screenshotsTabText,
+                        items: {
+                            itemId: 'screenshots',
+                            xtype: 'dataview',
+                            cls: 'screenshots',
+                            store: Ext.create('Ext.data.Store', {
+                                autoDestroy: true,
+                                idIndex: 0,
+                                fields: [
+                                    'src'
+                                ],
+                                data: me.config.dto.screenshots
+                            }),
+                            border: 0,
+                            tpl: new Ext.XTemplate(
+                                '<ul>',
+                                    '<tpl for=".">',
+                                        '<li>',
+                                            '<span>',
+                                                '<img src="{src}" />',
+                                            '</span>',
+                                        '</li>',
+                                    '</tpl>',
+                                '</ul>'
+                            ),
+                            itemSelector: 'li'
+                        }
+                    }/*,
+                    {
                         title: 'Update history'
-                    }
+                    }*/
                 ]
             }
         ];
@@ -166,5 +242,29 @@ Ext.define('Modera.backend.module.toolscontribution.view.ModuleDetails', {
         me.down('#removeBtn').on('click', function() {
             me.fireEvent('removemodule', me, me.config.dto);
         });
+
+        me.down('#thumbnails').on('selectionchange', function() {
+            var selection = this.getSelectionModel().getSelection();
+            if (selection.length > 0) {
+                me.activateScreenshotTab(selection[0].get('src'));
+            }
+        });
+
+        me.down('#thumbnails').on('containerclick', function(dataView, e) {
+            var target = e.getTarget();
+            if (target.id == 'moreButton') {
+                me.activateScreenshotTab();
+            }
+        });
+    },
+
+    // private
+    activateScreenshotTab: function(screenshot) {
+        var me = this;
+        var tabPanel = me.down('tabpanel');
+        tabPanel.setActiveTab('screenshotsTab');
+        if (screenshot) {
+            // TODO: scrolling
+        }
     }
 });
