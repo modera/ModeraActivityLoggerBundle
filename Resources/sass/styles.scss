@@ -97,15 +97,15 @@
 
             li {
                 height: 130px;
-                padding: 2px 10px 2px 2px;
-                margin-right: 0;
+                padding: 2px;
+                margin-right: 8px;
                 overflow: hidden;
                 float: left;
                 cursor: pointer;
 
                 span {
                     display: inline-block;
-                    height: 98%;
+                    height: 100%;
                 }
 
                 &:hover * {
