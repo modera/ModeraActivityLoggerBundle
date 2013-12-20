@@ -3,7 +3,6 @@
 namespace Modera\AdminGeneratorBundle\Generation\Generators;
 
 use Modera\AdminGeneratorBundle\Generation\GenerationResult;
-use Modera\AdminGeneratorBundle\Generation\Section;
 use Modera\AdminGeneratorBundle\Generation\ViewInterface;
 use Modera\AdminGeneratorBundle\Generation\GeneratorsManager;
 

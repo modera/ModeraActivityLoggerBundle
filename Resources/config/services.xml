@@ -18,5 +18,12 @@
                  factory-class="Modera\AdminGeneratorBundle\Generation\TwigFactory"
                  factory-method="create"
         />
+
+        <service id="modera_admin_generator.validation.entity_validator_service"
+                 class="Modera\AdminGeneratorBundle\Validation\EntityValidator">
+
+            <argument type="service" id="validator" />
+            <argument type="service" id="service_container" />
+        </service>
     </services>
 </container>

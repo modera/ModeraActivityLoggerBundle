@@ -2,6 +2,8 @@
 
 namespace Modera\AdminGeneratorBundle\Generation;
 
+use Modera\AdminGeneratorBundle\Generation\Generators\Section;
+
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation

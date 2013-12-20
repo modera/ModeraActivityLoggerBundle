@@ -1,6 +1,10 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Generation;
+namespace Modera\AdminGeneratorBundle\Generation\Generators;
+
+use Modera\AdminGeneratorBundle\Generation\GenerationResult;
+use Modera\AdminGeneratorBundle\Generation\GeneratorsManager;
+use Modera\AdminGeneratorBundle\Generation\ViewInterface;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -108,9 +112,13 @@ class Section
         return false;
     }
 
-    private function generateSectionClass()
+    /**
+     * @return array
+     */
+    public function getPreparedConfig()
     {
         $params = array(
+            'direct_action_class' => 'Actions.ModeraAdminGenerator_Data',
             'class_name' => $this->createClassName(),
             'runtime_views' => array()
         );
@@ -122,7 +130,7 @@ class Section
             );
         }
 
-        return new GenerationResult($this->twig->render('runtime/section.twig', $params), $this->createClassName());
+        return $params;
     }
 
     /**
@@ -132,7 +140,12 @@ class Section
     public function generate($className)
     {
         if ($this->createClassName() == $className) {
-            return $this->generateSectionClass();
+            $params = $this->getPreparedConfig();
+
+            return new GenerationResult(
+                $this->twig->render('runtime/section.twig', $params),
+                $this->createClassName()
+            );
         }
 
         $view = $this->getResponsibleView($className);

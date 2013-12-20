@@ -5,7 +5,6 @@ namespace Modera\AdminGeneratorBundle\Generation\Generators;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Modera\AdminGeneratorBundle\Generation\GenerationResult;
-use Modera\AdminGeneratorBundle\Generation\Section;
 use Modera\AdminGeneratorBundle\Generation\ViewInterface;
 
 /**

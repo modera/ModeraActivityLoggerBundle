@@ -2,7 +2,7 @@
 
 namespace Modera\AdminGeneratorBundle\Controller;
 
-use Modera\AdminGeneratorBundle\Generation\Section;
+use Modera\AdminGeneratorBundle\Generation\Generators\Section;
 use Modera\AdminGeneratorBundle\Generation\GeneratorsManager;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
