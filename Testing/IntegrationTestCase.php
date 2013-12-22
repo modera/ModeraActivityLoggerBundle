@@ -56,7 +56,7 @@ class IntegrationTestCase extends WebTestCase
             static::$em->getConnection()->beginTransaction();
         }
 
-        self::doSetUpBeforeClass();
+        static::doSetUpBeforeClass();
     }
 
     /**
@@ -76,7 +76,7 @@ class IntegrationTestCase extends WebTestCase
             static::rollbackTransaction();
         }
 
-        self::doTearDownAfterClass();
+        static::doTearDownAfterClass();
     }
 
     /**
