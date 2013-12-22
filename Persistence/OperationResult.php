@@ -28,6 +28,43 @@ class OperationResult
         );
     }
 
+    private function findEntriesByOperation($operationName)
+    {
+        $result = array();
+
+        foreach ($this->entries as $entry) {
+            if ($entry['operation'] == $operationName) {
+                $result[] = $entry;
+            }
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getCreatedEntities()
+    {
+        return $this->findEntriesByOperation(self::TYPE_ENTITY_CREATED);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getUpdateEntities()
+    {
+        return $this->findEntriesByOperation(self::TYPE_ENTITY_UPDATED);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getRemovedEntities()
+    {
+        return $this->findEntriesByOperation(self::TYPE_ENTITY_REMOVED);
+    }
+
     /**
      * @param ModelManagerInterface $modelMgr
      *
@@ -35,11 +72,7 @@ class OperationResult
      */
     public function toArray(ModelManagerInterface $modelMgr)
     {
-        $result = array(
-            'created_models' => array(),
-            'updated_models' => array(),
-            'removed_models' => array()
-        );
+        $result = array();
 
         $mapping = array(
             'entity_created' => 'created_models',
@@ -48,9 +81,20 @@ class OperationResult
         );
 
         foreach ($this->entries as $entry) {
-            $result[$mapping[$entry['operation']]][] = $modelMgr->generateModelIdFromEntityClass($entry['entity_class']);
+            $key = $mapping[$entry['operation']];
+
+            if (!isset($result[$key])) {
+                $result[$key] = array();
+            }
+
+            $result[$key][] = $modelMgr->generateModelIdFromEntityClass($entry['entity_class']);
         }
 
         return $result;
+    }
+
+    static public function clazz()
+    {
+        return get_called_class();
     }
 }

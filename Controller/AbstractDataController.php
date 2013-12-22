@@ -2,8 +2,7 @@
 
 namespace Modera\AdminGeneratorBundle\Controller;
 
-use Modera\AdminGeneratorBundle\Binding\DataBinderInterface;
-use Modera\AdminGeneratorBundle\Binding\DataBindingInterface;
+use Modera\AdminGeneratorBundle\DataMapping\DataMapperInterface;
 use Modera\AdminGeneratorBundle\EntityFactory\EntityFactoryInterface;
 use Modera\AdminGeneratorBundle\ExceptionHandling\ExceptionHandlerInterface;
 use Modera\AdminGeneratorBundle\Persistence\ModelManagerInterface;
@@ -13,19 +12,41 @@ use Modera\AdminGeneratorBundle\Validation\EntityValidator;
 use Modera\AdminGeneratorBundle\Validation\ValidationResult;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Neton\DirectBundle\Annotation\Remote;
-use Symfony\Bridge\Doctrine\DependencyInjection\Security\UserProvider\EntityFactory;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class DataController extends AbstractBaseController
+abstract class AbstractDataController extends AbstractBaseController
 {
+    /**
+     * Method that is meant to be overridden in subclasses.
+     *
+     * @return array
+     */
     public function getConfig()
     {
         return array(
-            'entity' => ''
+            'entity' => '',
+            'hydration' => array(
+                'groups' => array(
+                    'tags' => function() {
+
+                    },
+                    'comments' => new HydrationGroup(),
+                    'form' => array(
+
+                    ),
+                    'list' => array(
+
+                    )
+                ),
+                'gateways' => array(
+                    'list' => new HydrationGateway(array('list'), false),
+                    'form' => array('form', 'comments', 'tags')
+                )
+            )
         );
     }
 
@@ -38,11 +59,11 @@ class DataController extends AbstractBaseController
             'create_entity' => function(array $params, array $config, EntityFactoryInterface $defaultFactory, ContainerInterface $container) {
                 return $defaultFactory->create($params, $config);
             },
-            'bind_data_on_create' => function(array $params, $entity, DataBinderInterface $defaultBinder, ContainerInterface $container) {
-                return $defaultBinder->bind($params, $entity);
+            'map_data_on_create' => function(array $params, $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) {
+                $defaultMapper->mapData($params, $entity);
             },
-            'bind_data_on_update' => function(array $params, $entity, DataBinderInterface $defaultBinder, ContainerInterface $container) {
-                return $defaultBinder->bind($params, $entity);
+            'map_data_on_update' => function(array $params, $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) {
+                $defaultMapper->mapData($params, $entity);
             },
             'new_record_validator' => function(array $params, $mappedEntity, EntityValidator $defaultValidator, array $config, ContainerInterface $container) {
                 return $defaultValidator->validate($mappedEntity, $config);
@@ -62,26 +83,7 @@ class DataController extends AbstractBaseController
             // optional
             'ignore_standard_validator' => false,
             // optional
-            'entity_validation_method' => 'validate',
-            'hydration' => array(
-                'default_gateway' => 'list',
-                'data_gateways' => array(
-                    'list' => array(
-                        'security_role' => 'ROLE_FOO',
-                        'profiles' => array(
-                            'main' => function($entity) {
-                                return array(
-                                    'id' => $entity->getId()
-                                );
-                            }
-                        )
-                    )
-                )
-            )
-        );
-
-        $request = array(
-            '_gateway' => 'list'
+            'entity_validation_method' => 'validate'
         );
 
         $config = array_merge($defaultConfig, $this->getConfig());
@@ -117,9 +119,7 @@ class DataController extends AbstractBaseController
      */
     private function getPersistenceHandler()
     {
-        $config = $this->getPreparedConfig();
-
-        return $config['persistence_handler'];
+        return $this->get('modera_admin_generator.persistence.default_handler');
     }
 
     /**
@@ -127,9 +127,7 @@ class DataController extends AbstractBaseController
      */
     private function getModelManager()
     {
-        $config = $this->getPreparedConfig();
-
-        return $config['model_manager'];
+        return $this->container->get('modera_admin_generator.persistence.model_manager');
     }
 
     /**
@@ -137,15 +135,15 @@ class DataController extends AbstractBaseController
      */
     private function getEntityValidator()
     {
-        return $this->container->get('');
+        return $this->container->get('modera_admin_generator.validation.entity_validator_service');
     }
 
     /**
-     * @return DataBinderInterface
+     * @return \Modera\AdminGeneratorBundle\DataMapping\DataMapperInterface
      */
-    private function getDataBinder()
+    private function getDataMapper()
     {
-
+        return $this->container->get('modera_admin_generator.data_mapping.default_data_mapper');
     }
 
     /**
@@ -153,7 +151,7 @@ class DataController extends AbstractBaseController
      */
     private function getEntityFactory()
     {
-        return $this->container->get('');
+        return $this->container->get('modera_admin_generator.entity_factory.default_entity_factory');
     }
 
     /**
@@ -164,6 +162,26 @@ class DataController extends AbstractBaseController
         return $this->container->get('');
     }
 
+    private function checkAccess($operation)
+    {
+
+    }
+
+    private function createCreateActionSuccessfulResponse($entity, OperationResult $result)
+    {
+        return array(
+            'success' => true,
+            'result' => array(
+                'main' => array(
+                    'title' => 'Olo',
+                    'body' => 'Omnomnom about ololo'
+                ),
+                'comments' => array(),
+                'tags' => array()
+            )
+        );
+    }
+
     /**
      * @Remote
      */
@@ -172,11 +190,17 @@ class DataController extends AbstractBaseController
         $config = $this->getPreparedConfig();
 
         try {
+            $this->checkAccess('create');
+
+            if (!isset($params['record'])) {
+                throw new InvalidRequestException();
+            }
+
             $entity = $this->createEntity($params);
 
-            $dataBinder = $config['bind_data_on_create'];
-            if ($dataBinder) {
-                $dataBinder($params, $entity, $this->getDataBinder(), $this->container);
+            $dataMapper = $config['map_data_on_create'];
+            if ($dataMapper) {
+                $dataMapper($params['record'], $entity, $this->getDataMapper(), $this->container);
             }
 
             $validator = $config['new_record_validator'];
@@ -184,7 +208,7 @@ class DataController extends AbstractBaseController
                 /* @var ValidationResult $validationResult */
                 $validationResult = $validator($params, $entity, $this->getEntityValidator(), $config, $this->container);
                 if ($validationResult->hasErrors()) {
-                    return array($validationResult->toArray(), array(
+                    return array_merge($validationResult->toArray(), array(
                         'success' => false
                     ));
                 }
@@ -204,7 +228,7 @@ class DataController extends AbstractBaseController
         } catch (\Exception $e) {
             $exceptionHandler = $config['exception_handler'];
 
-            return $exceptionHandler($e, 'create', $this->container);
+            return $exceptionHandler($e, 'create', $this->getExceptionHandler(), $this->container);
         }
     }
 

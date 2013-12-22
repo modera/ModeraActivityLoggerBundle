@@ -25,9 +25,7 @@ class ValidationResultTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($arrayResult));
         $this->assertArrayHasKey('field_errors', $arrayResult);
 
-        $this->assertArrayHasKey('general_errors', $arrayResult);
-        $this->assertEquals(0, count($arrayResult['general_errors']));
-        $this->assertEquals(0, count($result->getGeneralErrors()));
+        $this->assertFalse(isset($arrayResult['general_errors']));
 
         $this->assertTrue(is_array($arrayResult['field_errors']));
         $this->assertEquals(1, count($arrayResult['field_errors']));

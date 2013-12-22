@@ -55,10 +55,16 @@ class ValidationResult
      */
     public function toArray()
     {
-        return array(
-            'field_errors' => $this->fieldErrors,
-            'general_errors' => $this->generalErrors
-        );
+        $result = array();
+
+        if (count($this->fieldErrors)) {
+            $result['field_errors'] = $this->fieldErrors;
+        }
+        if (count($this->generalErrors)) {
+            $result['general_errors'] = $this->generalErrors;
+        }
+
+        return $result;
     }
 
     /**
@@ -66,7 +72,9 @@ class ValidationResult
      */
     public function hasErrors()
     {
-        return count($this->toArray(), true) > 2;
+        $array = $this->toArray();
+
+        return isset($array['field_errors']) || isset($array['general_errors']);
     }
 
     static public function clazz()

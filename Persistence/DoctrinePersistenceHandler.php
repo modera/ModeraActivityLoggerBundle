@@ -34,7 +34,9 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
         $this->em->flush();
 
         $result = new OperationResult();
-        $result->reportEntity($entity, $this->resolveEntityId($entity), OperationResult::TYPE_ENTITY_CREATED);
+        $result->reportEntity(
+            get_class($entity), $this->resolveEntityId($entity), OperationResult::TYPE_ENTITY_CREATED
+        );
 
         return $result;
     }
@@ -46,7 +48,15 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
      */
     public function update($entity)
     {
+        $this->em->persist($entity);
+        $this->em->flush();
 
+        $result = new OperationResult();
+        $result->reportEntity(
+            get_class($entity), $this->resolveEntityId($entity), OperationResult::TYPE_ENTITY_UPDATED
+        );
+
+        return $result;
     }
 
     /**
@@ -57,5 +67,10 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     public function query(array $query)
     {
 
+    }
+
+    static public function clazz()
+    {
+        return get_called_class();
     }
 }

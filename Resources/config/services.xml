@@ -25,5 +25,26 @@
             <argument type="service" id="validator" />
             <argument type="service" id="service_container" />
         </service>
+
+        <service id="modera_admin_generator.entity_factory.default_entity_factory"
+                 class="Modera\AdminGeneratorBundle\EntityFactory\DefaultEntityFactory"
+        />
+
+        <service id="modera_admin_generator.data_mapping.default_data_mapper"
+                 class="Modera\AdminGeneratorBundle\DataMapping\DefaultDataMapper">
+
+            <argument type="service" id="sli.extjsintegration.entity_data_mapper" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="modera_admin_generator.persistence.default_handler"
+                 class="Modera\AdminGeneratorBundle\Persistence\DoctrinePersistenceHandler">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="modera_admin_generator.persistence.model_manager"
+                 class="Modera\AdminGeneratorBundle\Persistence\DefaultModelManager"
+        />
     </services>
 </container>
