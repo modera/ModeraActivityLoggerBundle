@@ -209,8 +209,6 @@ class HydrationServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testHydrateWhenHydrationProfileSpecifiedInShortManner()
     {
-        $this->markTestIncomplete();
-
         $result = $this->service->hydrate($this->article, $this->config, 'author');
 
         $this->assertTrue(is_array($result));

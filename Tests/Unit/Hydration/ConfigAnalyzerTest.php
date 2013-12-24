@@ -1,7 +1,8 @@
 <?php
 
 namespace Modera\ServerCrudBundle\Tests\Unit\Hydration;
-use Modera\ServerCrudBundle\Hydration\Config;
+
+use Modera\ServerCrudBundle\Hydration\ConfigAnalyzer;
 use Modera\ServerCrudBundle\Hydration\HydrationProfile;
 use Modera\ServerCrudBundle\Hydration\UnknownHydrationGroupException;
 use Modera\ServerCrudBundle\Hydration\UnknownHydrationProfileException;
@@ -9,9 +10,9 @@ use Modera\ServerCrudBundle\Hydration\UnknownHydrationProfileException;
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */ 
-class ConfigTest extends \PHPUnit_Framework_TestCase
+class ConfigAnalyzerTest extends \PHPUnit_Framework_TestCase
 {
-    /* @var Config */
+    /* @var ConfigAnalyzer */
     private $config;
     private $rawConfig;
 
@@ -34,13 +35,13 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
                 }
             ),
             'profiles' => array(
-                'list' => HydrationProfile::create(false)->useGroups(array( 'list')),
                 'form' => HydrationProfile::create()->useGroups(array('form', 'author')),
-                'author'
+                'mixed' => array('form', 'author', 'list'),
+                'list'
             )
         );
 
-        $this->config = new Config($this->rawConfig);
+        $this->config = new ConfigAnalyzer($this->rawConfig);
     }
 
     public function testGetProfile()
@@ -49,6 +50,31 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(HydrationProfile::clazz(), $result);
         $this->assertSame($this->rawConfig['profiles']['form'], $result);
+    }
+
+    public function testGetGroupProfileWithShortDeclaration()
+    {
+        /* @var HydrationProfile $result */
+        $result = $this->config->getProfileDefinition('mixed');
+
+        $this->assertInstanceOf(HydrationProfile::clazz(), $result);
+        $this->assertTrue($result->isGroupingNeeded());
+
+        $groups = $result->getGroups();
+
+        $this->assertTrue(in_array('form', $groups));
+        $this->assertTrue(in_array('author', $groups));
+        $this->assertTrue(in_array('list', $groups));
+    }
+
+    public function testGetGroupProfileWhenProfileNameMatchesGroup()
+    {
+        /* @var HydrationProfile $result */
+        $result = $this->config->getProfileDefinition('list');
+
+        $this->assertInstanceOf(HydrationProfile::clazz(), $result);
+        $this->assertFalse($result->isGroupingNeeded());
+        $this->assertSame(array('list'), $result->getGroups());
     }
 
     public function testGetProfileWhenItDoesntExist()
