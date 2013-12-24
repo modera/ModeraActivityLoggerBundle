@@ -74,7 +74,24 @@ class DoctrinePersistenceHandlerTest extends IntegrationTestCase
 
     public function testUpdate()
     {
-        $this->markTestIncomplete();
+        $user = new DummyUser();
+        $user->firstname = 'Vassily';
+        $user->lastname = 'Pupkin';
+
+        self::$em->persist($user);
+        self::$em->flush();
+
+        $user->lastname = 'Blah';
+
+        $result = $this->getHandler()->update($user);
+
+        $updatedEntities = $result->getUpdateEntities();
+        $this->assertEquals(1, count($updatedEntities));
+        $this->assertArrayHasKey(0, $updatedEntities);
+        $this->assertArrayHasKey('entity_class', $updatedEntities[0]);
+        $this->assertEquals(DummyUser::clazz(), $updatedEntities[0]['entity_class']);
+        $this->assertArrayHasKey('id', $updatedEntities[0]);
+        $this->assertEquals($user->id, $updatedEntities[0]['id']);
     }
 
     private function loadSomeData()
@@ -102,7 +119,7 @@ class DoctrinePersistenceHandlerTest extends IntegrationTestCase
 
         $this->assertTrue(is_array($result));
         $this->assertEquals(5, count($result));
-        $this->assertEquals(7, $result[0]->id);
+        $this->assertEquals(8, $result[0]->id);
     }
 
     public function testGetCount()
