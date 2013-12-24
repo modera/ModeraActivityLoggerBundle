@@ -12,6 +12,11 @@ class HydrationProfile implements HydrationProfileInterface
     private $groups = array();
     private $extensionPoint;
 
+    static public function clazz()
+    {
+        return get_called_class();
+    }
+
     /**
      * @return string[]
      */

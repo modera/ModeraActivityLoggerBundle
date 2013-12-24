@@ -81,14 +81,16 @@ class HydrationService
      */
     public function hydrate($object, array $config, $profile, $groups = null)
     {
-        $profile = $config['profiles'][$profile];
-        /* @var HydrationProfile $profile */
+        $config = new Config($config);
 
-        if (null === $groups) {
+        /* @var HydrationProfile $profile */
+        $profile = $config->getProfileDefinition($profile);
+
+        if (null === $groups) { // going to hydration all groups if none are explicitly specified
             $result = array();
 
             foreach ($profile->getGroups() as $groupName) {
-                $hydrator = $config['groups'][$groupName];
+                $hydrator = $config->getGroupDefinition($groupName);
 
                 $hydratorResult = $this->invokeHydrator($hydrator, $object);
 
@@ -101,14 +103,14 @@ class HydrationService
 
             // if there's only one group given then no grouping is going to be used
             if (count($groupsToUse) == 1) {
-                $hydrator = $config['groups'][$groupsToUse[0]];
+                $hydrator = $config->getGroupDefinition($groupsToUse[0]);
 
                 return $this->invokeHydrator($hydrator, $object);
             } else {
                 $result = array();
 
                 foreach ($groupsToUse as $groupName) {
-                    $hydrator = $config['groups'][$groupName];
+                    $hydrator = $config->getGroupDefinition($groupName);
 
                     $hydratorResult = $this->invokeHydrator($hydrator, $object);
 

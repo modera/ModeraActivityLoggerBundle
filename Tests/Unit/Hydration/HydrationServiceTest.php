@@ -4,6 +4,7 @@ namespace Modera\ServerCrudBundle\Tests\Unit\Hydration;
 
 use Modera\ServerCrudBundle\Hydration\HydrationProfile;
 use Modera\ServerCrudBundle\Hydration\HydrationService;
+use Modera\ServerCrudBundle\Hydration\UnknownHydrationProfileException;
 
 class Author
 {
@@ -94,7 +95,8 @@ class HydrationServiceTest extends \PHPUnit_Framework_TestCase
             ),
             'profiles' => array(
                 'list' => HydrationProfile::create(false)->useGroups(array( 'list')),
-                'form' => HydrationProfile::create()->useGroups(array('form', 'comments', 'author'))
+                'form' => HydrationProfile::create()->useGroups(array('form', 'comments', 'author')),
+                'author'
             )
         );
 
@@ -190,5 +192,29 @@ class HydrationServiceTest extends \PHPUnit_Framework_TestCase
     public function testHydrateWithNoResultGroupingAllowedButGroupSpecified()
     {
         $this->markTestIncomplete();
+    }
+
+    public function testWhenUnknownHydrationProfileIsSpecified()
+    {
+        $thrownException = null;
+        try {
+            $this->service->hydrate($this->article, $this->config, 'blahblah');
+        } catch (UnknownHydrationProfileException $e) {
+            $thrownException = $e;
+        }
+
+        $this->assertNotNull($thrownException);
+        $this->assertEquals('blahblah', $thrownException->getProfileName());
+    }
+
+    public function testHydrateWhenHydrationProfileSpecifiedInShortManner()
+    {
+        return;
+
+        $result = $this->service->hydrate($this->article, $this->config, 'author');
+
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('firstname', $result);
+        $this->assertArrayHasKey('lastname', $result);
     }
 }
