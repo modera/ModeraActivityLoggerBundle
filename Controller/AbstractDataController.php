@@ -5,6 +5,7 @@ namespace Modera\AdminGeneratorBundle\Controller;
 use Modera\AdminGeneratorBundle\DataMapping\DataMapperInterface;
 use Modera\AdminGeneratorBundle\EntityFactory\EntityFactoryInterface;
 use Modera\AdminGeneratorBundle\ExceptionHandling\ExceptionHandlerInterface;
+use Modera\AdminGeneratorBundle\Exceptions\InvalidRequestException;
 use Modera\AdminGeneratorBundle\Persistence\ModelManagerInterface;
 use Modera\AdminGeneratorBundle\Persistence\OperationResult;
 use Modera\AdminGeneratorBundle\Persistence\PersistenceHandlerInterface;
@@ -193,7 +194,11 @@ abstract class AbstractDataController extends AbstractBaseController
             $this->checkAccess('create');
 
             if (!isset($params['record'])) {
-                throw new InvalidRequestException();
+                $e = new InvalidRequestException("'/record' is not provided");
+                $e->setParams($params);
+                $e->setPath('/record');
+
+                throw $e;
             }
 
             $entity = $this->createEntity($params);
