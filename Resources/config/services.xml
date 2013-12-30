@@ -41,6 +41,7 @@
                  class="Modera\AdminGeneratorBundle\Persistence\DoctrinePersistenceHandler">
 
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sli.extjsintegration.extjs_query_builder" />
         </service>
 
         <service id="modera_admin_generator.persistence.model_manager"

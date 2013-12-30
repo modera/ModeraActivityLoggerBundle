@@ -3,6 +3,7 @@
 namespace Modera\AdminGeneratorBundle\Persistence;
 
 use Doctrine\ORM\EntityManager;
+use Sli\ExtJsIntegrationBundle\QueryBuilder\ExtjsQueryBuilder;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -11,10 +12,12 @@ use Doctrine\ORM\EntityManager;
 class DoctrinePersistenceHandler implements PersistenceHandlerInterface
 {
     private $em;
+    private $queryBuilder;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, ExtjsQueryBuilder $queryBuilder)
     {
         $this->em = $em;
+        $this->queryBuilder = $queryBuilder;
     }
 
     private function resolveEntityId($entity)
@@ -60,13 +63,39 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @param array $query
-     *
-     * @return object[]
+     * @inheritDoc
      */
-    public function query(array $query)
+    public function query($entityClass, array $query)
     {
+        return $this->queryBuilder->buildQuery($entityClass, $query)->getResult();
+    }
 
+    /**
+     * @inheritDoc
+     */
+    public function getCount($entityClass, array $query)
+    {
+        $qb = $this->queryBuilder->buildQueryBuilder($entityClass, $query);
+
+        return $this->queryBuilder->buildCountQueryBuilder($qb)->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function remove($entityClass, array $params)
+    {
+        $result = new OperationResult();
+
+        foreach ($this->queryBuilder->buildQuery($entityClass, $params)->getResult() as $entity) {
+            $this->em->remove($entity);
+
+            $result->reportEntity($entityClass, $this->resolveEntityId($entity), OperationResult::TYPE_ENTITY_REMOVED);
+        }
+
+        $this->em->flush();
+
+        return $result;
     }
 
     static public function clazz()

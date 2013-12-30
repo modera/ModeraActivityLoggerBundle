@@ -22,5 +22,27 @@ interface PersistenceHandlerInterface
      */
     public function update($entity);
 
-    public function query(array $query);
+    /**
+     * @param string $entityClass
+     * @param array  $params
+     *
+     * @return object[]
+     */
+    public function query($entityClass, array $params);
+
+    /**
+     * @param string $entityClass
+     * @param array  $params
+     *
+     * @return OperationResult
+     */
+    public function remove($entityClass, array $params);
+
+    /**
+     * @param string $entityClass
+     * @param array  $params
+     *
+     * @return integer
+     */
+    public function getCount($entityClass, array $params);
 }

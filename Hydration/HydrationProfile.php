@@ -9,11 +9,11 @@ namespace Modera\AdminGeneratorBundle\Hydration;
 class HydrationProfile implements HydrationProfileInterface
 {
     private $isGroupingNeeded;
-    private $groups;
+    private $groups = array();
     private $extensionPoint;
 
     /**
-     * @inheritDoc
+     * @return string[]
      */
     public function getGroups()
     {

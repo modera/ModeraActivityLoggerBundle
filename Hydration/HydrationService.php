@@ -54,6 +54,23 @@ class HydrationService
         return 'Invalid hydrator definition';
     }
 
+    private function mergeHydrationResult(array $currentResult, array $hydratorResult, HydrationProfile $profile, $groupName)
+    {
+        if ($profile->isGroupingNeeded()) {
+            $currentResult[$groupName] = $hydratorResult;
+        } else {
+            if (is_callable($hydratorResult)) {
+                $currentResult = $hydratorResult($currentResult);
+            } else if (is_array($hydratorResult)) {
+                $currentResult = array_merge($currentResult, $hydratorResult);
+            } else {
+                throw new \RuntimeException();
+            }
+        }
+
+        return $currentResult;
+    }
+
     /**
      * @param object          $object
      * @param array           $config
@@ -73,7 +90,9 @@ class HydrationService
             foreach ($profile->getGroups() as $groupName) {
                 $hydrator = $config['groups'][$groupName];
 
-                $result[$groupName] = $this->invokeHydrator($hydrator, $object);
+                $hydratorResult = $this->invokeHydrator($hydrator, $object);
+
+                $result = $this->mergeHydrationResult($result, $hydratorResult, $profile, $groupName);
             }
 
             return $result;
@@ -91,7 +110,9 @@ class HydrationService
                 foreach ($groupsToUse as $groupName) {
                     $hydrator = $config['groups'][$groupName];
 
-                    $result[$groupName] = $this->invokeHydrator($hydrator, $object);
+                    $hydratorResult = $this->invokeHydrator($hydrator, $object);
+
+                    $result = $this->mergeHydrationResult($result, $hydratorResult, $profile, $groupName);
                 }
 
                 return $result;

@@ -6,7 +6,7 @@ namespace Modera\AdminGeneratorBundle\Exceptions;
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class InvalidRequestException extends \RuntimeException
+class BadRequestException extends \RuntimeException
 {
     private $params = array();
     private $path;

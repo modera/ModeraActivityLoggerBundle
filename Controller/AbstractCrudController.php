@@ -5,7 +5,7 @@ namespace Modera\AdminGeneratorBundle\Controller;
 use Modera\AdminGeneratorBundle\DataMapping\DataMapperInterface;
 use Modera\AdminGeneratorBundle\EntityFactory\EntityFactoryInterface;
 use Modera\AdminGeneratorBundle\ExceptionHandling\ExceptionHandlerInterface;
-use Modera\AdminGeneratorBundle\Exceptions\InvalidRequestException;
+use Modera\AdminGeneratorBundle\Exceptions\BadRequestException;
 use Modera\AdminGeneratorBundle\Hydration\HydrationService;
 use Modera\AdminGeneratorBundle\Persistence\ModelManagerInterface;
 use Modera\AdminGeneratorBundle\Persistence\OperationResult;
@@ -20,7 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-abstract class AbstractDataController extends AbstractBaseController
+abstract class AbstractCrudController extends AbstractBaseController
 {
     /**
      * @return array
@@ -165,7 +165,7 @@ abstract class AbstractDataController extends AbstractBaseController
     private function hydrate($entity, array $params)
     {
         if (!isset($params['hydration']['profile'])) {
-            $e = new InvalidRequestException('Hydration profile is not specified.');
+            $e = new BadRequestException('Hydration profile is not specified.');
             $e->setPath('/hydration/profile');
             $e->setParams($params);
 
@@ -181,6 +181,24 @@ abstract class AbstractDataController extends AbstractBaseController
         return $this->getHydrator()->hydrate($entity, $hydrationConfig, $profile, $groups);
     }
 
+    private function validateEntity(array $params, $entity)
+    {
+        $config = $this->getPreparedConfig();
+
+        $validator = $config['new_record_validator'];
+        if ($validator) {
+            /* @var ValidationResult $validationResult */
+            $validationResult = $validator($params, $entity, $this->getEntityValidator(), $config, $this->container);
+            if ($validationResult->hasErrors()) {
+                return array_merge($validationResult->toArray(), array(
+                    'success' => false
+                ));
+            }
+        }
+
+        return true;
+    }
+
     /**
      * @Remote
      */
@@ -192,7 +210,7 @@ abstract class AbstractDataController extends AbstractBaseController
             $this->checkAccess('create');
 
             if (!isset($params['record'])) {
-                $e = new InvalidRequestException("'/record' is not provided");
+                $e = new BadRequestException("'/record' is not provided");
                 $e->setParams($params);
                 $e->setPath('/record');
 
@@ -206,15 +224,8 @@ abstract class AbstractDataController extends AbstractBaseController
                 $dataMapper($params['record'], $entity, $this->getDataMapper(), $this->container);
             }
 
-            $validator = $config['new_record_validator'];
-            if ($validator) {
-                /* @var ValidationResult $validationResult */
-                $validationResult = $validator($params, $entity, $this->getEntityValidator(), $config, $this->container);
-                if ($validationResult->hasErrors()) {
-                    return array_merge($validationResult->toArray(), array(
-                        'success' => false
-                    ));
-                }
+            if (true !== $validationResult = $this->validateEntity($params, $entity)) {
+                return $validationResult;
             }
 
             $saveHandler = $config['save_entity_handler'];
@@ -244,6 +255,42 @@ abstract class AbstractDataController extends AbstractBaseController
         }
     }
 
+    private function validateResultHasOneEntity(array $entities, array $params)
+    {
+        if (count($entities) > 1) {
+            $e = new BadRequestException(sprintf(
+                'Query must return exactly one result, but %d were returned', count($entities)
+            ));
+            $e->setPath('/filter');
+            $e->setParams($params);
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @Remote
+     */
+    public function getAction(array $params)
+    {
+        $config = $this->getPreparedConfig();
+
+        try {
+            $entities = $this->getPersistenceHandler()->query($config['entity'], $params);
+
+            $this->validateResultHasOneEntity($entities, $params);
+
+            $hydratedEntity = $this->hydrate($entities[0], $params);
+
+            return array(
+                'success' => true,
+                'result' => $hydratedEntity
+            );
+        } catch (\Exception $e) {
+            throw $e;
+        }
+    }
+
     /**
      * @Remote
      *
@@ -251,9 +298,24 @@ abstract class AbstractDataController extends AbstractBaseController
      */
     public function listAction(array $params)
     {
-        return array(
-            $this->getRecord()
-        );
+        $config = $this->getPreparedConfig();
+
+        try {
+            $total = $this->getPersistenceHandler()->getCount($config['entity'], $params);
+
+            $hydratedItems = array();
+            foreach ($this->getPersistenceHandler()->query($config['entity'], $params) as $entity) {
+                $hydratedItems[] = $this->hydrate($entity, $params);
+            }
+
+            return array(
+                'success' => true,
+                'items' => $hydratedItems,
+                'total' => $total
+            );
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -263,10 +325,18 @@ abstract class AbstractDataController extends AbstractBaseController
      */
     public function removeAction(array $params)
     {
-        return array(
-            'records_removed' => array('customer'),
-            'success' => true
-        );
+        $config = $this->getPreparedConfig();
+
+        try {
+            $operationResult = $this->getPersistenceHandler()->remove($config['entity'], $params);
+
+            return array_merge(
+                array('success' => true),
+                $operationResult->toArray($this->getModelManager())
+            );
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 
     /**
@@ -284,22 +354,22 @@ abstract class AbstractDataController extends AbstractBaseController
      */
     public function updateAction(array $params)
     {
-        return array(
-            'success' => true,
-            'updated_models' => array(
-                'modera.ecommerce.customer'
-            )
-        );
-    }
+        $config = $this->getPreparedConfig();
 
-    /**
-     * @Remote
-     */
-    public function getAction(array $params)
-    {
-        return array(
-            'success' => true,
-            'record' => $this->getRecord()
-        );
+        try {
+            $entities = $this->getPersistenceHandler()->query($config['entity'], $params);
+
+            $this->validateResultHasOneEntity($entities, $params);
+
+            $entity = $entities[0];
+
+            $dataMapper = $config['map_data_on_update'];
+            $dataMapper($params['record'], $entity, $this->getDataMapper(), $this->container);
+
+
+
+        } catch (\Exception $e) {
+            throw $e;
+        }
     }
 }

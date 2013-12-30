@@ -85,12 +85,15 @@ class HydrationServiceTest extends \PHPUnit_Framework_TestCase
                     'firstname' => 'author.firstname',
                     'lastname' => 'author.lastname'
                 ),
-                'list' => array(
-
-                )
+                'list' => function(Article $e) {
+                    return array(
+                        'title' => substr($e->title, 0, 10),
+                        'body' => substr($e->body, 0, 10)
+                    );
+                }
             ),
             'profiles' => array(
-                'list' => new HydrationProfile(array('list'), false),
+                'list' => HydrationProfile::create(false)->useGroups(array( 'list')),
                 'form' => HydrationProfile::create()->useGroups(array('form', 'comments', 'author'))
             )
         );
@@ -170,5 +173,22 @@ class HydrationServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey('author', $result);
         $this->assertValidAuthorResult($result);
+    }
+
+    public function testHydrateWithNoResultGroupingAllowed()
+    {
+        $result = $this->service->hydrate($this->article, $this->config, 'list');
+
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(2, count($result));
+        $this->assertArrayHasKey('title', $result);
+        $this->assertEquals($this->article->title, $result['title']);
+        $this->assertArrayHasKey('body', $result);
+        $this->assertEquals($this->article->body, $result['body']);
+    }
+
+    public function testHydrateWithNoResultGroupingAllowedButGroupSpecified()
+    {
+        $this->markTestIncomplete();
     }
 }

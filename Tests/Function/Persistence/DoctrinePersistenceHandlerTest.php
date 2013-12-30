@@ -71,4 +71,73 @@ class DoctrinePersistenceHandlerTest extends IntegrationTestCase
         $this->assertSame($user->firstname, $fetchedUser->firstname);
         $this->assertSame($user->lastname, $fetchedUser->lastname);
     }
+
+    public function testUpdate()
+    {
+        $this->markTestIncomplete();
+    }
+
+    private function loadSomeData()
+    {
+        for ($i=0; $i<10; $i++) {
+            $user = new DummyUser();
+            $user->firstname = 'Vassily ' . $i;
+            $user->lastname = 'Pupkin ' . $i;
+
+            self::$em->persist($user);
+        }
+        self::$em->flush();
+    }
+
+    public function testQuery()
+    {
+        $this->loadSomeData();
+
+        /* @var DummyUser[] $result */
+        $result = $this->getHandler()->query(DummyUser::clazz(), array(
+            'limit' => 5,
+            'page' => 2,
+            'start' => 0
+        ));
+
+        $this->assertTrue(is_array($result));
+        $this->assertEquals(5, count($result));
+        $this->assertEquals(7, $result[0]->id);
+    }
+
+    public function testGetCount()
+    {
+        $query = array(
+            'limit' => 5,
+            'page' => 2,
+            'start' => 0
+        );
+
+        $this->assertEquals(0, $this->getHandler()->getCount(DummyUser::clazz(), $query));
+
+        $this->loadSomeData();
+
+        $this->assertEquals(10, $this->getHandler()->getCount(DummyUser::clazz(), $query));
+    }
+
+    public function testRemove()
+    {
+        $this->loadSomeData();
+
+        $result = $this->getHandler()->remove(DummyUser::clazz(), array(
+            'filter' => array(
+                array(
+                    'property' => 'firstname',
+                    'value' => 'like:Vas%'
+                )
+            )
+        ));
+
+        $this->assertInstanceOf(OperationResult::clazz(), $result);
+        $this->assertEquals(10, count($result->getRemovedEntities()));
+
+        foreach ($result->getRemovedEntities() as $entry) {
+            $this->assertNull(self::$em->getRepository($entry['entity_class'])->find($entry['id']));
+        }
+    }
 }

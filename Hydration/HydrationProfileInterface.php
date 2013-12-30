@@ -9,11 +9,6 @@ namespace Modera\AdminGeneratorBundle\Hydration;
 interface HydrationProfileInterface
 {
     /**
-     * @return boolean
-     */
-    public function isGroupingNeeded();
-
-    /**
      * @return string[]
      */
     public function getGroups();

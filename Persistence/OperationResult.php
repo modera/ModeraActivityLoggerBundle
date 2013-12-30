@@ -34,7 +34,10 @@ class OperationResult
 
         foreach ($this->entries as $entry) {
             if ($entry['operation'] == $operationName) {
-                $result[] = $entry;
+                $result[] = array(
+                    'entity_class' => $entry['entity_class'],
+                    'id' => $entry['id']
+                );
             }
         }
 
@@ -87,7 +90,13 @@ class OperationResult
                 $result[$key] = array();
             }
 
-            $result[$key][] = $modelMgr->generateModelIdFromEntityClass($entry['entity_class']);
+            $modelName = $modelMgr->generateModelIdFromEntityClass($entry['entity_class']);
+
+            if (!isset($result[$key][$modelName])) {
+                $result[$key][$modelName] = array();
+            }
+
+            $result[$key][$modelName][] = $entry['id'];
         }
 
         return $result;
