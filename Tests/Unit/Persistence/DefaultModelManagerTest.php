@@ -34,12 +34,12 @@ class DefaultModelManagerTest extends \PHPUnit_Framework_TestCase
     public function testGenerateEntityClassFromModelId()
     {
         $this->assertEquals(
-            'Modera\AdminGenerator\Entity\Foo',
+            'Modera\AdminGeneratorBundle\Entity\Foo',
             $this->mgr->generateEntityClassFromModelId('modera.admin_generator.foo')
         );
 
         $this->assertEquals(
-            'Modera\AdminGenerator\Entity\Sub\Bar',
+            'Modera\AdminGeneratorBundle\Entity\Sub\Bar',
             $this->mgr->generateEntityClassFromModelId('modera.admin_generator.sub.bar')
         );
     }

@@ -47,12 +47,23 @@ class DefaultModelManager implements ModelManagerInterface
      */
     public function generateEntityClassFromModelId($modelId)
     {
-        // TODO
-
         $result = array();
 
-        foreach (explode('.', $modelId) as $segment) {
+        // modera.admin_generator.foo => Modera\AdminGenerator\Entity\Foo
+        foreach (explode('.', $modelId) as $i=>$segment) {
+            if (2 == $i) {
+                $result[] = 'Entity';
+            }
 
+            $explodedSegment = explode('_', $segment);
+            $explodedSegment = array_map(function($v) { return ucfirst($v); }, $explodedSegment);
+
+            $segment = implode('', $explodedSegment);
+            if (1 == $i) {
+                $segment .= 'Bundle';
+            }
+
+            $result[] = $segment;
         }
 
         return implode('\\', $result);

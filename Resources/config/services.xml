@@ -46,5 +46,11 @@
         <service id="modera_admin_generator.persistence.model_manager"
                  class="Modera\AdminGeneratorBundle\Persistence\DefaultModelManager"
         />
+
+        <service id="modera_admin_generator.hydration.hydration_service"
+                 class="Modera\AdminGeneratorBundle\Hydration\HydrationService">
+
+            <argument type="service" id="service_container" />
+        </service>
     </services>
 </container>

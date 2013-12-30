@@ -6,6 +6,7 @@ use Modera\AdminGeneratorBundle\DataMapping\DataMapperInterface;
 use Modera\AdminGeneratorBundle\EntityFactory\EntityFactoryInterface;
 use Modera\AdminGeneratorBundle\ExceptionHandling\ExceptionHandlerInterface;
 use Modera\AdminGeneratorBundle\Exceptions\InvalidRequestException;
+use Modera\AdminGeneratorBundle\Hydration\HydrationService;
 use Modera\AdminGeneratorBundle\Persistence\ModelManagerInterface;
 use Modera\AdminGeneratorBundle\Persistence\OperationResult;
 use Modera\AdminGeneratorBundle\Persistence\PersistenceHandlerInterface;
@@ -22,34 +23,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 abstract class AbstractDataController extends AbstractBaseController
 {
     /**
-     * Method that is meant to be overridden in subclasses.
-     *
      * @return array
      */
-    public function getConfig()
-    {
-        return array(
-            'entity' => '',
-            'hydration' => array(
-                'groups' => array(
-                    'tags' => function() {
-
-                    },
-                    'comments' => new HydrationGroup(),
-                    'form' => array(
-
-                    ),
-                    'list' => array(
-
-                    )
-                ),
-                'gateways' => array(
-                    'list' => new HydrationGateway(array('list'), false),
-                    'form' => array('form', 'comments', 'tags')
-                )
-            )
-        );
-    }
+    abstract public function getConfig();
 
     /**
      * @return array
@@ -91,6 +67,9 @@ abstract class AbstractDataController extends AbstractBaseController
 
         if (!isset($config['entity'])) {
             throw new \RuntimeException("'entity' configuration property is not defined.");
+        }
+        if (!isset($config['hydration'])) {
+            throw new \RuntimeException("'hydration' configuration property is not defined.");
         }
 
         return $config;
@@ -168,19 +147,38 @@ abstract class AbstractDataController extends AbstractBaseController
 
     }
 
-    private function createCreateActionSuccessfulResponse($entity, OperationResult $result)
+    /**
+     * @return HydrationService
+     */
+    private function getHydrator()
     {
-        return array(
-            'success' => true,
-            'result' => array(
-                'main' => array(
-                    'title' => 'Olo',
-                    'body' => 'Omnomnom about ololo'
-                ),
-                'comments' => array(),
-                'tags' => array()
-            )
-        );
+        return $this->get('modera_admin_generator.hydration.hydration_service');
+    }
+
+    /**
+     * @param object $entity
+     * @param array  $params
+     * @param string $defaultProfile
+     *
+     * @return array
+     */
+    private function hydrate($entity, array $params)
+    {
+        if (!isset($params['hydration']['profile'])) {
+            $e = new InvalidRequestException('Hydration profile is not specified.');
+            $e->setPath('/hydration/profile');
+            $e->setParams($params);
+
+            throw $e;
+        }
+
+        $profile = $params['hydration']['profile'];
+        $groups = isset($params['hydration']['group']) ? $params['hydration']['group'] : null;
+
+        $config = $this->getPreparedConfig();
+        $hydrationConfig = $config['hydration'];
+
+        return $this->getHydrator()->hydrate($entity, $hydrationConfig, $profile, $groups);
     }
 
     /**
@@ -227,10 +225,19 @@ abstract class AbstractDataController extends AbstractBaseController
             $response = array(
                 'success' => true
             );
+
             $response = array_merge($response, $operationResult->toArray($this->getModelManager()));
+
+            if (isset($params['hydration'])) {
+                $response = array_merge(
+                    $response, array('result' => $this->hydrate($entity, $params))
+                );
+            }
 
             return $response;
         } catch (\Exception $e) {
+            throw $e;
+
             $exceptionHandler = $config['exception_handler'];
 
             return $exceptionHandler($e, 'create', $this->getExceptionHandler(), $this->container);

@@ -3,6 +3,7 @@
 namespace Modera\AdminGeneratorBundle\Tests\Functional\Controller;
 
 use Modera\AdminGeneratorBundle\Controller\AbstractDataController;
+use Modera\AdminGeneratorBundle\Hydration\HydrationProfile;
 use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Doctrine\ORM\Mapping as Orm;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -60,7 +61,17 @@ class DataController extends AbstractDataController
     public function getConfig()
     {
         return array(
-            'entity' => DummyArticle::clazz()
+            'entity' => DummyArticle::clazz(),
+            'hydration' => array(
+                'groups' => array(
+                    'form' => array(
+                        'id', 'title', 'body'
+                    )
+                ),
+                'profiles' => array(
+                    'new_record' => HydrationProfile::create()->useGroups(array('form'))
+                )
+            )
         );
     }
 }
@@ -121,8 +132,7 @@ class AbstractDataControllerTest extends IntegrationTestCase
 
         $result = $this->controller->createAction(array(
             'hydration' => array(
-                'profile' => 'form',
-                'groups' => array('comments')
+                'profile' => 'new_record'
             ),
             'record' => array(
                 'title' => 'Some title',
@@ -131,12 +141,32 @@ class AbstractDataControllerTest extends IntegrationTestCase
         ));
 
         $this->assertTrue(is_array($result));
+
         $this->assertArrayHasKey('success', $result);
         $this->assertTrue($result['success']);
+
         $this->assertArrayHasKey('created_models', $result);
         $this->assertTrue(is_array($result['created_models']));
         $this->assertEquals(1, count($result['created_models']));
         $this->assertFalse(isset($result['updated_models']));
         $this->assertFalse(isset($result['removed_models']));
+
+        $this->assertArrayHasKey('result', $result);
+        $this->assertTrue(is_array($result['result']));
+        $this->assertArrayHasKey('form', $result['result']);
+        $this->assertTrue(is_array($result['result']['form']));
+        $this->assertArrayHasKey('id', $result['result']['form']);
+        $form = $result['result']['form'];
+        $this->assertNotNull($form['id']);
+        $this->assertArrayHasKey('title', $form);
+        $this->assertEquals('Some title', $form['title']);
+        $this->assertArrayHasKey('body', $form);
+        $this->assertEquals('Some text goes here', $form['body']);
+
+        /* @var DummyArticle $article */
+        $article = self::$em->getRepository(DummyArticle::clazz())->find($form['id']);
+        $this->assertInstanceOf(DummyArticle::clazz(), $article);
+        $this->assertEquals('Some title', $article->title);
+        $this->assertEquals('Some text goes here', $article->body);
     }
 }
