@@ -281,7 +281,7 @@ class AbstractCrudControllerTest extends IntegrationTestCase
         $this->assertNull(self::$em->getRepository(DummyArticle::clazz())->find($ids[0]));
         $this->assertNull(self::$em->getRepository(DummyArticle::clazz())->find($ids[1]));
     }
-    
+
     public function testGetAction()
     {
         $articles = $this->loadDummyData();
@@ -309,5 +309,74 @@ class AbstractCrudControllerTest extends IntegrationTestCase
         $this->assertEquals($articles[0]->getId(), $form['id']);
         $this->assertArrayHasKey('title', $form);
         $this->assertArrayHasKey('body', $form);
+    }
+
+    public function testUpdateAction()
+    {
+        $article = new DummyArticle();
+        $article->body = 'the body, yo';
+        $article->title = 'title, yo';
+
+        self::$em->persist($article);
+        self::$em->flush();
+
+        $result = $this->controller->updateAction(array(
+            'record' => array(
+                'id' => $article->id,
+                'title' => ''
+            )
+        ));
+
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('success', $result);
+        $this->assertFalse($result['success']);
+        $this->assertArrayHasKey('field_errors', $result);
+        $this->assertArrayHasKey('title', $result['field_errors']);
+        $this->assertTrue(is_array($result['field_errors']));
+        $this->assertEquals(1, count($result['field_errors']));
+        $this->assertArrayHasKey('title', $result['field_errors']);
+        $this->assertTrue(is_array($result['field_errors']['title']));
+        $this->assertEquals(1, count($result['field_errors']['title']));
+
+        // ---
+
+        self::$em->clear();
+
+        /* @var DummyArticle $fetchedArticle */
+        $fetchedArticle = self::$em->getRepository(DummyArticle::clazz())->find($article->id);
+
+        $this->assertEquals('title, yo', $fetchedArticle->title);
+        $this->assertEquals($article->body, $fetchedArticle->body);
+
+        $result = $this->controller->updateAction(array(
+            'hydration' => array(
+                'profile' => 'get_record'
+            ),
+            'record' => array(
+                'id' => $fetchedArticle->id,
+                'title' => 'new title',
+                'body' => 'new body'
+            )
+        ));
+
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('success', $result);
+        $this->assertTrue($result['success']);
+        $this->assertArrayHasKey('updated_models', $result);
+        $this->assertTrue(is_array($result['updated_models']));
+        $this->assertEquals(1, count($result['updated_models']));
+        $this->assertArrayHasKey('result', $result);
+        $this->assertTrue(is_array($result['result']));
+        $this->assertArrayHasKey('form', $result['result']);
+        $this->assertTrue(is_array($result['result']['form']));
+
+        self::$em->clear();
+
+        /* @var DummyArticle $updatedArticle */
+        $updatedArticle = self::$em->getRepository(DummyArticle::clazz())->find($article->id);
+
+        $this->assertNotNull($updatedArticle);
+        $this->assertEquals('new title', $updatedArticle->title);
+        $this->assertEquals('new body', $updatedArticle->body);
     }
 }

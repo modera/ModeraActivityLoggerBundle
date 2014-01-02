@@ -42,10 +42,10 @@ abstract class AbstractCrudController extends AbstractBaseController
             'map_data_on_update' => function(array $params, $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) {
                 $defaultMapper->mapData($params, $entity);
             },
-            'new_record_validator' => function(array $params, $mappedEntity, EntityValidator $defaultValidator, array $config, ContainerInterface $container) {
+            'new_entity_validator' => function(array $params, $mappedEntity, EntityValidator $defaultValidator, array $config, ContainerInterface $container) {
                 return $defaultValidator->validate($mappedEntity, $config);
             },
-            'updated_record_validator' => function(array $params, $mappedEntity, EntityValidator $defaultValidator, array $config, ContainerInterface $container) {
+            'updated_entity_validator' => function(array $params, $mappedEntity, EntityValidator $defaultValidator, array $config, ContainerInterface $container) {
                 return $defaultValidator->validate($mappedEntity, $config);
             },
             'save_entity_handler' => function($entity, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
@@ -219,33 +219,7 @@ abstract class AbstractCrudController extends AbstractBaseController
 
             $entity = $this->createEntity($params);
 
-            $dataMapper = $config['map_data_on_create'];
-            if ($dataMapper) {
-                $dataMapper($params['record'], $entity, $this->getDataMapper(), $this->container);
-            }
-
-            if (true !== $validationResult = $this->validateEntity($params, $entity)) {
-                return $validationResult;
-            }
-
-            $saveHandler = $config['save_entity_handler'];
-
-            /* @var OperationResult $operationResult */
-            $operationResult = $saveHandler($entity, $params, $this->getPersistenceHandler(), $this->container);
-
-            $response = array(
-                'success' => true
-            );
-
-            $response = array_merge($response, $operationResult->toArray($this->getModelManager()));
-
-            if (isset($params['hydration'])) {
-                $response = array_merge(
-                    $response, array('result' => $this->hydrate($entity, $params))
-                );
-            }
-
-            return $response;
+            return $this->saveOrUpdateEntityAndCreateResponse($params, $entity, 'create');
         } catch (\Exception $e) {
             throw $e;
 
@@ -255,7 +229,47 @@ abstract class AbstractCrudController extends AbstractBaseController
         }
     }
 
-    private function validateResultHasOneEntity(array $entities, array $params)
+    private function saveOrUpdateEntityAndCreateResponse(array $params, $entity, $operationType)
+    {
+        $config = $this->getPreparedConfig();
+
+        $dataMapper = $config['map_data_on_' . $operationType];
+        $persistenceHandler = $config[('create' == $operationType ? 'save' : 'update') . '_entity_handler'];
+        $validator = $config[('create' == $operationType ? 'new' : 'updated') . '_entity_validator'];
+
+        if ($dataMapper) {
+            $dataMapper($params['record'], $entity, $this->getDataMapper(), $this->container);
+        }
+
+        if ($validator) {
+            /* @var ValidationResult $validationResult */
+            $validationResult = $validator($params, $entity, $this->getEntityValidator(), $config, $this->container);
+            if ($validationResult->hasErrors()) {
+                return array_merge($validationResult->toArray(), array(
+                    'success' => false
+                ));
+            }
+        }
+
+        /* @var OperationResult $operationResult */
+        $operationResult = $persistenceHandler($entity, $params, $this->getPersistenceHandler(), $this->container);
+
+        $response = array(
+            'success' => true
+        );
+
+        $response = array_merge($response, $operationResult->toArray($this->getModelManager()));
+
+        if (isset($params['hydration'])) {
+            $response = array_merge(
+                $response, array('result' => $this->hydrate($entity, $params))
+            );
+        }
+
+        return $response;
+    }
+
+    private function validateResultHasExactlyOneEntity(array $entities, array $params)
     {
         if (count($entities) > 1) {
             $e = new BadRequestException(sprintf(
@@ -278,7 +292,7 @@ abstract class AbstractCrudController extends AbstractBaseController
         try {
             $entities = $this->getPersistenceHandler()->query($config['entity'], $params);
 
-            $this->validateResultHasOneEntity($entities, $params);
+            $this->validateResultHasExactlyOneEntity($entities, $params);
 
             $hydratedEntity = $this->hydrate($entities[0], $params);
 
@@ -359,15 +373,9 @@ abstract class AbstractCrudController extends AbstractBaseController
         try {
             $entities = $this->getPersistenceHandler()->query($config['entity'], $params);
 
-            $this->validateResultHasOneEntity($entities, $params);
+            $this->validateResultHasExactlyOneEntity($entities, $params);
 
-            $entity = $entities[0];
-
-            $dataMapper = $config['map_data_on_update'];
-            $dataMapper($params['record'], $entity, $this->getDataMapper(), $this->container);
-
-
-
+            return $this->saveOrUpdateEntityAndCreateResponse($params, $entities[0], 'update');
         } catch (\Exception $e) {
             throw $e;
         }
