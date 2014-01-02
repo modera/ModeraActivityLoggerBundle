@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\EntityFactory;
+namespace Modera\ServerCrudBundle\EntityFactory;
 
 use Sli\AuxBundle\Util\Toolkit;
 

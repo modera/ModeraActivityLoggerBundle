@@ -1,10 +1,10 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Functional\DataMapping;
+namespace Modera\ServerCrudBundle\Tests\Functional\DataMapping;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Modera\AdminGeneratorBundle\DataMapping\DefaultDataMapper;
+use Modera\ServerCrudBundle\DataMapping\DefaultDataMapper;
 use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Sli\AuxBundle\Util\Toolkit;
 use Doctrine\ORM\Mapping as Orm;

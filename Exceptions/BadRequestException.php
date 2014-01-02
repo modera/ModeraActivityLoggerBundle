@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Exceptions;
+namespace Modera\ServerCrudBundle\Exceptions;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

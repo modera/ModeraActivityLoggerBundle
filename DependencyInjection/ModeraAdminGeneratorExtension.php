@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\DependencyInjection;
+namespace Modera\ServerCrudBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

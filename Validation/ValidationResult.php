@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Validation;
+namespace Modera\ServerCrudBundle\Validation;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

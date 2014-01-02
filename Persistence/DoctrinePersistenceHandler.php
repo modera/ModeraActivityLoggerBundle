@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Persistence;
+namespace Modera\ServerCrudBundle\Persistence;
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;

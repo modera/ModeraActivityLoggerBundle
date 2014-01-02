@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\DataMapping;
+namespace Modera\ServerCrudBundle\DataMapping;
 
 use Doctrine\ORM\EntityManager;
 use Sli\ExtJsIntegrationBundle\DataMapping\EntityDataMapperService;

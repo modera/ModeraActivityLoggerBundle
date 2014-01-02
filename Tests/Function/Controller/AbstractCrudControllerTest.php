@@ -1,9 +1,9 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Functional\Controller;
+namespace Modera\ServerCrudBundle\Tests\Functional\Controller;
 
-use Modera\AdminGeneratorBundle\Controller\AbstractCrudController;
-use Modera\AdminGeneratorBundle\Hydration\HydrationProfile;
+use Modera\ServerCrudBundle\Controller\AbstractCrudController;
+use Modera\ServerCrudBundle\Hydration\HydrationProfile;
 use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Doctrine\ORM\Mapping as Orm;
 use Symfony\Component\Validator\Constraints as Assert;

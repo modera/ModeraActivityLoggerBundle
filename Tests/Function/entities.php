@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Functional;
+namespace Modera\ServerCrudBundle\Tests\Functional;
 
 use Doctrine\ORM\Mapping as Orm;
 

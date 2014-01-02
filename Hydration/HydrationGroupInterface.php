@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Hydration;
+namespace Modera\ServerCrudBundle\Hydration;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

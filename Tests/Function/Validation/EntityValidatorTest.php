@@ -1,9 +1,9 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Functional\Validation;
+namespace Modera\ServerCrudBundle\Tests\Functional\Validation;
 
-use Modera\AdminGeneratorBundle\Validation\EntityValidator;
-use Modera\AdminGeneratorBundle\Validation\ValidationResult;
+use Modera\ServerCrudBundle\Validation\EntityValidator;
+use Modera\ServerCrudBundle\Validation\ValidationResult;
 use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraints as Assert;

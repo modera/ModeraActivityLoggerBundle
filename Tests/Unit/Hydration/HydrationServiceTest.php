@@ -1,9 +1,9 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Unit\Hydration;
+namespace Modera\ServerCrudBundle\Tests\Unit\Hydration;
 
-use Modera\AdminGeneratorBundle\Hydration\HydrationProfile;
-use Modera\AdminGeneratorBundle\Hydration\HydrationService;
+use Modera\ServerCrudBundle\Hydration\HydrationProfile;
+use Modera\ServerCrudBundle\Hydration\HydrationService;
 
 class Author
 {

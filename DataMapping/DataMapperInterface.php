@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\DataMapping;
+namespace Modera\ServerCrudBundle\DataMapping;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

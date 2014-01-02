@@ -1,9 +1,9 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Controller;
+namespace Modera\ServerCrudBundle\Controller;
 
-use Modera\AdminGeneratorBundle\Generation\Generators\Section;
-use Modera\AdminGeneratorBundle\Generation\GeneratorsManager;
+use Modera\ServerCrudBundle\Generation\Generators\Section;
+use Modera\ServerCrudBundle\Generation\GeneratorsManager;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sli\ExpanderBundle\Ext\ContributorInterface;

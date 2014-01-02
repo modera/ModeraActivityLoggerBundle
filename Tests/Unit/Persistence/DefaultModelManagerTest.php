@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Unit\Persistence;
+namespace Modera\ServerCrudBundle\Tests\Unit\Persistence;
 
-use Modera\AdminGeneratorBundle\Persistence\DefaultModelManager;
+use Modera\ServerCrudBundle\Persistence\DefaultModelManager;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -34,12 +34,12 @@ class DefaultModelManagerTest extends \PHPUnit_Framework_TestCase
     public function testGenerateEntityClassFromModelId()
     {
         $this->assertEquals(
-            'Modera\AdminGeneratorBundle\Entity\Foo',
+            'Modera\ServerCrudBundle\Entity\Foo',
             $this->mgr->generateEntityClassFromModelId('modera.admin_generator.foo')
         );
 
         $this->assertEquals(
-            'Modera\AdminGeneratorBundle\Entity\Sub\Bar',
+            'Modera\ServerCrudBundle\Entity\Sub\Bar',
             $this->mgr->generateEntityClassFromModelId('modera.admin_generator.sub.bar')
         );
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Hydration;
+namespace Modera\ServerCrudBundle\Hydration;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

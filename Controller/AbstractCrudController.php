@@ -1,17 +1,17 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Controller;
+namespace Modera\ServerCrudBundle\Controller;
 
-use Modera\AdminGeneratorBundle\DataMapping\DataMapperInterface;
-use Modera\AdminGeneratorBundle\EntityFactory\EntityFactoryInterface;
-use Modera\AdminGeneratorBundle\ExceptionHandling\ExceptionHandlerInterface;
-use Modera\AdminGeneratorBundle\Exceptions\BadRequestException;
-use Modera\AdminGeneratorBundle\Hydration\HydrationService;
-use Modera\AdminGeneratorBundle\Persistence\ModelManagerInterface;
-use Modera\AdminGeneratorBundle\Persistence\OperationResult;
-use Modera\AdminGeneratorBundle\Persistence\PersistenceHandlerInterface;
-use Modera\AdminGeneratorBundle\Validation\EntityValidator;
-use Modera\AdminGeneratorBundle\Validation\ValidationResult;
+use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
+use Modera\ServerCrudBundle\EntityFactory\EntityFactoryInterface;
+use Modera\ServerCrudBundle\ExceptionHandling\ExceptionHandlerInterface;
+use Modera\ServerCrudBundle\Exceptions\BadRequestException;
+use Modera\ServerCrudBundle\Hydration\HydrationService;
+use Modera\ServerCrudBundle\Persistence\ModelManagerInterface;
+use Modera\ServerCrudBundle\Persistence\OperationResult;
+use Modera\ServerCrudBundle\Persistence\PersistenceHandlerInterface;
+use Modera\ServerCrudBundle\Validation\EntityValidator;
+use Modera\ServerCrudBundle\Validation\ValidationResult;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Neton\DirectBundle\Annotation\Remote;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -120,7 +120,7 @@ abstract class AbstractCrudController extends AbstractBaseController
     }
 
     /**
-     * @return \Modera\AdminGeneratorBundle\DataMapping\DataMapperInterface
+     * @return \Modera\ServerCrudBundle\DataMapping\DataMapperInterface
      */
     private function getDataMapper()
     {

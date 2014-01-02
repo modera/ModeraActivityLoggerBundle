@@ -1,9 +1,9 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Unit\ExceptionHandling;
+namespace Modera\ServerCrudBundle\Tests\Unit\ExceptionHandling;
 
-use Modera\AdminGeneratorBundle\ExceptionHandling\EnvAwareExceptionHandler;
-use Modera\AdminGeneratorBundle\ExceptionHandling\ExceptionHandlerInterface;
+use Modera\ServerCrudBundle\ExceptionHandling\EnvAwareExceptionHandler;
+use Modera\ServerCrudBundle\ExceptionHandling\ExceptionHandlerInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 class DummyExceptionHandler implements ExceptionHandlerInterface

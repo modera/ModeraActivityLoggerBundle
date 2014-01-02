@@ -15,7 +15,7 @@
         "symfony/framework-bundle": "~2.0"
     },
     "autoload": {
-        "psr-0": { "Modera\\AdminGeneratorBundle": "" }
+        "psr-0": { "Modera\\ServerCrudBundle": "" }
     },
-    "target-dir": "Modera/AdminGeneratorBundle"
+    "target-dir": "Modera/ServerCrudBundle"
 }

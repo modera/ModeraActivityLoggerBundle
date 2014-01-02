@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Unit\Validation;
+namespace Modera\ServerCrudBundle\Tests\Unit\Validation;
 
-use Modera\AdminGeneratorBundle\Validation\ValidationResult;
+use Modera\ServerCrudBundle\Validation\ValidationResult;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

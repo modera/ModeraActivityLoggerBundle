@@ -1,15 +1,15 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Functional\Persistence;
+namespace Modera\ServerCrudBundle\Tests\Functional\Persistence;
 
 require_once __DIR__ . '/../entities.php';
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-use Modera\AdminGeneratorBundle\Persistence\DoctrinePersistenceHandler;
-use Modera\AdminGeneratorBundle\Persistence\OperationResult;
+use Modera\ServerCrudBundle\Persistence\DoctrinePersistenceHandler;
+use Modera\ServerCrudBundle\Persistence\OperationResult;
 use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Sli\AuxBundle\Util\Toolkit;
-use Modera\AdminGeneratorBundle\Tests\Functional\DummyUser;
+use Modera\ServerCrudBundle\Tests\Functional\DummyUser;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -24,7 +24,7 @@ class DoctrinePersistenceHandlerTest extends IntegrationTestCase
             array(__DIR__)
         );
 
-        Toolkit::addMetadataDriverForEntityManager(self::$em, $driver, 'Modera\AdminGeneratorBundle\Tests\Functional');
+        Toolkit::addMetadataDriverForEntityManager(self::$em, $driver, 'Modera\ServerCrudBundle\Tests\Functional');
         Toolkit::createTableFoEntity(self::$em, DummyUser::clazz());
     }
 

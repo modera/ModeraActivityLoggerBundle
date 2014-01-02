@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\ExceptionHandling;
+namespace Modera\ServerCrudBundle\ExceptionHandling;
 
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\HttpKernel\Kernel;

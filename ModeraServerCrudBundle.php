@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle;
+namespace Modera\ServerCrudBundle;
 
 use Sli\ExpanderBundle\DependencyInjection\CompositeContributorsProviderCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -13,11 +13,7 @@ class ModeraServerCrudBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('modera_server_crud.sections_provider')
-        );
-
-        // see \Modera\AdminGeneratorBundle\ExceptionHandling\EnvAwareExceptionHandler
+        // see \Modera\ServerCrudBundle\ExceptionHandling\EnvAwareExceptionHandler
         $container->addCompilerPass(
             new CompositeContributorsProviderCompilerPass('modera_server_crud.exception_handling.handlers_provider')
         );

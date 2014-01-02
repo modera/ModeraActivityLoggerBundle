@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Persistence;
+namespace Modera\ServerCrudBundle\Persistence;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

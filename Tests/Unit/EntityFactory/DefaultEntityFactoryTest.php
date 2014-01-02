@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\AdminGeneratorBundle\Tests\Unit\EntityFactory;
+namespace Modera\ServerCrudBundle\Tests\Unit\EntityFactory;
 
-use Modera\AdminGeneratorBundle\EntityFactory\DefaultEntityFactory;
+use Modera\ServerCrudBundle\EntityFactory\DefaultEntityFactory;
 
 class DummyClassWithNoMandatoryArgumentsConstructor
 {
