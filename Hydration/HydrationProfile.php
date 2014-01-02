@@ -54,6 +54,13 @@ class HydrationProfile implements HydrationProfileInterface
 
     public function useGrouping($isGroupingNeeded)
     {
+        if (!in_array($isGroupingNeeded, array(true, false), true)) {
+            throw new \InvalidArgumentException(
+                'Only TRUE or FALSE can be used as a parameter for %s::useGrouping($isGroupingNeeded) method',
+                get_class($this)
+            );
+        }
+
         $this->isGroupingNeeded = $isGroupingNeeded;
 
         return $this;

@@ -16,5 +16,10 @@ class ModeraAdminGeneratorBundle extends Bundle
         $container->addCompilerPass(
             new CompositeContributorsProviderCompilerPass('modera_admin_generator.sections_provider')
         );
+
+        // see \Modera\AdminGeneratorBundle\ExceptionHandling\EnvAwareExceptionHandler
+        $container->addCompilerPass(
+            new CompositeContributorsProviderCompilerPass('modera_admin_generator.exception_handling.handlers_provider')
+        );
     }
 }

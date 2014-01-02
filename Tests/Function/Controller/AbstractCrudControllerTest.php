@@ -3,7 +3,6 @@
 namespace Modera\AdminGeneratorBundle\Tests\Functional\Controller;
 
 use Modera\AdminGeneratorBundle\Controller\AbstractCrudController;
-use Modera\AdminGeneratorBundle\Controller\AbstractDataController;
 use Modera\AdminGeneratorBundle\Hydration\HydrationProfile;
 use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Doctrine\ORM\Mapping as Orm;
@@ -14,6 +13,7 @@ use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 /**
  * @Orm\Entity
  * @Orm\Table("_testing_article")
+ * @Orm\HasLifecycleCallbacks
  */
 class DummyArticle
 {
@@ -35,6 +35,24 @@ class DummyArticle
      * @Assert\NotBlank
      */
     public $body;
+
+    static $suicideEngaged = false;
+
+    /**
+     * @Orm\PrePersist
+     * @Orm\PreUpdate
+     * @Orm\PreRemove
+     */
+    public function suicide()
+    {
+        if (self::$suicideEngaged) {
+            self::$suicideEngaged = false;
+
+            throw new \RuntimeException('boom');
+        }
+
+        self::$suicideEngaged = false;
+    }
 
     public function getId()
     {
@@ -69,17 +87,25 @@ class DataController extends AbstractCrudController
                         'id', 'title', 'body'
                     ),
                     'list' => function(DummyArticle $e) {
+                        if (DummyArticle::$suicideEngaged) {
+                            $e->suicide();
+                        }
+
                         return array(
                             'id' => $e->getId(),
                             'title' => substr($e->title, 0, 10),
                             'body' => substr($e->body, 0, 10)
                         );
+                    },
+                    'suicide' => function() {
+                        throw new \Exception();
                     }
                 ),
                 'profiles' => array(
                     'new_record' => HydrationProfile::create()->useGroups(array('form')),
                     'get_record' => HydrationProfile::create()->useGroups(array('form')),
-                    'list' => HydrationProfile::create(false)->useGroups(array('list'))
+                    'list' => HydrationProfile::create(false)->useGroups(array('list')),
+                    'rotten_profile' => HydrationProfile::create()->useGroups(array('suicide'))
                 )
             )
         );
@@ -100,6 +126,8 @@ class AbstractCrudControllerTest extends IntegrationTestCase
     {
         $this->controller = new DataController();
         $this->controller->setContainer(self::$container);
+
+        DummyArticle::$suicideEngaged = false;
     }
 
     // override
@@ -180,6 +208,27 @@ class AbstractCrudControllerTest extends IntegrationTestCase
         $this->assertEquals('Some text goes here', $article->body);
     }
 
+    private function assertValidExceptionResult(array $result)
+    {
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('success', $result);
+        $this->assertFalse($result['success']);
+    }
+
+    public function testCreateActionWithException()
+    {
+        DummyArticle::$suicideEngaged = true;
+
+        $result = $this->controller->createAction(array(
+            'record' => array(
+                'title' => 'opa',
+                'body' => 'hola'
+            )
+        ));
+
+        $this->assertValidExceptionResult($result);
+    }
+
     /**
      * @return DummyArticle[]
      */
@@ -246,6 +295,21 @@ class AbstractCrudControllerTest extends IntegrationTestCase
         $assertValidItem($result['items'], 2);
     }
 
+    public function testListActionWithException()
+    {
+        $this->loadDummyData();
+
+        DummyArticle::$suicideEngaged = true;
+
+        $result = $this->controller->listAction(array(
+            'hydration' => array(
+                'profile' => 'list'
+            )
+        ));
+
+        $this->assertValidExceptionResult($result);
+    }
+
     public function testRemoveAction()
     {
         $articles = $this->loadDummyData();
@@ -282,6 +346,29 @@ class AbstractCrudControllerTest extends IntegrationTestCase
         $this->assertNull(self::$em->getRepository(DummyArticle::clazz())->find($ids[1]));
     }
 
+    public function testRemoveActionWithException()
+    {
+        $articles = $this->loadDummyData();
+
+        $ids = array(
+            $articles[0]->getId(),
+            $articles[1]->getId()
+        );
+
+        DummyArticle::$suicideEngaged = true;
+
+        $result = $this->controller->removeAction(array(
+            'filter' => array(
+                array(
+                    'property' => 'id',
+                    'value' => 'in:' . implode(', ', $ids)
+                )
+            )
+        ));
+
+        $this->assertValidExceptionResult($result);
+    }
+
     public function testGetAction()
     {
         $articles = $this->loadDummyData();
@@ -309,6 +396,27 @@ class AbstractCrudControllerTest extends IntegrationTestCase
         $this->assertEquals($articles[0]->getId(), $form['id']);
         $this->assertArrayHasKey('title', $form);
         $this->assertArrayHasKey('body', $form);
+    }
+
+    public function testGetActionWithException()
+    {
+        $articles = $this->loadDummyData();
+
+        DummyArticle::$suicideEngaged = true;
+
+        $result = $this->controller->getAction(array(
+            'hydration' => array(
+                'profile' => 'rotten_profile'
+            ),
+            'filter' => array(
+                array(
+                    'property' => 'id',
+                    'value' => 'eq:' . $articles[0]->getId()
+                )
+            )
+        ));
+
+        $this->assertValidExceptionResult($result);
     }
 
     public function testUpdateAction()
@@ -378,5 +486,22 @@ class AbstractCrudControllerTest extends IntegrationTestCase
         $this->assertNotNull($updatedArticle);
         $this->assertEquals('new title', $updatedArticle->title);
         $this->assertEquals('new body', $updatedArticle->body);
+    }
+
+    public function testUpdateActionWithException()
+    {
+        $articles = $this->loadDummyData();
+
+        DummyArticle::$suicideEngaged = true;
+
+        $result = $this->controller->updateAction(array(
+            'record' => array(
+                'id' => $articles[0]->id,
+                'title' => 'yo',
+                'body' => 'ogo'
+            )
+        ));
+
+        $this->assertValidExceptionResult($result);
     }
 }

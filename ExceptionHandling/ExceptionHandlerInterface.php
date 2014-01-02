@@ -8,6 +8,12 @@ namespace Modera\AdminGeneratorBundle\ExceptionHandling;
  */
 interface ExceptionHandlerInterface
 {
+    const OPERATION_CREATE = 'create';
+    const OPERATION_UPDATE = 'update';
+    const OPERATION_REMOVE = 'remove';
+    const OPERATION_LIST = 'list';
+    const OPERATION_GET = 'get';
+
     /**
      * @param \Exception $e
      * @param string $operation

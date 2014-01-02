@@ -9,6 +9,13 @@ namespace Modera\AdminGeneratorBundle\Persistence;
 interface PersistenceHandlerInterface
 {
     /**
+     * @param string $entityClass
+     *
+     * @return string[]
+     */
+    public function resolveEntityPrimaryKeyFields($entityClass);
+
+    /**
      * @param object $entity
      *
      * @return OperationResult

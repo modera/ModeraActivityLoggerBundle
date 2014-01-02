@@ -3,6 +3,7 @@
 namespace Modera\AdminGeneratorBundle\Persistence;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sli\ExtJsIntegrationBundle\QueryBuilder\ExtjsQueryBuilder;
 
 /**
@@ -24,6 +25,29 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     {
         // TODO improve
         return $entity->getId();
+    }
+
+    /**
+     * @param string $entityClass
+     *
+     * @return string[]
+     */
+    public function resolveEntityPrimaryKeyFields($entityClass)
+    {
+        $result = array();
+
+        /* @var ClassMetadataInfo $meta */
+        $meta = $this->em->getClassMetadata($entityClass);
+
+        foreach ($meta->getFieldNames() as $fieldName) {
+            $fieldMapping = $meta->getFieldMapping($fieldName);
+
+            if (isset($fieldMapping['id']) && $fieldMapping['id']) {
+                $result[] = $fieldName;
+            }
+        }
+
+        return $result;
     }
 
     /**

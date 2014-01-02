@@ -139,7 +139,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getExceptionHandler()
     {
-        return $this->container->get('');
+        return $this->container->get('modera_admin_generator.exception_handling.handler');
     }
 
     private function checkAccess($operation)
@@ -199,13 +199,20 @@ abstract class AbstractCrudController extends AbstractBaseController
         return true;
     }
 
+    private function createExceptionResponse(\Exception $e, $operation)
+    {
+        $config = $this->getPreparedConfig();
+
+        $exceptionHandler = $config['exception_handler'];
+
+        return $exceptionHandler($e, $operation, $this->getExceptionHandler(), $this->container);
+    }
+
     /**
      * @Remote
      */
     public function createAction(array $params)
     {
-        $config = $this->getPreparedConfig();
-
         try {
             $this->checkAccess('create');
 
@@ -221,11 +228,7 @@ abstract class AbstractCrudController extends AbstractBaseController
 
             return $this->saveOrUpdateEntityAndCreateResponse($params, $entity, 'create');
         } catch (\Exception $e) {
-            throw $e;
-
-            $exceptionHandler = $config['exception_handler'];
-
-            return $exceptionHandler($e, 'create', $this->getExceptionHandler(), $this->container);
+            return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_CREATE);
         }
     }
 
@@ -301,7 +304,7 @@ abstract class AbstractCrudController extends AbstractBaseController
                 'result' => $hydratedEntity
             );
         } catch (\Exception $e) {
-            throw $e;
+            return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_GET);
         }
     }
 
@@ -328,7 +331,7 @@ abstract class AbstractCrudController extends AbstractBaseController
                 'total' => $total
             );
         } catch (\Exception $e) {
-            throw $e;
+            return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_LIST);
         }
     }
 
@@ -349,7 +352,7 @@ abstract class AbstractCrudController extends AbstractBaseController
                 $operationResult->toArray($this->getModelManager())
             );
         } catch (\Exception $e) {
-            throw $e;
+            return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_REMOVE);
         }
     }
 
@@ -371,13 +374,37 @@ abstract class AbstractCrudController extends AbstractBaseController
         $config = $this->getPreparedConfig();
 
         try {
-            $entities = $this->getPersistenceHandler()->query($config['entity'], $params);
+            if (!isset($params['record'])) {
+                $e = new BadRequestException("'/record' hasn't been provided");
+                $e->setParams($params);
+                $e->setPath('/');
+            }
+
+            $recordParams = $params['record'];
+
+            $missingPkFields = array();
+            $query = array();
+            foreach ($this->getPersistenceHandler()->resolveEntityPrimaryKeyFields($config['entity']) as $fieldName) {
+                if (isset($recordParams[$fieldName])) {
+                    $query[] = array(
+                        'property' => $fieldName,
+                        'value' => 'eq:' . $recordParams[$fieldName]
+                    );
+                } else {
+                    $missingPkFields[] = $fieldName;
+                }
+            }
+            if (count($missingPkFields)) {
+                throw new BadRequestException('These primary key fields were not provided: ' . implode(', ', $missingPkFields));
+            }
+
+            $entities = $this->getPersistenceHandler()->query($config['entity'], array('filter' => $query));
 
             $this->validateResultHasExactlyOneEntity($entities, $params);
 
             return $this->saveOrUpdateEntityAndCreateResponse($params, $entities[0], 'update');
         } catch (\Exception $e) {
-            throw $e;
+            return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_UPDATE);
         }
     }
 }

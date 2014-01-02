@@ -79,7 +79,9 @@ $exceptionResponseInDev = array(
         '---'
     ),
     'file' => 'FooController.php',
-    'message' => 'Something went terribly wrong'
+    'message' => 'Something went terribly wrong',
+    'code' => '123',
+    'line' => '123'
 );
 
 $exceptionResponseInProd = array(

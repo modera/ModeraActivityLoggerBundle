@@ -140,4 +140,13 @@ class DoctrinePersistenceHandlerTest extends IntegrationTestCase
             $this->assertNull(self::$em->getRepository($entry['entity_class'])->find($entry['id']));
         }
     }
+
+    public function testResolveEntityPrimaryKeyFields()
+    {
+        $fields = $this->getHandler()->resolveEntityPrimaryKeyFields(DummyUser::clazz());
+
+        $this->assertTrue(is_array($fields));
+        $this->assertEquals(1, count($fields));
+        $this->assertTrue(in_array('id', $fields));
+    }
 }
