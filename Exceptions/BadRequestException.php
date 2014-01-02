@@ -3,8 +3,11 @@
 namespace Modera\ServerCrudBundle\Exceptions;
 
 /**
+ * This exception can be thrown when an invalid request is received from client-side - when it doesn't have some mandatory
+ * parameters, for instance.
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
- * @copyright 2013 Modera Foundation
+ * @copyright 2014 Modera Foundation
  */
 class BadRequestException extends \RuntimeException
 {
