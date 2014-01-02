@@ -5,59 +5,59 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="modera_admin_generator.contributions.sections_provider"
+        <service id="modera_server_crud.contributions.sections_provider"
                  class="Modera\AdminGeneratorBundle\Contributions\SectionsProvider">
 
-            <argument type="service" id="modera_admin_generator.sections_provider" />
+            <argument type="service" id="modera_server_crud.sections_provider" />
 
             <tag name="mf.jsruntimeintegration.sections_provider" />
         </service>
 
-        <service id="modera_admin_generator.generation.twig"
+        <service id="modera_server_crud.generation.twig"
                  class="Twig_Environment"
                  factory-class="Modera\AdminGeneratorBundle\Generation\TwigFactory"
                  factory-method="create"
         />
 
-        <service id="modera_admin_generator.validation.entity_validator_service"
+        <service id="modera_server_crud.validation.entity_validator_service"
                  class="Modera\AdminGeneratorBundle\Validation\EntityValidator">
 
             <argument type="service" id="validator" />
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="modera_admin_generator.entity_factory.default_entity_factory"
+        <service id="modera_server_crud.entity_factory.default_entity_factory"
                  class="Modera\AdminGeneratorBundle\EntityFactory\DefaultEntityFactory"
         />
 
-        <service id="modera_admin_generator.data_mapping.default_data_mapper"
+        <service id="modera_server_crud.data_mapping.default_data_mapper"
                  class="Modera\AdminGeneratorBundle\DataMapping\DefaultDataMapper">
 
             <argument type="service" id="sli.extjsintegration.entity_data_mapper" />
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
 
-        <service id="modera_admin_generator.persistence.default_handler"
+        <service id="modera_server_crud.persistence.default_handler"
                  class="Modera\AdminGeneratorBundle\Persistence\DoctrinePersistenceHandler">
 
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="sli.extjsintegration.extjs_query_builder" />
         </service>
 
-        <service id="modera_admin_generator.persistence.model_manager"
+        <service id="modera_server_crud.persistence.model_manager"
                  class="Modera\AdminGeneratorBundle\Persistence\DefaultModelManager"
         />
 
-        <service id="modera_admin_generator.hydration.hydration_service"
+        <service id="modera_server_crud.hydration.hydration_service"
                  class="Modera\AdminGeneratorBundle\Hydration\HydrationService">
 
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="modera_admin_generator.exception_handling.handler"
+        <service id="modera_server_crud.exception_handling.handler"
                  class="Modera\AdminGeneratorBundle\ExceptionHandling\EnvAwareExceptionHandler">
 
-            <argument type="service" id="modera_admin_generator.exception_handling.handlers_provider" />
+            <argument type="service" id="modera_server_crud.exception_handling.handlers_provider" />
             <argument type="service" id="kernel" />
         </service>
     </services>

@@ -30,7 +30,7 @@ class GeneratorsManager
         $this->container = $container;
 
         /* @var \Twig_Environment $twig */
-        $twig = $this->container->get('modera_admin_generator.generation.twig');
+        $twig = $this->container->get('modera_server_crud.generation.twig');
         /* @var EntityManager $em */
         $em = $container->get('doctrine.orm.entity_manager');
 

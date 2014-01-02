@@ -118,7 +118,7 @@ class Section
     public function getPreparedConfig()
     {
         $params = array(
-            'direct_action_class' => 'Actions.ModeraAdminGenerator_Data',
+            'direct_action_class' => 'Actions.ModeraServerCrud_Data',
             'class_name' => $this->createClassName(),
             'runtime_views' => array()
         );

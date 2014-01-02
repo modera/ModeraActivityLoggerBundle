@@ -100,7 +100,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getPersistenceHandler()
     {
-        return $this->get('modera_admin_generator.persistence.default_handler');
+        return $this->get('modera_server_crud.persistence.default_handler');
     }
 
     /**
@@ -108,7 +108,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getModelManager()
     {
-        return $this->container->get('modera_admin_generator.persistence.model_manager');
+        return $this->container->get('modera_server_crud.persistence.model_manager');
     }
 
     /**
@@ -116,7 +116,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getEntityValidator()
     {
-        return $this->container->get('modera_admin_generator.validation.entity_validator_service');
+        return $this->container->get('modera_server_crud.validation.entity_validator_service');
     }
 
     /**
@@ -124,7 +124,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getDataMapper()
     {
-        return $this->container->get('modera_admin_generator.data_mapping.default_data_mapper');
+        return $this->container->get('modera_server_crud.data_mapping.default_data_mapper');
     }
 
     /**
@@ -132,7 +132,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getEntityFactory()
     {
-        return $this->container->get('modera_admin_generator.entity_factory.default_entity_factory');
+        return $this->container->get('modera_server_crud.entity_factory.default_entity_factory');
     }
 
     /**
@@ -140,7 +140,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getExceptionHandler()
     {
-        return $this->container->get('modera_admin_generator.exception_handling.handler');
+        return $this->container->get('modera_server_crud.exception_handling.handler');
     }
 
     /**
@@ -148,7 +148,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getHydrator()
     {
-        return $this->get('modera_admin_generator.hydration.hydration_service');
+        return $this->get('modera_server_crud.hydration.hydration_service');
     }
 
     /**

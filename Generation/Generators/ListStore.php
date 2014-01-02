@@ -65,7 +65,7 @@ class ListStore
 
         $preparedConfig = array(
             'class_name' => $this->createClassName($section, $view, $this),
-            'direct_action_name' => 'Actions.ModeraAdminGenerator_Data.list',
+            'direct_action_name' => 'Actions.ModeraServerCrud_Data.list',
             'fields' => array()
         );
 

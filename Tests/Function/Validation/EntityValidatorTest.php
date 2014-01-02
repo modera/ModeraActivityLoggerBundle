@@ -47,7 +47,7 @@ class EntityValidatorTest extends IntegrationTestCase
     // override
     public function doSetUp()
     {
-        $this->validator = self::$container->get('modera_admin_generator.validation.entity_validator_service');
+        $this->validator = self::$container->get('modera_server_crud.validation.entity_validator_service');
     }
 
     public function testIfServiceExists()

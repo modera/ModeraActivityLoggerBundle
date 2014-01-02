@@ -38,7 +38,7 @@ class DoctrinePersistenceHandlerTest extends IntegrationTestCase
      */
     private function getHandler()
     {
-        return self::$container->get('modera_admin_generator.persistence.default_handler');
+        return self::$container->get('modera_server_crud.persistence.default_handler');
     }
 
     public function testServiceExistence()

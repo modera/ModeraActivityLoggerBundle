@@ -61,7 +61,7 @@ class DefaultDataMapperTest extends IntegrationTestCase
     public function testMapData()
     {
         /* @var DefaultDataMapper $mapper */
-        $mapper = self::$container->get('modera_admin_generator.data_mapping.default_data_mapper');
+        $mapper = self::$container->get('modera_server_crud.data_mapping.default_data_mapper');
 
         $this->assertInstanceOf(DefaultDataMapper::clazz(), $mapper);
 

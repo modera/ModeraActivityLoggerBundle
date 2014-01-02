@@ -1,5 +1,5 @@
 {
-    "name": "modera/admin-generator-bundle",
+    "name": "modera/server-crud-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",

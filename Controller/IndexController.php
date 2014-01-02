@@ -47,7 +47,7 @@ class IndexController extends AbstractBaseController
             }
         }
 
-        $twig = $this->get('modera_admin_generator.generation.twig');
+        $twig = $this->get('modera_server_crud.generation.twig');
 
         $section = new Section($generatorConfig, new GeneratorsManager($this->container), $twig);
         if ($section->isResponsibleForClass($className)) {
