@@ -15,6 +15,7 @@ use Modera\AdminGeneratorBundle\Validation\ValidationResult;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Neton\DirectBundle\Annotation\Remote;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -142,17 +143,19 @@ abstract class AbstractCrudController extends AbstractBaseController
         return $this->container->get('modera_admin_generator.exception_handling.handler');
     }
 
-    private function checkAccess($operation)
-    {
-
-    }
-
     /**
      * @return HydrationService
      */
     private function getHydrator()
     {
         return $this->get('modera_admin_generator.hydration.hydration_service');
+    }
+
+    /**
+     * @param string $operation
+     */
+    private function checkAccess($operation)
+    {
     }
 
     /**
@@ -181,24 +184,6 @@ abstract class AbstractCrudController extends AbstractBaseController
         return $this->getHydrator()->hydrate($entity, $hydrationConfig, $profile, $groups);
     }
 
-    private function validateEntity(array $params, $entity)
-    {
-        $config = $this->getPreparedConfig();
-
-        $validator = $config['new_record_validator'];
-        if ($validator) {
-            /* @var ValidationResult $validationResult */
-            $validationResult = $validator($params, $entity, $this->getEntityValidator(), $config, $this->container);
-            if ($validationResult->hasErrors()) {
-                return array_merge($validationResult->toArray(), array(
-                    'success' => false
-                ));
-            }
-        }
-
-        return true;
-    }
-
     private function createExceptionResponse(\Exception $e, $operation)
     {
         $config = $this->getPreparedConfig();
@@ -217,7 +202,7 @@ abstract class AbstractCrudController extends AbstractBaseController
             $this->checkAccess('create');
 
             if (!isset($params['record'])) {
-                $e = new BadRequestException("'/record' is not provided");
+                $e = new BadRequestException("'/record' hasn't been provided");
                 $e->setParams($params);
                 $e->setPath('/record');
 
@@ -278,8 +263,8 @@ abstract class AbstractCrudController extends AbstractBaseController
             $e = new BadRequestException(sprintf(
                 'Query must return exactly one result, but %d were returned', count($entities)
             ));
-            $e->setPath('/filter');
             $e->setParams($params);
+            $e->setPath('/filter');
 
             throw $e;
         }
@@ -377,7 +362,7 @@ abstract class AbstractCrudController extends AbstractBaseController
             if (!isset($params['record'])) {
                 $e = new BadRequestException("'/record' hasn't been provided");
                 $e->setParams($params);
-                $e->setPath('/');
+                $e->setPath('/record');
             }
 
             $recordParams = $params['record'];
@@ -395,7 +380,11 @@ abstract class AbstractCrudController extends AbstractBaseController
                 }
             }
             if (count($missingPkFields)) {
-                throw new BadRequestException('These primary key fields were not provided: ' . implode(', ', $missingPkFields));
+                $e = new BadRequestException('These primary key fields were not provided: ' . implode(', ', $missingPkFields));
+                $e->setParams($params);
+                $e->setPath('/');
+
+                throw $e;
             }
 
             $entities = $this->getPersistenceHandler()->query($config['entity'], array('filter' => $query));
