@@ -330,6 +330,14 @@ abstract class AbstractCrudController extends AbstractBaseController
         $config = $this->getPreparedConfig();
 
         try {
+            if (!isset($params['filter'])) {
+                $e = new BadRequestException("'/filter' parameter hasn't been provided");
+                $e->setParams($params);
+                $e->setPath('/filter');
+
+                throw $e;
+            }
+
             $operationResult = $this->getPersistenceHandler()->remove($config['entity'], $params);
 
             return array_merge(
@@ -346,8 +354,11 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     public function getNewRecordValuesAction(array $params)
     {
+        $now = time();
         return array(
-            'firstname' => '?'
+            'firstname' => 'Firstname ' . $now,
+            'lastname' => 'Lastname ' . $now,
+            'personalCode' => 38812210283
         );
     }
 
@@ -363,6 +374,8 @@ abstract class AbstractCrudController extends AbstractBaseController
                 $e = new BadRequestException("'/record' hasn't been provided");
                 $e->setParams($params);
                 $e->setPath('/record');
+
+                throw $e;
             }
 
             $recordParams = $params['record'];
