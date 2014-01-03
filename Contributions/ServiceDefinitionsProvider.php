@@ -6,6 +6,7 @@ use Modera\JSRuntimeIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegra
 use Modera\SecurityAwareJSRuntimeBundle\DependencyInjection\ModeraSecurityAwareJSRuntimeExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Provides service definitions for client-side dependency injection container.
@@ -26,6 +27,19 @@ class ServiceDefinitionsProvider implements ContributorInterface
     }
 
     /**
+     * @param string $route
+     * @return string
+     */
+    private function getUrl($route)
+    {
+        if ('/' !== $route[0]) {
+            return $this->container->get('router')->generate($route, array(), UrlGeneratorInterface::ABSOLUTE_PATH);
+        }
+
+        return $route;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getItems()
@@ -38,9 +52,9 @@ class ServiceDefinitionsProvider implements ContributorInterface
                 'args' => [
                     [
                         'urls' => [
-                            'login' => $bundleConfig['login_url'],
-                            'isAuthenticated' => $bundleConfig['is_authenticated_url'],
-                            'logout' => $bundleConfig['logout_url']
+                            'login'           => $this->getUrl($bundleConfig['login_url']),
+                            'isAuthenticated' => $this->getUrl($bundleConfig['is_authenticated_url']),
+                            'logout'          => $this->getUrl($bundleConfig['logout_url']),
                         ]
                     ]
                 ]
