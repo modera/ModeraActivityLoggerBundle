@@ -8,9 +8,9 @@ namespace Modera\FoundationBundle\Extensibility;
  * http://wiki.eclipse.org/FAQ_How_do_I_use_IAdaptable_and_IAdapterFactory%3F
  *
  * @copyright 2013 Modera Foundation
- * @author Sergei Lissovski <sergei.lissovski@modera.net>
+ * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
-interface AdaptableInterface 
+interface AdaptableInterface
 {
     /**
      * @param string $adapter  Name of an interface you want to get an adapter for

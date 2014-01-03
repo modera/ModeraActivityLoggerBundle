@@ -8,7 +8,7 @@ namespace Modera\FoundationBundle\Exceptions;
  *
  * @copyright 2013 Modera Foundation
  * @author Sergei Lissovski <sergei.lissovski@modera.net>
- */ 
+ */
 class EntityNotFoundException extends \RuntimeException
 {
     /**

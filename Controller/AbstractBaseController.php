@@ -39,6 +39,7 @@ class AbstractBaseController extends Controller
     {
         /* @var \Modera\FoundationBundle\Util\ControllerServiceNameFormatter $formatter */
         $formatter = $this->get('mf.foundation.util.controller_service_name_formatter');
+
         return $formatter->formatPrefix(get_class($this));
     }
 
