@@ -16,7 +16,7 @@ class CssResourcesProvider implements ContributorInterface
     public function getItems()
     {
         return array(
-            'bundles/moderabackendtools/css/styles.css'
+            '/bundles/moderabackendtools/css/styles.css'
         );
     }
 }
