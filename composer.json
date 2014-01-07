@@ -83,4 +83,3 @@
         "psr-0": { "Modera\\BackendDashboardBundle": "src/Modera/BackendDashboardBundle" }
     }
 }
-/var/lib/jenkins/php/php-5.4.20/bin/phpunit --coverage-html build/logs/html
