@@ -1,0 +1,22 @@
+{
+    "name": "modera/backend-dashboard-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Alex Rudakov",
+            "email": "alexandr.rudakov@modera.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/framework-bundle": "~2.0",
+        "modera/js-runtime": "@dev",
+        "modera/js-runtime-integration-bundle": "@dev"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\BackendDashboardBundle": "" }
+    },
+    "target-dir": "Modera/BackendDashboardBundle"
+}
