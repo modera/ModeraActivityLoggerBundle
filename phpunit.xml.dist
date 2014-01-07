@@ -2,14 +2,19 @@
 
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuites>
-        <testsuite name="ModeraBackendDashboardBundle">
-            <directory suffix="Test.php">./src/</directory>
+        <testsuite name="SensioFrameworkExtraBundle">
+            <directory suffix="Test.php">./Tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./src/</directory>
+            <directory>./</directory>
+            <exclude>
+                <directory>./Resources</directory>
+                <directory>./Tests</directory>
+                <directory>./vendor</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
