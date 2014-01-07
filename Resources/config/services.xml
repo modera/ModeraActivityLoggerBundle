@@ -12,5 +12,11 @@
 
             <tag name="mf.jsruntimeintegration.csdi.service_definitions_provider" />
         </service>
+
+        <service id="mf.jsruntimeintegration.contributions.class_loader_mappings_provider"
+                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\ClassLoaderMappingsProvider">
+
+            <tag name="mf.jsruntimeintegration.class_loader_mappings_provider" />
+        </service>
     </services>
 </container>
