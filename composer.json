@@ -81,6 +81,5 @@
     },
     "autoload": {
         "psr-0": { "Modera\\BackendDashboardBundle": "src/Modera/BackendDashboardBundle" }
-    },
-    "target-dir": "Modera/BackendDashboardBundle"
+    }
 }
