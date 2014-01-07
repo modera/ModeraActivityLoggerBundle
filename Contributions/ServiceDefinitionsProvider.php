@@ -63,6 +63,10 @@ class ServiceDefinitionsProvider implements ContributorInterface
             'class_loader_configurator' => [
                 'className' => 'MF.runtime.ClassLoaderConfigurator',
                 'args' => ['@config_provider']
+            ],
+            'plugin_manager' => [
+                'className' => 'MF.runtime.extensibility.PluginManager',
+                'args' => ['@self']
             ]
         ];
     }

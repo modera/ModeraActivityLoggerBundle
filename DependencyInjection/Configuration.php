@@ -34,8 +34,7 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('/modera/js-runtime/src')
                 ->end()
-                ->scalarNode('viewport_class')
-                    ->defaultValue('MF.runtime.applications.authenticationaware.view.Viewport')
+                ->scalarNode('viewport_class') // for example: MF.runtime.applications.authenticationaware.view.Viewport
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('server_config_provider_service')
@@ -45,7 +44,8 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('get-config')
                 ->end()
-            ->end();
+            ->end()
+        ;
 
         return $treeBuilder;
     }
