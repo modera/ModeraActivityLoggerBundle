@@ -80,7 +80,7 @@
         "symfony/framework-bundle": "~2.0"
     },
     "autoload": {
-        "psr-0": { "Modera\\BackendDashboardBundle": "" }
+        "psr-0": { "Modera\\BackendDashboardBundle": "src/Modera/BackendDashboardBundle" }
     },
     "target-dir": "Modera/BackendDashboardBundle"
 }

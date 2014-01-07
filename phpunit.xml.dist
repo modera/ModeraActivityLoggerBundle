@@ -3,18 +3,13 @@
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="ModeraBackendDashboardBundle">
-            <directory suffix="Test.php">./Tests</directory>
+            <directory suffix="Test.php">./src/**/Tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
         <whitelist>
-            <directory>./</directory>
-            <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
-            </exclude>
+            <directory>./src/**/Tests</directory>
         </whitelist>
     </filter>
 </phpunit>
