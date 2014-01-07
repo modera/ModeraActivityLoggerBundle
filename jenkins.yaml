@@ -1,5 +1,4 @@
 php:
-  flavor: bundle
   versions:
     - 5.4.20
 git:
