@@ -9,13 +9,20 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 use Modera\JSRuntimeIntegrationBundle\Config\CallbackConfigMerger;
 
 /**
- * @author    Sergei Lissovski <sergei.lissovski@modera.org>
+ * Adds dashboard list to config for backend. It allows
+ * to show dashboards immediately without loading remote data through Direct.
+ *
+ * @author    Alex Rudakov <alexandr.rudakov@modera.org>
  * @copyright 2014 Modera Foundation
  */
 class ConfigMergersProvider implements ContributorInterface
 {
     private $items;
 
+    /**
+     * @param ContainerInterface   $container
+     * @param ContributorInterface $dashboardProvider
+     */
     public function __construct(ContainerInterface $container, ContributorInterface $dashboardProvider)
     {
         $this->items = array(
@@ -50,6 +57,8 @@ class ConfigMergersProvider implements ContributorInterface
 
     /**
      * @inheritDoc
+     *
+     * return CallbackConfigMerger[]
      */
     public function getItems()
     {

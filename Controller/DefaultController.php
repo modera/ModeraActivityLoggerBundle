@@ -9,8 +9,8 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Neton\DirectBundle\Annotation\Remote;
 
 /**
- * @copyright 2013 Modera Foundation
- * @author    Alex Rudakov <alexandr.rudakov@modera.net>
+ * @author    Alex Rudakov <alexandr.rudakov@modera.org>
+ * @copyright 2014 Modera Foundation
  */
 class DefaultController extends AbstractBaseController
 {

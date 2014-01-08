@@ -12,9 +12,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Implement this interface in case you want to provide your custom dashboard
  *
- * @package Modera\BackendDashboardBundle\Dashboard
- * @copyright 2013 Modera Foundation
- * @author    Alex Rudakov <alexandr.rudakov@modera.net>
+ * @author    Alex Rudakov <alexandr.rudakov@modera.org>
+ * @copyright 2014 Modera Foundation
  */
 interface DashboardInterface {
 

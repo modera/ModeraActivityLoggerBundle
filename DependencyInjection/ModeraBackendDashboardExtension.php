@@ -8,12 +8,8 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
 /**
- * @copyright 2013 Modera Foundation
- * @author    Alex Rudakov <alexandr.rudakov@modera.net>
- *
- * This is the class that loads and manages your bundle configuration
- *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
+ * @author    Alex Rudakov <alexandr.rudakov@modera.org>
+ * @copyright 2014 Modera Foundation
  */
 class ModeraBackendDashboardExtension extends Extension
 {

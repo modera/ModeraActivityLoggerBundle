@@ -10,8 +10,8 @@ use Sli\ExpanderBundle\Ext\OrderedContributorInterface;
 /**
  * Contributes js-runtime menu items.
  *
- * @copyright 2013 Modera Foundation
- * @author    Alex Rudakov <alexandr.rudakov@modera.net>
+ * @author    Alex Rudakov <alexandr.rudakov@modera.org>
+ * @copyright 2014 Modera Foundation
  */
 class MenuItemsProvider implements ContributorInterface, OrderedContributorInterface
 {
@@ -29,6 +29,8 @@ class MenuItemsProvider implements ContributorInterface, OrderedContributorInter
 
     /**
      * @inheritDoc
+     *
+     * @return MenuItemsProvider[]
      */
     public function getItems()
     {

@@ -9,6 +9,12 @@ namespace Modera\BackendDashboardBundle\Dashboard;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class SimpleDashboard
+ *
+ * @author    Alex Rudakov <alexandr.rudakov@modera.org>
+ * @copyright 2014 Modera Foundation
+ */
 class SimpleDashboard implements DashboardInterface
 {
     private $name;

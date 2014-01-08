@@ -8,8 +8,8 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 /**
  * Contributes js-runtime menu items.
  *
- * @copyright 2013 Modera Foundation
- * @author    Alex Rudakov <alexandr.rudakov@modera.net>
+ * @author    Alex Rudakov <alexandr.rudakov@modera.org>
+ * @copyright 2014 Modera Foundation
  */
 class DashboardProvider implements ContributorInterface
 {
