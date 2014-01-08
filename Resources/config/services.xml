@@ -18,5 +18,13 @@
 
             <tag name="mf.jsruntimeintegration.class_loader_mappings_provider" />
         </service>
+
+        <service id="modera_security_aware_js_runtime.contributions.config_mergers_provider"
+                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\ConfigMergersProvider">
+
+            <argument type="service" id="security.context" />
+
+            <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
+        </service>
     </services>
 </container>
