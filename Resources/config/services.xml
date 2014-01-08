@@ -16,5 +16,14 @@
         <service id="modera_backend_dashboard.dashboard_service" class="Modera\BackendDashboardBundle\Dashboard\DashboardService">
             <argument type="service" id="modera_backend_dashboard.dashboard_provider" />
         </service>
+
+        <service id="modera_backend_dashboard.contributions.config_mergers_provider"
+                 class="Modera\BackendDashboardBundle\Contributions\ConfigMergersProvider">
+
+            <argument type="service" id="service_container" />
+            <argument type="service" id="modera_backend_dashboard.dashboard_provider" />
+
+            <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
+        </service>
     </services>
 </container>

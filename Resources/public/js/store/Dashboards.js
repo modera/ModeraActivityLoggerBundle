@@ -2,7 +2,7 @@
  * @author Alex Rudakov <alexandr.rudakov@modera.net>
  */
 Ext.define('Modera.backend.dashboard.store.Dashboards', {
-    extend: 'Ext.data.DirectStore',
+    extend: 'Ext.data.Store',
 
     constructor: function() {
         this.config = {
@@ -10,8 +10,7 @@ Ext.define('Modera.backend.dashboard.store.Dashboards', {
                 'name', 'label', 'uiClass', 'default'
             ],
             proxy: {
-                type: 'direct',
-                directFn: Actions.ModeraBackendDashboard_Default.getDashboards
+                type: 'memory'
             }
         };
         this.callParent([this.config]);

@@ -23,24 +23,25 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
         var me = this;
         var ui = Ext.create('Modera.backend.dashboard.view.DashboardPanel', {});
 
-        ui.getStore().load({
-            callback: function() {
-
-                var dashboardName = null;
-
-                if (params['name']) {
-                    dashboardName = params['name']
-                } else {
-                    dashboardName = ui.getStore().findRecord('default', true).get('name');
-                }
-
-                /*
-                 Load dashboard's ui. Do not change, state params.
-                 */
-                ui.setDashboard(dashboardName, function() {
-                    callback(ui);
-                });
+        this.workbench.getService('config_provider').getConfig(function(config) {
+            if (Ext.isArray(config.dashboards)) {
+                ui.getStore().loadData(config.dashboards);
             }
+
+            var dashboardName = null;
+
+            if (params['name']) {
+                dashboardName = params['name']
+            } else {
+                dashboardName = ui.getStore().findRecord('default', true).get('name');
+            }
+
+            /*
+             Load dashboard's ui. Do not change, state params.
+             */
+            ui.setDashboard(dashboardName, function() {
+                callback(ui);
+            });
         });
     },
 

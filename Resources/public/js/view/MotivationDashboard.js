@@ -2,16 +2,15 @@
  * @author Alex Rudakov <alexandr.rudakov@modera.net>
  */
 Ext.define('Modera.backend.dashboard.view.MotivationDashboard', {
-    extend: 'Ext.panel.Panel',
+    extend: 'Ext.container.Container',
 
     requires: [
         'Modera.backend.dashboard.store.Dashboards',
-        'MFC.container.Header',
+        'MFC.container.Header'
     ],
 
     // override
     constructor: function(config) {
-        var me = this;
         var defaults = {
             layout: 'fit',
             items: [{

@@ -24,15 +24,6 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
 
             ui: 'rounded',
             boxShadow: true,
-
-//            items: [
-
-//
-//                {
-//                    title: 'Hello Ext',
-//                    html : 'Hello! Welcome to Ext JS.'
-//                }
-//            ],
             dockedItems: [
                 {
                     xtype: 'mfc-header',
@@ -42,6 +33,7 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
                     items: [
                         '->',
                         {
+                            queryMode: 'local',
                             xtype: 'combo',
                             itemId: 'dashboard-select',
                             fieldLabel: 'Select dashboard',
@@ -50,12 +42,6 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
                             width: 500,
                             labelWidth: 130,
                             store: Ext.create('Modera.backend.dashboard.store.Dashboards')
-
-        //                    listeners: {
-        //                        select: function() {
-        //                            Ext.Msg.alert('Chosen book', 'Buying ISBN: ' + this.getValue());
-        //                        }
-        //                    }
                         }
                     ]
                 }
@@ -64,19 +50,15 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
         this.config = Ext.apply(defaults, config || {});
         this.callParent([this.config]);
 
-//        this.addEvents(
-//            /**
-//             * @event changesection
-//             * @padashboardModera.backend.dashboard.view.HostPanel} me
-//             */
-//            'changesection'
-//        );
-
         this.assignListeners();
     },
 
+    /**
+     * @returns {Ext.data.Store}
+     */
     getStore: function() {
         var me = this;
+
         return me.down('#dashboard-select').getStore();
     },
 
@@ -91,8 +73,11 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
         });
     },
 
+    /**
+     * @param {String} dashboardName
+     * @param {Function} callback
+     */
     setDashboard: function(dashboardName, callback) {
-
         var me = this;
         var record = me.getStore().findRecord('name', dashboardName);
 
