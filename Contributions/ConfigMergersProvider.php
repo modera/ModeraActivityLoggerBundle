@@ -17,7 +17,7 @@ class ConfigMergersProvider implements ContributorInterface
     public function __construct(SecurityContextInterface $sc)
     {
         $this->items = array(
-            new CallbackConfigMerger(function(array $currentConfig) use ($sc) {/
+            new CallbackConfigMerger(function(array $currentConfig) use ($sc) {
                 if ($sc->getToken()) {
                     $roles = array();
 
