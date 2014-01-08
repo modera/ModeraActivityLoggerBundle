@@ -1,8 +1,9 @@
 <?php
 
-namespace Modera\BackendToolsBundle\Controller;
+namespace Modera\BackendDashboardBundle\Controller;
 
-use Modera\BackendToolsBundle\Section\Section;
+use Modera\BackendDashboardBundle\Dashboard\DashboardInterface;
+use Modera\BackendDashboardBundle\Section\Section;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Neton\DirectBundle\Annotation\Remote;
@@ -13,32 +14,38 @@ use Neton\DirectBundle\Annotation\Remote;
  */
 class DefaultController extends AbstractBaseController
 {
-//    /**
-//     * @Remote
-//     *
-//     * @param array $params
-//     *
-//     * @return array
-//     */
-//    public function getSectionsAction(array $params)
-//    {
-//        /* @var ContributorInterface $sectionsProvider */
-//        $sectionsProvider = $this->get('modera_backend_tools.sections_provider');
-//
-//        $result = array();
-//        foreach ($sectionsProvider->getItems() as $section) {
-//            /* @var Section $section */
-//            $result[] = array(
-//                'name' => $section->getName(),
-//                'glyph' => $section->getGlyph(),
-//                'iconSrc' => $section->getIconSrc(),
-//                'iconCls' => $section->getIconClass(),
-//                'description' => $section->getDescription(),
-//                'section' => $section->getSection(),
-//                'activationParams' => $section->getSectionActivationParams()
-//            );
-//        }
-//
-//        return $result;
-//    }
+    /**
+     * @Remote
+     *
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getDashboardsAction(array $params)
+    {
+        /* @var ContributorInterface $sectionsProvider */
+        $dashboardProvider = $this->get('modera_backend_dashboard.dashboard_provider');
+
+        $result = array();
+        foreach ($dashboardProvider->getItems() as $dashboard) {
+            /* @var DashboardInterface $dashboard */
+
+            if (!$dashboard->isAllowed($this->container)) {
+                continue;
+            }
+
+            $result[] = array(
+                'name' => $dashboard->getName(),
+                'label' => $dashboard->getLabel(),
+                'uiClass' => $dashboard->getUiClass(),
+                'default' => false
+            );
+        }
+
+        if (count($result)) {
+            $result[0]['default'] = true;
+        }
+
+        return $result;
+    }
 }

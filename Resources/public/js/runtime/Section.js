@@ -1,20 +1,18 @@
 /**
- * @author Sergei Lissovski <sergei.lissovski@modera.org>
+ * @author Alex Rudakov <alexandr.rudakov@modera.net>
  */
-Ext.define('Modera.backend.tools.runtime.Section', {
+Ext.define('Modera.backend.dashboard.runtime.Section', {
     extend: 'MF.runtime.Section',
 
     requires: [
-        'Modera.backend.tools.runtime.ListView'
+        'Modera.backend.dashboard.runtime.DashboardsView'
     ],
 
     // override
     activate: function(workbench, callback) {
-        workbench.getApplication().loadController('Modera.backend.tools.controller.Controller');
+        var dashboardView = Ext.create('Modera.backend.dashboard.runtime.DashboardsView');
 
-        var listView = Ext.create('Modera.backend.tools.runtime.ListView');
-
-        this.registerViewsManager(workbench, [listView]);
+        this.registerViewsManager(workbench, [dashboardView]);
 
         callback();
     }

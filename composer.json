@@ -36,7 +36,7 @@
         },
         {
             "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderabackendtoolsbundle.git"
+            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderabackenddashboardbundle.git"
         },
         {
             "type": "vcs",

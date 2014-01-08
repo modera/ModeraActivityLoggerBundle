@@ -14,7 +14,7 @@ class ModeraBackendDashboardBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('modera_backend_dashboard.sections_provider')
+            new CompositeContributorsProviderCompilerPass('modera_backend_dashboard.dashboard_provider')
         );
     }
 }
