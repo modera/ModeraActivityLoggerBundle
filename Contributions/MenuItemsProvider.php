@@ -5,6 +5,7 @@ namespace Modera\BackendDashboardBundle\Contributions;
 use Modera\JSRuntimeIntegrationBundle\Menu\MenuItem;
 use Modera\JSRuntimeIntegrationBundle\Menu\MenuItemInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
+use Sli\ExpanderBundle\Ext\OrderedContributorInterface;
 
 /**
  * Contributes js-runtime menu items.
@@ -12,7 +13,7 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  * @copyright 2013 Modera Foundation
  * @author    Alex Rudakov <alexandr.rudakov@modera.net>
  */
-class MenuItemsProvider implements ContributorInterface
+class MenuItemsProvider implements ContributorInterface, OrderedContributorInterface
 {
     private $items;
 
@@ -32,5 +33,10 @@ class MenuItemsProvider implements ContributorInterface
     public function getItems()
     {
         return $this->items;
+    }
+
+    public function getOrder()
+    {
+        return 0;
     }
 }

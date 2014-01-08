@@ -81,6 +81,11 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
         var me = this;
         var record = me.getStore().findRecord('name', dashboardName);
 
+        if (!record) {
+            callback();
+            return;
+        }
+
         var uiClass = record.get('uiClass');
 
         Ext.require(uiClass, function() {
