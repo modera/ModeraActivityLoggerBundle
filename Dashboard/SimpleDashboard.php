@@ -21,9 +21,9 @@ class SimpleDashboard implements DashboardInterface
     private $uiClass;
 
     /**
-     * @param $name
-     * @param $label
-     * @param $uiClass
+     * @param string $name    Technical name of dashboard
+     * @param string $label   Human readable label
+     * @param string $uiClass ExtJs class that provide ui (Derivative of Ext.container.Container or similar)
      */
     public function __construct($name, $label, $uiClass)
     {

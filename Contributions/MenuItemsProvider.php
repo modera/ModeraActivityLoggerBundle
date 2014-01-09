@@ -17,6 +17,9 @@ class MenuItemsProvider implements ContributorInterface, OrderedContributorInter
 {
     private $items;
 
+    /**
+     * Registers dashboard item as a section tab in Backend
+     */
     public function __construct()
     {
         $this->items = array(
@@ -37,6 +40,11 @@ class MenuItemsProvider implements ContributorInterface, OrderedContributorInter
         return $this->items;
     }
 
+    /**
+     * Makes dashboard a first tab
+     *
+     * @return int
+     */
     public function getOrder()
     {
         return 0;
