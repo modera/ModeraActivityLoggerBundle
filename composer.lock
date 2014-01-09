@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "408fe4ded6b7d0715136839483698dd7",
+    "hash": "96e4ea52513ebd7dc515719546f246cb",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -425,11 +425,11 @@
         },
         {
             "name": "modera/composer-symfony-web-asset-installer-plugin",
-            "version": "dev-feature-optional-deps",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "ssh://git@stash.dev.modera.org:7999/mf/composer-symfony-web-asset-installer-plugin.git",
-                "reference": "3808de7d5088910540260f925f5a3047b70b2e7c"
+                "reference": "b629a60d44f11ce376b78816b1ddf928cfbf6052"
             },
             "require": {
                 "composer-plugin-api": "1.0.0"
@@ -450,7 +450,7 @@
                     "homepage": "http://sergei.lissovski.org/"
                 }
             ],
-            "time": "2014-01-09 07:01:01"
+            "time": "2014-01-09 08:02:54"
         },
         {
             "name": "modera/foundation-bundle",
@@ -489,7 +489,7 @@
             "source": {
                 "type": "git",
                 "url": "ssh://git@stash.dev.modera.org:7999/mf/jsruntime.git",
-                "reference": "a7b11c721064181f89b447e06ef9f0c5027f4432"
+                "reference": "1c5a429fd59220aa7bb69e1f7a908219c20febd2"
             },
             "require": {
                 "modera/composer-symfony-web-asset-installer-plugin": "@dev"
@@ -502,7 +502,7 @@
                     "homepage": "http://sergei.lissovski.org/"
                 }
             ],
-            "time": "2014-01-08 12:12:54"
+            "time": "2014-01-09 07:55:59"
         },
         {
             "name": "modera/js-runtime-integration-bundle",
@@ -1142,12 +1142,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "969fb8f30fa0fec185d719e387bf4e88c439f86c"
+                "reference": "db48f06b5aa4d6ff552c871252d6dccaf711454b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/969fb8f30fa0fec185d719e387bf4e88c439f86c",
-                "reference": "969fb8f30fa0fec185d719e387bf4e88c439f86c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/db48f06b5aa4d6ff552c871252d6dccaf711454b",
+                "reference": "db48f06b5aa4d6ff552c871252d6dccaf711454b",
                 "shasum": ""
             },
             "require": {
@@ -1211,7 +1211,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-01-08 16:59:11"
+            "time": "2014-01-09 07:51:50"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1425,7 +1425,6 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "modera/composer-symfony-web-asset-installer-plugin": 20,
         "sergeil/expander-bundle": 20,
         "modera/js-runtime": 20,
         "modera/foundation-bundle": 20,

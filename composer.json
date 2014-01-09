@@ -77,10 +77,7 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "modera/composer-symfony-web-asset-installer-plugin": "dev-feature-optional-deps",
-        "symfony/framework-bundle": "~2.0",
         "sergeil/expander-bundle": "@dev",
-        "symfony/symfony": "~2.4",
         "modera/js-runtime": "@dev",
         "modera/foundation-bundle": "@dev",
         "modera/js-runtime-integration-bundle": "@dev"
