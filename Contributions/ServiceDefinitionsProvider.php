@@ -67,7 +67,11 @@ class ServiceDefinitionsProvider implements ContributorInterface
             'plugin_manager' => [
                 'className' => 'MF.runtime.extensibility.PluginManager',
                 'args' => [array('container' => '@self')]
-            ]
+            ],
+            'data_sync_runtime_plugin' => array(
+                'className' => 'MF.misc.DataSyncPlugin',
+                'tags' => ['runtime_plugin']
+            )
         ];
     }
 }
