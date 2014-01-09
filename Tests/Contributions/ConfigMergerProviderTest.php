@@ -104,4 +104,15 @@ class ConfigMergerProviderTest extends \PHPUnit_Framework_TestCase {
                 'default' => true
             ), $result['dashboards'][0]);
     }
+
+    public function testGetters()
+    {
+        $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $contributor = \Phake::mock('Sli\ExpanderBundle\Ext\ContributorInterface');
+
+        $provider = new ConfigMergersProvider($container, $contributor);
+
+        $this->assertSame($container, $provider->getContainer());
+        $this->assertSame($contributor, $provider->getDashboardProvider());
+    }
 } 
