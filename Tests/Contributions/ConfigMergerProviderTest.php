@@ -11,29 +11,43 @@ use Modera\BackendDashboardBundle\Contributions\ConfigMergersProvider;
  */
 class ConfigMergerProviderTest extends \PHPUnit_Framework_TestCase {
 
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @var \Sli\ExpanderBundle\Ext\ContributorInterface
+     */
+    private $contributor;
+    /**
+     * @var ConfigMergersProvider
+     */
+    private $provider;
+
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
+        $this->contributor = \Phake::mock('Sli\ExpanderBundle\Ext\ContributorInterface');
+        $this->provider = new ConfigMergersProvider($this->container, $this->contributor);
+    }
+
+
     public function testItems()
     {
-        $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $contributor = \Phake::mock('Sli\ExpanderBundle\Ext\ContributorInterface');
-
-        $provider = new ConfigMergersProvider($container, $contributor);
-
-        $result = $provider->getItems();
+        $result = $this->provider->getItems();
 
         $this->assertTrue(is_array($result));
-        $this->assertSame($provider, $result[0]);
+        $this->assertSame($this->provider, $result[0]);
     }
 
     public function testMerge_NoItems()
     {
-        $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $contributor = \Phake::mock('Sli\ExpanderBundle\Ext\ContributorInterface');
+        \Phake::when($this->contributor)->getItems()->thenReturn(array());
 
-        \Phake::when($contributor)->getItems()->thenReturn(array());
-
-        $provider = new ConfigMergersProvider($container, $contributor);
-
-        $result = $provider->merge(array('foo' => 'bar'));
+        $result = $this->provider->merge(array('foo' => 'bar'));
 
         $this->assertArrayHasKey('foo', $result);
         $this->assertEquals('bar', $result['foo']);
@@ -44,20 +58,15 @@ class ConfigMergerProviderTest extends \PHPUnit_Framework_TestCase {
 
     public function testMerge_HasItems()
     {
-        $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $contributor = \Phake::mock('Sli\ExpanderBundle\Ext\ContributorInterface');
-
         $item = \Phake::mock('Modera\BackendDashboardBundle\Dashboard\DashboardInterface');
         \Phake::when($item)->getName()->thenReturn('name1');
         \Phake::when($item)->getLabel()->thenReturn('label1');
         \Phake::when($item)->getUiClass()->thenReturn('class1');
-        \Phake::when($item)->isAllowed($container)->thenReturn(true);
+        \Phake::when($item)->isAllowed($this->container)->thenReturn(true);
 
-        \Phake::when($contributor)->getItems()->thenReturn(array($item));
+        \Phake::when($this->contributor)->getItems()->thenReturn(array($item));
 
-        $provider = new ConfigMergersProvider($container, $contributor);
-
-        $result = $provider->merge(array('foo' => 'bar'));
+        $result = $this->provider->merge(array('foo' => 'bar'));
 
         $this->assertArrayHasKey('foo', $result);
         $this->assertEquals('bar', $result['foo']);
@@ -74,23 +83,18 @@ class ConfigMergerProviderTest extends \PHPUnit_Framework_TestCase {
 
     public function testMerge_HasItems_NotAllowed()
     {
-        $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $contributor = \Phake::mock('Sli\ExpanderBundle\Ext\ContributorInterface');
-
         $itemAllowed = \Phake::mock('Modera\BackendDashboardBundle\Dashboard\DashboardInterface');
         \Phake::when($itemAllowed)->getName()->thenReturn('allowed_name1');
         \Phake::when($itemAllowed)->getLabel()->thenReturn('allowed_label1');
         \Phake::when($itemAllowed)->getUiClass()->thenReturn('allowed_class1');
-        \Phake::when($itemAllowed)->isAllowed($container)->thenReturn(true);
+        \Phake::when($itemAllowed)->isAllowed($this->container)->thenReturn(true);
 
         $itemNotAllowed = \Phake::mock('Modera\BackendDashboardBundle\Dashboard\DashboardInterface');
-        \Phake::when($itemNotAllowed)->isAllowed($container)->thenReturn(false);
+        \Phake::when($itemNotAllowed)->isAllowed($this->container)->thenReturn(false);
 
-        \Phake::when($contributor)->getItems()->thenReturn(array($itemNotAllowed, $itemAllowed));
+        \Phake::when($this->contributor)->getItems()->thenReturn(array($itemNotAllowed, $itemAllowed));
 
-        $provider = new ConfigMergersProvider($container, $contributor);
-
-        $result = $provider->merge(array('foo' => 'bar'));
+        $result = $this->provider->merge(array('foo' => 'bar'));
 
         $this->assertArrayHasKey('foo', $result);
         $this->assertEquals('bar', $result['foo']);
@@ -107,12 +111,7 @@ class ConfigMergerProviderTest extends \PHPUnit_Framework_TestCase {
 
     public function testGetters()
     {
-        $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
-        $contributor = \Phake::mock('Sli\ExpanderBundle\Ext\ContributorInterface');
-
-        $provider = new ConfigMergersProvider($container, $contributor);
-
-        $this->assertSame($container, $provider->getContainer());
-        $this->assertSame($contributor, $provider->getDashboardProvider());
+        $this->assertSame($this->container, $this->provider->getContainer());
+        $this->assertSame($this->contributor, $this->provider->getDashboardProvider());
     }
 } 

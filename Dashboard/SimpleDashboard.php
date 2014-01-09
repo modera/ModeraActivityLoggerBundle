@@ -32,21 +32,6 @@ class SimpleDashboard implements DashboardInterface
         $this->uiClass = $uiClass;
     }
 
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return SimpleDashboard
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
     /**
      * Return name
      *
@@ -67,20 +52,6 @@ class SimpleDashboard implements DashboardInterface
     }
 
     /**
-     * Set uiClass
-     *
-     * @param mixed $uiClass
-     *
-     * @return SimpleDashboard
-     */
-    public function setUiClass($uiClass)
-    {
-        $this->uiClass = $uiClass;
-
-        return $this;
-    }
-
-    /**
      * Return label
      *
      * @return mixed
@@ -88,20 +59,6 @@ class SimpleDashboard implements DashboardInterface
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * Set label
-     *
-     * @param mixed $label
-     *
-     * @return SimpleDashboard
-     */
-    public function setLabel($label)
-    {
-        $this->label = $label;
-
-        return $this;
     }
 
     /**

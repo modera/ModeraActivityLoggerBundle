@@ -18,8 +18,6 @@ use Modera\JSRuntimeIntegrationBundle\Config\CallbackConfigMerger;
  */
 class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterface
 {
-    private $items;
-
     /**
      * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
