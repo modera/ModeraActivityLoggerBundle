@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\BackendDashboardBundle\Tests;
+namespace Modera\BackendDashboardBundle\Tests\Contributions;
 
 use Modera\BackendDashboardBundle\Contributions\MenuItemsProvider;
 

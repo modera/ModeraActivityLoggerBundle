@@ -3,6 +3,7 @@
 namespace Modera\BackendDashboardBundle\Contributions;
 
 use Modera\BackendDashboardBundle\Dashboard\DashboardInterface;
+use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
@@ -15,9 +16,19 @@ use Modera\JSRuntimeIntegrationBundle\Config\CallbackConfigMerger;
  * @author    Alex Rudakov <alexandr.rudakov@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class ConfigMergersProvider implements ContributorInterface
+class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterface
 {
     private $items;
+
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    private $container;
+
+    /**
+     * @var \Sli\ExpanderBundle\Ext\ContributorInterface
+     */
+    private $dashboardProvider;
 
     /**
      * @param ContainerInterface   $container         Symfony container for isAllowed() method
@@ -25,43 +36,71 @@ class ConfigMergersProvider implements ContributorInterface
      */
     public function __construct(ContainerInterface $container, ContributorInterface $dashboardProvider)
     {
-        $this->items = array(
-            new CallbackConfigMerger(function(array $currentConfig) use ($container, $dashboardProvider) {
+        $this->container = $container;
+        $this->dashboardProvider = $dashboardProvider;
+    }
 
-                $result = array();
-                foreach ($dashboardProvider->getItems() as $dashboard) {
-                    /* @var DashboardInterface $dashboard */
+    /**
+     * Merge in dashboard list into runtime configuration.
+     *
+     * @param array $currentConfig
+     *
+     * @return array
+     */
+    public function merge(array $currentConfig)
+    {
+        $result = array();
+        foreach ($this->dashboardProvider->getItems() as $dashboard) {
+            /* @var DashboardInterface $dashboard */
 
-                    if (!$dashboard->isAllowed($container)) {
-                        continue;
-                    }
+            if (!$dashboard->isAllowed($this->container)) {
+                continue;
+            }
 
-                    $result[] = array(
-                        'name' => $dashboard->getName(),
-                        'label' => $dashboard->getLabel(),
-                        'uiClass' => $dashboard->getUiClass(),
-                        'default' => false
-                    );
-                }
+            $result[] = array(
+                'name' => $dashboard->getName(),
+                'label' => $dashboard->getLabel(),
+                'uiClass' => $dashboard->getUiClass(),
+                'default' => false
+            );
+        }
 
-                if (count($result)) {
-                    $result[0]['default'] = true;
-                }
+        if (count($result)) {
+            $result[0]['default'] = true;
+        }
 
-                return array_merge($currentConfig, array(
-                    'dashboards' => $result
-                ));
-            })
-        );
+        return array_merge($currentConfig, array(
+                'dashboards' => $result
+            ));
     }
 
     /**
      * @inheritDoc
      *
-     * @return CallbackConfigMerger[]
+     * @return array
      */
     public function getItems()
     {
-        return $this->items;
+        return array($this);
+    }
+
+    /**
+     * Return container
+     *
+     * @return mixed
+     */
+    public function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
+     * Return dashboardProvider
+     *
+     * @return mixed
+     */
+    public function getDashboardProvider()
+    {
+        return $this->dashboardProvider;
     }
 }
