@@ -1,9 +1,4 @@
 <?php
-/**
- * @copyright 2013 Modera Foundation
- * @author Alex Rudakov <alexandr.rudakov@modera.net>
- */
- 
 
 namespace Modera\BackendDashboardBundle\Dashboard;
 
@@ -15,7 +10,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @author    Alex Rudakov <alexandr.rudakov@modera.org>
  * @copyright 2014 Modera Foundation
  */
-interface DashboardInterface {
+interface DashboardInterface
+{
 
     /**
      * Technical name of dashboard. Used as a key in arrays/db/forms

@@ -3,7 +3,6 @@
  * @copyright 2013 Modera Foundation
  * @author Alex Rudakov <alexandr.rudakov@modera.net>
  */
- 
 
 namespace Modera\BackendDashboardBundle\Dashboard;
 
@@ -21,7 +20,12 @@ class SimpleDashboard implements DashboardInterface
     private $label;
     private $uiClass;
 
-    function __construct($name, $label, $uiClass)
+    /**
+     * @param $name
+     * @param $label
+     * @param $uiClass
+     */
+    public function __construct($name, $label, $uiClass)
     {
         $this->label = $label;
         $this->name = $name;

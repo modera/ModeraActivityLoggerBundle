@@ -20,8 +20,8 @@ class ConfigMergersProvider implements ContributorInterface
     private $items;
 
     /**
-     * @param ContainerInterface   $container
-     * @param ContributorInterface $dashboardProvider
+     * @param ContainerInterface   $container         Symfony container for isAllowed() method
+     * @param ContributorInterface $dashboardProvider Dashboard providers are collected automatically by Expander bundle
      */
     public function __construct(ContainerInterface $container, ContributorInterface $dashboardProvider)
     {
@@ -58,7 +58,7 @@ class ConfigMergersProvider implements ContributorInterface
     /**
      * @inheritDoc
      *
-     * return CallbackConfigMerger[]
+     * @return CallbackConfigMerger[]
      */
     public function getItems()
     {

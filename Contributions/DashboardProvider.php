@@ -2,6 +2,7 @@
 
 namespace Modera\BackendDashboardBundle\Contributions;
 
+use Modera\BackendDashboardBundle\Dashboard\DashboardInterface;
 use Modera\BackendDashboardBundle\Dashboard\SimpleDashboard;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
@@ -15,6 +16,9 @@ class DashboardProvider implements ContributorInterface
 {
     private $items;
 
+    /**
+     * Adds couple example dashboard by default
+     */
     public function __construct()
     {
         $this->items = array(
@@ -24,7 +28,7 @@ class DashboardProvider implements ContributorInterface
     }
 
     /**
-     * @inheritDoc
+     * @return DashboardInterface[]
      */
     public function getItems()
     {
