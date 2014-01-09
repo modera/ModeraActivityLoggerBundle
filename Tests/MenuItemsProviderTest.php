@@ -2,6 +2,8 @@
 
 namespace Modera\BackendDashboardBundle\Tests;
 
+use Modera\BackendDashboardBundle\Contributions\MenuItemsProvider;
+
 
 /**
  * @author    Alex Rudakov <alexandr.rudakov@modera.org>
@@ -9,8 +11,20 @@ namespace Modera\BackendDashboardBundle\Tests;
  */
 class MenuItemsProviderTest extends \PHPUnit_Framework_TestCase {
 
-    public function testSomething()
+    public function testItems()
     {
-        $this->assertTrue(true);
+        $provider = new MenuItemsProvider();
+
+        $items = $provider->getItems();
+
+        $this->assertEquals(1, count($items));
+
+        $this->assertInstanceOf('Modera\JSRuntimeIntegrationBundle\Menu\MenuItem', $items[0]);
+    }
+
+    public function testOrder()
+    {
+        $provider = new MenuItemsProvider();
+        $this->assertTrue(is_integer($provider->getOrder()));
     }
 } 
