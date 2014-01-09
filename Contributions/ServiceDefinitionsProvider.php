@@ -66,7 +66,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
             ],
             'plugin_manager' => [
                 'className' => 'MF.runtime.extensibility.PluginManager',
-                'args' => ['@self']
+                'args' => [array('container' => '@self')]
             ]
         ];
     }
