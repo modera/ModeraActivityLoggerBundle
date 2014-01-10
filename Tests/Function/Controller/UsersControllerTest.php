@@ -3,13 +3,13 @@
 namespace Modera\BackendSecurityBundle\Tests\Functional\Controller;
 
 use Modera\BackendSecurityBundle\Controller\UsersController;
-use Modera\FoundationBundle\Testing\IntegrationTestCase;
+use Modera\FoundationBundle\Testing\FunctionalTestCase;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class UsersControllerTest extends IntegrationTestCase
+class UsersControllerTest extends FunctionalTestCase
 {
     /* @var UsersController */
     private $controller;
@@ -32,5 +32,6 @@ class UsersControllerTest extends IntegrationTestCase
         $this->assertTrue(is_array($result['result']));
         $this->assertEquals(1, count($result['result']));
         $this->assertArrayHasKey('plainPassword', $result['result']);
+        $this->assertGreaterThan(0, strlen($result['result']['plainPassword']));
     }
 }
