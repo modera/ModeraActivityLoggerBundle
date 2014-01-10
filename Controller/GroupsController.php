@@ -1,0 +1,44 @@
+<?php
+
+namespace Modera\BackendSecurityBundle\Controller;
+
+use Modera\SecurityBundle\Entity\Group;
+use Modera\ServerCrudBundle\Controller\AbstractCrudController;
+use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
+use Modera\ServerCrudBundle\Hydration\HydrationProfile;
+
+/**
+ * @author    Sergei Lissovski <sergei.lissovski@modera.org>
+ * @copyright 2014 Modera Foundation
+ */
+class GroupsController extends AbstractCrudController
+{
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return array(
+            'entity' => Group::clazz(),
+            'hydration' => array(
+                'groups' => array(
+                    'list' => function(Group $group) {
+                            return array(
+                                'id' => $group->getId(),
+                                'name' => $group->getName(),
+                                'usersCount' => count($group->getUsers())
+                            );
+                        },
+                    'delete-group' => ['name'],
+                    'main-form' => ['id', 'name'],
+                    'compact-list' => ['id', 'name']
+                ),
+                'profiles' => array(
+                    'list', 'compact-list',
+                    'delete-group',
+                    'edit-group' => array('main-form')
+                )
+            )
+        );
+    }
+}

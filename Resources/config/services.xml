@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_backend_security.contributions.tools_sections_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\ToolsSectionsProvider">
+
+            <tag name="modera_backend_tools.sections_provider" />
+        </service>
+
+        <service id="modera_backend_security.contributions.sections_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\SectionsProvider">
+
+            <tag name="mf.jsruntimeintegration.sections_provider" />
+        </service>
+
+        <service id="modera_backend_security.contributions.css_resources_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\CssResourcesProvider">
+
+            <tag name="mf.jsruntimeintegration.css_resources_provider" />
+        </service>
+    </services>
+
+</container>
