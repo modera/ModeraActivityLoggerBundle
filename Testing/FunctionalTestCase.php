@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
- * A base test case that you may extend when writing your integration tests, it allows you
+ * A base test case that you may extend when writing your functional tests, it allows you
  * to configure so-called isolation level of your test methods ( override getIsolationLevel() method ). Isolation level controls:
  * - at which point database transaction is discarded
  * - if your test has authenticated a user, then at which moment it will be automatically logged out
@@ -21,7 +21,7 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class IntegrationTestCase extends WebTestCase
+class FunctionalTestCase extends WebTestCase
 {
     const IM_METHOD = 'method';
     const IM_CLASS = 'class';

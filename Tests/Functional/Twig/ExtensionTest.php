@@ -2,14 +2,14 @@
 
 namespace Modera\FoundationBundle\Tests\Functional\Twig;
 
-use Modera\FoundationBundle\Testing\IntegrationTestCase;
+use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\FoundationBundle\Twig\Extension;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class ExtensionTest extends IntegrationTestCase
+class ExtensionTest extends FunctionalTestCase
 {
     public function testHasExtension()
     {
