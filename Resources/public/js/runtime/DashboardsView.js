@@ -24,8 +24,10 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
         var ui = Ext.create('Modera.backend.dashboard.view.DashboardPanel', {});
 
         this.workbench.getService('config_provider').getConfig(function(config) {
-            if (Ext.isArray(config.dashboards)) {
-                ui.getStore().loadData(config.dashboards);
+            var dashboard_config = config.modera_backend_dashboard;
+
+            if (Ext.isArray(dashboard_config.dashboards)) {
+                ui.getStore().loadData(dashboard_config.dashboards);
             }
 
             var dashboardName = null;

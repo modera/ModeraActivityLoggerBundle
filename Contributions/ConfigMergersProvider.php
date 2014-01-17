@@ -68,7 +68,9 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
         }
 
         return array_merge($currentConfig, array(
-                'dashboards' => $result
+                'modera_backend_dashboard' => array(
+                    'dashboards' => $result
+                )
             ));
     }
 
