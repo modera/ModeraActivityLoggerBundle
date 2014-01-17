@@ -165,7 +165,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      *
      * @return array
      */
-    private function hydrate($entity, array $params)
+    final protected function hydrate($entity, array $params)
     {
         if (!isset($params['hydration']['profile'])) {
             $e = new BadRequestException('Hydration profile is not specified.');
@@ -184,7 +184,7 @@ abstract class AbstractCrudController extends AbstractBaseController
         return $this->getHydrator()->hydrate($entity, $hydrationConfig, $profile, $groups);
     }
 
-    private function createExceptionResponse(\Exception $e, $operation)
+    final protected function createExceptionResponse(\Exception $e, $operation)
     {
         $config = $this->getPreparedConfig();
 
