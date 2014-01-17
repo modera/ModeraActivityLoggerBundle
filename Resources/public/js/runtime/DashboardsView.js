@@ -48,6 +48,11 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
     },
 
     // override
+    processParams: function(params, ui) {
+        params.name = ui.getStore().findRecord('default', true).get('name');
+    },
+
+    // override
     attachStateListeners: function(ui) {
         var me = this;
 
