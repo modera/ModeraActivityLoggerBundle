@@ -44,6 +44,12 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('get-config')
                 ->end()
+                ->scalarNode('deployment_name')
+                    ->defaultValue(null)
+                ->end()
+                ->scalarNode('deployment_url')
+                    ->defaultValue(null)
+                ->end()
             ->end()
         ;
 

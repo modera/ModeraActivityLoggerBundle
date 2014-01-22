@@ -60,6 +60,8 @@ class ConfigMerger implements ConfigMergerInterface
         }
 
         return array_merge($existingConfig, array(
+            'deploymentName' => $this->bundleConfig['deployment_name'],
+            'deploymentUrl' => $this->bundleConfig['deployment_url'],
             'homeSection' => $this->bundleConfig['home_section'],
             'sections' => $sections, // backend sections
             'menuItems' => $menuItems,
