@@ -77,7 +77,7 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
      * @param {String} dashboardName
      * @param {Function} callback
      */
-    setDashboard: function(dashboardName, callback) {
+    setDashboard: function(runtimeView, dashboardName, callback) {
         var me = this;
         var record = me.getStore().findRecord('name', dashboardName);
 
@@ -90,7 +90,9 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
 
         Ext.require(uiClass, function() {
             me.removeAll();
-            me.add(Ext.create(uiClass));
+            me.add(Ext.create(uiClass, {
+                runtimeView: runtimeView
+            }));
 
             me.down('#title').update(record.get('label'));
             me.down('#dashboard-select').setValue(record);

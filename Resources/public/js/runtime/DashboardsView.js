@@ -24,6 +24,7 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
         var ui = Ext.create('Modera.backend.dashboard.view.DashboardPanel', {});
 
         this.workbench.getService('config_provider').getConfig(function(config) {
+
             var dashboard_config = config.modera_backend_dashboard;
 
             if (Ext.isArray(dashboard_config.dashboards)) {
@@ -41,7 +42,7 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
             /*
              Load dashboard's ui. Do not change, state params.
              */
-            ui.setDashboard(dashboardName, function() {
+            ui.setDashboard(me, dashboardName, function() {
                 callback(ui);
             });
         });
@@ -61,7 +62,7 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
             /*
             Load dashboard ui and save dashboard name to state params.
              */
-            ui.setDashboard(dashboardName, function() {
+            ui.setDashboard(me, dashboardName, function() {
                 me.executionContext.updateParams(me, {
                     name: dashboardName
                 });
@@ -77,7 +78,7 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
             /*
              Load dashboard ui. Save params not needed.
              */
-            me.getUi().setDashboard(diff.getViewParamChangedNewValue(this, 'name'), function() {
+            me.getUi().setDashboard(me, diff.getViewParamChangedNewValue(this, 'name'), function() {
                 callback();
             });
         } else {
