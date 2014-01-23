@@ -93,27 +93,47 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
         w.show();
         w.down('panel').setLoading(true);
 
-        Actions.ModeraBackendModule_Default[method]({ id: params.id }, function(response) {
-            w.down('panel').setLoading(false);
-            w.down('#status').update(response.msg);
-            var status = function() {
-                Actions.ModeraBackendModule_Default.status(response.status, function(resp) {
-                    var html = resp.msg;
-                    if (true == resp.working) {
+        var url = window.location.protocol + '//' + window.location.hostname;
+        Actions.ModeraBackendModule_Default[method]({ id: params.id, url: url }, function(response) {
+            if (false === response.success) {
+                w.down('panel').setLoading(false);
+                w.down('#status').update('Package not found!');
+
+                return;
+            }
+
+            Ext.data.JsonP.request({
+                url: response.urls['call'],
+                params: response.params,
+                success: function(resp) {
+
+                    w.down('panel').setLoading(false);
+                    w.down('#status').update(resp.msg);
+
+                    var status = function() {
+                        Ext.data.JsonP.request({
+                            url: response.urls['status'],
+                            params: response.params,
+                            success: function(resp) {
+                                var html = resp.msg;
+                                if (true == resp.working) {
+                                    setTimeout(function() {
+                                        status();
+                                    }, 500);
+                                    html += 'Loading ...';
+                                }
+
+                                w.down('#status').update(html.replace(/\n/g, "<br />"));
+                            }
+                        });
+                    };
+                    if (resp.success) {
                         setTimeout(function() {
                             status();
-                        }, 1000);
-                        html += 'Loading ...';
+                        }, 500);
                     }
-
-                    w.down('#status').update(html.replace(/\n/g, "<br />"));
-                });
-            };
-            if (response.success) {
-                setTimeout(function() {
-                    status();
-                }, 500);
-            }
+                }
+            });
         });
     }
 });

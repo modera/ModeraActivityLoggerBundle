@@ -20,7 +20,7 @@
         "modera/js-runtime": "@dev",
         "modera/backend-tools-bundle": "@dev",
         "modera/js-runtime-integration-bundle": "@dev",
-        "modera/module": "@dev"
+        "modera/module": "dev-dev@dev"
     },
     "autoload": {
         "psr-0": { "Modera\\BackendModuleBundle": "" }

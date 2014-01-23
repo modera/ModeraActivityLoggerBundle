@@ -24,6 +24,14 @@ class DefaultController extends Controller
     }
 
     /**
+     * @return int
+     */
+    protected function getModuleClientPort()
+    {
+        return 8021; //TODO: move to config
+    }
+
+    /**
      * @return string
      */
     protected function getDefaultLogo()
@@ -170,23 +178,40 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param string $method
-     * @param array $params
+     * @param $url
      * @return array
      */
-    protected function remote($method, array $params)
+    protected function remoteUrls($url)
     {
-        $response = array();
-        try {
-            $port = $this->getModuleServerPort();
-            $this->getModuleRepository()->connect($port, function($remote, $connection) use ($method, $params, &$response) {
-                $remote->{$method}($params, function($resp) use ($connection, &$response) {
-                    $connection->end();
-                    $response = array_merge($response, (array) $resp);
-                });
-            });
-        } catch (\Exception $e) {
-            $response['msg'] = $e->getMessage();
+        $port = $this->getModuleClientPort();
+        return array(
+            'call'   => $url . ':' . $port . '/call',
+            'status' => $url . ':' . $port . '/status',
+        );
+    }
+
+    /**
+     * @Remote
+     *
+     * @param array $params
+     */
+    public function requireAction(array $params)
+    {
+        $response = array(
+            'success' => false,
+            'params'  => array(),
+            'urls'    => $this->remoteUrls($params['url']),
+        );
+
+        $package = $this->getModuleRepository()->getPackage($params['id']);
+        if ($package) {
+            $latest = $this->getPackageLatestVersion($package->getVersions());
+            $response['success'] = true;
+            $response['params'] = array(
+                'method'  => 'require',
+                'name'    => $latest->getName(),
+                'version' => $latest->getVersion(),
+            );
         }
 
         return $response;
@@ -197,48 +222,17 @@ class DefaultController extends Controller
      *
      * @param array $params
      */
-    public function requireAction(array $params)
-    {
-        $response = array('success' => false, 'msg' => 'Error', 'status' => array());
-        $package = $this->getModuleRepository()->getPackage($params['id']);
-        if ($package) {
-            $latest = $this->getPackageLatestVersion($package->getVersions());
-            $response['status'] = array(
-                'method'  => 'require',
-                'name'    => $latest->getName(),
-                'version' => $latest->getVersion(),
-            );
-        }
-        return array_merge($response, $this->remote('call', $response['status']));
-    }
-
-    /**
-     * @Remote
-     *
-     * @param array $params
-     */
     public function removeAction(array $params)
     {
-        $response = array('success' => false, 'msg' => 'Error', 'status' => array());
-        $response['status'] = array(
-            'method'  => 'remove',
-            'name'    => $params['id'],
-        );
-        return array_merge($response, $this->remote('call', $response['status']));
-    }
-
-    /**
-     * @Remote
-     *
-     * @param array $params
-     */
-    public function statusAction(array $params)
-    {
         $response = array(
-            'success' => false,
-            'working' => false,
-            'msg'     => '',
+            'success' => true,
+            'params'  => array(
+                'method'  => 'remove',
+                'name'    => $params['id'],
+            ),
+            'urls'    => $this->remoteUrls($params['url']),
         );
-        return array_merge($response, $this->remote('status', $params));
+
+        return $response;
     }
 }
