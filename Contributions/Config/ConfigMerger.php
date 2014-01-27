@@ -43,6 +43,7 @@ class ConfigMerger implements ConfigMergerInterface
         foreach ($this->menuMgr->getAll() as $menuItem) {
             $menuItems[] =  array(
                 'id' => $menuItem->getId(),
+                'glyph' => $menuItem->getGlyph(),
                 'label' => $menuItem->getLabel(),
                 'controller' => $menuItem->getController(),
                 'metadata' => $menuItem->getMetadata()

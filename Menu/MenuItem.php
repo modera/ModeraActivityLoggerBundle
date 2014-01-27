@@ -20,11 +20,20 @@ class MenuItem extends Section
      * @param string $id
      * @param array  $metadata
      */
-    public function __construct($label, $controller, $id, array $metadata = array())
+    public function __construct($label, $controller, $id, array $metadata = array(), $glyph = null)
     {
+        $this->glyph = $glyph;
         $this->label = $label;
 
         parent::__construct($id, $controller, $metadata);
+    }
+
+    /**
+     * @return string
+     */
+    public function getGlyph()
+    {
+        return $this->glyph;
     }
 
     /**
