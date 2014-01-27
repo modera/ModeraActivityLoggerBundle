@@ -8,22 +8,6 @@ use Neton\DirectBundle\Annotation\Remote;
 class DefaultController extends Controller
 {
     /**
-     * @return \Modera\Module\Repository\ModuleRepository
-     */
-    protected function getModuleRepository()
-    {
-        return $this->get('modera_module.repository.module_repository');
-    }
-
-    /**
-     * @return int
-     */
-    protected function getModuleServerPort()
-    {
-        return 8020; //TODO: move to config
-    }
-
-    /**
      * @return int
      */
     protected function getModuleClientPort()
@@ -37,6 +21,14 @@ class DefaultController extends Controller
     protected function getDefaultLogo()
     {
         return '/bundles/moderabackendmodule/images/default.png';
+    }
+
+    /**
+     * @return \Modera\Module\Repository\ModuleRepository
+     */
+    protected function getModuleRepository()
+    {
+        return $this->get('modera_module.repository.module_repository');
     }
 
     /**
