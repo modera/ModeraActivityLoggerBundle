@@ -121,6 +121,15 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                                         status();
                                     }, 500);
                                     html += 'Loading ...';
+                                } else {
+                                    Actions.ModeraBackendModule_Default.check({ id: params.id }, function(response) {
+                                        if (true === response.success) {
+                                            html += '<br />PLEASE REFRESH THE PAGE TO SEE CHANGES.<br />';
+                                        } else {
+                                            html += '<br />AN UNRECOGNIZED ERROR OCCURRED.<br />';
+                                        }
+                                        w.down('#status').update(html.replace(/\n/g, "<br />"));
+                                    });
                                 }
 
                                 w.down('#status').update(html.replace(/\n/g, "<br />"));

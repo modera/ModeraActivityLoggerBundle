@@ -20,6 +20,7 @@ Ext.define('Modera.backend.module.toolscontribution.view.AbstractModulesList', {
             hideHeaders: true,
             emptyCls: 'mfc-grid-empty-text',
             cls: 'modera-backend-module-grid',
+            monitorModel: 'modera.backend_module_bundle.module',
             columns: [
                 {
                     width: 55,

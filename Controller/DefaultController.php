@@ -238,4 +238,21 @@ class DefaultController extends Controller
 
         return $response;
     }
+
+    /**
+     * @Remote
+     *
+     * @param array $params
+     */
+    public function checkAction(array $params)
+    {
+        $response = array(
+            'success'        => true,
+            'updated_models' => array(
+                'modera.backend_module_bundle.module' => [$params['id']],
+            ),
+        );
+
+        return $response;
+    }
 }
