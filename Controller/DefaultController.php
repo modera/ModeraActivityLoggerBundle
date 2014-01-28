@@ -2,15 +2,34 @@
 
 namespace Modera\BackendModuleBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Neton\DirectBundle\Annotation\Remote;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Modera\Module\Repository\ModuleRepository;
 
 class DefaultController extends Controller
 {
     /**
+     * @var ModuleRepository
+     */
+    private $moduleRepository;
+
+    /**
+     * @return \Modera\Module\Repository\ModuleRepository
+     */
+    private function getModuleRepository()
+    {
+        if (!$this->moduleRepository) {
+            $workingDir = dirname($this->container->get('kernel')->getRootdir());
+            $this->moduleRepository = new ModuleRepository($workingDir);
+        }
+
+        return $this->moduleRepository;
+    }
+
+    /**
      * @return int
      */
-    protected function getModuleClientPort()
+    private function getModuleClientPort()
     {
         return 8021; //TODO: move to config
     }
@@ -18,24 +37,16 @@ class DefaultController extends Controller
     /**
      * @return string
      */
-    protected function getDefaultLogo()
+    private function getDefaultLogo()
     {
         return '/bundles/moderabackendmodule/images/default.png';
-    }
-
-    /**
-     * @return \Modera\Module\Repository\ModuleRepository
-     */
-    protected function getModuleRepository()
-    {
-        return $this->get('modera_module.repository.module_repository');
     }
 
     /**
      * @param array $versions
      * @return \Packagist\Api\Result\Package\Version
      */
-    protected function getPackageLatestVersion(array $versions)
+    private function getPackageLatestVersion(array $versions)
     {
         ksort($versions);
         return end($versions);
@@ -45,7 +56,7 @@ class DefaultController extends Controller
      * @param $name
      * @return array|null
      */
-    protected function getModuleInfo($name, $extended = false)
+    private function getModuleInfo($name, $extended = false)
     {
         $package = $this->getModuleRepository()->getPackage($name);
         if (!$package) {
@@ -173,7 +184,7 @@ class DefaultController extends Controller
      * @param $url
      * @return array
      */
-    protected function remoteUrls($url)
+    private function remoteUrls($url)
     {
         $port = $this->getModuleClientPort();
         return array(

@@ -6,12 +6,6 @@
 
     <services>
 
-        <service id="modera_module.repository.module_repository"
-                 class="Modera\Module\Repository\ModuleRepository">
-
-            <argument>%kernel.root_dir%/..</argument>
-        </service>
-
         <service id="modera_backend_module.contributions.tools_sections_provider"
                  class="Modera\BackendModuleBundle\Contributions\ToolsSectionsProvider">
 
