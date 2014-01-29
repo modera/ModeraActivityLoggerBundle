@@ -9,6 +9,9 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
         'Modera.backend.module.toolscontribution.view.ModuleDetails'
     ],
 
+    // l10n
+    loadingText: 'Loading module details ...',
+
     // override
     getId: function() {
         return 'module-details-window';
@@ -18,7 +21,16 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
     doCreateUi: function(params, callback) {
         var me = this;
 
+        var previousView = null;
+        var views = this.workbench.getViewsManager().getActiveViews();
+        if (views[views.length - 1]) {
+            previousView = views[views.length - 1];
+            previousView.getUi().setLoading(this.loadingText);
+        }
+
         Actions.ModeraBackendModule_Default.getModuleDetails({ id: params.id }, function(response) {
+            previousView.getUi().setLoading(false);
+
             var w = Ext.create('Ext.window.Window', {
                 width: 960,
                 height: 480,
