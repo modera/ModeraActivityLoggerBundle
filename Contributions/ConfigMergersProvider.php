@@ -14,7 +14,7 @@ class ConfigMergersProvider implements ContributorInterface
 {
     private $items;
 
-    public function __construct(SecurityContextInterface $sc)
+    public function __construct(SecurityContextInterface $sc, ContributorInterface $clientDiDefinitionsProvider)
     {
         $this->items = array(
             new CallbackConfigMerger(function(array $currentConfig) use ($sc) {
@@ -31,6 +31,11 @@ class ConfigMergersProvider implements ContributorInterface
                 } else {
                     return $currentConfig;
                 }
+            }),
+            new CallbackConfigMerger(function(array $currentConfig) use ($clientDiDefinitionsProvider) {
+                return array_merge($currentConfig, array(
+                    'serviceDefinitions' => $clientDiDefinitionsProvider->getItems()
+                ));
             })
         );
     }

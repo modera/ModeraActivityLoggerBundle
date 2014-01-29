@@ -23,6 +23,7 @@
                  class="Modera\SecurityAwareJSRuntimeBundle\Contributions\ConfigMergersProvider">
 
             <argument type="service" id="security.context" />
+            <argument type="service" id="modera_security_aware_js_runtime.client_di_service_defs_provider" />
 
             <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
         </service>

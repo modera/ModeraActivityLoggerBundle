@@ -61,7 +61,11 @@ class ServiceDefinitionsProvider implements ContributorInterface
                 ]
             ],
             'ui_security_plugin' => array(
-                'className' => 'Modera.securityawarejsruntime.runtime.plugin.UiSecurityPlugin',
+                'className' => 'MF.security.UiSecurityPlugin',
+                'tags' => ['runtime_plugin']
+            ),
+            'di_service_definitions_provider_plugin' => array(
+                'className' => 'MF.runtime.DiServiceDefinitionsProviderPlugin',
                 'tags' => ['runtime_plugin']
             )
         ];
