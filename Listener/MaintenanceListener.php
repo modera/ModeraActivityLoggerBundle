@@ -4,6 +4,7 @@ namespace Modera\ModuleBundle\Listener;
 
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -38,9 +39,20 @@ class MaintenanceListener
         $debug = in_array($this->container->get('kernel')->getEnvironment(), array('test', 'dev'));
 
         if ($maintenance && !$debug) {
-            $engine = $this->container->get('templating');
-            $content = $engine->render('ModeraModuleBundle::maintenance.html.twig');
-            $event->setResponse(new Response($content, 503));
+            $request = $event->getRequest();
+            if ($request->isXmlHttpRequest()) {
+                $result = array(
+                    'success' => false,
+                    'message' => 'The server is temporarily down for maintenance.'
+                );
+                $response = new JsonResponse($result);
+            } else {
+                $engine = $this->container->get('templating');
+                $content = $engine->render('ModeraModuleBundle::maintenance.html.twig');
+                $response = new Response($content, 503);
+            }
+
+            $event->setResponse($response);
             $event->stopPropagation();
         }
     }
