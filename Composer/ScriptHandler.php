@@ -47,7 +47,7 @@ class ScriptHandler extends AbstractScriptHandler
      */
     public static function disableMaintenance(Event $event)
     {
-        echo '*** Disable maintenance: ' . PHP_EOL;
+        echo '*** Disable maintenance' . PHP_EOL;
 
         static::setMaintenance($event, false);
         static::clearCache($event);
@@ -61,6 +61,7 @@ class ScriptHandler extends AbstractScriptHandler
         static $_scripts = array();
 
         if ($event instanceof PackageEvent) {
+
             $operation = $event->getOperation();
             if ($operation instanceof UpdateOperation) {
                 $package = $operation->getTargetPackage();
@@ -84,6 +85,7 @@ class ScriptHandler extends AbstractScriptHandler
                         if (!is_array($scripts)) {
                             $scripts = array($scripts);
                         }
+
                         foreach ($scripts as $script) {
                             if (in_array($event->getName(), $delayedEvents)) {
                                 $_scripts[$event->getName()][] = array(
@@ -96,20 +98,15 @@ class ScriptHandler extends AbstractScriptHandler
                                 $className::$methodName($event);
                             }
                         }
-
                     }
                 }
             }
-        } else if (in_array($event->getName(), array('post-package-install', 'post-package-update'))) {
+
+        } else if (in_array($event->getName(), array('post-install-cmd', 'post-update-cmd'))) {
+
             foreach ($_scripts as $eventName => $scripts) {
-
-                echo '>>> '. $event->getName() . ':' . $eventName . PHP_EOL;
-
                 foreach ($scripts as $data) {
                     if (is_callable($data['script'])) {
-
-                        echo '>>> '. $data['script'] . PHP_EOL;
-
                         $className = substr($data['script'], 0, strpos($data['script'], '::'));
                         $methodName = substr($data['script'], strpos($data['script'], '::') + 2);
                         $className::$methodName($data['event']);
