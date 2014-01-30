@@ -66,7 +66,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
             ),
             'di_service_definitions_provider_plugin' => array(
                 'className' => 'MF.runtime.DiServiceDefinitionsProviderPlugin',
-//                'tags' => ['runtime_plugin'] // TODO uncomment
+                'tags' => ['runtime_plugin']
             )
         ];
     }
