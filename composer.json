@@ -1,0 +1,21 @@
+{
+    "name": "modera/module-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/framework-bundle": "~2.0",
+        "modera/module": "dev-dev@dev"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\ModuleBundle": "" }
+    },
+    "target-dir": "Modera/ModuleBundle"
+}
