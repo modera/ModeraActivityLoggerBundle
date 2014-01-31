@@ -109,6 +109,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
 
     /**
      * @param {String} sectionName
+     * @param {Function} callback
      */
     activateSection: function(sectionName, callback) {
         var me = this;
