@@ -35,7 +35,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
             'config_provider' => [
                 'className' => 'MF.runtime.config.AjaxConfigProvider',
                 'args' => [
-                    ['url' => $bundleConfig['client_runtime_config_provider_url']]
+                    array('url' => $bundleConfig['client_runtime_config_provider_url'])
                 ]
             ],
             'workbench' => [
@@ -48,7 +48,9 @@ class ServiceDefinitionsProvider implements ContributorInterface
             ],
             'process_manager' => [
                 'className' => 'MF.process.ProcessManager',
-                'args' => [['serviceContainer' => '@self']]
+                'args' => [
+                    array('serviceContainer' => '@self')
+                ]
             ],
             'process_monitor' => [
                 'className' =>  'MF.process.ConsoleProcessMonitor'
@@ -58,18 +60,38 @@ class ServiceDefinitionsProvider implements ContributorInterface
             ],
             'root_execution_context' => [
                 'className' => 'MF.viewsmanagement.executioncontext.BrowserHistoryExecutionContext',
-                'args' => [['serviceContainer' => '@self']]
+                'args' => [
+                    array('serviceContainer' => '@self')
+                ]
             ],
-            'class_loader_configurator' => [
+            'class_loader_configurator' => array(
                 'className' => 'MF.runtime.ClassLoaderConfigurator',
                 'args' => ['@config_provider']
-            ],
-            'plugin_manager' => [
+            ),
+            'plugin_manager' => array(
                 'className' => 'MF.runtime.extensibility.PluginManager',
-                'args' => [array('container' => '@self')]
-            ],
+                'args' => [
+                    array('container' => '@self')
+                ]
+            ),
             'data_sync_runtime_plugin' => array(
                 'className' => 'MF.misc.DataSyncPlugin',
+                'tags' => ['runtime_plugin']
+            ),
+            'intent_dialogs_factory' => array(
+                'className' => 'MF.intent.DialogsFactory'
+            ),
+            'intent_manager' => array(
+                'className' => 'MF.intent.IntentManager',
+                'args' => [
+                    array(
+                        'container' => '@self',
+                        'dialogsFactory' => '@intent_dialogs_factory'
+                    )
+                ]
+            ),
+            'intent_ui_analyzer' => array(
+                'className' => 'MF.intent.UiAnalyzerPlugin',
                 'tags' => ['runtime_plugin']
             )
         ];
