@@ -22,7 +22,8 @@ class DashboardProvider implements ContributorInterface
     public function __construct()
     {
         $this->items = array(
-            new SimpleDashboard('default', 'Default dashboard', 'Modera.backend.dashboard.view.DefaultDashboard'),
+            new SimpleDashboard('default', 'Default dashboard', 'Modera.backend.dashboard.runtime.SampleDashboardView'),
+//            new SimpleDashboard('default', 'Default dashboard', 'Modera.backend.dashboard.view.DefaultDashboard'),
             //new SimpleDashboard('motivation', 'Motivation dashboard', 'Modera.backend.dashboard.view.MotivationDashboard'),
         );
     }
