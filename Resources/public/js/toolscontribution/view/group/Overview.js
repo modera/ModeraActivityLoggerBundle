@@ -49,6 +49,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.Overview', {
                             iconCls: 'mfc-icon-edit-24',
                             scale: 'medium',
                             selectionAware: true,
+                            extensionPoint: 'groupActions',
                             menu: Ext.create('Ext.menu.Menu', {
                                 items: [
                                     {
