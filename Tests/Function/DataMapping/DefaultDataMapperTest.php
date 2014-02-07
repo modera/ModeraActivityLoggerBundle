@@ -4,8 +4,8 @@ namespace Modera\ServerCrudBundle\Tests\Functional\DataMapping;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\ServerCrudBundle\DataMapping\DefaultDataMapper;
-use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Sli\AuxBundle\Util\Toolkit;
 use Doctrine\ORM\Mapping as Orm;
 
@@ -46,7 +46,7 @@ class DummyUser
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class DefaultDataMapperTest extends IntegrationTestCase
+class DefaultDataMapperTest extends FunctionalTestCase
 {
     static public function doSetUpBeforeClass()
     {

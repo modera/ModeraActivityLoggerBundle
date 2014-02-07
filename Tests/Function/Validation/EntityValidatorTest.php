@@ -2,9 +2,9 @@
 
 namespace Modera\ServerCrudBundle\Tests\Functional\Validation;
 
+use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\ServerCrudBundle\Validation\EntityValidator;
 use Modera\ServerCrudBundle\Validation\ValidationResult;
-use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -39,7 +39,7 @@ class DummyEntityToValidationWithMethod
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class EntityValidatorTest extends IntegrationTestCase
+class EntityValidatorTest extends FunctionalTestCase
 {
     /* @var EntityValidator */
     private $validator;

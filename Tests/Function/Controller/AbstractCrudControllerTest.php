@@ -2,9 +2,9 @@
 
 namespace Modera\ServerCrudBundle\Tests\Functional\Controller;
 
+use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\Hydration\HydrationProfile;
-use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Doctrine\ORM\Mapping as Orm;
 use Symfony\Component\Validator\Constraints as Assert;
 use Sli\AuxBundle\Util\Toolkit;
@@ -116,7 +116,7 @@ class DataController extends AbstractCrudController
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class AbstractCrudControllerTest extends IntegrationTestCase
+class AbstractCrudControllerTest extends FunctionalTestCase
 {
     /* @var DataController */
     private $controller;

@@ -5,9 +5,9 @@ namespace Modera\ServerCrudBundle\Tests\Functional\Persistence;
 require_once __DIR__ . '/../entities.php';
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\ServerCrudBundle\Persistence\DoctrinePersistenceHandler;
 use Modera\ServerCrudBundle\Persistence\OperationResult;
-use Modera\FoundationBundle\Testing\IntegrationTestCase;
 use Sli\AuxBundle\Util\Toolkit;
 use Modera\ServerCrudBundle\Tests\Functional\DummyUser;
 
@@ -15,7 +15,7 @@ use Modera\ServerCrudBundle\Tests\Functional\DummyUser;
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class DoctrinePersistenceHandlerTest extends IntegrationTestCase
+class DoctrinePersistenceHandlerTest extends FunctionalTestCase
 {
     static public function doSetUpBeforeClass()
     {

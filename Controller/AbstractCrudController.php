@@ -272,22 +272,13 @@ abstract class AbstractCrudController extends AbstractBaseController
     private function validateResultHasExactlyOneEntity(array $entities, array $params)
     {
         if (count($entities) > 1) {
-            $e = new MoreThanOneResultException(sprintf(
+            throw new MoreThanOneResultException(sprintf(
                 'Query must return exactly one result, but %d were returned', count($entities)
             ));
-            $e->setParams($params);
-            $e->setPath('/filter');
-
-            throw $e;
         }
-        if (count($entities) == 0) {
-            $e = new NothingFoundException(sprintf(
-                'Query must return exactly one result, but nothing was returned', count($entities)
-            ));
-            $e->setParams($params);
-            $e->setPath('/filter');
 
-            throw $e;
+        if (count($entities) == 0) {
+            throw new NothingFoundException('Query must return exactly one result, but nothing was returned');
         }
     }
 
