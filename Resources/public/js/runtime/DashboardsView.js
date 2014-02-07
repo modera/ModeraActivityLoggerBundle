@@ -2,11 +2,7 @@
  * @author Alex Rudakov <alexandr.rudakov@modera.net>
  */
 Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
-
-    requires: [
-        'Modera.backend.dashboard.view.DashboardPanel'
-    ],
+    extend: 'MF.viewsmanagement.views.AbstractCompositeView',
 
     // override
     getId: function() {
@@ -19,83 +15,56 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
     },
 
     // override
-    doCreateUi: function(params, callback) {
+    getZones: function(callback) {
         var me = this;
-        var ui = Ext.create('Modera.backend.dashboard.view.DashboardPanel', {});
 
-        this.workbench.getService('config_provider').getConfig(function(config) {
-
-            var dashboard_config = config.modera_backend_dashboard;
-
-            if (Ext.isArray(dashboard_config.dashboards)) {
-                ui.getStore().loadData(dashboard_config.dashboards);
-            }
-
-            var dashboardName = null;
-
-            if (params['name']) {
-                dashboardName = params['name']
-            } else {
-                var defaultDashboard = ui.getStore().findRecord('default', true);
-                if (defaultDashboard) {
-                    dashboardName = defaultDashboard.get('name');
-                } else {
-                    dashboardName = null;
+        if (!this.zones) {
+            this.workbench.getService('config_provider').getConfig(function(config) {
+                var dashboardConfig = config.modera_backend_dashboard;
+                if (!Ext.isArray(dashboardConfig.dashboards)) {
+                    throw 'dat is baddd!';
                 }
-            }
 
-            if (dashboardName) {
-                /*
-                 Load dashboard's ui. Do not change, state params.
-                 */
-                ui.setDashboard(me, dashboardName, function() {
-                    callback(ui);
+                var zone = {
+                    controllingParam: 'name',
+                    activities: {
+                    },
+                    controller: function(parentUi, zoneUi, dashboardName, callback) {
+                        zoneUi.showDashboard(dashboardName);
+
+                        callback();
+                    }
+                };
+
+                // dynamically populating possible dashboards
+                Ext.each(dashboardConfig.dashboards, function(dashboardConfig) {
+                    zone.activities[dashboardConfig.name] = Ext.create(dashboardConfig.uiClass);
                 });
-            } else {
-                callback(ui);
-            }
-        });
-    },
 
-    // override
-    processParams: function(params, ui) {
-        var defaultDashboard = ui.getStore().findRecord('default', true);
-        if (defaultDashboard) {
-            params.name = defaultDashboard.get('name');
-        }
-    },
+                me.zones = [zone];
 
-    // override
-    attachStateListeners: function(ui) {
-        var me = this;
-
-        ui.on('changedashboardintention', function(dashboardName) {
-
-            /*
-            Load dashboard ui and save dashboard name to state params.
-             */
-            ui.setDashboard(me, dashboardName, function() {
-                me.executionContext.updateParams(me, {
-                    name: dashboardName
-                });
-            });
-        });
-    },
-
-    // override
-    applyTransition: function(diff, callback) {
-        var me = this;
-
-        if (diff.isViewParamValueChanged(this, 'name')) {
-            /*
-             Load dashboard ui. Save params not needed.
-             */
-            me.getUi().setDashboard(me, diff.getViewParamChangedNewValue(this, 'name'), function() {
-                callback();
+                callback(me.zones);
             });
         } else {
-            callback();
+            callback(me.zones);
         }
-    }
+    },
 
+    // override
+    doCreateUi: function(params, callback) {
+        var me = this;
+
+        this.workbench.getService('config_provider').getConfig(function(config) {
+            var ui = Ext.create('Modera.backend.dashboard.view.DashboardPanel', {});
+
+            var dashboardConfig = config.modera_backend_dashboard;
+            if (Ext.isArray(dashboardConfig.dashboards)) {
+                ui.setDashboards(dashboardConfig.dashboards);
+            }
+
+            me.setUpZones(ui);
+
+            callback(ui);
+        });
+    }
 });

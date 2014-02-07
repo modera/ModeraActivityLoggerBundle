@@ -1,5 +1,5 @@
 /**
- * @author Alex Rudakov <alexandr.rudakov@modera.net>
+ * @author Alex Rudakov <alexandr.rudakov@modera.org>
  */
 Ext.define('Modera.backend.dashboard.runtime.Section', {
     extend: 'MF.runtime.Section',
@@ -12,7 +12,7 @@ Ext.define('Modera.backend.dashboard.runtime.Section', {
     activate: function(workbench, callback) {
         var dashboardView = Ext.create('Modera.backend.dashboard.runtime.DashboardsView');
 
-        this.registerViewsManager(workbench, [dashboardView]);
+        this.registerViewsManager(workbench, [dashboardView, Ext.create('Modera.backend.dashboard.runtime.testing.DummyWindowView')]);
 
         callback();
     }
