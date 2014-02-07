@@ -4,6 +4,11 @@
 Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
     extend: 'MF.viewsmanagement.views.AbstractCompositeView',
 
+    /**
+     * @private
+     * @property {Object[]} dashboards
+     */
+
     // override
     getId: function() {
         return 'home';
@@ -15,56 +20,64 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
     },
 
     // override
+    doInit: function(callback) {
+        var me = this;
+
+        this.workbench.getService('config_provider').getConfig(function(config) {
+            me.dashboards = config.modera_backend_dashboard.dashboards;
+
+            callback();
+        });
+    },
+
+    // override
     getZones: function(callback) {
         var me = this;
 
         if (!this.zones) {
-            this.workbench.getService('config_provider').getConfig(function(config) {
-                var dashboardConfig = config.modera_backend_dashboard;
-                if (!Ext.isArray(dashboardConfig.dashboards)) {
-                    throw 'dat is baddd!';
+            var zone = {
+                controllingParam: 'name',
+                activities: {
+                },
+                controller: function(parentUi, zoneUi, dashboardName, callback) {
+                    zoneUi.showDashboard(dashboardName);
+
+                    callback();
                 }
+            };
 
-                var zone = {
-                    controllingParam: 'name',
-                    activities: {
-                    },
-                    controller: function(parentUi, zoneUi, dashboardName, callback) {
-                        zoneUi.showDashboard(dashboardName);
-
-                        callback();
-                    }
-                };
-
-                // dynamically populating possible dashboards
-                Ext.each(dashboardConfig.dashboards, function(dashboardConfig) {
-                    zone.activities[dashboardConfig.name] = Ext.create(dashboardConfig.uiClass);
-                });
-
-                me.zones = [zone];
-
-                callback(me.zones);
+            // dynamically populating possible dashboards
+            Ext.each(this.dashboards, function(dashboardConfig) {
+                zone.activities[dashboardConfig.name] = Ext.create(dashboardConfig.uiClass);
             });
-        } else {
-            callback(me.zones);
+
+            me.zones = [zone];
         }
+
+        callback(me.zones);
     },
 
     // override
     doCreateUi: function(params, callback) {
-        var me = this;
+        var ui = Ext.create('Modera.backend.dashboard.view.DashboardPanel', {});
+        ui.setDashboards(this.dashboards);
 
-        this.workbench.getService('config_provider').getConfig(function(config) {
-            var ui = Ext.create('Modera.backend.dashboard.view.DashboardPanel', {});
+        this.setUpZones(ui);
 
-            var dashboardConfig = config.modera_backend_dashboard;
-            if (Ext.isArray(dashboardConfig.dashboards)) {
-                ui.setDashboards(dashboardConfig.dashboards);
+        callback(ui);
+    },
+
+    // override
+    getDefaultParams: function() {
+        var defaultDashboard = null;
+        Ext.each(this.dashboards, function(dashboard) {
+            if (dashboard.default) {
+                defaultDashboard = dashboard;
+
+                return false;
             }
-
-            me.setUpZones(ui);
-
-            callback(ui);
         });
+
+        return { name: defaultDashboard.name };
     }
 });
