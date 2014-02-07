@@ -2,10 +2,13 @@
 
 namespace Modera\ServerCrudBundle\Controller;
 
+use Doctrine\ORM\NoResultException;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
 use Modera\ServerCrudBundle\EntityFactory\EntityFactoryInterface;
 use Modera\ServerCrudBundle\ExceptionHandling\ExceptionHandlerInterface;
 use Modera\ServerCrudBundle\Exceptions\BadRequestException;
+use Modera\ServerCrudBundle\Exceptions\MoreThanOneResultException;
+use Modera\ServerCrudBundle\Exceptions\NothingFoundException;
 use Modera\ServerCrudBundle\Hydration\HydrationService;
 use Modera\ServerCrudBundle\Persistence\ModelManagerInterface;
 use Modera\ServerCrudBundle\Persistence\OperationResult;
@@ -257,11 +260,29 @@ abstract class AbstractCrudController extends AbstractBaseController
         return $response;
     }
 
+    /**
+     * Validates that result form query has exactly one value.
+     *
+     * @param array $entities
+     * @param array $params
+     *
+     * @throws \Modera\ServerCrudBundle\Exceptions\NothingFoundException
+     * @throws \Modera\ServerCrudBundle\Exceptions\MoreThanOneResultException
+     */
     private function validateResultHasExactlyOneEntity(array $entities, array $params)
     {
         if (count($entities) > 1) {
-            $e = new BadRequestException(sprintf(
+            $e = new MoreThanOneResultException(sprintf(
                 'Query must return exactly one result, but %d were returned', count($entities)
+            ));
+            $e->setParams($params);
+            $e->setPath('/filter');
+
+            throw $e;
+        }
+        if (count($entities) == 0) {
+            $e = new NothingFoundException(sprintf(
+                'Query must return exactly one result, but nothing was returned', count($entities)
             ));
             $e->setParams($params);
             $e->setPath('/filter');
