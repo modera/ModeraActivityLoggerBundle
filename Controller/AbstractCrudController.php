@@ -101,7 +101,7 @@ abstract class AbstractCrudController extends AbstractBaseController
     /**
      * @return PersistenceHandlerInterface
      */
-    protected function getPersistenceHandler()
+    private function getPersistenceHandler()
     {
         return $this->get('modera_server_crud.persistence.default_handler');
     }
@@ -269,7 +269,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      * @throws \Modera\ServerCrudBundle\Exceptions\NothingFoundException
      * @throws \Modera\ServerCrudBundle\Exceptions\MoreThanOneResultException
      */
-    protected function validateResultHasExactlyOneEntity(array $entities, array $params)
+    private function validateResultHasExactlyOneEntity(array $entities, array $params)
     {
         if (count($entities) > 1) {
             $e = new MoreThanOneResultException(sprintf(
