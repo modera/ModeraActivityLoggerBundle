@@ -141,7 +141,13 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
                 $defaults[] = $data['defaultDashboard'];
             }
         }
-        $default = count($defaults) ? $defaults[count($defaults) - 1] : $dashboards[0];
+
+        if (!count($dashboards)) {
+            $dashboards = [];
+            $default = null;
+        }  else {
+            $default = count($defaults) ? $defaults[count($defaults) - 1] : $dashboards[0];
+        }
 
         return [$default, $dashboards];
     }

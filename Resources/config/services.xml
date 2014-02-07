@@ -31,5 +31,11 @@
 
             <tag name="modera_security_aware_js_runtime.client_di_service_defs_provider" />
         </service>
+
+        <service id="modera_backend_dashboard.event_listener.user_settings_entity_managing_listener"
+                 class="Modera\BackendDashboardBundle\EventListener\SettingsEntityManagingListener">
+
+            <tag name="doctrine.event_listener" event="onFlush"  />
+        </service>
     </services>
 </container>

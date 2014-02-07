@@ -36,21 +36,33 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
             if (params['name']) {
                 dashboardName = params['name']
             } else {
-                dashboardName = ui.getStore().findRecord('default', true).get('name');
+                var defaultDashboard = ui.getStore().findRecord('default', true);
+                if (defaultDashboard) {
+                    dashboardName = defaultDashboard.get('name');
+                } else {
+                    dashboardName = null;
+                }
             }
 
-            /*
-             Load dashboard's ui. Do not change, state params.
-             */
-            ui.setDashboard(me, dashboardName, function() {
+            if (dashboardName) {
+                /*
+                 Load dashboard's ui. Do not change, state params.
+                 */
+                ui.setDashboard(me, dashboardName, function() {
+                    callback(ui);
+                });
+            } else {
                 callback(ui);
-            });
+            }
         });
     },
 
     // override
     processParams: function(params, ui) {
-        params.name = ui.getStore().findRecord('default', true).get('name');
+        var defaultDashboard = ui.getStore().findRecord('default', true);
+        if (defaultDashboard) {
+            params.name = defaultDashboard.get('name');
+        }
     },
 
     // override
