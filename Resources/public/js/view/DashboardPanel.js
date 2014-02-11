@@ -22,9 +22,12 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
             border: false,
             //ui: 'rounded',
             //boxShadow: true,
-            bodyStyle: 'background:transparent',
+            bodyStyle: 'background: transparent',
             layout: 'card',
-            defaults: {border:false},
+            defaults: {
+                border: false,
+                layout: 'fit'
+            },
             dockedItems: [
                 {
                     xtype: 'mfc-header',
