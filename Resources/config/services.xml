@@ -42,7 +42,15 @@
         <service id="mf.jsruntimeintegration.contributions.js_resources_provider"
                  class="Modera\JSRuntimeIntegrationBundle\Contributions\JsResourcesProvider">
 
+            <argument type="service" id="router" />
+
             <tag name="mf.jsruntimeintegration.js_resources_provider" />
+        </service>
+
+        <service id="mf.jsruntimeintegration.contributions.css_resources_provider"
+                 class="Modera\JSRuntimeIntegrationBundle\Contributions\CssResourcesProvider">
+
+            <tag name="mf.jsruntimeintegration.css_resources_provider" />
         </service>
     </services>
 </container>
