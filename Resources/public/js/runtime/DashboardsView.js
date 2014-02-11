@@ -1,5 +1,5 @@
 /**
- * @author Alex Rudakov <alexandr.rudakov@modera.net>
+ * @author Alex Rudakov <alexandr.rudakov@modera.org>
  */
 Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
     extend: 'MF.viewsmanagement.views.AbstractCompositeView',
@@ -8,6 +8,13 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
      * @private
      * @property {Object[]} dashboards
      */
+
+    // override
+    constructor: function() {
+        this.callParent(arguments);
+
+        this.dashboards = [];
+    },
 
     // override
     getId: function() {
@@ -26,7 +33,7 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
         this.workbench.getService('config_provider').getConfig(function(config) {
             me.dashboards = config.modera_backend_dashboard.dashboards;
 
-            callback();
+            callback(me);
         });
     },
 
@@ -77,6 +84,10 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
                 return false;
             }
         });
+
+        if (!defaultDashboard) {
+            throw this.$className + '.getDefaultParams(): Unable to find a default dashboard!';
+        }
 
         return { name: defaultDashboard.name };
     }
