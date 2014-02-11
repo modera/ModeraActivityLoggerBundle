@@ -61,7 +61,7 @@ Ext.define('Modera.backend.tools.view.HostPanel', {
                                 glyph = values.glyph;
                             }
                             if (!iconCls && !glyph && !iconSrc) {
-                                glyph = 'xe807@mf-theme-header-icon';
+                                glyph = FontAwesome.resolve('cogs');
                             }
 
                             if (glyph) {

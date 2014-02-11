@@ -4,6 +4,7 @@ namespace Modera\BackendToolsBundle\Contributions;
 
 use Modera\JSRuntimeIntegrationBundle\Menu\MenuItem;
 use Modera\JSRuntimeIntegrationBundle\Menu\MenuItemInterface;
+use Modera\JSRuntimeIntegrationBundle\Model\FontAwesome;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
@@ -22,7 +23,7 @@ class MenuItemsProvider implements ContributorInterface
             new MenuItem('Tools', 'Modera.backend.tools.runtime.Section', 'tools', [
                 MenuItemInterface::META_NAMESPACE => 'Modera.backend.tools',
                 MenuItemInterface::META_NAMESPACE_PATH => '/bundles/moderabackendtools/js'
-            ], 0xf0ad),
+            ], FontAwesome::resolve('wrench')),
         );
     }
 
