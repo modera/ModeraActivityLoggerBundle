@@ -26,7 +26,7 @@ class MenuItemsProvider implements ContributorInterface, OrderedContributorInter
             new MenuItem('Dashboard', 'Modera.backend.dashboard.runtime.Section', 'dashboard', [
                 MenuItemInterface::META_NAMESPACE => 'Modera.backend.dashboard',
                 MenuItemInterface::META_NAMESPACE_PATH => '/bundles/moderabackenddashboard/js'
-            ]),
+            ], 0xf0e4),
         );
     }
 
