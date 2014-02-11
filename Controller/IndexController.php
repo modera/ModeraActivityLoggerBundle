@@ -6,11 +6,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Modera\JSRuntimeIntegrationBundle\Config\ConfigManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Modera\JSRuntimeIntegrationBundle\Model\FontAwesome;
 
 /**
  * Exposes actions which can be used by client-side runtime to configure/manage its state.
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
+ * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2013 Modera Foundation
  */
 class IndexController extends Controller
@@ -34,24 +36,7 @@ class IndexController extends Controller
      */
     public function fontAwesomeAction()
     {
-        $js = <<<JS
-
-Ext.define('FontAwesome', {
-    singleton: true,
-
-    FONT_FAMILY: 'FontAwesome',
-
-    WRENCH: 0xf0ad,
-    DASHBOARD: 0xf0e4
-});
-
-Ext.onReady(function() {
-    Ext.setGlyphFontFamily(FontAwesome.FONT_FAMILY);
-});
-
-JS;
-
-        $response = new Response($js);
+        $response = new Response(FontAwesome::jsCode());
         $response->headers->set('Content-Type', 'text/javascript');
 
         return $response;
