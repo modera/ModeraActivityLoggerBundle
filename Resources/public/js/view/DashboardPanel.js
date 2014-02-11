@@ -17,18 +17,21 @@ Ext.define('Modera.backend.dashboard.view.DashboardPanel', {
     // override
     constructor: function(config) {
         var defaults = {
-            basePanel: true,
-            padding: 10,
-            border: true,
-            ui: 'rounded',
-            boxShadow: true,
+            //basePanel: true,
+            //padding: 10,
+            border: false,
+            //ui: 'rounded',
+            //boxShadow: true,
+            bodyStyle: 'background:transparent',
             layout: 'card',
+            defaults: {border:false},
             dockedItems: [
                 {
                     xtype: 'mfc-header',
                     dock: 'top',
                     title: this.titleText,
                     margin: '0 0 9 0',
+                    hidden: true,
                     items: [
                         '->',
                         {
