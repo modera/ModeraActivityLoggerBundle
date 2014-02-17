@@ -38,8 +38,12 @@ class ScriptHandler extends AbstractScriptHandler
     {
         echo '*** Enable maintenance' . PHP_EOL;
 
-        static::setMaintenance($event, true);
-        static::clearCache($event);
+        try {
+            static::setMaintenance($event, true);
+            static::clearCache($event);
+        } catch (\RuntimeException $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
     }
 
     /**
@@ -49,8 +53,12 @@ class ScriptHandler extends AbstractScriptHandler
     {
         echo '*** Disable maintenance' . PHP_EOL;
 
-        static::setMaintenance($event, false);
-        static::clearCache($event);
+        try {
+            static::setMaintenance($event, false);
+            static::clearCache($event);
+        } catch (\RuntimeException $e) {
+            echo $e->getMessage() . PHP_EOL;
+        }
     }
 
     /**
