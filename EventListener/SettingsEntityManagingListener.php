@@ -42,7 +42,7 @@ class SettingsEntityManagingListener
                 $query->execute(array($entity));
             }
             if ($entity instanceof Group) {
-                $query = $em->createQuery(sprintf('DELETE FROM %s us WHERE us.user = ?0', GroupSettings::clazz()));
+                $query = $em->createQuery(sprintf('DELETE FROM %s us WHERE us.group = ?0', GroupSettings::clazz()));
                 $query->execute(array($entity));
             }
         }
