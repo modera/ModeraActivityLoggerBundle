@@ -153,6 +153,12 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
                             status();
                         }, 500);
                     }
+                },
+                failure: function(resp) {
+                    if ('error' === resp) {
+                        w.down('panel').setLoading(false);
+                        w.down('#status').update('The module server service is not started.');
+                    }
                 }
             });
         });
