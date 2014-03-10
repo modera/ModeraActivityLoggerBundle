@@ -32,7 +32,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @Route("/font-awesome.js", name="mf_font_awesome")
+     * @Route("/font-awesome.js", name="mf_font_awesome_secured")
      */
     public function fontAwesomeAction()
     {

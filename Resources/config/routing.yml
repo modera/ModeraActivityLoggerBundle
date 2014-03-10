@@ -1,0 +1,9 @@
+
+modera_js_runtime_integration:
+    resource: "@ModeraJSRuntimeIntegrationBundle/Controller/"
+    type:     annotation
+    prefix:   /backend
+
+mf_font_awesome:
+    path:      /font-awesome.js
+    defaults:  { _controller: ModeraJSRuntimeIntegrationBundle:Index:fontAwesome }
