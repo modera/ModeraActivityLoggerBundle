@@ -28,9 +28,6 @@ class IndexController extends Controller
         $runtimeConfig = $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
         $securedRuntimeConfig = $this->container->getParameter(ModeraSecurityAwareJSRuntimeExtension::CONFIG_KEY);
 
-        /* @var ServiceDefinitionsManager $definitionsMgr */
-        $definitionsMgr = $this->container->get('mf.jsruntimeintegrationbundle.csdi.service_definitions_manager');
-
         /* @var ContributorInterface $cssResourcesProvider */
         $cssResourcesProvider = $this->get('mf.jsruntimeintegration.css_resources_provider');
 
@@ -39,9 +36,22 @@ class IndexController extends Controller
 
         return [
             'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
-            'container_services' => $definitionsMgr->getDefinitions(),
             'css_resources' => $cssResourcesProvider->getItems(),
             'js_resources' => $jsResourcesProvider->getItems()
         ];
+    }
+
+    /**
+     * @Route("app.js")
+     * @Template
+     */
+    public function applicationAction()
+    {
+        /* @var ServiceDefinitionsManager $definitionsMgr */
+        $definitionsMgr = $this->container->get('mf.jsruntimeintegrationbundle.csdi.service_definitions_manager');
+
+        return array(
+            'container_services' => $definitionsMgr->getDefinitions(),
+        );
     }
 }

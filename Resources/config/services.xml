@@ -27,5 +27,11 @@
 
             <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
         </service>
+
+        <service id="modera_security_aware_js_runtime.contributions.js_resources_provider"
+                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\JsResourcesProvider">
+
+            <tag name="mf.jsruntimeintegration.js_resources_provider" />
+        </service>
     </services>
 </container>

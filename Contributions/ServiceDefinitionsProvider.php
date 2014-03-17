@@ -59,15 +59,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
                         'configProvider' => '@config_provider'
                     ]
                 ]
-            ],
-            'ui_security_plugin' => array(
-                'className' => 'MF.security.UiSecurityPlugin',
-                'tags' => ['runtime_plugin']
-            ),
-            'di_service_definitions_provider_plugin' => array(
-                'className' => 'MF.runtime.DiServiceDefinitionsProviderPlugin',
-                'tags' => ['runtime_plugin']
-            )
+            ]
         ];
     }
 }

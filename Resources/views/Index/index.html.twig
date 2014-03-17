@@ -24,7 +24,9 @@
     Ext.Loader.setConfig({
         enabled: true,
         paths: {
-            MFC: '{{ config.runtime_path }}/MFC'
+            MFC: '{{ config.runtime_path }}/MFC',
+            MF: '{{ config.runtime_path }}/MF',
+            X : '/bundles/moderasecurityawarejsruntime/js'
         }
     });
 
@@ -41,82 +43,12 @@
         Ext.each(Ext.ComponentQuery.query('window'), function(w) {
             if (w.isVisible()) {
                 w.doLayout();
+                w.center();
             }
         });
     });
 
-    Ext.application({
-        name: 'MF',
-        appFolder: '{{ config.runtime_path }}/MF',
-
-        requires: [
-            'MF.Util',
-            'MF.runtime.applications.authenticationaware.controller.Workbench'
-        ],
-
-        loadController: function(clazz) {
-
-            return this.getController(clazz);
-        },
-
-        /**
-         * @final
-         * @returns {MF.container.Container}
-         */
-        getContainer: function() {
-            if (!this.container) {
-                var definitions = this.getContainerServiceDefinitions();
-                this.modifyContainerServiceDefinitions(definitions);
-
-                this.container = Ext.create('MF.dependencyinjection.Container', {
-                    application: this,
-                    definitions: definitions
-                });
-
-                this.container.setParameter(
-                    'runtime.workbench_controller_class',
-                    MF.runtime.applications.authenticationaware.controller.Workbench.$className
-                );
-            }
-
-            return this.container;
-        },
-
-        /**
-         * @return {Object}
-         */
-        getWorkbenchController: function() {
-            return this.loadController(this.getContainer().getParameter('runtime.workbench_controller_class'));
-        },
-
-        // private
-        getContainerServiceDefinitions: function() {
-{% autoescape false %}
-            return {{ container_services|json_encode(constant('JSON_PRETTY_PRINT'))|mf_prepend_every_line(12, ' ', true) }};
-{% endautoescape %}
-        },
-
-        /**
-         * TEMPLATE-METHOD
-         *
-         * @protected
-         */
-        modifyContainerServiceDefinitions: function() {
-        },
-
-        // override
-        launch: function() {
-            var me = this;
-
-            Ext.each(['Viewport', 'Workbench'], function(clazz) {
-                me.loadController('MF.runtime.applications.authenticationaware.controller.' + clazz);
-            });
-
-            this.getContainer().get('root_execution_context').bootstrap(function() {
-                Ext.create('{{ config.viewport_class }}', {});
-            });
-        }
-    });
+    Ext.application('X.Application');
 </script>
 
 </body>
