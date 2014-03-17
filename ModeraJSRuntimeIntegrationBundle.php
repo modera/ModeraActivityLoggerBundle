@@ -2,6 +2,7 @@
 
 namespace Modera\JSRuntimeIntegrationBundle;
 
+use Modera\JSRuntimeIntegrationBundle\DependencyInjection\MenuItemContributorCompilerPass;
 use Sli\ExpanderBundle\DependencyInjection\CompositeContributorsProviderCompilerPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
@@ -24,6 +25,9 @@ class ModeraJSRuntimeIntegrationBundle extends Bundle
         $container->addCompilerPass(
             new CompositeContributorsProviderCompilerPass('mf.jsruntimeintegration.config.config_mergers_provider')
         );
+
+        // allows to contribute menu items by defining them in config file
+        $container->addCompilerPass(new MenuItemContributorCompilerPass());
 
         // allows to contribute sections that will be displayed in backend menu
         $container->addCompilerPass(
