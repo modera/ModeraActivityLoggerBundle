@@ -1,8 +1,8 @@
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
-Ext.define('Modera.backend.tools.runtime.ListView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.tools.runtime.ListActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
         'Modera.backend.tools.view.HostPanel',
@@ -15,7 +15,7 @@ Ext.define('Modera.backend.tools.runtime.ListView', {
     },
 
     // override
-    isHomeView: function() {
+    isHomeActivity: function() {
         return true;
     },
 
