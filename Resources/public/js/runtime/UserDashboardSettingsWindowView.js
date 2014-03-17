@@ -3,7 +3,7 @@
  * @copyright 2014 Modera Foundation
  */
 Ext.define('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
         'Modera.backend.dashboard.view.DashboardSettingsWindow'

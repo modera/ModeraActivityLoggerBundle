@@ -2,7 +2,7 @@
  * @author Alex Rudakov <alexandr.rudakov@modera.net>
  */
 Ext.define('Modera.backend.dashboard.runtime.SampleDashboardView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+    extend: 'MF.activation.activities.AbstractActivity',
 
     // override
     getId: function() {

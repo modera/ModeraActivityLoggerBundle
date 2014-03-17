@@ -12,7 +12,7 @@ Ext.define('Modera.backend.dashboard.runtime.Section', {
     activate: function(workbench, callback) {
         var dashboardView = Ext.create('Modera.backend.dashboard.runtime.DashboardsView');
 
-        this.registerViewsManager(workbench, [dashboardView, Ext.create('Modera.backend.dashboard.runtime.testing.DummyWindowView')]);
+        this.registerActivitiesManager(workbench, [dashboardView, Ext.create('Modera.backend.dashboard.runtime.testing.DummyWindowView')]);
 
         callback();
     }

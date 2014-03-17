@@ -19,7 +19,7 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
             'modera_backend_dashboard.settings_window_view_contributor' => array(
                 'className' => 'Modera.backend.dashboard.runtime.SettingsWindowContributor',
                 'args' => ['@application'],
-                'tags' => ['shared_views_provider']
+                'tags' => ['shared_activities_provider']
             )
         );
     }

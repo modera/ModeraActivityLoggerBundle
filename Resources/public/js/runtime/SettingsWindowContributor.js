@@ -68,7 +68,7 @@ Ext.define('Modera.backend.dashboard.runtime.SettingsWindowContributor', {
     },
 
     // override
-    getSharedViews: function(section) {
+    getSharedActivities: function(section) {
         if (section instanceof Modera.backend.security.toolscontribution.runtime.Section) {
             return [this.userSettingsWindowView, this.groupSettingsWindowView];
         }
