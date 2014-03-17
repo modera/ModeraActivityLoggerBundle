@@ -1,8 +1,8 @@
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
-Ext.define('Modera.backend.security.toolscontribution.runtime.group.EditRecordWindowView', {
-    extend: 'MF.viewsmanagement.views.BasicEditRecordWindowView',
+Ext.define('Modera.backend.security.toolscontribution.runtime.group.NewWindowActivity', {
+    extend: 'MF.activation.activities.BasicNewRecordWindowActivity',
 
     requires: [
         'Modera.backend.security.toolscontribution.view.group.NewAndEditWindow'
@@ -11,10 +11,10 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.group.EditRecordWi
     // override
     constructor: function(config) {
         var defaults = {
-            id: 'edit-group',
+            id: 'new-group',
             uiFactory: function() {
                 return Ext.create('Modera.backend.security.toolscontribution.view.group.NewAndEditWindow', {
-                    type: 'edit'
+                    type: 'new'
                 });
             },
             directClass: Actions.ModeraBackendSecurity_Groups

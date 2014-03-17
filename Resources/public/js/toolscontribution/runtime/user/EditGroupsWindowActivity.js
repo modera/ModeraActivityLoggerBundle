@@ -1,16 +1,16 @@
 /**
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
-Ext.define('Modera.backend.security.toolscontribution.runtime.user.EditWindowView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.security.toolscontribution.runtime.user.EditGroupsWindowActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
-        'Modera.backend.security.toolscontribution.view.user.EditWindow'
+        'Modera.backend.security.toolscontribution.view.user.EditGroupsWindow'
     ],
 
     // override
     getId: function() {
-        return 'edit-user';
+        return 'edit-groups';
     },
 
     // override
@@ -20,12 +20,12 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.EditWindowVie
                 { property: 'id', value: 'eq:' + params.id }
             ],
             hydration: {
-                profile: 'main-form'
+                profile: 'compact-list'
             }
         };
 
         Actions.ModeraBackendSecurity_Users.get(requestParams, function(response) {
-            var window = Ext.create('Modera.backend.security.toolscontribution.view.user.EditWindow');
+            var window = Ext.create('Modera.backend.security.toolscontribution.view.user.EditGroupsWindow');
 
             window.loadData(response.result);
 
@@ -39,19 +39,17 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.EditWindowVie
 
         ui.on('saveandclose', function(window) {
             var values = window.down('form').getForm().getValues();
+            values['groups'] = window.getAssignedGroupsIds()
 
             Actions.ModeraBackendSecurity_Users.update({ record: values }, function(response) {
                 if (response.success) {
-
-                    if (me.section) {
-                        me.section.fireEvent('recordsupdated', response['updated_models']);
-                    }
+                    me.section.fireEvent('recordsupdated', response['updated_models']);
 
                     window.close();
                 } else {
                     window.showErrors(response);
                 }
             });
-        })
+        });
     }
 });

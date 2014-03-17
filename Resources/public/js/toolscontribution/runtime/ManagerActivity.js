@@ -1,8 +1,8 @@
 /**
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
-Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
     ],
@@ -13,7 +13,7 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerView', {
     },
 
     // override
-    isHomeView: function() {
+    isHomeActivity: function() {
         return true;
     },
 

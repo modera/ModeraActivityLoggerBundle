@@ -1,8 +1,8 @@
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
-Ext.define('Modera.backend.security.toolscontribution.runtime.group.ListView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.security.toolscontribution.runtime.group.ListActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
         'Modera.backend.security.toolscontribution.view.group.Overview'

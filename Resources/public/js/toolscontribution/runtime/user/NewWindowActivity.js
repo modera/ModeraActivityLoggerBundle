@@ -1,8 +1,8 @@
 /**
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
-Ext.define('Modera.backend.security.toolscontribution.runtime.user.NewWindowView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.security.toolscontribution.runtime.user.NewWindowActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
         'Modera.backend.security.toolscontribution.view.user.NewWindow'

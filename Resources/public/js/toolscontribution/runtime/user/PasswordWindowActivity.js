@@ -1,8 +1,8 @@
 /**
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
-Ext.define('Modera.backend.security.toolscontribution.runtime.user.PasswordWindowView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.security.toolscontribution.runtime.user.PasswordWindowActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
         'Modera.backend.security.toolscontribution.view.user.PasswordWindow'

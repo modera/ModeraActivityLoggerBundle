@@ -1,8 +1,8 @@
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
-Ext.define('Modera.backend.security.toolscontribution.runtime.group.DeleteWindowView', {
-    extend: 'MF.viewsmanagement.views.BasicDeleteRecordWindowView',
+Ext.define('Modera.backend.security.toolscontribution.runtime.user.DeleteWindowActivity', {
+    extend: 'MF.activation.activities.BasicDeleteRecordWindowActivity',
 
     requires: [
         'MFC.window.DeleteRecordConfirmationWindow'
@@ -11,10 +11,10 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.group.DeleteWindow
     // override
     constructor: function(config) {
         var defaults = {
-            id: 'delete-group',
+            id: 'delete-user',
             uiClass: 'MFC.window.DeleteRecordConfirmationWindow',
-            directClass: Actions.ModeraBackendSecurity_Groups,
-            responseRecordNameKey: 'name'
+            directClass: Actions.ModeraBackendSecurity_Users,
+            responseRecordNameKey: 'username'
         };
 
         this.callParent([Ext.apply(defaults, config || {})]);
