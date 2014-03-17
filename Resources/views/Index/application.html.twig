@@ -1,0 +1,19 @@
+Ext.define('ModeraFoundationApp.Application', {
+    extend: 'MF.runtime.applications.authenticationaware.AuthenticationRequiredApplication',
+
+    name: 'ModeraFoundationApp',
+
+    requires: [
+        'MF.Util',
+        'MF.runtime.applications.authenticationaware.controller.Workbench'
+    ],
+
+    // override
+    modifyContainerServiceDefinitions: function(services) {
+{% autoescape false %}
+        var newServices = {{ container_services|json_encode(constant('JSON_PRETTY_PRINT'))|mf_prepend_every_line(8, ' ', true) }};
+{% endautoescape %}
+
+        return Ext.Object.merge(services, newServices);
+    }
+});

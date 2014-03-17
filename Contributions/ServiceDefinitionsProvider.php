@@ -56,7 +56,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
                             'isAuthenticated' => $this->getUrl($bundleConfig['is_authenticated_url']),
                             'logout'          => $this->getUrl($bundleConfig['logout_url']),
                         ],
-                        'configProvider' => '@config_provider'
+                        'authorizationMgr' => '@authorization_mgr'
                     ]
                 ]
             ]

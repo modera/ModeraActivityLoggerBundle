@@ -42,7 +42,7 @@ class IndexController extends Controller
     }
 
     /**
-     * @Route("app.js")
+     * @Route("/ModeraFoundation/Application.js", name="modera_security_aware_js_runtime.index.application")
      * @Template
      */
     public function applicationAction()
@@ -51,7 +51,7 @@ class IndexController extends Controller
         $definitionsMgr = $this->container->get('mf.jsruntimeintegrationbundle.csdi.service_definitions_manager');
 
         return array(
-            'container_services' => $definitionsMgr->getDefinitions(),
+            'container_services' => $definitionsMgr->getDefinitions()
         );
     }
 }
