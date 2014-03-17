@@ -1,7 +1,7 @@
 /**
  * @author Alex Rudakov <alexandr.rudakov@modera.net>
  */
-Ext.define('Modera.backend.dashboard.runtime.SampleDashboardView', {
+Ext.define('Modera.backend.dashboard.runtime.SampleDashboardActivity', {
     extend: 'MF.activation.activities.AbstractActivity',
 
     // override

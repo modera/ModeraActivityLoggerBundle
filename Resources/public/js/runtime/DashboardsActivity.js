@@ -1,7 +1,7 @@
 /**
  * @author Alex Rudakov <alexandr.rudakov@modera.org>
  */
-Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
+Ext.define('Modera.backend.dashboard.runtime.DashboardsActivity', {
     extend: 'MF.activation.activities.AbstractCompositeActivity',
 
     /**

@@ -2,8 +2,8 @@
  * @author Alex Rudakov <alexandr.rudakov@modera.org>
  * @copyright 2014 Modera Foundation
  */
-Ext.define('Modera.backend.dashboard.runtime.GroupDashboardSettingsWindowView', {
-    extend: 'Modera.backend.dashboard.runtime.UserDashboardSettingsWindowView',
+Ext.define('Modera.backend.dashboard.runtime.GroupDashboardSettingsWindowActivity', {
+    extend: 'Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity',
 
     requires: [
         'Modera.backend.dashboard.view.DashboardSettingsWindow'

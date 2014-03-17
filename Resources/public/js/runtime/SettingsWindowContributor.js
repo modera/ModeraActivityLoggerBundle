@@ -9,8 +9,8 @@ Ext.define('Modera.backend.dashboard.runtime.SettingsWindowContributor', {
 
     requires: [
         'Modera.backend.security.toolscontribution.runtime.Section',
-        'Modera.backend.dashboard.runtime.UserDashboardSettingsWindowView',
-        'Modera.backend.dashboard.runtime.GroupDashboardSettingsWindowView',
+        'Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity',
+        'Modera.backend.dashboard.runtime.GroupDashboardSettingsWindowActivity',
         'MF.Util'
     ],
 
@@ -21,8 +21,8 @@ Ext.define('Modera.backend.dashboard.runtime.SettingsWindowContributor', {
     constructor: function(application) {
         this.application = application;
 
-        this.userSettingsWindowView = Ext.create('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowView');
-        this.groupSettingsWindowView = Ext.create('Modera.backend.dashboard.runtime.GroupDashboardSettingsWindowView');
+        this.userSettingsWindowView = Ext.create('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity');
+        this.groupSettingsWindowView = Ext.create('Modera.backend.dashboard.runtime.GroupDashboardSettingsWindowActivity');
 
         this.contributeButton('modera-backend-security-user-list', 'userActions', this.onUserContributedButtonClicked);
         this.contributeButton('modera-backend-security-group-overview #groups', 'groupActions', this.onGroupContributedButtonClicked);
