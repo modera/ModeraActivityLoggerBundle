@@ -28,5 +28,7 @@ class ModeraJSRuntimeIntegrationExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->setParameter(self::CONFIG_KEY, $config);
     }
 }
