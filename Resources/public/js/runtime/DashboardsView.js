@@ -22,7 +22,7 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsView', {
     },
 
     // override
-    isHomeView: function() {
+    isHomeActivity: function() {
         return true;
     },
 
