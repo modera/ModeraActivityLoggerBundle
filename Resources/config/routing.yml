@@ -1,0 +1,9 @@
+modera_security.security:
+    resource: "@ModeraSecurityBundle/Controller/SecurityController.php"
+    type:     annotation
+    prefix:   /
+
+modera_security.user:
+    resource: "@ModeraSecurityBundle/Controller/UserController.php"
+    type:     annotation
+    prefix:   /

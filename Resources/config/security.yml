@@ -1,0 +1,66 @@
+services:
+    modera_security.security.logout_success_handler:
+        class: Modera\SecurityBundle\Security\LogoutSuccessHandler
+        arguments:
+            - @security.http_utils
+            - /
+
+    modera_security.security.authenticator:
+        class: Modera\SecurityBundle\Security\Authenticator
+        arguments:
+            - @security.encoder_factory
+
+    modera_security.security.entity_user_provider:
+        class: Modera\SecurityBundle\Security\EntityUserProvider
+        arguments:
+            - @doctrine.orm.entity_manager
+            - Modera\SecurityBundle\Entity\User
+
+    security.user_provider:
+        alias: modera_security.security.entity_user_provider
+
+security:
+    encoders:
+        Modera\SecurityBundle\Entity\User:
+            algorithm:        sha1
+            encode_as_base64: false
+            iterations:       1
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        modera_provider:
+            id: security.user_provider
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern:  ^/login$
+            security: false
+
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+            context: modera_auth
+            provider: authenticator
+            simple-form:
+                provider:      modera_provider
+                authenticator: modera_security.security.authenticator
+                check_path:    _security_check
+                login_path:    _security_login
+            logout:
+                path:   _security_logout
+                success_handler: modera_security.security.logout_success_handler
+#            remember_me:
+#                key:      "%secret%"
+#                lifetime: 31536000 # 365 days in seconds
+#                path:     /
+#                domain:   ~ # Defaults to the current domain from $_SERVER
+
+    access_control:
+        - { path: ^/backend/.+, roles: ROLE_USER }
