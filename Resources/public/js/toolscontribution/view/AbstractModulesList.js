@@ -21,6 +21,11 @@ Ext.define('Modera.backend.module.toolscontribution.view.AbstractModulesList', {
             emptyCls: 'mfc-grid-empty-text',
             cls: 'modera-backend-module-grid',
             monitorModel: 'modera.backend_module_bundle.module',
+            listeners: {
+                'afterrender': function(grid) {
+                    grid.view.refresh();
+                }
+            },
             columns: [
                 {
                     width: 55,

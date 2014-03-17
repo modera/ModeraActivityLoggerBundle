@@ -5,20 +5,20 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.Section', {
     extend: 'MF.runtime.Section',
 
     requires: [
-        'Modera.backend.module.toolscontribution.runtime.AvailableModulesListView',
-        'Modera.backend.module.toolscontribution.runtime.InstalledModulesListView',
-        'Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowView'
+        'Modera.backend.module.toolscontribution.runtime.AvailableModulesListActivity',
+        'Modera.backend.module.toolscontribution.runtime.InstalledModulesListActivity',
+        'Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowActivity'
     ],
 
     // override
     activate: function(workbench, callback) {
 //        workbench.getApplication().loadController('Modera.backend.tools.controller.Controller');
 
-        var installedModuleListView = Ext.create('Modera.backend.module.toolscontribution.runtime.InstalledModulesListView'),
-            availableModulesListView = Ext.create('Modera.backend.module.toolscontribution.runtime.AvailableModulesListView'),
-            moduleDetailsWindowView = Ext.create('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowView');
+        var installedModuleListActivity = Ext.create('Modera.backend.module.toolscontribution.runtime.InstalledModulesListActivity'),
+            availableModulesListActivity = Ext.create('Modera.backend.module.toolscontribution.runtime.AvailableModulesListActivity'),
+            moduleDetailsWindowActivity = Ext.create('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowActivity');
 
-        this.registerViewsManager(workbench, [availableModulesListView, installedModuleListView, moduleDetailsWindowView]);
+        this.registerActivitiesManager(workbench, [availableModulesListActivity, installedModuleListActivity, moduleDetailsWindowActivity]);
 
         callback();
     }

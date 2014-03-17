@@ -1,8 +1,8 @@
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
-Ext.define('Modera.backend.module.toolscontribution.runtime.InstalledModulesListView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.module.toolscontribution.runtime.InstalledModulesListActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
     ],
@@ -13,7 +13,7 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.InstalledModulesList
     },
 
     // override
-    isHomeView: function() {
+    isHomeActivity: function() {
         return true;
     },
 
@@ -31,7 +31,6 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.InstalledModulesList
         panel.getStore().load({
             callback: function() {
                 onReadyCallback(panel);
-                panel.view.refresh();
             }
         });
     }

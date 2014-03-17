@@ -1,8 +1,8 @@
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
-Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
         'MFC.container.Header',
@@ -21,15 +21,15 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.ModuleDetailsWindowV
     doCreateUi: function(params, callback) {
         var me = this;
 
-        var previousView = null;
-        var views = this.workbench.getViewsManager().getActiveViews();
-        if (views[views.length - 1]) {
-            previousView = views[views.length - 1];
-            previousView.getUi().setLoading(this.loadingText);
+        var previousActivity = null;
+        var activities = this.workbench.getActivitiesManager().getActiveActivities();
+        if (activities[activities.length - 1]) {
+            previousActivity = activities[activities.length - 1];
+            previousActivity.getUi().setLoading(this.loadingText);
         }
 
         Actions.ModeraBackendModule_Default.getModuleDetails({ id: params.id }, function(response) {
-            previousView.getUi().setLoading(false);
+            previousActivity.getUi().setLoading(false);
 
             var w = Ext.create('Ext.window.Window', {
                 width: 960,

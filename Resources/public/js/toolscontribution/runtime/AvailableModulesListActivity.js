@@ -2,8 +2,8 @@
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
-Ext.define('Modera.backend.module.toolscontribution.runtime.AvailableModulesListView', {
-    extend: 'MF.viewsmanagement.views.AbstractView',
+Ext.define('Modera.backend.module.toolscontribution.runtime.AvailableModulesListActivity', {
+    extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
     ],
@@ -27,20 +27,17 @@ Ext.define('Modera.backend.module.toolscontribution.runtime.AvailableModulesList
     doCreateUi: function(params, onReadyCallback) {
         var panel = Ext.create('Modera.backend.module.toolscontribution.view.AvailableModulesList', {});
 
-        var previousView = null;
-        var views = this.workbench.getViewsManager().getActiveViews();
-        if (views[views.length - 1]) {
-            previousView = views[views.length - 1];
-            previousView.getUi().setLoading(this.loadingText);
+        var previousActivity = null;
+        var activities = this.workbench.getActivitiesManager().getActiveActivities();
+        if (activities[activities.length - 1]) {
+            previousActivity = activities[activities.length - 1];
+            previousActivity.getUi().setLoading(this.loadingText);
         }
 
         panel.getStore().load({
             callback: function() {
-                previousView.getUi().setLoading(false);
-
+                previousActivity.getUi().setLoading(false);
                 onReadyCallback(panel);
-
-                panel.view.refresh();
             }
         });
     }

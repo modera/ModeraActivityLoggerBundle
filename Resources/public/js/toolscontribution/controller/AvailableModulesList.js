@@ -18,11 +18,11 @@ Ext.define('Modera.backend.module.toolscontribution.controller.AvailableModulesL
 
     // private
     showModuleDetails: function(panel, record) {
-        this.application.getContainer().get('workbench').activateView('module-details-window', { id: record.get('id') });
+        this.application.getContainer().get('workbench').launchActivity('module-details-window', { id: record.get('id') });
     },
 
     // private
     showInatalledModules: function() {
-        this.application.getContainer().get('workbench').activateView('installed-modules-list');
+        this.application.getContainer().get('workbench').launchActivity('installed-modules-list');
     }
 });
