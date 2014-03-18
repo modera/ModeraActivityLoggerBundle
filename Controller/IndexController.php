@@ -9,6 +9,7 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Entry point to web application.
@@ -34,16 +35,26 @@ class IndexController extends Controller
         /* @var ContributorInterface $cssResourcesProvider */
         $jsResourcesProvider = $this->get('mf.jsruntimeintegration.js_resources_provider');
 
+        /* @var RouterInterface $router */
+        $router = $this->get('router');
+        // converting URL like /app_dev.php/backend/ModeraFoundation/Application.js to /app_dev.php/backend/ModeraFoundation
+        $appLoadingPath = $router->generate('modera_security_aware_js_runtime.index.application');
+        $appLoadingPath = substr($appLoadingPath, 0, strpos($appLoadingPath, 'Application.js') - 1);
+
         return [
             'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
             'css_resources' => $cssResourcesProvider->getItems(),
             'js_resources' => $jsResourcesProvider->getItems(),
-            'app_name' => $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_APP_NAME)
+            'app_name' => $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_APP_NAME),
+            'app_loading_path' => $appLoadingPath
         ];
     }
 
     /**
-     * @Route("/%mf.jsruntimeintegration.config.app_name%/Application.js", name="modera_security_aware_js_runtime.index.application")
+     * @Route(
+     *   pattern="/%mf.jsruntimeintegration.config.app_name%/Application.js",
+     *   name="modera_security_aware_js_runtime.index.application"
+     * )
      * @Template
      */
     public function applicationAction()
