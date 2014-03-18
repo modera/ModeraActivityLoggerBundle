@@ -27,7 +27,7 @@
         paths: {
             MFC: '{{ config.runtime_path }}/MFC',
             MF: '{{ config.runtime_path }}/MF',
-            {{ app_name }} : '{{ app_loading_path }}'
+            {{ config.app_name }}: '{{ app_loading_path }}'
         }
     });
 
@@ -49,7 +49,7 @@
         });
     });
 
-    Ext.application('{{ app_name }}.Application');
+    Ext.application('{{ config.app_name }}.Application');
 </script>
 
 </body>

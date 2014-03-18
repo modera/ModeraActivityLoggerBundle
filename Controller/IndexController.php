@@ -41,16 +41,17 @@ class IndexController extends Controller
         $appLoadingPath = $router->generate('modera_security_aware_js_runtime.index.application');
         $appLoadingPath = substr($appLoadingPath, 0, strpos($appLoadingPath, 'Application.js') - 1);
 
-        return [
+        return array(
             'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
             'css_resources' => $cssResourcesProvider->getItems(),
             'js_resources' => $jsResourcesProvider->getItems(),
-            'app_name' => $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_APP_NAME),
             'app_loading_path' => $appLoadingPath
-        ];
+        );
     }
 
     /**
+     * Dynamically generates an entry point to backend application.
+     *
      * @Route(
      *   pattern="/%mf.jsruntimeintegration.config.app_name%/Application.js",
      *   name="modera_security_aware_js_runtime.index.application"
@@ -64,7 +65,7 @@ class IndexController extends Controller
 
         return array(
             'container_services' => $definitionsMgr->getDefinitions(),
-            'app_name' => $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_APP_NAME)
+            'config' => $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY)
         );
     }
 }
