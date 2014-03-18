@@ -37,12 +37,13 @@ class IndexController extends Controller
         return [
             'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
             'css_resources' => $cssResourcesProvider->getItems(),
-            'js_resources' => $jsResourcesProvider->getItems()
+            'js_resources' => $jsResourcesProvider->getItems(),
+            'app_name' => $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_APP_NAME)
         ];
     }
 
     /**
-     * @Route("/ModeraFoundation/Application.js", name="modera_security_aware_js_runtime.index.application")
+     * @Route("/%mf.jsruntimeintegration.config.app_name%/Application.js", name="modera_security_aware_js_runtime.index.application")
      * @Template
      */
     public function applicationAction()
@@ -51,7 +52,8 @@ class IndexController extends Controller
         $definitionsMgr = $this->container->get('mf.jsruntimeintegrationbundle.csdi.service_definitions_manager');
 
         return array(
-            'container_services' => $definitionsMgr->getDefinitions()
+            'container_services' => $definitionsMgr->getDefinitions(),
+            'app_name' => $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_APP_NAME)
         );
     }
 }

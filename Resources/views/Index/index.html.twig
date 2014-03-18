@@ -27,7 +27,7 @@
         paths: {
             MFC: '{{ config.runtime_path }}/MFC',
             MF: '{{ config.runtime_path }}/MF',
-            ModeraFoundationApp : '/app_dev.php/backend/ModeraFoundation'
+            {{ app_name }} : '/app_dev.php/backend/{{ app_name }}'
         }
     });
 
@@ -49,7 +49,7 @@
         });
     });
 
-    Ext.application('ModeraFoundationApp.Application');
+    Ext.application('{{ app_name }}.Application');
 </script>
 
 </body>
