@@ -53,7 +53,7 @@ Ext.define('Modera.backend.dashboard.runtime.SettingsWindowContributor', {
     onUserContributedButtonClicked: function(btn) {
         var user = btn.up('modera-backend-security-user-list').getSelectionModel().getSelection()[0];
 
-        this.application.getContainer().get('workbench').activateView('user-dashboard-settings', {
+        this.application.getContainer().get('workbench').launchActivity('user-dashboard-settings', {
             id: user.get('id')
         });
     },
@@ -62,7 +62,7 @@ Ext.define('Modera.backend.dashboard.runtime.SettingsWindowContributor', {
     onGroupContributedButtonClicked: function(btn) {
         var group = btn.up('modera-backend-security-group-overview #groups').getSelectionModel().getSelection()[0];
 
-        this.application.getContainer().get('workbench').activateView('group-dashboard-settings', {
+        this.application.getContainer().get('workbench').launchActivity('group-dashboard-settings', {
             id: group.get('id')
         });
     },
