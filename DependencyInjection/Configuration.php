@@ -76,6 +76,17 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('deployment_url')
                     ->defaultValue(null)
                 ->end()
+                // this is going to be used as configuration parameter for instance of Ext.app.Application and
+                // corresponding server controller's action that will be responsible for generating subclass
+                // of Application class. A value for this configuration property must be a valid not-escpaed hash object
+                // value. For example, valid names are:
+                // Foo
+                // Mega_Application
+                // Invalid names:
+                // Mega Application
+                ->scalarNode('app_name')
+                    ->defaultValue('ModeraFoundation')
+                ->end()
             ->end()
         ;
 
