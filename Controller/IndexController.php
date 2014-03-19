@@ -52,10 +52,9 @@ class IndexController extends Controller
     /**
      * Dynamically generates an entry point to backend application.
      *
-     * @Route(
-     *   pattern="/%mf.jsruntimeintegration.config.app_name%/Application.js",
-     *   name="modera_security_aware_js_runtime.index.application"
-     * )
+     * @see Resources/config/routing.yml
+     * @see \Modera\SecurityAwareJSRuntimeBundle\Contributions\RoutingResourcesProvider
+     *
      * @Template
      */
     public function applicationAction()
