@@ -31,9 +31,6 @@ class IndexController extends Controller
         return new Response(json_encode($configManager->getConfig(), \JSON_PRETTY_PRINT));
     }
 
-    /**
-     * @Route("/font-awesome.js", name="mf_font_awesome_secured")
-     */
     public function fontAwesomeAction()
     {
         $response = new Response(FontAwesome::jsCode());

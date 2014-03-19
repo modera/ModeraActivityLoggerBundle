@@ -52,5 +52,11 @@
 
             <tag name="mf.jsruntimeintegration.css_resources_provider" />
         </service>
+
+        <service id="jsruntimeintegration.contributions.routing_resources_provider"
+                 class="Modera\JSRuntimeIntegrationBundle\Contributions\RoutingResourcesProvider">
+
+            <tag name="modera_routing.routing_resources_provider" />
+        </service>
     </services>
 </container>
