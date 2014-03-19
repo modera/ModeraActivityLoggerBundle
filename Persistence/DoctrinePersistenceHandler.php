@@ -7,6 +7,9 @@ use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Sli\ExtJsIntegrationBundle\QueryBuilder\ExtjsQueryBuilder;
 
 /**
+ * Implementations of PersistenceHandlerInterface which eventually will use Doctrine's EntityManager to communicate
+ * with database.
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
@@ -15,6 +18,10 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     private $em;
     private $queryBuilder;
 
+    /**
+     * @param EntityManager $em
+     * @param ExtjsQueryBuilder $queryBuilder
+     */
     public function __construct(EntityManager $em, ExtjsQueryBuilder $queryBuilder)
     {
         $this->em = $em;
@@ -28,9 +35,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @param string $entityClass
-     *
-     * @return string[]
+     * @inheritDoc
      */
     public function resolveEntityPrimaryKeyFields($entityClass)
     {
@@ -51,9 +56,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @param object $entity
-     *
-     * @return OperationResult
+     * @inheritDoc
      */
     public function save($entity)
     {
@@ -69,9 +72,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @param object $entity
-     *
-     * @return OperationResult
+     * @inheritDoc
      */
     public function update($entity)
     {

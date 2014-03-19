@@ -73,6 +73,15 @@ class DummyArticle
     {
         return get_called_class();
     }
+
+    static public function formatNewValues(array $params, array $config, $container)
+    {
+        return array(
+            'params' => $params,
+            'config' => $config,
+            'container' => $container
+        );
+    }
 }
 
 class DataController extends AbstractCrudController
@@ -503,5 +512,22 @@ class AbstractCrudControllerTest extends FunctionalTestCase
         ));
 
         $this->assertValidExceptionResult($result);
+    }
+
+    public function testGetNewRecordValuesAction()
+    {
+        $params = array('params');
+
+        $output = $this->controller->getNewRecordValuesAction($params);
+
+        $this->assertTrue(is_array($output));
+        $this->assertArrayHasKey('params', $output);
+        $this->assertSame($params, $output['params']);
+        $this->assertArrayHasKey('config', $output);
+        $this->assertTrue(is_array($output['config']));
+        // we can't do just values comparison here because it goes to some kind of recursion
+        $this->assertSame(array_keys($this->controller->getPreparedConfig()), array_keys($output['config']));
+        $this->assertArrayHasKey('container', $output);
+        $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerInterface', $output['container']);
     }
 }

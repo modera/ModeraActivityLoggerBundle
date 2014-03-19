@@ -4,12 +4,14 @@ namespace Modera\ServerCrudBundle\Controller;
 
 use Doctrine\ORM\NoResultException;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
+use Modera\ServerCrudBundle\DependencyInjection\ModeraServerCrudExtension;
 use Modera\ServerCrudBundle\EntityFactory\EntityFactoryInterface;
 use Modera\ServerCrudBundle\ExceptionHandling\ExceptionHandlerInterface;
 use Modera\ServerCrudBundle\Exceptions\BadRequestException;
 use Modera\ServerCrudBundle\Exceptions\MoreThanOneResultException;
 use Modera\ServerCrudBundle\Exceptions\NothingFoundException;
 use Modera\ServerCrudBundle\Hydration\HydrationService;
+use Modera\ServerCrudBundle\NewValuesFactory\NewValuesFactoryInterface;
 use Modera\ServerCrudBundle\Persistence\ModelManagerInterface;
 use Modera\ServerCrudBundle\Persistence\OperationResult;
 use Modera\ServerCrudBundle\Persistence\PersistenceHandlerInterface;
@@ -21,10 +23,21 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
+ * Class provides tools for fulfilling CRUD operations.
+ *
+ * When you create a subclass of AbstractCrudController you must implement `getConfig` method which must
+ * contain at least two configuration properties:
+ *
+ * - entity -- Fully qualified class name of entity this controller will be responsible for
+ * - hydration -- Data hydration rules
+ *
+ * For more details on other available configuration properties and general how-tos please refer to the bundle's
+ * README.md file.
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-abstract class AbstractCrudController extends AbstractBaseController
+abstract class AbstractCrudController extends AbstractBaseController implements CrudControllerInterface
 {
     /**
      * @return array
@@ -60,6 +73,9 @@ abstract class AbstractCrudController extends AbstractBaseController
             },
             'exception_handler' => function(\Exception $e, $operation, ExceptionHandlerInterface $defaultHandler, ContainerInterface $container) {
                 return $defaultHandler->createResponse($e, $operation);
+            },
+            'format_new_entity_values' => function(array $params, array $config, NewValuesFactoryInterface $defaultImpl, ContainerInterface $container) {
+                return $defaultImpl->getValues($params, $config);
             },
             // optional
             'ignore_standard_validator' => false,
@@ -99,11 +115,22 @@ abstract class AbstractCrudController extends AbstractBaseController
     }
 
     /**
+     * @param string $serviceType
+     * @return object
+     */
+    private function getConfiguredService($serviceType)
+    {
+        $config = $this->container->getParameter(ModeraServerCrudExtension::CONFIG_KEY);
+
+        return $this->container->get($config[$serviceType]);
+    }
+
+    /**
      * @return PersistenceHandlerInterface
      */
     private function getPersistenceHandler()
     {
-        return $this->get('modera_server_crud.persistence.default_handler');
+        return $this->getConfiguredService('persistence_handler');
     }
 
     /**
@@ -111,7 +138,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getModelManager()
     {
-        return $this->container->get('modera_server_crud.persistence.model_manager');
+        return $this->getConfiguredService('model_manager');
     }
 
     /**
@@ -119,7 +146,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getEntityValidator()
     {
-        return $this->container->get('modera_server_crud.validation.entity_validator_service');
+        return $this->getConfiguredService('entity_validator');
     }
 
     /**
@@ -127,7 +154,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getDataMapper()
     {
-        return $this->container->get('modera_server_crud.data_mapping.default_data_mapper');
+        return $this->getConfiguredService('data_mapper');
     }
 
     /**
@@ -135,7 +162,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getEntityFactory()
     {
-        return $this->container->get('modera_server_crud.entity_factory.default_entity_factory');
+        return $this->getConfiguredService('entity_factory');
     }
 
     /**
@@ -143,7 +170,7 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getExceptionHandler()
     {
-        return $this->container->get('modera_server_crud.exception_handling.handler');
+        return $this->getConfiguredService('exception_handler');
     }
 
     /**
@@ -151,7 +178,15 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     private function getHydrator()
     {
-        return $this->get('modera_server_crud.hydration.hydration_service');
+        return $this->getConfiguredService('hydrator');
+    }
+
+    /**
+     * @return NewValuesFactoryInterface
+     */
+    private function getNewValuesFactory()
+    {
+        return $this->getConfiguredService('new_values_factory');
     }
 
     /**
@@ -366,12 +401,11 @@ abstract class AbstractCrudController extends AbstractBaseController
      */
     public function getNewRecordValuesAction(array $params)
     {
-        $now = time();
-        return array(
-            'firstname' => 'Firstname ' . $now,
-            'lastname' => 'Lastname ' . $now,
-            'personalCode' => 38812210283
-        );
+        $config = $this->getPreparedConfig();
+
+        $newValuesFactory = $config['format_new_entity_values'];
+
+        return $newValuesFactory($params, $config, $this->getNewValuesFactory(), $this->container);
     }
 
     /**

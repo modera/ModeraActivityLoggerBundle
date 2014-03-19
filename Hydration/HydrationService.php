@@ -6,8 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
 /**
- * Service is responsible for converting given entity/entities to something that should be sent back
- * to client-side.
+ * Service is responsible for converting given entity/entities to something that can be sent back to client-side.
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
@@ -17,6 +16,9 @@ class HydrationService
     private $container;
     private $accessor;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
@@ -86,7 +88,7 @@ class HydrationService
         /* @var HydrationProfile $profile */
         $profile = $configAnalyzer->getProfileDefinition($profile);
 
-        if (null === $groups) { // going to hydration all groups if none are explicitly specified
+        if (null === $groups) { // going to hydrate all groups if none are explicitly specified
             $result = array();
 
             foreach ($profile->getGroups() as $groupName) {
