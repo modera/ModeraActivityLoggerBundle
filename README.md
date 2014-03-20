@@ -723,13 +723,23 @@ you can use `save_entity_handler` or `update_entity_handler` when implementing `
     public function getConfig() {
         $fn = function($entity, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
             $container->get('logger')->info(sprintf('Persisting %s to database', get_class($entity));
+
+            $defaultHandler->
         }
 
         return array(
             'entity' => '...',
             'hydration' => '...',
-            'save_entity_handler' => $fn,
-            'update_entity_handler => $fn
+            'save_entity_handler' => function($entity, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
+                 $container->get('logger')->info(sprintf('Persisting %s to database', get_class($entity));
+
+                 $defaultHandler->save($entity);
+             },
+            'update_entity_handler => function($entity, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
+               $container->get('logger')->info(sprintf('Updating %s in database', get_class($entity));
+
+               $defaultHandler->update($entity);
+            },
         );
     }
 
