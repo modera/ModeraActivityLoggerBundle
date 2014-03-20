@@ -11,7 +11,7 @@ from client-side. These operations are supported:
 
 What this bundle does:
 
- * Provides super-type controller that you can inherit from to leverage all aforementioned operations
+ * Provides a super-type controller that you can inherit from to harness power of all aforementioned operations
  * Integrates a powerful querying language where you define queries using JSON - now you can safely build queries
    on client-side
  * Hydration package - this component provides a nice way of converting your entities to data-structure that can
@@ -574,12 +574,192 @@ AbstractCrudController relies upon.
 
 ### Mapping data
 
+If you have very specific requirements when it comes to binding data from client-side onto your entities then you can
+extend existing or create a new implementation of \Modera\ServerCrudBundle\DataMapping\DataMapperInterface interface.
+Once you have created it you can use bundle semantic configuration to register it:
+
+    modera_server_crud:
+        data_mapper:  your_mapper_di_service_id
+
+When using bundle semantic configuration then all subclasses of \Modera\ServerCrudBundle\Controller\AbstractCrudController
+will use a new data-mapping logic but sometimes all you need to is to have non-standard mapping logic just for one
+specific controller, in this case you can use `map_data_on_create` and `map_data_on_update` configuration properties
+when implementing `getConfig` method:
+
+    // override
+    public function getConfig() {
+        $fn = function(array $params, $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) {
+            $defaultMapper->mapData($params, $entity);
+
+            $sc = $container->get('security.context');
+
+            $user = $sc->getToken()->getUser();
+            if (is_object($user)) {
+                $entity->setManager();
+            }
+        }
+
+        return array(
+            'entity' => '...',
+            'hydration' => '...',
+            'map_data_on_create' => $fn,
+            'map_data_on_update' => $fn
+        );
+    }
+
+Both `map_data_on_create` and `map_data_on_update` share identical method signature ( set of accepted parameters ).
+
 ### Creating new instances of entities
+
+Before something can be persisted to database you need to convert a data-structure received from client-side to something
+that you can pass to persistence layer. When you are working with ORM ( because you are using Symfony we believe you are
+using ORM ) before you can map data onto entity you need to create its instance of configured with `getConfig` method
+configuration property `entity`. AbstractCrudController relies on implementation of
+\Modera\ServerCrudBundle\EntityFactory\EntityFactoryInterface to have new entities created. By default a very simple
+implementation is used which will create instances using class constructors -
+\Modera\ServerCrudBundle\EntityFactory\DefaultEntityFactory. Sometimes you may want to add support for class factory methods,
+for this to happen you can implement EntityFactoryInterface and register your implementation using `entity_factory`
+bundle configuration parameter:
+
+    modera_server_crud:
+            entity_factory:  your_entity_factory_service_id
+
+If you don't want to make all subclasses of AbstractCrudController use your service but instead just one specific controller
+then you can use `create_entity` configuration property when implementing `getConfig` method:
+
+    // override
+    public function getConfig() {
+        return array(
+            'entity' => '...',
+            'hydration' => '...',
+            'create_entity' => function(array $params, array $config, EntityFactoryInterface $defaultFactory, ContainerInterface $container) {
+                return EntityClass::create();
+            }
+        );
+    }
 
 ### Handling exceptions
 
+Sometimes your application logic may throw domain exception that you want to handle in a very specific way or a response
+that you want to send to server-side should convey some additional data. If you have this requirement then you need
+to use `exception_handler` bundle configuration property:
+
+    modera_server_crud:
+        exception_handler: your_handler_service_id
+
+`your_handler_service_id` must point a DI service which implements \Modera\ServerCrudBundle\ExceptionHandling\ExceptionHandlerInterface
+interface.
+
+Approach described above will change logic for all controllers, if you need to change logic for just one controller
+then you can use `exception_handler` configuration property when implementing `getConfig` method:
+
+    // override
+    public function getConfig() {
+        return array(
+            'entity' => '...',
+            'hydration' => '...',
+            'exception_handler' => function(\Exception $e, $operation, ExceptionHandlerInterface $defaultHandler, ContainerInterface $container) {
+                $response = $defaultHandler->createResponse($e, $operation);
+                if ($e instanceof TranslataleException) {
+                    $response['message'] = $container->get('translator')->translate($e->getToken());
+                }
+
+                return $response;
+            },
+        );
+    }
+
+`$operation` parameter of 'exception_handler' callback will contain values of ExceptionHandlerInterface::OPERATION_*
+constants.
+
 ### Create data templates for new records
+
+As we already explained in "Getting new record data structure template" section sometimes you may need some default
+values for fields when create a new record on client-side side. A component which is responsible for this logic is configured
+using `new_values_factory` bundle configuration property:
+
+    modera_server_crud:
+        new_values_factory: service_id
+
+`service_id` must point to a service which implements \Modera\ServerCrudBundle\NewValuesFactory\NewValuesFactoryInterface
+interface.
+
+If don't want to create a universal handler for all controllers and want to change default logic for just one controller
+then you need to use `format_new_entity_values` configuration property when implementing `getConfig` method:
+
+    // override
+    public function getConfig() {
+        return array(
+            'entity' => '...',
+            'hydration' => '...',
+            'format_new_entity_values' => function(array $params, array $config, NewValuesFactoryInterface $defaultImpl, ContainerInterface $container) {
+                $now = new \DateTime('now');
+                return array(
+                    'billing_date' => $now->format('d.m.Y');
+                );
+             },
+        );
+    }
 
 ### Persistence and querying
 
+Persistence is a term which is used to generally refer to a layer which is responsible for persisting your data to
+some non-ephemeral storage - once you pushed your data to persistence storage later you should be able to fetch from there.
+Most of the time when you think of persistence you will think of relational databases like MySQL, or NoSQL databases
+like MongoDB but essentially you can store your data in a plain file or even use some remote web-service endpoint,
+AbstractCrudController doesn't need to know details because it relies on
+\Modera\ServerCrudBundle\Persistence\PersistenceHandlerInterface interface not on any specific implementation. Out of the
+box the bundle provides implementation which is capable of persisting data to all databases which Doctrine ORM supports,
+but if you need to create your own implementation then you will need to implement PersistenceHandlerInterface, register
+it in service container and use bundle's configuration property `persistence_handler`:
+
+    modera_server_crud:
+        persistence_handler:  my_persistence_handler_service
+
+If all you need is to apply some additional conditions on how to data gets saved to persistent storage or updated, then
+you can use `save_entity_handler` or `update_entity_handler` when implementing `getConfig()` method:
+
+    // override
+    public function getConfig() {
+        $fn = function($entity, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
+            $container->get('logger')->info(sprintf('Persisting %s to database', get_class($entity));
+        }
+
+        return array(
+            'entity' => '...',
+            'hydration' => '...',
+            'save_entity_handler' => $fn,
+            'update_entity_handler => $fn
+        );
+    }
+
+As you can see `save_entity_handler` and  `update_entity_handler` share same arguments set.
+
 ### Validating
+
+Having your data validated before it gets persisted is inevitable step that you need to consider implementing to guarantee
+data consistency. When it comes to validation AbstractCrudController relies on implementations of
+\Modera\ServerCrudBundle\Validation\EntityValidatorInterface interface to process validation. Default implementation which
+is represented by \Modera\ServerCrudBundle\Validation\DefaultEntityValidator class allows you to leverage all power
+of built-in symfony validation package and adds one extra thing on top - domain validation. When implementing
+`getConfig()` method you can use `ignore_standard_validator` and `entity_validation_method` configuration properties.
+By default, whenever an entity gets persisted DefaultEntityValidator will check if `ignore_standard_validator` is
+still set to `FALSE` ( it's default value is FALSE ) and everything's okay it will try to locate method name which
+is configured with `entity_validation_method` ( default method name is `validate` ) and invoke this to let entity do some
+additional domain validation. For example, if we have a User entity which has $address field and before entity is
+persisted we want to make sure that provided address really exists, then we could come up with something like this:
+
+class User
+{
+    public $address;
+
+    public function validate(ValidationResult $result, ContainerInterface $c)
+    {
+        if (!$c->get('get_service')->addressExists($this->address)) {
+            $result->addFieldError('address', "Given address doesn't seem to exist");
+        }
+    }
+}
+
+First argument passed to `validate` method is instance of \Modera\ServerCrudBundle\Validation\ValidationResult and
+must be used to report validation errors - you can report both field related errors as well as general ones.

@@ -15,7 +15,7 @@ use Modera\ServerCrudBundle\NewValuesFactory\NewValuesFactoryInterface;
 use Modera\ServerCrudBundle\Persistence\ModelManagerInterface;
 use Modera\ServerCrudBundle\Persistence\OperationResult;
 use Modera\ServerCrudBundle\Persistence\PersistenceHandlerInterface;
-use Modera\ServerCrudBundle\Validation\EntityValidator;
+use Modera\ServerCrudBundle\Validation\DefaultEntityValidator;
 use Modera\ServerCrudBundle\Validation\ValidationResult;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Neton\DirectBundle\Annotation\Remote;
@@ -59,10 +59,10 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
             'map_data_on_update' => function(array $params, $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) {
                 $defaultMapper->mapData($params, $entity);
             },
-            'new_entity_validator' => function(array $params, $mappedEntity, EntityValidator $defaultValidator, array $config, ContainerInterface $container) {
+            'new_entity_validator' => function(array $params, $mappedEntity, DefaultEntityValidator $defaultValidator, array $config, ContainerInterface $container) {
                 return $defaultValidator->validate($mappedEntity, $config);
             },
-            'updated_entity_validator' => function(array $params, $mappedEntity, EntityValidator $defaultValidator, array $config, ContainerInterface $container) {
+            'updated_entity_validator' => function(array $params, $mappedEntity, DefaultEntityValidator $defaultValidator, array $config, ContainerInterface $container) {
                 return $defaultValidator->validate($mappedEntity, $config);
             },
             'save_entity_handler' => function($entity, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
@@ -142,7 +142,7 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
     }
 
     /**
-     * @return EntityValidator
+     * @return DefaultEntityValidator
      */
     private function getEntityValidator()
     {

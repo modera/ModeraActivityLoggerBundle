@@ -10,13 +10,14 @@ use Symfony\Component\Validator\ValidatorInterface;
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class EntityValidator
+class DefaultEntityValidator implements EntityValidatorInterface
 {
     private $validator;
     private $container;
 
     /**
      * @param ValidatorInterface $validator
+     * @param ContainerInterface $container
      */
     public function __construct(ValidatorInterface $validator, ContainerInterface $container)
     {
@@ -25,10 +26,7 @@ class EntityValidator
     }
 
     /**
-     * @param object $entity
-     * @param array  $config
-     *
-     * @return ValidationResult
+     * @inheritDoc
      */
     public function validate($entity, array $config)
     {

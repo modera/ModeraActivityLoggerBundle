@@ -11,6 +11,8 @@ namespace Modera\ServerCrudBundle\Persistence;
 interface PersistenceHandlerInterface
 {
     /**
+     * Must returns field names which can be used to uniqually identify a record.
+     *
      * @param string $entityClass
      *
      * @return string[]

@@ -35,7 +35,7 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('entity_validator')
-                    ->defaultValue('modera_server_crud.validation.entity_validator_service')
+                    ->defaultValue('modera_server_crud.validation.default_entity_validator')
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('data_mapper')

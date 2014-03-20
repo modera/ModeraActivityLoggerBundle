@@ -14,6 +14,10 @@ class DefaultDataMapper implements DataMapperInterface
     private $mapper;
     private $em;
 
+    /**
+     * @param EntityDataMapperService $mapper
+     * @param EntityManager           $em
+     */
     public function __construct(EntityDataMapperService $mapper, EntityManager $em)
     {
         $this->mapper = $mapper;

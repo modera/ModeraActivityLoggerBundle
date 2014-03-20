@@ -11,8 +11,8 @@
                  factory-method="create"
         />
 
-        <service id="modera_server_crud.validation.entity_validator_service"
-                 class="Modera\ServerCrudBundle\Validation\EntityValidator">
+        <service id="modera_server_crud.validation.default_entity_validator"
+                 class="Modera\ServerCrudBundle\Validation\DefaultEntityValidator">
 
             <argument type="service" id="validator" />
             <argument type="service" id="service_container" />

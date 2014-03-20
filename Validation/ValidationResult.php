@@ -3,6 +3,8 @@
 namespace Modera\ServerCrudBundle\Validation;
 
 /**
+ * Class should be used to report validation errors.
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
@@ -12,6 +14,8 @@ class ValidationResult
     private $generalErrors = array();
 
     /**
+     * Adds a field related error.
+     *
      * @param string $fieldName
      * @param string $error
      */
@@ -25,7 +29,10 @@ class ValidationResult
     }
 
     /**
-     * @param string[]
+     * You can use this method to report some general error ( error that is associated with no fields or associated
+     * to several ones at the same time and you don't want to show same error message for several fields ).
+     *
+     * @param string $error
      */
     public function addGeneralError($error)
     {
@@ -35,7 +42,7 @@ class ValidationResult
     /**
      * @param string $fieldName
      *
-     * @return array
+     * @return string[]
      */
     public function getFieldErrors($fieldName)
     {
@@ -43,7 +50,7 @@ class ValidationResult
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getGeneralErrors()
     {

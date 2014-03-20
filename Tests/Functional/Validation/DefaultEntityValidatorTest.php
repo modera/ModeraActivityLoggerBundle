@@ -3,7 +3,7 @@
 namespace Modera\ServerCrudBundle\Tests\Functional\Validation;
 
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
-use Modera\ServerCrudBundle\Validation\EntityValidator;
+use Modera\ServerCrudBundle\Validation\DefaultEntityValidator;
 use Modera\ServerCrudBundle\Validation\ValidationResult;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -39,20 +39,20 @@ class DummyEntityToValidationWithMethod
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
-class EntityValidatorTest extends FunctionalTestCase
+class DefaultEntityValidatorTest extends FunctionalTestCase
 {
-    /* @var EntityValidator */
+    /* @var DefaultEntityValidator */
     private $validator;
 
     // override
     public function doSetUp()
     {
-        $this->validator = self::$container->get('modera_server_crud.validation.entity_validator_service');
+        $this->validator = self::$container->get('modera_server_crud.validation.default_entity_validator');
     }
 
     public function testIfServiceExists()
     {
-        $this->assertInstanceOf(EntityValidator::clazz(), $this->validator);
+        $this->assertInstanceOf(DefaultEntityValidator::clazz(), $this->validator);
     }
 
     public function testValidateBySymfonyServices()

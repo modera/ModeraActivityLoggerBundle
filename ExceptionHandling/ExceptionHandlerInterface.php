@@ -3,6 +3,8 @@
 namespace Modera\ServerCrudBundle\ExceptionHandling;
 
 /**
+ * Implementations are responsible for converting exception to a response that will be sent back to client-side.
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
