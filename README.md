@@ -759,17 +759,17 @@ is configured with `entity_validation_method` ( default method name is `validate
 additional domain validation. For example, if we have a User entity which has $address field and before entity is
 persisted we want to make sure that provided address really exists, then we could come up with something like this:
 
-class User
-{
-    public $address;
-
-    public function validate(ValidationResult $result, ContainerInterface $c)
+    class User
     {
-        if (!$c->get('get_service')->addressExists($this->address)) {
-            $result->addFieldError('address', "Given address doesn't seem to exist");
+        public $address;
+
+        public function validate(ValidationResult $result, ContainerInterface $c)
+        {
+            if (!$c->get('get_service')->addressExists($this->address)) {
+                $result->addFieldError('address', "Given address doesn't seem to exist");
+            }
         }
     }
-}
 
 First argument passed to `validate` method is instance of \Modera\ServerCrudBundle\Validation\ValidationResult and
 must be used to report validation errors - you can report both field related errors as well as general ones.
