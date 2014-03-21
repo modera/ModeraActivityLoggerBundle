@@ -36,8 +36,9 @@ class DefaultNewValuesFactory implements NewValuesFactoryInterface
 
         if (method_exists($entityClass, $methodName)) {
             $reflClass = new \ReflectionClass($entityClass);
-            if ($reflClass->getMethod($methodName)->isStatic()) {
-                return $entityClass::{$methodName}($params, $config, $this->container);
+            $reflMethod = $reflClass->getMethod($methodName);
+            if ($reflMethod->isStatic()) {
+                return $reflMethod->invokeArgs(null, array($params, $config, $this->container));
             }
         }
 
