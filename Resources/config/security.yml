@@ -63,4 +63,4 @@ security:
 #                domain:   ~ # Defaults to the current domain from $_SERVER
 
     access_control:
-        - { path: ^/backend/.+, roles: ROLE_USER }
+        - { path: ^/backend/.+, roles: ROLE_BACKEND_USER }

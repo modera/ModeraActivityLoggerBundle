@@ -36,16 +36,16 @@ class Group
     private $name;
 
     /**
-     * @var Role[]
+     * @var Permission[]
      *
-     * @ORM\ManyToMany(targetEntity="Role", mappedBy="groups", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Permission", mappedBy="groups", cascade={"persist"})
      */
-    private $roles;
+    private $permissions;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->roles = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
     }
 
     static public function clazz()
@@ -65,24 +65,24 @@ class Group
     }
 
     /**
-     * @param Role $role
+     * @param Permission $role
      */
-    public function addRole(Role $role)
+    public function addPermission(Permission $role)
     {
         $role->addGroup($this);
-        if (!$this->roles->contains($role)) {
-            $this->roles->add($role);
+        if (!$this->permissions->contains($role)) {
+            $this->permissions->add($role);
         }
     }
 
     /**
-     * @param Role $role
+     * @param Permission $role
      *
      * @return boolean
      */
-    public function hasRole(Role $role)
+    public function hasPermission(Permission $role)
     {
-        return $this->roles->contains($role);
+        return $this->permissions->contains($role);
     }
 
     /**
@@ -123,16 +123,16 @@ class Group
         return $this->users;
     }
 
-    public function setRoles($roles)
+    public function setPermissions($roles)
     {
-        $this->roles = $roles;
+        $this->permissions = $roles;
     }
 
     /**
-     * @return Role[]
+     * @return Permission[]
      */
-    public function getRoles()
+    public function getPermissions()
     {
-        return $this->roles;
+        return $this->permissions;
     }
 }

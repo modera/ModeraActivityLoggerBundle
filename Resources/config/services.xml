@@ -10,6 +10,14 @@
 
             <tag name="modera_routing.routing_resources_provider" />
         </service>
+
+        <service id="modera_security.data_installation.permission_and_categories_installer"
+                 class="Modera\SecurityBundle\DataInstallation\PermissionAndCategoriesInstaller">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="modera_security.permission_categories_provider" />
+            <argument type="service" id="modera_security.permissions_provider" />
+        </service>
     </services>
 
 </container>

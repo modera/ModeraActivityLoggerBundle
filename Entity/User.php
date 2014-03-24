@@ -90,18 +90,18 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     private $groups;
 
     /**
-     * @var Role[]
+     * @var Permission[]
      *
-     * @ORM\ManyToMany(targetEntity="Role", mappedBy="users", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Permission", mappedBy="users", cascade={"persist"})
      */
-    private $roles;
+    private $permissions;
 
     public function __construct()
     {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
         $this->groups = new ArrayCollection();
-        $this->roles = new ArrayCollection();
+        $this->permissions = new ArrayCollection();
     }
 
     /**
@@ -121,13 +121,13 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @param Role $role
+     * @param Permission $role
      */
-    public function addRole(Role $role)
+    public function addPermission(Permission $role)
     {
         $role->addUser($this);
-        if (!$this->roles->contains($role)) {
-            $this->roles[] = $role;
+        if (!$this->permissions->contains($role)) {
+            $this->permissions[] = $role;
         }
     }
 
@@ -140,7 +140,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @return Role[]
+     * @return Permission[]
      */
     public function getRawRoles()
     {
@@ -150,7 +150,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
                 $roles[] = $role;
             }
         }
-        foreach ($this->roles as $role) {
+        foreach ($this->permissions as $role) {
             $roles[] = $role;
         }
 
@@ -399,6 +399,14 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * @return \Modera\SecurityBundle\Entity\Permission[]
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
     }
 
     /**
