@@ -42,6 +42,11 @@ class FunctionalTestCase extends WebTestCase
         }
     }
 
+    static private function emExists()
+    {
+        return self::$container->has('doctrine.orm.entity_manager');
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -50,9 +55,12 @@ class FunctionalTestCase extends WebTestCase
         static::$kernel = static::createKernel();
         static::$kernel->boot();
         static::$container = static::$kernel->getContainer();
-        static::$em = static::$kernel->getContainer()->get('doctrine.orm.entity_manager');
 
-        if (static::getIsolationLevel() == self::IM_CLASS) {
+        if (self::emExists()) {
+            static::$em = static::$container->get('doctrine.orm.entity_manager');
+        }
+
+        if (static::getIsolationLevel() == self::IM_CLASS && self::emExists()) {
             static::$em->getConnection()->beginTransaction();
         }
 
@@ -72,7 +80,7 @@ class FunctionalTestCase extends WebTestCase
      */
     final static public function tearDownAfterClass()
     {
-        if (static::getIsolationLevel() == self::IM_CLASS) {
+        if (static::getIsolationLevel() == self::IM_CLASS && self::emExists()) {
             static::rollbackTransaction();
         }
 
@@ -102,7 +110,7 @@ class FunctionalTestCase extends WebTestCase
      */
     final public function setUp()
     {
-        if ($this->getIsolationLevel() == self::IM_METHOD) {
+        if ($this->getIsolationLevel() == self::IM_METHOD && $this->emExists()) {
             self::$em->getConnection()->beginTransaction();
         }
 
@@ -121,11 +129,13 @@ class FunctionalTestCase extends WebTestCase
      */
     final public function tearDown()
     {
-        if ($this->getIsolationLevel() == self::IM_METHOD) {
+        if ($this->getIsolationLevel() == self::IM_METHOD && $this->emExists()) {
             self::rollbackTransaction();
         }
 
-        $this->logoutUser();
+        if (self::$container->has('security.context')) {
+            $this->logoutUser();
+        }
 
         $this->doTearDown();
     }
