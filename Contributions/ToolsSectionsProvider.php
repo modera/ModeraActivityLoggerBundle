@@ -2,8 +2,11 @@
 
 namespace Modera\BackendSecurityBundle\Contributions;
 
+use Modera\BackendSecurityBundle\ModeraBackendSecurityBundle;
 use Modera\BackendToolsBundle\Section\Section;
+use Modera\TranslationsBundle\Helper\T;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Contributes a section to Backend/Tools
@@ -13,19 +16,16 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class ToolsSectionsProvider implements ContributorInterface
 {
+    private $securityContext;
+
     private $items;
 
-    public function __construct()
+    /**
+     * @param SecurityContextInterface $securityContext
+     */
+    public function __construct(SecurityContextInterface $securityContext)
     {
-        $this->items = array(
-            new Section(
-                'Security permissions',
-                'tools.security',
-                'Control permissions of users/groups.',
-                '', '',
-                'modera-backend-security-tools-icon'
-            )
-        );
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -33,6 +33,20 @@ class ToolsSectionsProvider implements ContributorInterface
      */
     public function getItems()
     {
+        if (!$this->items) {
+            $this->items = array();
+
+            if ($this->securityContext->isGranted(ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION)) {
+                $this->items[] = new Section(
+                    T::trans('Security permissions'),
+                    'tools.security',
+                    T::trans('Control permissions of users/groups.'),
+                    '', '',
+                    'modera-backend-security-tools-icon'
+                );
+            }
+        }
+
         return $this->items;
     }
 }
