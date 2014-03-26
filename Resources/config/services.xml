@@ -9,6 +9,8 @@
         <service id="modera_backend_module.contributions.tools_sections_provider"
                  class="Modera\BackendModuleBundle\Contributions\ToolsSectionsProvider">
 
+            <argument type="service" id="security.context" />
+
             <tag name="modera_backend_tools.sections_provider" />
         </service>
 
@@ -22,6 +24,12 @@
                  class="Modera\BackendModuleBundle\Contributions\CssResourcesProvider">
 
             <tag name="mf.jsruntimeintegration.css_resources_provider" />
+        </service>
+
+        <service id="modera_backend_module.contributions.permission_provider"
+                 class="Modera\BackendModuleBundle\Contributions\PermissionsProvider">
+
+            <tag name="modera_security.permissions_provider" />
         </service>
     </services>
 </container>

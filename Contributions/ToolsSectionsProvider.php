@@ -2,8 +2,10 @@
 
 namespace Modera\BackendModuleBundle\Contributions;
 
+use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
 use Modera\BackendToolsBundle\Section\Section;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Contributes a section to Backend/Tools
@@ -13,19 +15,16 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class ToolsSectionsProvider implements ContributorInterface
 {
+    private $securityContext;
+
     private $items;
 
-    public function __construct()
+    /**
+     * @param SecurityContextInterface $securityContext
+     */
+    public function __construct(SecurityContextInterface $securityContext)
     {
-        $this->items = array(
-            new Section(
-                'Modules',
-                'tools.modules',
-                'Modules management.',
-                '', '',
-                'modera-backend-module-tools-icon'
-            )
-        );
+        $this->securityContext = $securityContext;
     }
 
     /**
@@ -33,6 +32,20 @@ class ToolsSectionsProvider implements ContributorInterface
      */
     public function getItems()
     {
+        if (!$this->items) {
+            $this->items = [];
+
+            if ($this->securityContext->isGranted(ModeraBackendModuleBundle::ROLE_ACCESS_BACKEND_TOOLS_MODULES_SECTION)) {
+                $this->items[] = new Section(
+                    'Modules',
+                    'tools.modules',
+                    'Modules management.',
+                    '', '',
+                    'modera-backend-module-tools-icon'
+                );
+            }
+        }
+
         return $this->items;
     }
 }
