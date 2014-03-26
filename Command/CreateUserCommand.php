@@ -3,6 +3,7 @@
 namespace Modera\SecurityBundle\Command;
 
 use Doctrine\ORM\EntityManager;
+use Modera\SecurityBundle\Entity\Permission;
 use Modera\SecurityBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\DialogHelper;
@@ -32,6 +33,9 @@ class CreateUserCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /* @var EntityManager $em */
+        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+
         /* @var DialogHelper $dialog */
         $dialog = $this->getHelper('dialog');
 
@@ -58,8 +62,12 @@ class CreateUserCommand extends ContainerAwareCommand
         $user->setUsername($username);
         $user->setPassword($encoderFactory->getEncoder($user)->encodePassword($password, $user->getSalt()));
 
-        /* @var EntityManager $em */
-        $em = $this->getContainer()->get('doctrine.orm.entity_manager');
+        foreach ($em->getRepository(Permission::clazz())->findAll() as $permission) {
+            /* @var Permission $permission */
+
+            $user->addPermission($permission);
+        }
+
         $em->persist($user);
         $em->flush();
 

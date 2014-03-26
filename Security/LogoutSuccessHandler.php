@@ -16,14 +16,12 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
 {
     /**
-     * @param Request $request
-     * @return JsonResponse|RedirectResponse|Response
+     * @inheritDoc
      */
     public function onLogoutSuccess(Request $request)
     {
         if ($request->isXmlHttpRequest()) {
-            $response = array('success' => true);
-            return new JsonResponse($response);
+            return new JsonResponse(array('success' => true));
         } else {
             return parent::onLogoutSuccess($request);
         }

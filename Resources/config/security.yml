@@ -48,7 +48,7 @@ security:
             anonymous: ~
             context: modera_auth
             provider: authenticator
-            simple-form:
+            simple_form:
                 provider:      modera_provider
                 authenticator: modera_security.security.authenticator
                 check_path:    _security_check
@@ -56,11 +56,6 @@ security:
             logout:
                 path:   _security_logout
                 success_handler: modera_security.security.logout_success_handler
-#            remember_me:
-#                key:      "%secret%"
-#                lifetime: 31536000 # 365 days in seconds
-#                path:     /
-#                domain:   ~ # Defaults to the current domain from $_SERVER
 
     access_control:
         - { path: ^/backend/.+, roles: ROLE_BACKEND_USER }

@@ -2,10 +2,12 @@
 
 namespace Modera\SecurityBundle\Controller;
 
+use Modera\SecurityBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\SecurityContext;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -63,6 +65,17 @@ class SecurityController extends Controller
 
         /* @var SecurityContextInterface $sc */
         $sc = $this->get('security.context');
+
+        $t = $sc->getToken();
+        if ($t->isAuthenticated() && $t->getUser() instanceof User) {
+            if (!$sc->isGranted('ROLE_BACKEND_USER')) {
+                return new JsonResponse(array(
+                    'success' => false,
+                    'message' => "You don't have required rights to access administration interface."
+                ));
+            }
+        }
+
         $response = Authenticator::getSuccessfulAuthResponse($sc->getToken());
 
         return new JsonResponse($response);
