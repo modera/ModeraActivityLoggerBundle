@@ -46,20 +46,24 @@ class ServiceDefinitionsProvider implements ContributorInterface
     {
         $bundleConfig = $this->container->getParameter(ModeraSecurityAwareJSRuntimeExtension::CONFIG_KEY);
 
-        return [
-            'security_manager' => [
+        return array(
+            'security_manager' => array(
                 'className' => 'MF.security.AjaxSecurityManager',
-                'args' => [
-                    [
-                        'urls' => [
+                'args' => array(
+                    array(
+                        'urls' => array(
                             'login'           => $this->getUrl($bundleConfig['login_url']),
                             'isAuthenticated' => $this->getUrl($bundleConfig['is_authenticated_url']),
                             'logout'          => $this->getUrl($bundleConfig['logout_url']),
-                        ],
+                        ),
                         'authorizationMgr' => '@authorization_mgr'
-                    ]
-                ]
-            ]
-        ];
+                    )
+                )
+            ),
+            'profile_context_menu' => array(
+                'className' => 'Modera.securityawarejsruntime.runtime.ProfileContextMenuPlugin',
+                'tags'      => ['runtime_plugin'],
+            ),
+        );
     }
 }
