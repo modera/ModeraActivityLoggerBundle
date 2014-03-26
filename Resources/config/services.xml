@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_backend_tools_activity_log.contributions.tools_sections_provider"
+                 class="Modera\BackendToolsActivityLogBundle\Contributions\ToolsSectionsProvider">
+
+            <tag name="modera_backend_tools.sections_provider" />
+        </service>
+
+        <service id="modera_backend_tools_activity_log.contributions.sections_provider"
+                 class="Modera\BackendToolsActivityLogBundle\Contributions\SectionsProvider">
+
+            <tag name="mf.jsruntimeintegration.sections_provider" />
+        </service>
+    </services>
+</container>
