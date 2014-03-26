@@ -15,6 +15,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class ModeraSecurityAwareJSRuntimeBundle extends Bundle
 {
+    const ROLE_BACKEND_USER = 'ROLE_BACKEND_USER';
+
     public function build(ContainerBuilder $container)
     {
         // allows to contribute client-side DI container service definitions that will be configured only

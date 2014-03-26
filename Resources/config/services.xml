@@ -33,5 +33,17 @@
 
             <tag name="modera_routing.routing_resources_provider" />
         </service>
+
+        <service id="modera_security_aware_js_runtime.contributions.permission_categories_provider"
+                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\PermissionCategoriesProvider">
+
+            <tag name="modera_security.permission_categories_provider" />
+        </service>
+
+        <service id="modera_security_aware_js_runtime.contributions.permissions_provider"
+                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\PermissionsProvider">
+
+            <tag name="modera_security.permissions_provider" />
+        </service>
     </services>
 </container>
