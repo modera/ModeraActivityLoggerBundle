@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\SecurityBundle\Security;
+namespace Modera\SecurityBundle\Model;
 
 /**
  * A higher level of abstraction for Symfony2 security roles, adds some additional information to roles
@@ -25,4 +25,9 @@ interface PermissionInterface
      *                 "This permission is used to allow a user see a section in the menu"
      */
     public function getDescription();
+
+    /**
+     * @return string
+     */
+    public function getCategory();
 }

@@ -14,7 +14,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
  *
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
-class Role implements RoleInterface
+class Permission implements RoleInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -45,14 +45,14 @@ class Role implements RoleInterface
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Permission", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="modera_security_rolehierarchy",
-     *     joinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")},
+     *     joinColumns={@ORM\JoinColumn(name="permission_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="child_id", referencedColumnName="id")}
      * )
      *
-     * @var Role[]
+     * @var Permission[]
      */
     private $roles;
 
@@ -69,6 +69,13 @@ class Role implements RoleInterface
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="roles", cascade={"persist"})
      */
     private $groups;
+
+    /**
+     * @var PermissionCategory
+     *
+     * @Orm\ManyToOne(targetEntity="PermissionCategory", inversedBy="permissions")
+     */
+    private $category;
 
     public function __construct()
     {
@@ -184,5 +191,21 @@ class Role implements RoleInterface
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

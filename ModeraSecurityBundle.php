@@ -17,5 +17,9 @@ class ModeraSecurityBundle extends Bundle
         $container->addCompilerPass(
             new CompositeContributorsProviderCompilerPass('modera_security.permissions_provider')
         );
+
+        $container->addCompilerPass(
+            new CompositeContributorsProviderCompilerPass('modera_security.permission_categories_provider')
+        );
     }
 }
