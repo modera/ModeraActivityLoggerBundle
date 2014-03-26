@@ -20,7 +20,7 @@
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
-        "psr-0": { "Modera\\ModeraBackendToolsActivityLogBundle": "" }
+        "psr-0": { "Modera\\BackendToolsActivityLogBundle": "" }
     },
-    "target-dir": "Modera/ModeraBackendToolsActivityLogBundle"
+    "target-dir": "Modera/BackendToolsActivityLogBundle"
 }
