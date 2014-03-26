@@ -8,6 +8,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class ModeraBackendToolsBundle extends Bundle
 {
+    const ROLE_ACCESS_TOOLS_SECTION = 'ROLE_BACKEND_TOOLS_ACCESS_SECTION';
+
     /**
      * {@inheritDoc}
      */

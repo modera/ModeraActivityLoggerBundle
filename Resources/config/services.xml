@@ -5,7 +5,10 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="modera_backend_tools.contributions.menu_items_provider" class="Modera\BackendToolsBundle\Contributions\MenuItemsProvider">
+        <service id="modera_backend_tools.contributions.menu_items_provider"
+                 class="Modera\BackendToolsBundle\Contributions\MenuItemsProvider">
+
+            <argument type="service" id="security.context" />
 
             <tag name="mf.jsruntimeintegration.menu.menu_items_provider" />
         </service>
@@ -14,6 +17,12 @@
                  class="Modera\BackendToolsBundle\Contributions\CssResourcesProvider">
 
             <tag name="mf.jsruntimeintegration.css_resources_provider" />
+        </service>
+
+        <service id="modera_backend_tools.contributions.permissions_provider"
+                 class="Modera\BackendToolsBundle\Contributions\PermissionsProvider">
+
+            <tag name="modera_security.permissions_provider" />
         </service>
     </services>
 </container>
