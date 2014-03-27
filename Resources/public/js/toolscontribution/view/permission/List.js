@@ -30,12 +30,14 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
             columnLines: true,
             monitorModel: 'modera.security_bundle.user',
             emptyCls: 'mfc-grid-empty-text',
-            selType: 'cellmodel',
             store: store,
             features: [{
                 ftype:'grouping',
                 groupHeaderTpl: '{name}'
             }],
+            viewConfig: {
+                markDirty:false
+            },
             columns  : [
                 {
                     dataIndex: 'name',
@@ -132,6 +134,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
                 }
             });
         });
+
+        record.set('groups', groups);
 
         me.fireEvent('permissionchange', me, {
             id: record.get('id'),
