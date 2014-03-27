@@ -133,7 +133,7 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
 
             $roleNames = [];
             foreach ($token->getRoles() as $roleName) {
-                $roleNames[] = $roleName;
+                $roleNames[] = $roleName->getRole();
             }
 
             // TODO HAAACK
