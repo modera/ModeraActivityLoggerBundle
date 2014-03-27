@@ -1,0 +1,29 @@
+{
+    "name": "modera/activity-logger-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org",
+            "homepage": "http://sergei.lissovski.org/"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/symfony": "~2.0",
+        "symfony/framework-bundle": "~2.0",
+        "sergeil/extjsintegration-bundle": "@dev",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2"
+    },
+    "require-dev": {
+        "modera/foundation-bundle": "@dev",
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\ActivityLoggerBundle": "" }
+    },
+    "target-dir": "Modera/ActivityLoggerBundle"
+}
