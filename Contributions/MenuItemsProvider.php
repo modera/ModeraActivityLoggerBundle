@@ -32,6 +32,8 @@ class MenuItemsProvider implements ContributorInterface
     public function getItems()
     {
         if (!$this->items) {
+            $this->items = [];
+
             if ($this->securityContext->isGranted(ModeraBackendToolsBundle::ROLE_ACCESS_TOOLS_SECTION)) {
                 $this->items[] = new MenuItem('Tools', 'Modera.backend.tools.runtime.Section', 'tools', array(
                     MenuItemInterface::META_NAMESPACE => 'Modera.backend.tools',
