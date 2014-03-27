@@ -146,7 +146,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     {
         $roles = array();
         foreach ($this->getGroups() as $group) {
-            foreach ($group->getRoles() as $role) {
+            foreach ($group->getPermissions() as $role) {
                 $roles[] = $role;
             }
         }

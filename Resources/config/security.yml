@@ -1,4 +1,7 @@
 services:
+    modera_security.security.access_denied_handler:
+        class: Modera\SecurityBundle\Security\AccessDeniedHandler
+
     modera_security.security.logout_success_handler:
         class: Modera\SecurityBundle\Security\LogoutSuccessHandler
         arguments:
@@ -48,6 +51,7 @@ security:
             anonymous: ~
             context: modera_auth
             provider: authenticator
+            access_denied_handler: modera_security.security.access_denied_handler
             simple_form:
                 provider:      modera_provider
                 authenticator: modera_security.security.authenticator
