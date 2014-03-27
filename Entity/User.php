@@ -415,7 +415,8 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     public function getPreferences()
     {
         return array(
-            PreferencesAwareUserInterface::SETTINGS_DATE_FORMAT => 'Y-m-d'
+            PreferencesAwareUserInterface::SETTINGS_DATE_FORMAT => 'Y-m-d',
+            PreferencesAwareUserInterface::SETTINGS_DATETIME_FORMAT => 'Y-m-d H:i:s',
         );
     }
 }
