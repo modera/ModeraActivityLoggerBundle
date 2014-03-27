@@ -29,11 +29,20 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
     doCreateUi: function(params, onReadyCallback) {
         var sectionName = params.section || 'users';
 
-        var panel = Ext.create('Modera.backend.security.toolscontribution.view.Manager', {
-            sectionName: sectionName
+        var groupsStore = Ext.create('Modera.backend.security.toolscontribution.store.Groups', {
+            autoLoad: false
         });
+        groupsStore.load({
+            callback: function() {
 
-        onReadyCallback(panel);
+                var panel = Ext.create('Modera.backend.security.toolscontribution.view.Manager', {
+                    sectionName: sectionName,
+                    groupsStore: groupsStore
+                });
+
+                onReadyCallback(panel);
+            }
+        });
     },
 
     // internal
@@ -61,6 +70,10 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
             me.executionContext.updateParams(me, {
                 section: section
             })
+        });
+
+        ui.down('modera-backend-security-permission-list').on('permissionchange', function(sourceComponent, params) {
+            Actions.ModeraBackendSecurity_Permissions.update({ record: params }, function(response) {});
         });
     }
 });

@@ -8,13 +8,15 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
     requires: [
         'MFC.container.Header',
         'Modera.backend.security.toolscontribution.view.user.List',
-        'Modera.backend.security.toolscontribution.view.group.Overview'
+        'Modera.backend.security.toolscontribution.view.group.Overview',
+        'Modera.backend.security.toolscontribution.view.permission.List'
     ],
 
     // l10n
     headerTitleText: 'Security and permissions',
     btnUsersText: 'Users',
     btnGroupsText: 'Groups',
+    btnPermissionsText: 'Permissions',
 
     // override
     constructor: function(config) {
@@ -68,6 +70,12 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
                                 pressed: config.sectionName == 'groups',
                                 text: me.btnGroupsText,
                                 iconCls: 'modera-backend-security-icon-group-32'
+                            },
+                            {
+                                itemId: 'permissions',
+                                pressed: config.sectionName == 'permissions',
+                                text: me.btnPermissionsText,
+                                iconCls: 'modera-backend-security-icon-permission-32'
                             }
                         ]
                     }
@@ -86,6 +94,11 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
                         {
                             itemId: 'groups',
                             xtype: 'modera-backend-security-group-overview'
+                        },
+                        {
+                            itemId: 'permissions',
+                            xtype: 'modera-backend-security-permission-list',
+                            groupsStore: config['groupsStore']
                         }
                     ]
                 }
