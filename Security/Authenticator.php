@@ -116,7 +116,7 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
         if ($request->isXmlHttpRequest()) {
-            $result = static::getSuccessfulAuthResponse($token);
+            $result = static::getAuthenticationResponse($token);
 
             return new JsonResponse($result);
         }
@@ -126,10 +126,24 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
      * @param TokenInterface $token
      * @return array
      */
-    static public function getSuccessfulAuthResponse(TokenInterface $token)
+    static public function getAuthenticationResponse(TokenInterface $token)
     {
         $response = array('success' => false);
         if ($token->isAuthenticated() && $token->getUser() instanceof User) {
+
+            $roleNames = [];
+            foreach ($token->getRoles() as $roleName) {
+                $roleNames[] = $roleName;
+            }
+
+            // TODO HAAACK
+            if (!in_array('ROLE_BACKEND_USER', $roleNames)) {
+                return array(
+                    'success' => false,
+                    'message' => "You don't have required rights to access administration interface."
+                );
+            }
+
 
             /* @var User $user */
             $user = $token->getUser();
