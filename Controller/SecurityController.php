@@ -66,17 +66,7 @@ class SecurityController extends Controller
         /* @var SecurityContextInterface $sc */
         $sc = $this->get('security.context');
 
-        $t = $sc->getToken();
-        if ($t->isAuthenticated() && $t->getUser() instanceof User) {
-            if (!$sc->isGranted('ROLE_BACKEND_USER')) {
-                return new JsonResponse(array(
-                    'success' => false,
-                    'message' => "You don't have required rights to access administration interface."
-                ));
-            }
-        }
-
-        $response = Authenticator::getSuccessfulAuthResponse($sc->getToken());
+        $response = Authenticator::getAuthenticationResponse($sc->getToken());
 
         return new JsonResponse($response);
     }
