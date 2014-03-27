@@ -98,6 +98,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
                 var cssPrefix = Ext.baseCSSPrefix;
                 var cls = [cssPrefix + 'grid-checkcolumn', 'group-' + config['groupId']];
 
+                meta.style = 'cursor:pointer;';
+
                 if (this.disabled) {
                     meta.tdCls += ' ' + this.disabledCls;
                 }
