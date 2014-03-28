@@ -86,7 +86,7 @@ class CompileTranslationsCommand extends ContainerAwareCommand
 
             foreach ($bundles as $bundleName => $catalogues) {
 
-                $bundleTransDir = $resourcesDir . '/' . $bundleName . '/translations';
+                $bundleTransDir = $resourcesDir . '/translations' . '/' . $bundleName;
                 $bundleTransPath = $basePath . '/' . $bundleTransDir;
 
                 $output->writeln('>>> ' . $bundleName . ': ' . $bundleTransDir);
