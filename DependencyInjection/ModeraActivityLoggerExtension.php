@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ModeraActivityLoggerExtension extends Extension
 {
+    const CONFIG_KEY = 'modera_activity_logger.config';
+
     /**
      * {@inheritDoc}
      */
@@ -24,5 +26,7 @@ class ModeraActivityLoggerExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->setParameter(self::CONFIG_KEY, $config);
     }
 }
