@@ -57,7 +57,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
     {
         // load any existing translation files
         $finder = new Finder();
-        $files = $finder->files()->name('*.php')->in($directory);
+        $files = $finder->files()->name('*.php')->exclude('Tests')->in($directory);
         foreach ($files as $file) {
             $this->parseTokens(token_get_all(file_get_contents($file)), $catalog);
         }
