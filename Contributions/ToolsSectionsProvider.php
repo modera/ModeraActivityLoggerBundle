@@ -23,7 +23,7 @@ class ToolsSectionsProvider implements ContributorInterface
                 'tools.activitylog',
                 'See what activities recently have happened on the site',
                 '', '',
-                'modera-backend-translations-tool-tools-icon'
+                'modera-backend-tools-activity-log-icon'
             )
         );
     }

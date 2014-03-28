@@ -5,7 +5,8 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
     extend: 'Ext.panel.Panel',
 
     requires: [
-        'Modera.backend.tools.activitylog.store.Activities'
+        'Modera.backend.tools.activitylog.store.Activities',
+        'MFC.Date'
     ],
 
     // l10n
@@ -18,6 +19,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
     levelLabelText: 'Level',
     eventLabelText: 'Event description',
     detailsLabelText: 'Details...',
+    userLabelText: 'User',
 
     constructor: function() {
         var store = Ext.create('Modera.backend.tools.activitylog.store.Activities');
@@ -29,7 +31,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                 xtype: 'mfc-header',
                 title: this.headerTitleText,
                 margin: '0 0 9 0',
-                iconCls: 'modera-backend-security-tools-icon',
+                iconCls: 'modera-backend-tools-activity-log-icon',
                 closeBtn: true
             },
             layout: 'fit',
@@ -42,6 +44,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                         rounded: true,
                         region: 'center',
                         xtype: 'grid',
+                        itemId: 'activitiesGrid',
                         columns: [
                             {
                                 dataIndex: 'message',
@@ -51,7 +54,10 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             {
                                 dataIndex: 'createdAt',
                                 text: this.timeColumnHeaderText,
-                                width: 150
+                                width: 150,
+                                renderer: function(v) {
+                                    return MFC.Date.moment(v, 'X').fromNow();
+                                }
                             }
                         ],
                         store: store,
@@ -62,7 +68,8 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             },
                             {
                                 xtype: 'textfield',
-                                fieldLabel: 'Event'
+                                fieldLabel: 'Event',
+                                itemId: 'eventTypeFilter'
                             }
                         ],
                         dockedItems: [
@@ -88,6 +95,17 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
         this.assignListeners();
     },
 
+    loadActivities: function(params) {
+        var store = this.down('grid').getStore();
+        if (params['sort-by'] && params['sort-direction']) {
+            store.sort([
+                { property: params['sort-by'], direction: params['sort-direction'] }
+            ]);
+        } else {
+            store.load();
+        }
+    },
+
     // private
     showActivityEntryDetails: function(record) {
         var me = this,
@@ -100,6 +118,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
             },
             items: [
                 {
+                    itemId: 'activityPreview',
                     style: {
                         'padding-top': '20px',
                         'border-top': '2px dashed #ECECEC'
@@ -116,7 +135,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                     items: [
                         {
                             xtype: 'fieldcontainer',
-                            fieldLabel: 'User',
+                            fieldLabel: this.userLabelText,
                             layout: {
                                 type: 'hbox',
                                 align: 'stretch'
@@ -125,20 +144,18 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                                 {
                                     xtype: 'displayfield',
                                     name: 'author',
-                                    renderer: function(value) {
-                                        return '<b>' + value + '</b>';
-                                    },
-                                    listeners: {
-                                        change: function(field) {
-                                            field.up('fieldcontainer').setHeight('auto');
+                                    renderer: function(v) {
+                                        v = Ext.decode(v);
+
+                                        if (v.isUser) {
+                                            if (v.fullName) {
+                                                return Ext.String.format('<b>{0}</b> ( {1} )', v.fullName, v.username)
+                                            } else {
+                                                return '<b>' + v.username + '</b>';
+                                            }
+                                        } else {
+                                            return '<b>' + v.identity + '</b>';
                                         }
-                                    }
-                                },
-                                {
-                                    xtype: 'displayfield',
-                                    name: 'username',
-                                    renderer: function(value) {
-                                        return value ? '&nbsp; (' + value + ')' : '';
                                     }
                                 }
                             ]
@@ -147,9 +164,10 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             xtype: 'button',
                             text: this.addAsFilterBtnText,
                             handler: function() {
-                                var form = me.query('#activityPreview')[0].getForm();
-                                var value = form.findField('user').getValue();
-                                me.fireEvent('addAsFilter', 'user.username', value);
+                                var form = me.down('#activityPreview').getForm(),
+                                    value = form.findField('user').getValue();
+
+                                me.fireEvent('addfilter', 'user.username', value);
                             }
                         },
                         {
@@ -160,21 +178,22 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             xtype: 'button',
                             text: this.addAsFilterBtnText,
                             handler: function() {
-                                var form = me.query('#activityPreview')[0].getForm();
-                                var value = form.findField('type').getValue();
-                                me.fireEvent('addAsFilter', 'type', value);
+                                var form = me.down('#activityPreview').getForm(),
+                                    value = form.findField('type').getValue();
+
+                                me.fireEvent('addfilter', 'type', value);
                             }
                         },
                         {
                             fieldLabel: this.createdAtLabelText,
                             name: 'createdAt',
-                            renderer: function(value) {
-                                return value;
-//                                var date = new Date(value);
-//                                var info = MFC.Date.moment(date).format('DD.MM.YYYY HH:MM');
-//                                info += ' (' + MFC.Date.moment(date).fromNow() + ')';
-//
-//                                return info;
+                            renderer: function(v) {
+                                var moment = MFC.Date.moment(v, 'X');
+
+                                var info = moment.format('DD.MM.YYYY HH:MM');
+                                info += ' ( ' + moment.fromNow() + ' ) ';
+
+                                return info;
                             }
                         },
                         {
@@ -217,6 +236,18 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
 
         grid.on('itemclick', function(view, record) {
             me.showActivityEntryDetails(record);
+        });
+
+        me.on('addfilter', function(fieldName, value) {
+            if ('type' == fieldName) {
+                me.down('#eventTypeFilter').setValue(value);
+
+                var store = me.down('#activitiesGrid').getStore();
+                store.filters.clear();
+                store.filter([
+                    { property: 'type', 'value': 'eq:' + value }
+                ]);
+            }
         });
     }
 });

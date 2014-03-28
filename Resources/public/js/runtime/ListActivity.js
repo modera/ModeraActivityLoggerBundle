@@ -21,9 +21,8 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
 
     // override
     doCreateUi: function(params, callback) {
-        var grid = Ext.create('Modera.backend.tools.activitylog.view.MainPanel', {
-
-        });
+        var grid = Ext.create('Modera.backend.tools.activitylog.view.MainPanel');
+        grid.loadActivities(params);
 
         callback(grid);
     },
@@ -38,5 +37,41 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
                 params: data
             });
         });
+
+        ui.on('addfilter', function(fieldName, value) {
+
+        });
+    },
+
+    // override
+    attachStateListeners: function(ui) {
+        var me = this,
+            ec = this.getExecutionContext();
+
+        var pagingBar = ui.down('pagingtoolbar');
+        if (pagingBar) {
+            pagingBar.on('change', function(bar, pageData) {
+                ec.setParam(me, 'page', pageData.currentPage);
+            });
+        }
+
+        var grid = ui.down('grid');
+        if (grid) {
+            grid.on('headerclick', function(grid, column) {
+                ec.setParams(me, {
+                    'sort-by': column.dataIndex,
+                    'sort-direction': column.sortState
+                });
+            });
+        }
+    },
+
+    // override
+    getDefaultParams: function() {
+        return {
+            page: 1,
+            'sort-by': 'createdAt',
+            'sort-direction': 'DESC'
+        }
     }
 });

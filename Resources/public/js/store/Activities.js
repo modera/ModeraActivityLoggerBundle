@@ -7,13 +7,17 @@ Ext.define('Modera.backend.tools.activitylog.store.Activities', {
     // override
     constructor: function() {
         this.config = {
-            autoLoad: true,
+            remoteSort: true,
+            remoteFilter: true,
             fields: [
                 'id', 'author', 'type', 'level', 'message', 'createdAt'
             ],
             proxy: {
                 type: 'direct',
-                directFn: Actions.ModeraBackendToolsActivityLog_Default.list
+                directFn: Actions.ModeraBackendToolsActivityLog_Default.list,
+                reader: {
+                    root: 'items'
+                }
             }
         };
         this.callParent([this.config]);

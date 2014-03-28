@@ -5,6 +5,7 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ActivityDetailsWindowActivi
     extend: 'MF.activation.activities.AbstractActivity',
 
     requires: [
+        'MFC.window.ModalWindow'
     ],
 
     // override
@@ -19,14 +20,26 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ActivityDetailsWindowActivi
 
     // override
     doCreateUi: function(params, callback) {
-        Actions.ModeraBackendToolsActivityLog_Default.get({ id: params.id }, function(response) {
-            var grid = Ext.create('MFC.window.ModalWindow', {
-                title: 'Activity details',
-                maxWidth: 600,
-                maxHeight: 500,
-                height: 400,
-                width: 500
-            });
+        var me = this;
+
+        var query = {
+            filter: [
+                { property: 'id', value: 'eq:' + params.id }
+            ]
+        };
+        Actions.ModeraBackendToolsActivityLog_Default.get(query, function(response) {
+            if (response.success) {
+                var grid = Ext.create('MFC.window.ModalWindow', {
+                    title: 'Activity details',
+                    maxWidth: 600,
+                    maxHeight: 500,
+                    height: 400,
+                    width: 500,
+                    html: response.result.message
+                });
+            } else {
+                throw me.$className + '.doCreateUi(): unsuccessful response received from server: ' + response.message
+            }
 
             callback(grid);
         });
