@@ -28,5 +28,19 @@
 
             <tag name="mf.jsruntimeintegration.css_resources_provider" />
         </service>
+
+        <service parent="modera_translations.handling.php_classes_translation_handler">
+
+            <argument>ModeraBackendToolsActivityLogBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+
+        <service parent="modera_backend_translations_tool.handling.extjs_translation_handler">
+
+            <argument>ModeraBackendToolsActivityLogBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
     </services>
 </container>
