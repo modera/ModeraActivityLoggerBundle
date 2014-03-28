@@ -144,6 +144,13 @@ class TranslationsController extends AbstractCrudController
                 $data = array_merge(unserialize($string), $data);
             }
             $cache->save($key, serialize($data));
+
+            $input = new ArrayInput(array(
+                'command' => 'cache:clear',
+                '--env'   => $this->container->getParameter('kernel.environment'),
+            ));
+            $input->setInteractive(false);
+            $app->run($input, new NullOutput());
         }
 
         return array(
