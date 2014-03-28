@@ -2,12 +2,16 @@
 
 namespace Modera\BackendSecurityBundle\Controller;
 
+use Modera\ActivityLoggerBundle\Manager\ActivityManagerInterface;
 use Modera\SecurityBundle\Entity\User;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
 use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
 use Modera\ServerCrudBundle\Hydration\HydrationProfile;
+use Modera\TranslationsBundle\Helper\T;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -66,8 +70,27 @@ class UsersController extends AbstractCrudController
             'map_data_on_update' => function(array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
                 $defaultMapper->mapData($params, $entity);
 
+                /* @var LoggerInterface $activityMgr */
+                $activityMgr = $container->get('modera_activity_logger.manager.activity_manager');
+                /* @var SecurityContextInterface $sc */
+                $sc = $container->get('security.context');
+
                 if (isset($params['plainPassword']) && $params['plainPassword']) {
                     $self->setPassword($entity, $params['plainPassword']);
+
+                    $activityMsg = T::trans('Password has been changed for user "%user%".', array('%user%' => $entity->getUsername()));
+                    $activityContext = array(
+                        'type' => 'user.password_changed',
+                        'author' => $sc->getToken()->getUser()->getId()
+                    );
+                    $activityMgr->info($activityMsg, $activityContext);
+                } else {
+                    $activityMsg = T::trans('Profile data is changed for user "%user%".', array('%user%' => $entity->getUsername()));
+                    $activityContext = array(
+                        'type' => 'user.profile_updated',
+                        'author' => $sc->getToken()->getUser()->getId()
+                    );
+                    $activityMgr->info($activityMsg, $activityContext);
                 }
             },
         );
