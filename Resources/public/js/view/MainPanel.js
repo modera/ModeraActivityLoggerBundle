@@ -188,9 +188,9 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             fieldLabel: this.createdAtLabelText,
                             name: 'createdAt',
                             renderer: function(v) {
-                                var moment = MFC.Date.moment(v, 'X');
+                                var moment = MFC.Date.moment(v);
 
-                                var info = moment.format('DD.MM.YYYY HH:MM');
+                                var info = MFC.Date.format(moment, 'datetime');
                                 info += ' ( ' + moment.fromNow() + ' ) ';
 
                                 return info;

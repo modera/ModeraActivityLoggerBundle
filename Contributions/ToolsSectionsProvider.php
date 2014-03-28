@@ -3,6 +3,7 @@
 namespace Modera\BackendToolsActivityLogBundle\Contributions;
 
 use Modera\BackendToolsBundle\Section\Section;
+use Modera\TranslationsBundle\Helper\T;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
@@ -19,9 +20,9 @@ class ToolsSectionsProvider implements ContributorInterface
     {
         $this->items = array(
             new Section(
-                'Activity log',
+                T::trans('Activity log'),
                 'tools.activitylog',
-                'See what activities recently have happened on the site',
+                T::trans('See what activities recently have happened on the site'),
                 '', '',
                 'modera-backend-tools-activity-log-icon'
             )
