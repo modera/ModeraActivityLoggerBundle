@@ -14,7 +14,8 @@
         "modera/js-runtime": "@dev",
         "modera/backend-tools-bundle": "@dev",
         "modera/js-runtime-integration-bundle": "@dev",
-        "modera/translations-bundle": "dev-master"
+        "modera/translations-bundle": "dev-master",
+        "sergeil/extjslocalization-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Modera\\BackendTranslationsToolBundle": "" }
