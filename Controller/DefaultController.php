@@ -5,8 +5,10 @@ namespace Modera\BackendToolsActivityLogBundle\Controller;
 use Modera\ActivityLoggerBundle\Manager\ActivityManagerInterface;
 use Modera\ActivityLoggerBundle\Model\ActivityInterface;
 use Modera\BackendToolsActivityLogBundle\AuthorResolving\ActivityAuthorResolver;
+use Modera\BackendToolsActivityLogBundle\AutoSuggest\FilterAutoSuggestService;
 use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
 use Modera\ServerCrudBundle\Hydration\HydrationService;
+use Sli\AuxBundle\Util\Toolkit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Neton\DirectBundle\Annotation\Remote;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -106,5 +108,18 @@ class DefaultController extends Controller
         return array_merge($result, $response, array(
             'success' => true
         ));
+    }
+
+    /**
+     * @Remote
+     */
+    public function suggestAction(array $params)
+    {
+        Toolkit::validateRequiredRequestParams($params, ['queryType', 'query']);
+
+        /* @var FilterAutoSuggestService $service */
+        $service = $this->get('modera_backend_tools_activity_log.auto_suggest.filter_auto_suggest_service');
+
+        return $service->suggest($params['queryType'], $params['query']);
     }
 }

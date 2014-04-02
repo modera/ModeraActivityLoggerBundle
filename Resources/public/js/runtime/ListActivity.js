@@ -37,10 +37,6 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
                 params: data
             });
         });
-
-        ui.on('addfilter', function(fieldName, value) {
-
-        });
     },
 
     // override

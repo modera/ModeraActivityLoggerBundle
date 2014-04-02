@@ -6,7 +6,8 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
 
     requires: [
         'Modera.backend.tools.activitylog.store.Activities',
-        'MFC.Date'
+        'MFC.Date',
+        'MFC.FieldValueChangeMonitor'
     ],
 
     // l10n
@@ -34,6 +35,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                 iconCls: 'modera-backend-tools-activity-log-icon',
                 closeBtn: true
             },
+            cls: 'modera-backend-tools-activity-grid',
             layout: 'fit',
             items: {
                 layout: 'border',
@@ -49,30 +51,75 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             {
                                 dataIndex: 'message',
                                 text: this.eventDescriptionColumnHeaderText,
-                                flex: 1
+                                flex: 1,
+                                renderer: function(v, metadata, record) {
+                                    metadata.tdCls = 'message ' + record.get('level');
+                                    return v;
+                                }
                             },
                             {
                                 dataIndex: 'createdAt',
                                 text: this.timeColumnHeaderText,
                                 width: 150,
                                 renderer: function(v) {
-                                    return MFC.Date.moment(v, 'X').fromNow();
+                                    return MFC.Date.moment(v).fromNow();
                                 }
                             }
                         ],
                         store: store,
-                        tbar: [
-                            {
-                                xtype: 'textfield',
-                                fieldLabel: 'User'
-                            },
-                            {
-                                xtype: 'textfield',
-                                fieldLabel: 'Event',
-                                itemId: 'eventTypeFilter'
-                            }
-                        ],
                         dockedItems: [
+                            {
+                                docked: 'top',
+                                xtype: 'toolbar',
+                                items: [
+                                    {
+                                        width: 220,
+                                        itemId: 'authorFilter',
+                                        xtype: 'combo',
+                                        emptyText: 'User',
+                                        hideTrigger: true,
+                                        displayField: 'value',
+                                        valueField: 'id',
+                                        store: Ext.create('Ext.data.Store', {
+                                            remoteSort: true,
+                                            remoteFilter: true,
+                                            fields: [
+                                                'id', 'value'
+                                            ],
+                                            proxy: {
+                                                type: 'direct',
+                                                directFn: Actions.ModeraBackendToolsActivityLog_Default.suggest,
+                                                extraParams: {
+                                                    queryType: 'user'
+                                                }
+                                            }
+                                        })
+                                    },
+                                    {
+                                        width: 220,
+                                        itemId: 'typeFilter',
+                                        xtype: 'combo',
+                                        emptyText: 'Event type',
+                                        hideTrigger: true,
+                                        displayField: 'value',
+                                        valueField: 'id',
+                                        store: Ext.create('Ext.data.Store', {
+                                            remoteSort: true,
+                                            remoteFilter: true,
+                                            fields: [
+                                                'id', 'value'
+                                            ],
+                                            proxy: {
+                                                type: 'direct',
+                                                directFn: Actions.ModeraBackendToolsActivityLog_Default.suggest,
+                                                extraParams: {
+                                                    queryType: 'eventType'
+                                                }
+                                            }
+                                        })
+                                    }
+                                ]
+                            },
                             {
                                 xtype: 'pagingtoolbar',
                                 store: store,
@@ -91,6 +138,18 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
         };
 
         this.callParent([defaults]);
+
+        this.addEvents(
+            /**
+             * Event is fired when filter is applied using buttons in activity preview container
+             *
+             * @event applyFilters
+             * @param {Object} values
+             * @param {Ext.form.field.ComboBox} authorField
+             * @param {Ext.form.field.ComboBox} typeField
+             */
+            'applyFilters'
+        );
 
         this.assignListeners();
     },
@@ -161,13 +220,18 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             ]
                         },
                         {
+                            itemId: 'filterByUserBtn',
                             xtype: 'button',
                             text: this.addAsFilterBtnText,
                             handler: function() {
-                                var form = me.down('#activityPreview').getForm(),
-                                    value = form.findField('user').getValue();
+                                var form = me.down('#activityPreview').getForm();
 
-                                me.fireEvent('addfilter', 'user.username', value);
+                                var values = {
+                                    author: Ext.decode(form.findField('author').getValue()).id,
+                                    type: me.down('#typeFilter').getValue()
+                                };
+
+                                me.fireEvent('applyFilters', values, me.down('#authorFilter'), me.down('#typeFilter'))
                             }
                         },
                         {
@@ -178,10 +242,14 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             xtype: 'button',
                             text: this.addAsFilterBtnText,
                             handler: function() {
-                                var form = me.down('#activityPreview').getForm(),
-                                    value = form.findField('type').getValue();
+                                var form = me.down('#activityPreview').getForm();
 
-                                me.fireEvent('addfilter', 'type', value);
+                                var values = {
+                                    author: me.down('#authorFilter').getValue(),
+                                    type: form.findField('type').getValue()
+                                };
+
+                                me.fireEvent('applyFilters', values, me.down('#authorFilter'), me.down('#typeFilter'))
                             }
                         },
                         {
@@ -227,6 +295,11 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
 
         container.removeAll();
         container.add(detailsForm);
+
+        var author = Ext.decode(record.get('author'));
+        if (!author.isUser) {
+            this.down('#activityPreview #filterByUserBtn').disable();
+        }
     },
 
     // private
@@ -238,16 +311,82 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
             me.showActivityEntryDetails(record);
         });
 
-        me.on('addfilter', function(fieldName, value) {
-            if ('type' == fieldName) {
-                me.down('#eventTypeFilter').setValue(value);
+        this.on('applyFilters', function(values, authorField, eventTypeField) {
+            var filters = [];
 
-                var store = me.down('#activitiesGrid').getStore();
-                store.filters.clear();
-                store.filter([
-                    { property: 'type', 'value': 'eq:' + value }
-                ]);
+            if (values['author']) {
+                authorField.getStore().load({
+                    params: {
+                        queryType: 'exact-user',
+                        query:  values.author
+                    },
+                    callback: function(records) {
+                        authorField.setValue(records[0].get('id'));
+                    }
+                });
+
+                filters.push({ property: 'author', value: 'eq:' + values.author });
+            }
+            if (values['type']) {
+                eventTypeField.setValue(values.type);
+                filters.push({ property: 'type', value: 'eq:' + values.type });
+            }
+
+            var grid = me.down('grid');
+
+            grid.getStore().filters.clear();
+            grid.getStore().filter(filters);
+        });
+
+        var authorField = this.down('#authorFilter'),
+            typeFilter = this.down('#typeFilter');
+
+        authorField.on('select', this.onFilterChanged, this);
+        this.attachFieldValueMonitor(authorField);
+        typeFilter.on('select', this.onFilterChanged, this);
+        this.attachFieldValueMonitor(typeFilter);
+    },
+
+    // private
+    attachFieldValueMonitor: function(field) {
+        var me = this;
+
+        var monitor = Ext.create('MFC.FieldValueChangeMonitor', {
+            field: field
+        });
+        monitor.on('valueChanged', function(field, newValue) {
+            if (!newValue) {
+                me.onFilterChanged();
             }
         });
+    },
+
+    // private
+    onFilterChanged: function() {
+        var filterValues = this.getFilterValues();
+
+        var filters = [];
+        if (filterValues['author']) {
+            filters.push({ property: 'author', value: 'eq:' + filterValues.author });
+        }
+        if (filterValues['type']) {
+            filters.push({ property: 'type', value: 'eq:' + filterValues.type });
+        }
+
+        var store = this.down('grid').getStore();
+        if (0 == filters.length) {
+            store.clearFilter();
+        } else {
+            store.filters.clear();
+            store.filter(filters);
+        }
+    },
+
+    // private
+    getFilterValues: function() {
+        return {
+            author: this.down('#authorFilter').getValue(),
+            type: this.down('#typeFilter').getValue()
+        }
     }
 });

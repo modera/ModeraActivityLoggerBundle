@@ -36,6 +36,7 @@ class ActivityAuthorResolver
             $user = $this->om->find(User::clazz(), $activity->getAuthor());
             if ($user) {
                 return array(
+                    'id' => $user->getId(),
                     'isUser' => true,
                     'fullName' => $user->getFullName(),
                     'username' => $user->getUsername()

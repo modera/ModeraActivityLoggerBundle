@@ -42,5 +42,12 @@
 
             <tag name="modera_translations.translation_handler" />
         </service>
+
+        <service id="modera_backend_tools_activity_log.auto_suggest.filter_auto_suggest_service"
+                 class="Modera\BackendToolsActivityLogBundle\AutoSuggest\FilterAutoSuggestService">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="modera_activity_logger.manager.activity_manager" />
+        </service>
     </services>
 </container>
