@@ -1,5 +1,5 @@
 {
-    "name": "modera/mjr-theme-integration-integration-bundle",
+    "name": "modera/mjr-theme-integration-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",
