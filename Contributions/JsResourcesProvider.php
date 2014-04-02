@@ -2,8 +2,11 @@
 
 namespace Modera\JSRuntimeIntegrationBundle\Contributions;
 
+use Modera\JSRuntimeIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -17,11 +20,23 @@ class JsResourcesProvider implements ContributorInterface
     private $router;
 
     /**
+     * @var array
+     */
+    private $bundleConfig;
+
+    private $isDevEnv;
+
+    /**
      * @param Router $router
      */
-    public function __construct(Router $router)
+    public function __construct(ContainerInterface $container)
     {
-        $this->router = $router;
+        $this->router = $container->get('router');
+        $this->bundleConfig = $container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+
+        /* @var Kernel $kernel */
+        $kernel = $container->get('kernel');
+        $this->isDevEnv = $kernel->getEnvironment() == 'dev';
     }
 
     /**
@@ -29,10 +44,14 @@ class JsResourcesProvider implements ContributorInterface
      */
     public function getItems()
     {
-        // http://cdnjs.com/libraries/moment.js/
+        $extjs = $this->bundleConfig['extjs_path'] . '/ext-all' . ($this->isDevEnv ? '-debug-w-comments' : '') . '.js';
+
         return array(
+            $extjs,
+            $this->router->generate('api'),
             '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment-with-langs.min.js',
             $this->router->generate('mf_font_awesome'),
+            '/bundles/moderajsruntimeintegration/js/orientationchange.js',
         );
     }
 }
