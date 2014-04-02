@@ -3,17 +3,14 @@
 <head>
     <link rel="shortcut icon" href="{{ asset('bundles/moderasecurityawarejsruntime/favicon.ico') }}" />
 
-    <link href="/modera/extjs-workspace/packages/modera-theme/build/resources/modera-theme-all-debug.css" rel="stylesheet" />
-    <link href="/modera/extjs-workspace/packages/modera-runtime/build/resources/modera-runtime-all-debug.css" rel="stylesheet" />
-
 {% for resource in css_resources %}
-    <link href="{{ resource }}" rel="stylesheet" />
+    <link href="{{ asset(resource) }}" rel="stylesheet" />
 {% endfor %}
-
 </head>
 
 <body>
 
+{# this will display a loading mask while extjs and runtime javascript code is being loaded #}
 <table style="width:100%; height:100%; background:#EAEAEA;">
     <tr>
         <td style="text-align:center;">
@@ -22,41 +19,24 @@
     </tr>
 </table>
 
-<script type="text/javascript" src="{{ config.extjs_path }}/ext-all-debug-w-comments.js"></script>
-<script src="/modera/extjs-workspace/packages/modera-theme/build/modera-theme.js" type="text/javascript" ></script>
-
-<script type="text/javascript" src="{{ url('api')}}"></script>
+{#
+  it is important to keep "heavy" javascript files are loading mask above because loading javascript files would block
+  DOM engine execution
+#}
+{#<script type="text/javascript" src="{{ asset(config.extjs_path) }}/ext-all-debug-w-comments.js"></script>#}
 
 {% for resource in js_resources %}
-    <script src="{{ resource }}" type="text/javascript"></script>
+<script type="text/javascript" src="{{ asset(resource) }}"></script>
 {% endfor %}
 
 <script type="text/javascript">
     Ext.Loader.setConfig({
         enabled: true,
         paths: {
-            MFC: '{{ config.runtime_path }}/MFC',
-            MF: '{{ config.runtime_path }}/MF',
+            MFC: '{{ asset(config.runtime_path) }}/src/MFC',
+            MF: '{{ asset(config.runtime_path) }}/src/MF',
             {{ config.app_name }}: '{{ app_loading_path }}'
         }
-    });
-
-    // TODO externalize
-    window.addEventListener('orientationchange', function() {
-        // this code is responsible for properly updating layout when page is viewed from a device which has
-        // orientation sensor and gets flipped ( like you flip iPad from being position vertically to landscape
-        // mode )
-        var viewport = Ext.ComponentQuery.query('viewport')[0];
-        if (viewport) {
-            viewport.doLayout();
-        }
-
-        Ext.each(Ext.ComponentQuery.query('window'), function(w) {
-            if (w.isVisible()) {
-                w.doLayout();
-                w.center();
-            }
-        });
     });
 
     Ext.application('{{ config.app_name }}.Application');
