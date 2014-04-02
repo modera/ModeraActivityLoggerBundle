@@ -1,0 +1,3 @@
+# ModeraMJRThemeIntegrationBundle
+
+Integrates MJR theme
