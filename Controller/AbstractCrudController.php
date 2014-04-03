@@ -233,6 +233,8 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
     public function createAction(array $params)
     {
         try {
+            $this->interceptAction('create', $params);
+
             if (!isset($params['record'])) {
                 $e = new BadRequestException("'/record' hasn't been provided");
                 $e->setParams($params);
@@ -411,9 +413,15 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
     {
         $config = $this->getPreparedConfig();
 
-        $newValuesFactory = $config['format_new_entity_values'];
+        try {
+            $this->interceptAction('getNewRecordValues', $params);
 
-        return $newValuesFactory($params, $config, $this->getNewValuesFactory(), $this->container);
+            $newValuesFactory = $config['format_new_entity_values'];
+
+            return $newValuesFactory($params, $config, $this->getNewValuesFactory(), $this->container);
+        } catch (\Exception $e) {
+            return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_GET_NEW_RECORD_VALUES);
+        }
     }
 
     /**

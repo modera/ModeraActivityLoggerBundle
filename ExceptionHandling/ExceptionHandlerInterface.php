@@ -15,6 +15,7 @@ interface ExceptionHandlerInterface
     const OPERATION_REMOVE = 'remove';
     const OPERATION_LIST = 'list';
     const OPERATION_GET = 'get';
+    const OPERATION_GET_NEW_RECORD_VALUES = 'get_new_record_values';
 
     /**
      * @param \Exception $e

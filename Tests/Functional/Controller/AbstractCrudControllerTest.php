@@ -6,6 +6,7 @@ use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\Hydration\HydrationProfile;
 use Doctrine\ORM\Mapping as Orm;
+use Modera\ServerCrudBundle\Tests\Fixtures\Bundle\Contributions\ControllerActionInterceptorsProvider;
 use Symfony\Component\Validator\Constraints as Assert;
 use Sli\AuxBundle\Util\Toolkit;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
@@ -156,14 +157,39 @@ class AbstractCrudControllerTest extends FunctionalTestCase
         Toolkit::dropTableForEntity(self::$em, DummyArticle::clazz());
     }
 
+    /**
+     * @return ControllerActionInterceptorsProvider
+     */
+    private function getDummyInterceptor()
+    {
+        return self::$container->get('modera_server_crud_dummy_bundle.contributions.controller_action_interceptors_provider');
+    }
+
+    private function assertValidInterceptorInvocation($requestParams, $type)
+    {
+        $invocation = $this->getDummyInterceptor()->interceptor->invocations[$type];
+
+        $this->assertEquals(
+            1,
+            count($invocation),
+            "It is expected that interceptor for '$type' would be invoked only once!"
+        );
+        $this->assertSame($requestParams, $invocation[0][0]);
+        $this->assertSame($this->controller, $invocation[0][1]);
+    }
+
     public function testCreateAction()
     {
-        // validation for "title" field should fail
-        $result = $this->controller->createAction(array(
+        $requestParams = array(
             'record' => array(
                 'body' => 'Some text goes here'
             )
-        ));
+        );
+
+        // validation for "title" field should fail
+        $result = $this->controller->createAction($requestParams);
+
+        $this->assertValidInterceptorInvocation($requestParams, 'create');
 
         $this->assertTrue(is_array($result));
         $this->assertArrayHasKey('success', $result);
@@ -265,7 +291,7 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $this->loadDummyData();
 
-        $result = $this->controller->listAction(array(
+        $requestParams = array(
             'limit' => 3,
             'sort' => array(
                 array('property' => 'id', 'direction' => 'DESC')
@@ -279,7 +305,11 @@ class AbstractCrudControllerTest extends FunctionalTestCase
             'hydration' => array(
                 'profile' => 'list'
             )
-        ));
+        );
+
+        $result = $this->controller->listAction($requestParams);
+
+        $this->assertValidInterceptorInvocation($requestParams, 'list');
 
         $me = $this;
 
@@ -328,14 +358,18 @@ class AbstractCrudControllerTest extends FunctionalTestCase
             $articles[1]->getId()
         );
 
-        $result = $this->controller->removeAction(array(
+        $requestParams = array(
             'filter' => array(
                 array(
                     'property' => 'id',
                     'value' => 'in:' . implode(', ', $ids)
                 )
             )
-        ));
+        );
+
+        $result = $this->controller->removeAction($requestParams);
+
+        $this->assertValidInterceptorInvocation($requestParams, 'remove');
 
         $this->assertTrue(is_array($result));
         $this->assertArrayHasKey('success', $result);
@@ -382,7 +416,7 @@ class AbstractCrudControllerTest extends FunctionalTestCase
     {
         $articles = $this->loadDummyData();
 
-        $result = $this->controller->getAction(array(
+        $requestParams = array(
             'hydration' => array(
                 'profile' => 'get_record'
             ),
@@ -392,7 +426,11 @@ class AbstractCrudControllerTest extends FunctionalTestCase
                     'value' => 'eq:' . $articles[0]->getId()
                 )
             )
-        ));
+        );
+
+        $result = $this->controller->getAction($requestParams);
+
+        $this->assertValidInterceptorInvocation($requestParams, 'get');
 
         $this->assertTrue(is_array($result));
         $this->assertArrayHasKey('success', $result);
@@ -413,7 +451,7 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         DummyArticle::$suicideEngaged = true;
 
-        $result = $this->controller->getAction(array(
+        $requestParams = array(
             'hydration' => array(
                 'profile' => 'rotten_profile'
             ),
@@ -423,7 +461,8 @@ class AbstractCrudControllerTest extends FunctionalTestCase
                     'value' => 'eq:' . $articles[0]->getId()
                 )
             )
-        ));
+        );
+        $result = $this->controller->getAction($requestParams);
 
         $this->assertValidExceptionResult($result);
     }
@@ -437,12 +476,15 @@ class AbstractCrudControllerTest extends FunctionalTestCase
         self::$em->persist($article);
         self::$em->flush();
 
-        $result = $this->controller->updateAction(array(
+        $requestParams = array(
             'record' => array(
                 'id' => $article->id,
                 'title' => ''
             )
-        ));
+        );
+        $result = $this->controller->updateAction($requestParams);
+
+        $this->assertValidInterceptorInvocation($requestParams, 'update');
 
         $this->assertTrue(is_array($result));
         $this->assertArrayHasKey('success', $result);
@@ -516,13 +558,15 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
     public function testGetNewRecordValuesAction()
     {
-        $params = array('params');
+        $requestParams = array('params');
 
-        $output = $this->controller->getNewRecordValuesAction($params);
+        $output = $this->controller->getNewRecordValuesAction($requestParams);
+
+        $this->assertValidInterceptorInvocation($requestParams, 'getNewRecordValues');
 
         $this->assertTrue(is_array($output));
         $this->assertArrayHasKey('params', $output);
-        $this->assertSame($params, $output['params']);
+        $this->assertSame($requestParams, $output['params']);
         $this->assertArrayHasKey('config', $output);
         $this->assertTrue(is_array($output['config']));
         // we can't do just values comparison here because it goes to some kind of recursion

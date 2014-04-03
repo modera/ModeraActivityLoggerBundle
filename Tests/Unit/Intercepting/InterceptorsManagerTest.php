@@ -3,56 +3,12 @@
 namespace Modera\ServerCrudBundle\Tests\Unit\Intercepting;
 
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
-use Modera\ServerCrudBundle\Intercepting\ControllerActionsInterceptorInterface;
 use Modera\ServerCrudBundle\Intercepting\InterceptorsManager;
 use Modera\ServerCrudBundle\Intercepting\InvalidInterceptorException;
+use Modera\ServerCrudBundle\Tests\Fixtures\DummyInterceptor;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
-class DummyInterceptor implements ControllerActionsInterceptorInterface
-{
-    public $invocations = array(
-        'create' => array(),
-        'update' => array(),
-        'get' => array(),
-        'list' => array(),
-        'remove' => array(),
-        'getNewRecordValues' => array()
-    );
-
-    public function onCreate(array $params, AbstractCrudController $controller)
-    {
-        $this->invocations['create'][] = array($params, $controller);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function onUpdate(array $params, AbstractCrudController $controller)
-    {
-        $this->invocations['update'][] = array($params, $controller);
-    }
-
-
-    public function onGet(array $params, AbstractCrudController $controller)
-    {
-        $this->invocations['get'][] = array($params, $controller);
-    }
-
-    public function onList(array $params, AbstractCrudController $controller)
-    {
-        $this->invocations['list'][] = array($params, $controller);
-    }
-
-    public function onRemove(array $params, AbstractCrudController $controller)
-    {
-        $this->invocations['remove'][] = array($params, $controller);
-    }
-
-    public function onGetNewRecordValues(array $params, AbstractCrudController $controller)
-    {
-        $this->invocations['getNewRecordValues'][] = array($params, $controller);
-    }
-}
+require_once __DIR__ . '/../../Fixtures/DummyInterceptor.php';
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
