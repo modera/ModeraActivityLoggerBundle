@@ -17,5 +17,11 @@ class ModeraServerCrudBundle extends Bundle
         $container->addCompilerPass(
             new CompositeContributorsProviderCompilerPass('modera_server_crud.exception_handling.handlers_provider')
         );
+
+        // see \Modera\ServerCrudBundle\Controller\AbstractCrudController::interceptAction
+        // CAP stands for "Controller Action Interceptor"
+        $container->addCompilerPass(
+            new CompositeContributorsProviderCompilerPass('modera_server_crud.intercepting.cai_providers')
+        );
     }
 }

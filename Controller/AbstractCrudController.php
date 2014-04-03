@@ -11,6 +11,8 @@ use Modera\ServerCrudBundle\Exceptions\BadRequestException;
 use Modera\ServerCrudBundle\Exceptions\MoreThanOneResultException;
 use Modera\ServerCrudBundle\Exceptions\NothingFoundException;
 use Modera\ServerCrudBundle\Hydration\HydrationService;
+use Modera\ServerCrudBundle\Intercepting\ControllerActionsInterceptorInterface;
+use Modera\ServerCrudBundle\Intercepting\InterceptorsManager;
 use Modera\ServerCrudBundle\NewValuesFactory\NewValuesFactoryInterface;
 use Modera\ServerCrudBundle\Persistence\ModelManagerInterface;
 use Modera\ServerCrudBundle\Persistence\OperationResult;
@@ -19,6 +21,7 @@ use Modera\ServerCrudBundle\Validation\DefaultEntityValidator;
 use Modera\ServerCrudBundle\Validation\ValidationResult;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Neton\DirectBundle\Annotation\Remote;
+use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -190,13 +193,6 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
     }
 
     /**
-     * @param string $operation
-     */
-    private function checkAccess($operation)
-    {
-    }
-
-    /**
      * @param object $entity
      * @param array  $params
      * @param string $defaultProfile
@@ -237,8 +233,6 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
     public function createAction(array $params)
     {
         try {
-            $this->checkAccess('create');
-
             if (!isset($params['record'])) {
                 $e = new BadRequestException("'/record' hasn't been provided");
                 $e->setParams($params);
@@ -317,6 +311,14 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
         }
     }
 
+    private function interceptAction($actionName, $params)
+    {
+        /* @var InterceptorsManager $mgr */
+        $mgr = $this->get('modera_server_crud.intercepting.interceptors_manager');
+
+        $mgr->intercept($actionName, $params, $this);
+    }
+
     /**
      * @Remote
      */
@@ -325,6 +327,8 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
         $config = $this->getPreparedConfig();
 
         try {
+            $this->interceptAction('get', $params);
+
             $entities = $this->getPersistenceHandler()->query($config['entity'], $params);
 
             $this->validateResultHasExactlyOneEntity($entities, $params);
@@ -350,6 +354,8 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
         $config = $this->getPreparedConfig();
 
         try {
+            $this->interceptAction('list', $params);
+
             $total = $this->getPersistenceHandler()->getCount($config['entity'], $params);
 
             $hydratedItems = array();
@@ -377,6 +383,8 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
         $config = $this->getPreparedConfig();
 
         try {
+            $this->interceptAction('remove', $params);
+
             if (!isset($params['filter'])) {
                 $e = new BadRequestException("'/filter' parameter hasn't been provided");
                 $e->setParams($params);
@@ -416,6 +424,8 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
         $config = $this->getPreparedConfig();
 
         try {
+            $this->interceptAction('update', $params);
+
             if (!isset($params['record'])) {
                 $e = new BadRequestException("'/record' hasn't been provided");
                 $e->setParams($params);
@@ -454,5 +464,10 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
         } catch (\Exception $e) {
             return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_UPDATE);
         }
+    }
+
+    static public function clazz()
+    {
+        return get_called_class();
     }
 }
