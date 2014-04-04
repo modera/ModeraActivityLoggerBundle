@@ -179,11 +179,8 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
             items: [
                 {
                     itemId: 'activityPreview',
-                    style: {
-                        'padding-top': '20px',
-                        'border-top': '2px dashed #ECECEC'
-                    },
-                    bodyPadding: '0 30',
+                    cls: 'mfc-dashed-top-line',
+                    bodyPadding: '20 30 0',
                     border: false,
                     xtype: 'form',
                     defaultType: 'displayfield',
