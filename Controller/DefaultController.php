@@ -2,9 +2,12 @@
 
 namespace Modera\BackendModuleBundle\Controller;
 
+use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
 use Neton\DirectBundle\Annotation\Remote;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Modera\Module\Repository\ModuleRepository;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class DefaultController extends Controller
 {
@@ -132,6 +135,16 @@ class DefaultController extends Controller
         return $result;
     }
 
+    private function checkAccess()
+    {
+        /* @var SecurityContextInterface $sc */
+        $sc = $this->get('security.context');
+
+        if (!$sc->isGranted(ModeraBackendModuleBundle::ROLE_ACCESS_BACKEND_TOOLS_MODULES_SECTION)) {
+            throw new AccessDeniedHttpException();
+        }
+    }
+
     /**
      * @Remote
      *
@@ -139,6 +152,8 @@ class DefaultController extends Controller
      */
     public function getInstalledModulesAction(array $params)
     {
+        $this->checkAccess();
+
         $result = array();
         $packages = $this->getModuleRepository()->getInstalled();
         foreach ($packages as $package) {
@@ -158,6 +173,8 @@ class DefaultController extends Controller
      */
     public function getAvailableModulesAction(array $params)
     {
+        $this->checkAccess();
+
         $result = array();
         $data = $this->getModuleRepository()->getAvailable();
         foreach ($data as $name) {
@@ -177,6 +194,8 @@ class DefaultController extends Controller
      */
     public function getModuleDetailsAction(array $params)
     {
+        $this->checkAccess();
+
         return $this->getModuleInfo($params['id'], true);
     }
 
@@ -200,6 +219,8 @@ class DefaultController extends Controller
      */
     public function requireAction(array $params)
     {
+        $this->checkAccess();
+
         $response = array(
             'success' => false,
             'params'  => array(),
@@ -227,6 +248,8 @@ class DefaultController extends Controller
      */
     public function removeAction(array $params)
     {
+        $this->checkAccess();
+
         $response = array(
             'success' => true,
             'params'  => array(
@@ -246,6 +269,8 @@ class DefaultController extends Controller
      */
     public function checkAction(array $params)
     {
+        $this->checkAccess();
+
         $response = array(
             'success'        => true,
             'updated_models' => array(
