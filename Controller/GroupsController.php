@@ -20,6 +20,9 @@ class GroupsController extends AbstractCrudController
     {
         return array(
             'entity' => Group::clazz(),
+            'security' => array(
+                'role' => 'ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION'
+            ),
             'hydration' => array(
                 'groups' => array(
                     'list' => function(Group $group) {

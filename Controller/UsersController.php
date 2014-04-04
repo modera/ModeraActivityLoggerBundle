@@ -27,6 +27,9 @@ class UsersController extends AbstractCrudController
         $self = $this;
         return array(
             'entity' => User::clazz(),
+            'security' => array(
+                'role' => 'ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION'
+            ),
             'hydration' => array(
                 'groups' => array(
                     'main-form' => ['id', 'username', 'email', 'firstName', 'lastName', 'middleName'],
