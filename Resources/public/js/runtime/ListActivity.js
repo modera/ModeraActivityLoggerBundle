@@ -47,7 +47,9 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
         var pagingBar = ui.down('pagingtoolbar');
         if (pagingBar) {
             pagingBar.on('change', function(bar, pageData) {
-                ec.setParam(me, 'page', pageData.currentPage);
+                if (pageData) {
+                    ec.setParam(me, 'page', pageData.currentPage);
+                }
             });
         }
 
@@ -59,6 +61,13 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
                     'sort-direction': column.sortState
                 });
             });
+        }
+
+        var header = ui.down('mfc-header');
+        if (header) {
+            header.on('close', function() {
+                ec.getApplication().getContainer().get('workbench').activateSection('tools');
+            })
         }
     },
 

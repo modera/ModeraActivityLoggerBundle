@@ -66,7 +66,7 @@ class FilterAutoSuggestServiceTest extends FunctionalTestCase
         $this->assertArrayHasKey('id', $result[0]);
         $this->assertEquals($u->getId(), $result[0]['id']);
         $this->assertArrayHasKey('value', $result[0]);
-        $this->assertEquals(sprintf('%s ( %s )', $u->getFullName(), $u->getUsername()), $result[0]['value']);
+        $this->assertEquals(sprintf('%s (%s)', $u->getFullName(), $u->getUsername()), $result[0]['value']);
     }
 
     public function testSuggestEvent()
@@ -98,6 +98,6 @@ class FilterAutoSuggestServiceTest extends FunctionalTestCase
         $this->assertArrayHasKey('id', $result[0]);
         $this->assertArrayHasKey('value', $result[0]);
         $this->assertEquals($u->getId(), $result[0]['id']);
-        $this->assertEquals(sprintf('%s ( %s )', $u->getFullName(), $u->getUsername()), $result[0]['value']);
+        $this->assertEquals(sprintf('%s (%s)', $u->getFullName(), $u->getUsername()), $result[0]['value']);
     }
 } 

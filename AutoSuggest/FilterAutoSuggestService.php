@@ -30,7 +30,7 @@ class FilterAutoSuggestService
     protected function stringifyUser(User $user)
     {
         return $user->getFullName()
-              ? sprintf('%s ( %s )', $user->getFullName(), $user->getUsername())
+              ? sprintf('%s (%s)', $user->getFullName(), $user->getUsername())
               : $user->getUsername();
     }
 

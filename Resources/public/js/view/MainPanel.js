@@ -7,7 +7,8 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
     requires: [
         'Modera.backend.tools.activitylog.store.Activities',
         'MFC.Date',
-        'MFC.FieldValueChangeMonitor'
+        'MFC.FieldValueChangeMonitor',
+        'MFC.container.Header'
     ],
 
     // l10n
@@ -73,7 +74,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                                 xtype: 'toolbar',
                                 items: [
                                     {
-                                        width: 220,
+                                        width: 300,
                                         itemId: 'authorFilter',
                                         xtype: 'combo',
                                         emptyText: 'User',
@@ -235,6 +236,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             }
                         },
                         {
+                            style: 'margin-top: 5px',
                             fieldLabel: this.eventTypeLabelText,
                             name: 'type'
                         },
@@ -253,13 +255,14 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                             }
                         },
                         {
+                            style: 'margin-top: 5px',
                             fieldLabel: this.createdAtLabelText,
                             name: 'createdAt',
                             renderer: function(v) {
                                 var moment = MFC.Date.moment(v);
 
                                 var info = MFC.Date.format(moment, 'datetime');
-                                info += ' ( ' + moment.fromNow() + ' ) ';
+                                info += ' (' + moment.fromNow() + ')';
 
                                 return info;
                             }
@@ -359,6 +362,10 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                 me.onFilterChanged();
             }
         });
+
+        field.on('focus', function(field) {
+            field.selectText();
+        })
     },
 
     // private
