@@ -773,3 +773,39 @@ persisted we want to make sure that provided address really exists, then we coul
 
 First argument passed to `validate` method is instance of \Modera\ServerCrudBundle\Validation\ValidationResult and
 must be used to report validation errors - you can report both field related errors as well as general ones.
+
+### Actions intercepting
+
+Sometimes you may want to add apply some additional logic before some controller actions get executed. There could many
+use cases - you may need to add security enforcement or some logging logic, to name a few. In order to apply some additional
+code before any of web-exposed AbstractCrud controller actions gets executed you need to do to these two simply steps:
+
+* Create an implementation of \Modera\ServerCrudBundle\Intercepting\ControllerActionsInterceptorInterface interface
+or subclass \Modera\ServerCrudBundle\Intercepting\ControllerActionsInterceptor if you don't want to write boilerplate
+code.
+* Register an instance of \Sli\ExpanderBundle\Ext\ContributorInterface which would return an instance of your interceptor
+in a dependency injection container and tag it with "modera_server_crud.intercepting.cai_providers".
+
+### Security
+
+Quite often you will need to secure your controllers. All your subclasses can be secured by using "security"
+configuration key when overriding `AbstractCrudController::getConfig` method:
+
+    // override
+    public function getConfig()
+    {
+        return array(
+            // ...
+            'security' => array(
+                'role' => 'ROLE_ACCESS_USERS',
+                'actions' => array(
+                    'create' => 'ROLE_CREATE_USER'
+                )
+            )
+        );
+    }
+
+When `security/role` configuration property is provided then user must have this role in order to access all controller
+actions. If you need to add more fine-grained security role requirements then you need to use `security/actions` property,
+each key of this array corresponds to a controller actions name without "Action" suffix and its value is a security
+role name that user must have in order to invoke this action.
