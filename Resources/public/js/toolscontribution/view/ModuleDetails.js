@@ -38,7 +38,7 @@ Ext.define('Modera.backend.module.toolscontribution.view.ModuleDetails', {
                 region: 'west',
                 width: 300,
                 padding: '0 10 0 0',
-                cls: 'info',
+                cls: 'info mfc-dashed-top-line',
                 items: [
                     {
                         xtype: 'form',
