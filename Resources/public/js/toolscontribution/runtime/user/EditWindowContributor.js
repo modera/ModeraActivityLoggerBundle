@@ -2,7 +2,7 @@
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 Ext.define('Modera.backend.security.toolscontribution.runtime.user.EditWindowContributor', {
-    extends: 'MF.runtime.SharedViewsProviderInterface',
+    extends: 'MF.runtime.SharedActivitiesProviderInterface',
 
     requires: [
         'MF.Util',
