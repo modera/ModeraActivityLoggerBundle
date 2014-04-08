@@ -5,7 +5,7 @@
  * @copyright 2014 Modera Foundation
  */
 Ext.define('Modera.backend.dashboard.runtime.SettingsWindowContributor', {
-    extends: 'MF.runtime.SharedViewsProviderInterface',
+    extends: 'MF.runtime.SharedActivitiesProviderInterface',
 
     requires: [
         'Modera.backend.security.toolscontribution.runtime.Section',

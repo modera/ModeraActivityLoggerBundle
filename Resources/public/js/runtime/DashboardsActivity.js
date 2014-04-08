@@ -37,6 +37,12 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsActivity', {
         });
     },
 
+
+    // internal
+    onSectionLoaded: function(section) {
+        section.relayEvents(this.getUi(), ['handleaction']);
+    },
+
     // override
     getZones: function(callback) {
         var me = this;
