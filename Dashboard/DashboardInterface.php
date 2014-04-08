@@ -28,6 +28,20 @@ interface DashboardInterface
     public function getLabel();
 
     /**
+     * Short dashboard description
+     *
+     * @return string
+     */
+    public function getDescription();
+
+    /**
+     * Icon cls
+     *
+     * @return string
+     */
+    public function getIcon();
+
+    /**
      * Extjs ui class that will serve the dashboard.
      *
      * @return string

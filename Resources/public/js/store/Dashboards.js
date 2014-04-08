@@ -6,11 +6,22 @@ Ext.define('Modera.backend.dashboard.store.Dashboards', {
 
     constructor: function() {
         this.config = {
+            autoLoad: true,
             fields: [
-                'name', 'label', 'uiClass', 'default'
+                'name', //
+                'label',
+                'uiClass',
+                'default',
+//
+//                'glyph',
+//                'iconSrc',
+//                'iconCls'
             ],
             proxy: {
-                type: 'memory'
+                type: 'memory',
+                reader: {
+                    type: 'json'
+                }
             }
         };
         this.callParent([this.config]);

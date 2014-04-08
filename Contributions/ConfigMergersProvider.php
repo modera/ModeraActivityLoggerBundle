@@ -4,6 +4,7 @@ namespace Modera\BackendDashboardBundle\Contributions;
 
 use Doctrine\ORM\EntityManager;
 use Modera\BackendDashboardBundle\Dashboard\DashboardInterface;
+use Modera\BackendDashboardBundle\Dashboard\SimpleDashboard;
 use Modera\BackendDashboardBundle\Entity\GroupSettings;
 use Modera\BackendDashboardBundle\Entity\UserSettings;
 use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
@@ -54,6 +55,7 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
         list($default, $userDashboards) = $this->getUserDashboards();
 
         $result = array();
+        $selectedAsDefault = null;
         foreach ($this->dashboardProvider->getItems() as $dashboard) {
             /* @var DashboardInterface $dashboard */
 
@@ -65,11 +67,27 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
                 continue;
             }
 
+            $isDefault = $dashboard->getName() == $default;
             $result[] = array(
                 'name' => $dashboard->getName(),
                 'label' => $dashboard->getLabel(),
                 'uiClass' => $dashboard->getUiClass(),
-                'default' => $dashboard->getName() == $default
+                'iconCls' => $dashboard->getIcon(),
+                'description' => $dashboard->getDescription(),
+                'default' => $isDefault
+            );
+            if ($default) {
+                $selectedAsDefault = $default;
+            }
+        }
+
+        if (!$selectedAsDefault) {
+            $dashboard = new SimpleDashboard('default', 'List of user dashboards', 'Modera.backend.dashboard.runtime.DashboardListDashboardActivity');
+            $result[] = array(
+                'name' => $dashboard->getName(),
+                'label' => $dashboard->getLabel(),
+                'uiClass' => $dashboard->getUiClass(),
+                'default' => true
             );
         }
 
@@ -146,7 +164,7 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
             $dashboards = [];
             $default = null;
         }  else {
-            $default = count($defaults) ? $defaults[count($defaults) - 1] : $dashboards[0];
+            $default = count($defaults) ? $defaults[count($defaults) - 1] : null;
         }
 
         return [$default, $dashboards];

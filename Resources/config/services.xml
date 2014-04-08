@@ -9,9 +9,9 @@
             <tag name="mf.jsruntimeintegration.menu.menu_items_provider" />
         </service>
 
-        <service id="modera_backend_dashboard.contributions.dashboard_provider" class="Modera\BackendDashboardBundle\Contributions\DashboardProvider">
-            <tag name="modera_backend_dashboard.dashboard_provider" />
-        </service>
+        <!--<service id="modera_backend_dashboard.contributions.dashboard_provider" class="Modera\BackendDashboardBundle\Contributions\DashboardProvider">-->
+            <!--<tag name="modera_backend_dashboard.dashboard_provider" />-->
+        <!--</service>-->
 
         <service id="modera_backend_dashboard.dashboard_service" class="Modera\BackendDashboardBundle\Dashboard\DashboardService">
             <argument type="service" id="modera_backend_dashboard.dashboard_provider" />

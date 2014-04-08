@@ -24,12 +24,16 @@ class SimpleDashboard implements DashboardInterface
      * @param string $name    Technical name of dashboard
      * @param string $label   Human readable label
      * @param string $uiClass ExtJs class that provide ui (Derivative of Ext.container.Container or similar)
+     * @param string $description
+     * @param string $icon
      */
-    public function __construct($name, $label, $uiClass)
+    public function __construct($name, $label, $uiClass, $description='', $icon='modera-backend-module-tools-icon')
     {
         $this->label = $label;
         $this->name = $name;
         $this->uiClass = $uiClass;
+        $this->description = $description;
+        $this->icon = $icon;
     }
 
     /**
@@ -41,6 +45,27 @@ class SimpleDashboard implements DashboardInterface
     {
         return $this->name;
     }
+
+    /**
+     * Short dashboard description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Short dashboard description
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
     /**
      * Return uiClass
      *
