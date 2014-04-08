@@ -2,7 +2,7 @@
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 Ext.define('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowContributor', {
-    extends: 'MF.runtime.SharedViewsProviderInterface',
+    extends: 'MF.runtime.SharedActivitiesProviderInterface',
 
     requires: [
         'MF.Util',
