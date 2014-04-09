@@ -5,7 +5,7 @@ namespace Modera\BackendSecurityBundle\Contributions;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
- * @author    Sergei VIzel <sergei.vizel@modera.org>
+ * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
  */
 class ClientDiServiceDefinitionsProvider implements ContributorInterface
@@ -25,7 +25,7 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
                 'className' => 'Modera.backend.security.toolscontribution.runtime.user.PasswordWindowContributor',
                 'args' => ['@application'],
                 'tags' => ['shared_activities_provider']
-            ),
+            )
         );
     }
 } 

@@ -14,9 +14,14 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.permission.ListAct
         return 'permissions';
     },
 
+    getSecurityConfig: function() {
+        return {
+            role: 'ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION'
+        }
+    },
+
     // override
     doCreateUi: function(params, callback) {
-
         var groupsStore = Ext.create('Modera.backend.security.toolscontribution.store.Groups', {
             autoLoad: false
         });

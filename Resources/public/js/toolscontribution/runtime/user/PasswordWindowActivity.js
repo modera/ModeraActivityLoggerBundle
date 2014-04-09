@@ -13,6 +13,12 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.PasswordWindo
         return 'edit-password';
     },
 
+    getSecurityConfig: function() {
+        return {
+            role: 'ROLE_MANAGE_USER_PROFILES'
+        }
+    },
+
     // override
     doCreateUi: function(params, callback) {
         var requestParams = {

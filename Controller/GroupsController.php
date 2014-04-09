@@ -2,10 +2,9 @@
 
 namespace Modera\BackendSecurityBundle\Controller;
 
+use Modera\BackendSecurityBundle\ModeraBackendSecurityBundle;
 use Modera\SecurityBundle\Entity\Group;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
-use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
-use Modera\ServerCrudBundle\Hydration\HydrationProfile;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -21,7 +20,12 @@ class GroupsController extends AbstractCrudController
         return array(
             'entity' => Group::clazz(),
             'security' => array(
-                'role' => 'ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION'
+                'role' => ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION,
+                'actions' => array(
+                    'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
+                    'update' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
+                    'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS
+                )
             ),
             'hydration' => array(
                 'groups' => array(

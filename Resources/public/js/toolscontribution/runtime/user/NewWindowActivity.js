@@ -13,6 +13,12 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.NewWindowActi
         return 'new-user';
     },
 
+    getSecurityConfig: function() {
+        return {
+            role: 'ROLE_MANAGE_USER_PROFILES'
+        }
+    },
+
     // override
     doCreateUi: function(params, callback) {
         var window = Ext.create('Modera.backend.security.toolscontribution.view.user.NewWindow');

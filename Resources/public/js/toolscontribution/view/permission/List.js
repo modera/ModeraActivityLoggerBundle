@@ -38,7 +38,10 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
             viewConfig: {
                 markDirty:false
             },
-            columns  : [
+            security: {
+                role: 'ROLE_MANAGE_PERMISSIONS'
+            },
+            columns: [
                 {
                     dataIndex: 'name',
                     flex: 4,

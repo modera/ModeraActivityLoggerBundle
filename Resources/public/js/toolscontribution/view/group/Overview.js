@@ -38,7 +38,11 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.Overview', {
                             itemId: 'addNewGroupBtn',
                             text: this.newGroupBtnText,
                             iconCls: 'mfc-icon-add-24',
-                            scale: 'medium'
+                            scale: 'medium',
+                            security: {
+                                role: 'ROLE_MANAGE_PERMISSIONS',
+                                strategy: 'hide'
+                            }
                         },
                         '->',
                         {
@@ -56,7 +60,11 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.Overview', {
                                         itemId: 'deleteBtn',
                                         text: this.deleteBtnText,
                                         scale: 'medium',
-                                        iconCls: 'mfc-icon-delete-24'
+                                        iconCls: 'mfc-icon-delete-24',
+                                        security: {
+                                            role: 'ROLE_MANAGE_PERMISSIONS',
+                                            strategy: 'hide'
+                                        }
                                     }
                                 ]
                             })

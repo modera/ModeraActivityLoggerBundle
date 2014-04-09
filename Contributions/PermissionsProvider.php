@@ -26,6 +26,16 @@ class PermissionsProvider implements ContributorInterface
                     T::trans('Access users and groups manager'),
                     ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION,
                     'site'
+                ),
+                new Permission(
+                    T::trans('Manage user profiles'),
+                    ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
+                    'site'
+                ),
+                new Permission(
+                    T::trans('Manage permissions'),
+                    ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
+                    'site'
                 )
             ];
         }

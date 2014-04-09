@@ -13,6 +13,12 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.ListActivity'
         return 'users';
     },
 
+    getSecurityConfig: function() {
+        return {
+            role: 'ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION'
+        }
+    },
+
     // override
     doCreateUi: function(params, callback) {
         var grid = Ext.create('Modera.backend.security.toolscontribution.view.user.List');

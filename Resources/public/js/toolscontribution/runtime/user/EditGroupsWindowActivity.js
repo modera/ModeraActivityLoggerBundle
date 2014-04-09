@@ -13,6 +13,12 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.EditGroupsWin
         return 'edit-groups';
     },
 
+    getSecurityConfig: function() {
+        return {
+            role: 'ROLE_MANAGE_USER_PROFILES'
+        }
+    },
+
     // override
     doCreateUi: function(params, callback) {
         var requestParams = {

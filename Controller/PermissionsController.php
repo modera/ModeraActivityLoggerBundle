@@ -2,6 +2,7 @@
 
 namespace Modera\BackendSecurityBundle\Controller;
 
+use Modera\BackendSecurityBundle\ModeraBackendSecurityBundle;
 use Modera\SecurityBundle\Entity\Permission;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
@@ -21,7 +22,12 @@ class PermissionsController extends AbstractCrudController
         return array(
             'entity' => Permission::clazz(),
             'security' => array(
-                'role' => 'ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION'
+                'role' => ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION,
+                'actions' => array(
+                    'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
+                    'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
+                    'update' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS
+                )
             ),
             'hydration' => array(
                 'groups' => array(

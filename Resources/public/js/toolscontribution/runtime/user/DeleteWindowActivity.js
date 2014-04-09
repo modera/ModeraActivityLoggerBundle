@@ -8,6 +8,12 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.DeleteWindowA
         'MFC.window.DeleteRecordConfirmationWindow'
     ],
 
+    getSecurityConfig: function() {
+        return {
+            role: 'ROLE_MANAGE_USER_PROFILES'
+        }
+    },
+
     // override
     constructor: function(config) {
         var defaults = {

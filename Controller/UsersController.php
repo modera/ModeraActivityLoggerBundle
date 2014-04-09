@@ -3,6 +3,7 @@
 namespace Modera\BackendSecurityBundle\Controller;
 
 use Modera\ActivityLoggerBundle\Manager\ActivityManagerInterface;
+use Modera\BackendSecurityBundle\ModeraBackendSecurityBundle;
 use Modera\SecurityBundle\Entity\User;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
@@ -28,7 +29,12 @@ class UsersController extends AbstractCrudController
         return array(
             'entity' => User::clazz(),
             'security' => array(
-                'role' => 'ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION'
+                'role' => ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION,
+                'actions' => array(
+                    'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
+                    'update' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
+                    'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES
+                )
             ),
             'hydration' => array(
                 'groups' => array(
@@ -105,6 +111,7 @@ class UsersController extends AbstractCrudController
     public function generatePasswordAction(array $params)
     {
         $plainPassword = $this->generatePassword();
+
         return array(
             'success' => true,
             'result'  => array(
