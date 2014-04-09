@@ -64,6 +64,15 @@ class ServiceDefinitionsProvider implements ContributorInterface
                 'className' => 'Modera.securityawarejsruntime.runtime.ProfileContextMenuPlugin',
                 'tags'      => ['runtime_plugin'],
             ),
+            'modera_backend_security.activation_security_interceptor' => array(
+                'className' => 'MF.activation.security.ActivationSecurityInterceptor',
+                'args' => [
+                    array(
+                        'securityMgr' => '@security_manager'
+                    )
+                ],
+                'tags' => ['activation_interceptor']
+            )
         );
     }
 }

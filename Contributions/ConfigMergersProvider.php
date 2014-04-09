@@ -26,7 +26,7 @@ class ConfigMergersProvider implements ContributorInterface
                     }
 
                     return array_merge($currentConfig, array(
-                        'userRoles' => $roles
+                        'roles' => $roles
                     ));
                 } else {
                     return $currentConfig;
