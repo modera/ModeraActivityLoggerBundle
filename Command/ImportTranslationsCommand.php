@@ -3,7 +3,6 @@
 namespace Modera\TranslationsBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Modera\TranslationsBundle\Handling\PhpClassesTranslationHandler;
 use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Catalogue\DiffOperation;
 use Symfony\Component\Console\Input\InputInterface;
@@ -39,7 +38,6 @@ class ImportTranslationsCommand extends ContainerAwareCommand
         /* @var TranslationHandlersChain $thc */
         $thc = $this->getContainer()->get('modera_translations.service.translation_handlers_chain');
 
-        $sources = array('template', 'extjs', PhpClassesTranslationHandler::SOURCE_NAME);
         $languages = $em->getRepository(Language::clazz())->findBy(array(
             'isEnabled' => true
         ));
@@ -66,7 +64,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
 
                 $bundleName = $handler->getBundleName();
 
-                foreach ($sources as $source) {
+                foreach ($handler->getSources() as $source) {
 
                     $tokens = $em->getRepository(TranslationToken::clazz())->findBy(array(
                         'source'     => $source,

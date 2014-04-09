@@ -13,9 +13,16 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.4.0",
         "symfony/framework-bundle": "~2.0",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
         "modera/languages-bundle": "dev-master"
+    },
+    "require-dev": {
+        "modera/foundation-bundle": "dev-master",
+        "phake/phake": "2.0.*@dev",
+        "phpunit/phpunit": "3.*"
     },
     "autoload": {
         "psr-0": { "Modera\\TranslationsBundle": "" }

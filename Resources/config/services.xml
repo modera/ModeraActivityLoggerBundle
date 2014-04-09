@@ -41,6 +41,7 @@
             <argument type="service" id="translation.extractor" />
         </service>
 
+        <!--
         <service parent="modera_translations.handling.template_translation_handler">
 
             <argument>ModeraTranslationsBundle</argument>
@@ -54,5 +55,6 @@
 
             <tag name="modera_translations.translation_handler" />
         </service>
+        -->
     </services>
 </container>

@@ -16,6 +16,11 @@ interface TranslationHandlerInterface
     public function getBundleName();
 
     /**
+     * @return array
+     */
+    public function getSources();
+
+    /**
      * Copies translations from file system of a symfony dictionary that eventually
      * will be dumped to database.
      *

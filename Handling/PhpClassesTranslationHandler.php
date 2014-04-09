@@ -15,14 +15,6 @@ class PhpClassesTranslationHandler extends TemplateTranslationHandler
     /**
      * @inheritDoc
      */
-    protected function isSourceAvailable($source)
-    {
-        return self::SOURCE_NAME == $source;
-    }
-
-    /**
-     * @inheritDoc
-     */
     protected function resolveResourcesDirectory(BundleInterface $bundle)
     {
         return $bundle->getPath();

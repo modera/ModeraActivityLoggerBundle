@@ -3,7 +3,7 @@
 namespace Modera\TranslationsBundle\Handling;
 
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
-use Symfony\Component\HttpKernel\Kernel;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\Translation\MessageCatalogue;
@@ -17,13 +17,15 @@ use Symfony\Bundle\FrameworkBundle\Translation\TranslationLoader;
  */
 class TemplateTranslationHandler implements TranslationHandlerInterface
 {
+    const SOURCE_NAME = 'template';
+
     /**
      * @var string
      */
     private $bundle;
 
     /**
-     * @var Kernel
+     * @var KernelInterface
      */
     private $kernel;
 
@@ -37,7 +39,7 @@ class TemplateTranslationHandler implements TranslationHandlerInterface
      */
     private $loader;
 
-    public function __construct(Kernel $kernel, TranslationLoader $loader, ExtractorInterface $extractor, $bundle)
+    public function __construct(KernelInterface $kernel, TranslationLoader $loader, ExtractorInterface $extractor, $bundle)
     {
         $this->kernel    = $kernel;
         $this->loader    = $loader;
@@ -51,6 +53,14 @@ class TemplateTranslationHandler implements TranslationHandlerInterface
     public function getBundleName()
     {
         return $this->bundle;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSources()
+    {
+        return array(static::SOURCE_NAME);
     }
 
     /**
@@ -99,7 +109,7 @@ class TemplateTranslationHandler implements TranslationHandlerInterface
      */
     protected function isSourceAvailable($source)
     {
-        return 'template' == $source;
+        return static::SOURCE_NAME == $source;
     }
 
     /**
