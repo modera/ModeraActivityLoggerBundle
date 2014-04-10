@@ -31,7 +31,7 @@ class CompileTranslationsCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $outputFormat = 'xlf';
+        $outputFormat = 'yml';
 
         /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
@@ -67,6 +67,10 @@ class CompileTranslationsCommand extends ContainerAwareCommand
             /* @var LanguageTranslationToken $ltt */
             foreach ($ltts as $ltt) {
 
+                if (!$ltt->getLanguage()->getIsEnabled()) {
+                    continue;
+                }
+
                 $locale = $ltt->getLanguage()->getLocale();
 
                 if (!isset($bundles[$bundleName][$locale])) {
@@ -85,6 +89,10 @@ class CompileTranslationsCommand extends ContainerAwareCommand
             $basePath = dirname($this->getContainer()->get('kernel')->getRootdir());
 
             foreach ($bundles as $bundleName => $catalogues) {
+
+                if (!count($catalogues)) {
+                    continue;
+                }
 
                 $bundleTransDir = $resourcesDir . '/translations' . '/' . $bundleName;
                 $bundleTransPath = $basePath . '/' . $bundleTransDir;
