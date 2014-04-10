@@ -55,8 +55,8 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
     applyTransition: function(diff, callback) {
         var me = this;
 
-        if (diff.isViewParamValueChanged(me, 'section')) {
-            me.getUi().activateSection(diff.getViewParamChangedNewValue(me, 'section'), callback);
+        if (diff.isParamValueChanged(me, 'section')) {
+            me.getUi().activateSection(diff.getActivityParamChangedNewValue(me, 'section'), callback);
         } else {
             callback();
         }
