@@ -4,7 +4,7 @@
 Ext.define('Modera.backend.tools.activitylog.runtime.Section', {
     extend: 'MF.runtime.Section',
 
-    requries: [
+    requires: [
         'Modera.backend.tools.activitylog.runtime.ListActivity',
         'Modera.backend.tools.activitylog.runtime.ActivityDetailsWindowActivity'
     ],
@@ -21,15 +21,21 @@ Ext.define('Modera.backend.tools.activitylog.runtime.Section', {
         callback();
     },
 
+    canHandleIntent: function(intent, cb) {
+        cb('show_activity_details' == intent.name && intent.params && intent.params.hasOwnProperty('id'));
+    },
+
     // override
     handleIntent: function(intent) {
-        if ('show_activity_details' == intent.name && intent.params && intent.params.hasOwnProperty('id')) {
+        var me = this;
+        this.canHandleIntent(intent, function(result) {
+            if (result) {
+                me.application.getContainer().get('workbench').getActivitiesManager().launchActivity(
+                    'activity-details', { id: intent.params.id }
+                );
 
-            this.application.getContainer().get('workbench').getActivitiesManager().launchActivity(
-                'activity-details', { id: intent.params.id }
-            );
-
-            return true;
-        }
+                cb();
+            }
+        });
     }
 });
