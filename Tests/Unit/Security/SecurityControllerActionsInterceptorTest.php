@@ -5,6 +5,7 @@ namespace Modera\ServerCrudBundle\Tests\Unit\Security;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\Security\AccessDeniedHttpException;
 use Modera\ServerCrudBundle\Security\SecurityControllerActionsInterceptor;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -32,20 +33,32 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
             )
         );
 
-        $this->controller->expects($this->atLeastOnce())
-                         ->method('getPreparedConfig')
-                         ->will($this->returnValue($config));
-
+        $this->teachController($config);
 
         $thrownException = null;
         try {
-            $this->interceptor->checkAccess("it doesn't matter in this case", $this->controller);
+            $this->interceptor->checkAccess("it doesn't matter in this case", array(), $this->controller);
         } catch (AccessDeniedHttpException $e) {
             $thrownException = $e;
         }
 
         $this->assertNotNull($thrownException);
         $this->assertEquals('ROLE_FOO', $thrownException->getRole());
+    }
+
+    private function teachController(array $preparedConfig)
+    {
+        $this->controller->expects($this->atLeastOnce())
+             ->method('getPreparedConfig')
+             ->will($this->returnValue($preparedConfig));
+    }
+
+    private function teachSecurityContext($expectedArgValue, $returnValue)
+    {
+        $this->securityContext->expects($this->atLeastOnce())
+            ->method('isGranted')
+            ->with($this->equalTo($expectedArgValue))
+            ->will($this->returnValue($returnValue));
     }
 
     public function assertExceptionThrown($actionName)
@@ -63,15 +76,8 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
             )
         );
 
-        $this->securityContext->expects($this->atLeastOnce())
-            ->method('isGranted')
-            ->with($this->equalTo($config['security']['actions'][$actionName]))
-            ->will($this->returnValue(false));
-
-        $this->controller->expects($this->atLeastOnce())
-            ->method('getPreparedConfig')
-            ->will($this->returnValue($config));
-
+        $this->teachSecurityContext($config['security']['actions'][$actionName], false);
+        $this->teachController($config);
 
         $thrownException = null;
         try {
@@ -84,7 +90,10 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
         $this->assertEquals($config['security']['actions'][$actionName], $thrownException->getRole());
     }
 
-    public function assertAccessAllowed($actionName)
+    /**
+     * @param string $actionName
+     */
+    private function assertAccessAllowed($actionName)
     {
         $config = array(
             'security' => array(
@@ -99,14 +108,8 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
             )
         );
 
-        $this->securityContext->expects($this->atLeastOnce())
-             ->method('isGranted')
-             ->with($this->equalTo($config['security']['actions'][$actionName]))
-             ->will($this->returnValue(true));
-
-        $this->controller->expects($this->atLeastOnce())
-             ->method('getPreparedConfig')
-             ->will($this->returnValue($config));
+        $this->teachSecurityContext($config['security']['actions'][$actionName], true);
+        $this->teachController($config);
 
         $this->interceptor->{'on' . ucfirst($actionName)}(array(), $this->controller);
     }
@@ -169,5 +172,38 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
     public function testOnGetNewRecordValuesAllowed()
     {
         $this->assertAccessAllowed('getNewRecordValues');
+    }
+
+    public function testCheckAccessWithCallable()
+    {
+        $holder = new \stdClass();
+
+        $config = array(
+            'security' => array(
+                'actions' => array(
+                    'create' => function(SecurityContextInterface $sc, $params, $actionName) use($holder) {
+                        $holder->sc = $sc;
+                        $holder->params = $params;
+                        $holder->actionName = $actionName;
+
+                        return false;
+                    },
+                )
+            )
+        );
+
+        $this->teachController($config);
+
+        $thrownException = null;
+        try {
+            $this->interceptor->checkAccess('create', array('foo'), $this->controller);
+        } catch (AccessDeniedHttpException $e) {
+            $thrownException = $e;
+        }
+
+        $this->assertNotNull($thrownException);
+        $this->assertInstanceOf('Symfony\Component\Security\Core\SecurityContextInterface', $holder->sc);
+        $this->assertEquals(array('foo'), $holder->params);
+        $this->assertEquals('create', $holder->actionName);
     }
 } 

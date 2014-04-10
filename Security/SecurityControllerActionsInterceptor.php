@@ -26,12 +26,24 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
 
     private function throwAccessDeniedException($role)
     {
-        $e = new AccessDeniedHttpException("Security role '$role' is required to perform this action.");
-        $e->setRole($role);
+        $msg = is_callable($role)
+             ? 'You are not allowed to perform this action.'
+             : "Security role '$role' is required to perform this action.";
+
+        $e = new AccessDeniedHttpException($msg);
+        if (!is_callable($role)) {
+            $e->setRole($role);
+        }
+
         throw $e;
     }
 
-    public function checkAccess($actionName, AbstractCrudController $controller)
+    /**
+     * @param string $actionName
+     * @param array $params
+     * @param AbstractCrudController $controller
+     */
+    public function checkAccess($actionName, array $params, AbstractCrudController $controller)
     {
         $config = $controller->getPreparedConfig();
 
@@ -49,7 +61,11 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
             if (isset($security['actions']) && isset($security['actions'][$actionName])) {
                 $role = $security['actions'][$actionName];
 
-                if (!$this->securityContext->isGranted($role)) {
+                if (is_callable($role)) {
+                    if (!call_user_func($role, $this->securityContext, $params, $actionName)) {
+                        $this->throwAccessDeniedException($role);
+                    }
+                } else if (!$this->securityContext->isGranted($role)) {
                     $this->throwAccessDeniedException($role);
                 }
             }
@@ -61,7 +77,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
      */
     public function onCreate(array $params, AbstractCrudController $controller)
     {
-        $this->checkAccess('create', $controller);
+        $this->checkAccess('create', $params, $controller);
     }
 
     /**
@@ -69,7 +85,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
      */
     public function onUpdate(array $params, AbstractCrudController $controller)
     {
-        $this->checkAccess('update', $controller);
+        $this->checkAccess('update', $params, $controller);
     }
 
     /**
@@ -77,7 +93,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
      */
     public function onGet(array $params, AbstractCrudController $controller)
     {
-        $this->checkAccess('get', $controller);
+        $this->checkAccess('get', $params, $controller);
     }
 
     /**
@@ -85,7 +101,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
      */
     public function onList(array $params, AbstractCrudController $controller)
     {
-        $this->checkAccess('list', $controller);
+        $this->checkAccess('list', $params, $controller);
     }
 
     /**
@@ -93,7 +109,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
      */
     public function onRemove(array $params, AbstractCrudController $controller)
     {
-        $this->checkAccess('remove', $controller);
+        $this->checkAccess('remove', $params, $controller);
     }
 
     /**
@@ -101,7 +117,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
      */
     public function onGetNewRecordValues(array $params, AbstractCrudController $controller)
     {
-        $this->checkAccess('getNewRecordValues', $controller);
+        $this->checkAccess('getNewRecordValues', $params, $controller);
     }
 
     static public function clazz()

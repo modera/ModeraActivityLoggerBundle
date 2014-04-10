@@ -799,7 +799,10 @@ configuration key when overriding `AbstractCrudController::getConfig` method:
             'security' => array(
                 'role' => 'ROLE_ACCESS_USERS',
                 'actions' => array(
-                    'create' => 'ROLE_CREATE_USER'
+                    'create' => 'ROLE_CREATE_USER',
+                    'update' => function(SecurityContextInterface $sc, $params, $actionName) {
+                        // some non-trivial security check may occur in a callback
+                    }
                 )
             )
         );
@@ -808,4 +811,5 @@ configuration key when overriding `AbstractCrudController::getConfig` method:
 When `security/role` configuration property is provided then user must have this role in order to access all controller
 actions. If you need to add more fine-grained security role requirements then you need to use `security/actions` property,
 each key of this array corresponds to a controller actions name without "Action" suffix and its value is a security
-role name that user must have in order to invoke this action.
+role name that user must have in order to invoke this action or a PHP callable that must be invoked to do security
+checks.
