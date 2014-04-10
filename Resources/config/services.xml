@@ -16,21 +16,6 @@
                  class="Doctrine\Common\Cache\ApcCache">
         </service>
 
-        <service id="modera_backend_translations_tool.contributions.routing_resources_provider"
-                 class="Modera\BackendTranslationsToolBundle\Contributions\RoutingResourcesProvider">
-
-            <tag name="modera_routing.routing_resources_provider" />
-        </service>
-
-        <service id="modera_backend_translations_tool.contributions.client_di_service_definitions_provider"
-                 class="Modera\BackendTranslationsToolBundle\Contributions\ClientDiServiceDefinitionsProvider">
-
-            <argument type="service" id="service_container" />
-
-            <!--<tag name="modera_security_aware_js_runtime.client_di_service_defs_provider" />-->
-            <tag name="mf.jsruntimeintegration.csdi.service_definitions_provider" />
-        </service>
-
         <service id="modera_backend_translations_tool.contributions.filters_provider"
                  class="Modera\BackendTranslationsToolBundle\Contributions\FiltersProvider">
 

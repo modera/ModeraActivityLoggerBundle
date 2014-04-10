@@ -53,7 +53,8 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
             $q = $this->em()->createQuery(
                 'SELECT IDENTITY(ltt.translationToken) as translationToken ' .
                 'FROM ModeraTranslationsBundle:LanguageTranslationToken ltt ' .
-                'WHERE ltt.isNew=true GROUP BY ltt.translationToken'
+                'LEFT JOIN ltt.language l ' .
+                'WHERE ltt.isNew=true AND l.isEnabled=true GROUP BY ltt.translationToken'
             );
             $result = $q->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
         } catch (\Exception $e) {
