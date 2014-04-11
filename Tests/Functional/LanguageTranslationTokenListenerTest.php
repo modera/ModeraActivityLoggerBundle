@@ -16,7 +16,6 @@ class LanguageTranslationTokenListenerTest extends FunctionalTestCase
     private function createLanguageTranslationToken($locale, $translation, TranslationToken $token)
     {
         $language = new Language;
-        $language->setName('Test (' . $locale . ')');
         $language->setLocale($locale);
 
         $languageTranslationToken = new LanguageTranslationToken;

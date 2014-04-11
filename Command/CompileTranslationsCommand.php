@@ -67,7 +67,7 @@ class CompileTranslationsCommand extends ContainerAwareCommand
             /* @var LanguageTranslationToken $ltt */
             foreach ($ltts as $ltt) {
 
-                if (!$ltt->getLanguage()->getIsEnabled()) {
+                if (!$ltt->getLanguage()->getEnabled()) {
                     continue;
                 }
 

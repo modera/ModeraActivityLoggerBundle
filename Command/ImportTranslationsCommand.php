@@ -46,7 +46,6 @@ class ImportTranslationsCommand extends ContainerAwareCommand
 
             $language = new Language;
             $language->setLocale($defaultLocale);
-            $language->setName(ucfirst($defaultLocale));
             $language->setEnabled(true);
             $em->persist($language);
             $em->flush();
