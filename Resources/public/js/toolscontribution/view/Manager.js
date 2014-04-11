@@ -116,8 +116,6 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
              */
             'sectionchanged'
         );
-
-        me.assignListeners();
     },
 
     /**
@@ -136,38 +134,5 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
         if (callback) {
             callback();
         }
-    },
-
-    // private
-    assignListeners: function() {
-        var me = this;
-
-        var usersList = me.down('modera-backend-security-user-list');
-        usersList.on('newrecord', function(sourceComponent) {
-            me.fireEvent('handleaction', 'newuser', sourceComponent);
-        });
-        usersList.on('editrecord', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'edituser', sourceComponent, params);
-        });
-        usersList.on('deleterecord', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'deleteuser', sourceComponent, params);
-        });
-        usersList.on('editpassword', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'editpassword', sourceComponent, params);
-        });
-        usersList.on('editgroups', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'editgroups', sourceComponent, params);
-        });
-
-        var groupsOverview = me.down('modera-backend-security-group-overview');
-        groupsOverview.on('creategroup', function(sourceComponent) {
-            me.fireEvent('handleaction', 'newgroup', sourceComponent);
-        });
-        groupsOverview.on('deletegroup', function(sourceComponent, record) {
-            me.fireEvent('handleaction', 'deletegroup', sourceComponent, { id: record.get('id') });
-        });
-        groupsOverview.on('editgroup', function(sourceComponent, record) {
-            me.fireEvent('handleaction', 'editgroup', sourceComponent, { id: record.get('id') });
-        });
     }
 });

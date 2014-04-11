@@ -67,11 +67,6 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.EditWindowAct
 
             Actions.ModeraBackendSecurity_Users.update({ record: values }, function(response) {
                 if (response.success) {
-
-                    if (me.section) {
-                        me.section.fireEvent('recordsupdated', response['updated_models']);
-                    }
-
                     window.close();
                 } else {
                     window.showErrors(response);

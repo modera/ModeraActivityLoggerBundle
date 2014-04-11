@@ -29,11 +29,23 @@ class UsersController extends AbstractCrudController
         return array(
             'entity' => User::clazz(),
             'security' => array(
-                'role' => ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION,
                 'actions' => array(
                     'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
-                    'update' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
-                    'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES
+                    'update' => function(SecurityContextInterface $sc, array $params) {
+                        /* @var User $user */
+                        $user = $sc->getToken()->getUser();
+
+                        if ($sc->isGranted(ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES)) {
+                            return true;
+                        } else {
+                            // irrespectively of what privileges user has we will always allow him to edit his
+                            // own profile data
+                            return $user instanceof User && isset($params['record']['id'])
+                                   && $user->getId() == $params['record']['id'];
+                        }
+                    },
+                    'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
+                    'list' => ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION
                 )
             ),
             'hydration' => array(

@@ -56,7 +56,7 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
         var me = this;
 
         if (diff.isParamValueChanged(me, 'section')) {
-            me.getUi().activateSection(diff.getActivityParamChangedNewValue(me, 'section'), callback);
+            me.getUi().activateSection(diff.getChangedParamNewValue(me, 'section'), callback);
         } else {
             callback();
         }
@@ -74,6 +74,46 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
 
         ui.down('modera-backend-security-permission-list').on('permissionchange', function(sourceComponent, params) {
             Actions.ModeraBackendSecurity_Permissions.update({ record: params }, function(response) {});
+        });
+    },
+
+    // override
+    getDefaultParams: function() {
+        return {
+            section: 'users'
+        }
+    },
+
+    // override
+    attachContractListeners: function(ui) {
+        var me = this;
+        
+        var usersList = ui.down('modera-backend-security-user-list');
+        usersList.on('newrecord', function(sourceComponent) {
+            me.fireEvent('handleaction', 'newuser', sourceComponent);
+        });
+        usersList.on('editrecord', function(sourceComponent, params) {
+            me.fireEvent('handleaction', 'edituser', sourceComponent, params);
+        });
+        usersList.on('deleterecord', function(sourceComponent, params) {
+            me.fireEvent('handleaction', 'deleteuser', sourceComponent, params);
+        });
+        usersList.on('editpassword', function(sourceComponent, params) {
+            me.fireEvent('handleaction', 'editpassword', sourceComponent, params);
+        });
+        usersList.on('editgroups', function(sourceComponent, params) {
+            me.fireEvent('handleaction', 'editgroups', sourceComponent, params);
+        });
+
+        var groupsOverview = ui.down('modera-backend-security-group-overview');
+        groupsOverview.on('creategroup', function(sourceComponent) {
+            me.fireEvent('handleaction', 'newgroup', sourceComponent);
+        });
+        groupsOverview.on('deletegroup', function(sourceComponent, record) {
+            me.fireEvent('handleaction', 'deletegroup', sourceComponent, { id: record.get('id') });
+        });
+        groupsOverview.on('editgroup', function(sourceComponent, record) {
+            me.fireEvent('handleaction', 'editgroup', sourceComponent, { id: record.get('id') });
         });
     }
 });
