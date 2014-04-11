@@ -11,7 +11,13 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/intl": "~2.3",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
         "symfony/framework-bundle": "~2.3"
+    },
+    "require-dev": {
+        "modera/foundation-bundle": "dev-master",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": { "Modera\\LanguagesBundle": "" }

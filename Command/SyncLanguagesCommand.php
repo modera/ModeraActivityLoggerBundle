@@ -15,13 +15,13 @@ use Modera\LanguagesBundle\DependencyInjection\ModeraLanguagesExtension;
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class ImportLanguagesCommand extends ContainerAwareCommand
+class SyncLanguagesCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
         $this
-            ->setName('modera:languages:import')
-            ->setDescription('Import languages from config to database.')
+            ->setName('modera:languages:config-sync')
+            ->setDescription('Synchronize languages config with database.')
         ;
     }
 
@@ -30,7 +30,7 @@ class ImportLanguagesCommand extends ContainerAwareCommand
         /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        $languages = $this->getContainer()->getParameter(ModeraLanguagesExtension::CONFIG_KEY);
+        $languages = $this->getConfigLanguages();
         $dbLanguages = $em->getRepository(Language::clazz())->findAll();
 
         $updated = array();
@@ -70,9 +70,17 @@ class ImportLanguagesCommand extends ContainerAwareCommand
         $em->flush();
 
         $table = $this->getApplication()->getHelperSet()->get('table');
-        $table->setHeaders(array('locale', 'name', 'isEnabled'));
+        $table->setHeaders(array('locale', 'name', 'enabled'));
         $table->setRows($tableRows);
         $table->render($output);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getConfigLanguages()
+    {
+        return $this->getContainer()->getParameter(ModeraLanguagesExtension::CONFIG_KEY);
     }
 
     /**
@@ -87,4 +95,4 @@ class ImportLanguagesCommand extends ContainerAwareCommand
             $dbLanguage->getEnabled(),
         );
     }
-} 
+}

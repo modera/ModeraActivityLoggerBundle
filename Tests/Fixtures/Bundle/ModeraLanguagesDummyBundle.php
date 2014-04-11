@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\LanguagesBundle;
+namespace Modera\LanguagesBundle\Tests\Fixtures\Bundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -8,6 +8,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class ModeraLanguagesBundle extends Bundle
+class ModeraLanguagesDummyBundle extends Bundle
 {
 }

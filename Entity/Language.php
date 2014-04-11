@@ -54,9 +54,9 @@ class Language
      */
     public function getName($locale = null)
     {
-        $locales = Intl::getLocaleBundle()->getLocaleNames($locale ?: $this->locale);
-        $str = $locales[$this->locale] ?: 'Undefined';
         $enc = 'utf-8';
+        $names = Intl::getLocaleBundle()->getLocaleNames($locale ?: $this->locale);
+        $str = isset($names[$this->locale]) ? $names[$this->locale] : $this->locale;
         return mb_strtoupper(mb_substr($str, 0, 1, $enc), $enc) . mb_substr($str, 1, mb_strlen($str, $enc), $enc);
     }
 

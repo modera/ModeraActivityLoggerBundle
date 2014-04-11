@@ -1,0 +1,24 @@
+framework:
+    secret:          Hell yeah!
+    csrf_protection: true
+    session:         ~
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     127.0.0.1
+        port:     3306
+        dbname:   modera_languages_bundle
+        user:     root
+        password:
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true
+
+modera_languages:
+    - { locale: en }
+    - { locale: ru, is_enabled: false }
+    - { locale: et }
