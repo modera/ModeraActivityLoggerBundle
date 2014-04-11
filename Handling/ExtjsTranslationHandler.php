@@ -11,13 +11,7 @@ use Symfony\Component\HttpKernel\Bundle\BundleInterface;
  */
 class ExtjsTranslationHandler extends TemplateTranslationHandler
 {
-    /**
-     * @inheritDoc
-     */
-    protected function isSourceAvailable($source)
-    {
-        return 'extjs' == $source;
-    }
+    const SOURCE_NAME = 'extjs';
 
     /**
      * @inheritDoc

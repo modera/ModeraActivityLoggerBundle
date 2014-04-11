@@ -35,7 +35,7 @@ abstract class AbstractTranslationTokensFilter implements FilterInterface
     }
 
     /**
-     * @return
+     * @return \Doctrine\ORM\EntityManager
      */
     protected function em()
     {
