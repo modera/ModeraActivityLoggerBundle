@@ -67,8 +67,8 @@ Ext.define('Modera.backend.translationstool.toolscontribution.runtime.ListActivi
     applyTransition: function(diff, callback) {
         var me = this;
 
-        if (diff.isViewParamValueChanged(me, 'show')) {
-            var filter = diff.getViewParamChangedNewValue(me, 'show');
+        if (diff.isParamValueChanged(me, 'show')) {
+            var filter = diff.getChangedParamNewValue(me, 'show');
             me.getUi().down('#' + filter).toggle();
             me.getUi().getStore().filterByFilterId(filter);
             callback();
