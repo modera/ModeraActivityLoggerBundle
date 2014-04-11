@@ -3,6 +3,7 @@
 namespace Modera\LanguagesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Intl\Intl;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -21,12 +22,6 @@ class Language
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", nullable=false)
-     */
-    private $name;
 
     /**
      * @var string
@@ -57,17 +52,12 @@ class Language
     /**
      * @return string
      */
-    public function getName()
+    public function getName($locale = null)
     {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+        $locales = Intl::getLocaleBundle()->getLocaleNames($locale ?: $this->locale);
+        $str = $locales[$this->locale] ?: 'Undefined';
+        $enc = 'utf-8';
+        return mb_strtoupper(mb_substr($str, 0, 1, $enc), $enc) . mb_substr($str, 1, mb_strlen($str, $enc), $enc);
     }
 
     /**

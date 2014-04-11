@@ -48,7 +48,6 @@ class ImportLanguagesCommand extends ContainerAwareCommand
 
                 if (is_array($language)) {
                     $updated[] = $language['locale'];
-                    $dbLanguage->setName($language['name']);
                     $dbLanguage->setEnabled($language['is_enabled'] ? true : false);
                 } else {
                     $dbLanguage->setEnabled(false);
@@ -62,7 +61,6 @@ class ImportLanguagesCommand extends ContainerAwareCommand
             if (!in_array($language['locale'], $updated)) {
                 $dbLanguage = new Language;
                 $dbLanguage->setLocale($language['locale']);
-                $dbLanguage->setName($language['name']);
                 $dbLanguage->setEnabled($language['is_enabled'] ? true : false);
                 $em->persist($dbLanguage);
                 $tableRows[] = $this->tableRow($dbLanguage);
@@ -86,7 +84,7 @@ class ImportLanguagesCommand extends ContainerAwareCommand
         return array(
             $dbLanguage->getLocale(),
             $dbLanguage->getName(),
-            $dbLanguage->getIsEnabled(),
+            $dbLanguage->getEnabled(),
         );
     }
 } 

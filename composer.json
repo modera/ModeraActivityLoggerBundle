@@ -9,8 +9,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
-        "symfony/framework-bundle": "~2.0"
+        "php": ">=5.3.3",
+        "symfony/intl": "~2.3",
+        "symfony/framework-bundle": "~2.3"
     },
     "autoload": {
         "psr-0": { "Modera\\LanguagesBundle": "" }

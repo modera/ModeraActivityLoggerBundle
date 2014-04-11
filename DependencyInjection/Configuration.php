@@ -24,7 +24,6 @@ class Configuration implements ConfigurationInterface
             ->prototype('array')
                 ->children()
                     ->scalarNode('locale')->end()
-                    ->scalarNode('name')->end()
                     ->booleanNode('is_enabled')->defaultValue(true)->end()
                 ->end()
             ->end();
