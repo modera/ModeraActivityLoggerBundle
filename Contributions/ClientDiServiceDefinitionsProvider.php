@@ -61,7 +61,7 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
             $em = $this->container->get('doctrine.orm.entity_manager');
             /* @var UserSettings $settings */
             $settings = $em->getRepository(UserSettings::clazz())->findOneBy(array('user' => $token->getUser()->getId()));
-            if ($settings && $settings->getLanguage() && $settings->getLanguage()->getIsEnabled()) {
+            if ($settings && $settings->getLanguage() && $settings->getLanguage()->getEnabled()) {
                 $locale = $settings->getLanguage()->getLocale();
                 $session = $request->getSession();
                 $session->set('_backend_locale', $locale);
