@@ -31,48 +31,28 @@ Ext.define('Modera.backend.dashboard.runtime.Section', {
 
         callback(function() {
             workbench.getActivitiesManager().iterateActivities(function(view) {
-                if (view['onSectionLoaded'] && Ext.isFunction(view.onSectionLoaded)) {
-                    view.onSectionLoaded(me);
-                }
-
-                me.relayEvents(view, ['recordsupdated', 'recordscreated']);
                 if (view['getZones'] && Ext.isFunction(view.getZones)) {
                     view.getZones(function(zones) {
                         Ext.each(zones, function(zoneConfig) {
-
-                            Ext.each(Ext.Object.getValues(zoneConfig.activities), function(activity){
-                                if (activity['onSectionLoaded'] && Ext.isFunction(activity.onSectionLoaded)) {
-                                    activity.onSectionLoaded(me);
-                                }
-
-                                me.relayEvents(activity, ['recordsupdated', 'recordscreated']);
-                            });
-
+                            me.configureInteractions(workbench, zoneConfig.activities);
                         });
                     });
                 }
-
-
             });
         });
-
-        me.configureFlows(workbench);
     },
 
-    // protected
-    configureFlows: function(workbench) {
+    // private
+    configureInteractions: function(workbench, activities) {
         var me = this;
-
-        if (!me.flowsConfigured) {
-            me.on('handleaction', function(actionName, sourceComponent, params) {
-                if (workbench.getActivitiesManager().getView(actionName)) {
+        Ext.each(Ext.Object.getValues(activities), function(activity) {
+            activity.on('handleaction', function(actionName, sourceComponent, params) {
+                if (workbench.getActivitiesManager().getActivity(actionName)) {
                     workbench.launchActivity(actionName, params || {});
                 } else if (workbench.getSection(actionName)) {
                     workbench.activateSection(actionName, params || {});
                 }
             });
-
-            me.flowsConfigured = true;
-        }
+        });
     }
 });
