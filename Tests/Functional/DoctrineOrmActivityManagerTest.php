@@ -58,7 +58,13 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
 
     public function testLog()
     {
-        $this->mgr->log(LogLevel::ALERT, 'testing it', array('author' => 'Joe', 'type' => 'foo_type'));
+        $cx = array(
+            'author' => 'Joe',
+            'type' => 'foo_type',
+            'meta' => array('foo', 'bar')
+        );
+
+        $this->mgr->log(LogLevel::ALERT, 'testing it', $cx);
 
         $activity = $this->getLastCreatedActivity();
 
@@ -67,6 +73,7 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
         $this->assertEquals('testing it', $activity->getMessage());
         $this->assertEquals('Joe', $activity->getAuthor());
         $this->assertEquals('foo_type', $activity->getType());
+        $this->assertSame($cx['meta'], $activity->getMeta());
     }
 
     public function testQuery()

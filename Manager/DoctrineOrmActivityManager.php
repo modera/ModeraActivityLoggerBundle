@@ -51,6 +51,9 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
         if (isset($context['type'])) {
             $activity->setType($context['type']);
         }
+        if (isset($context['meta']) && is_array($context)) {
+            $activity->setMeta($context['meta']);
+        }
 
         $this->om->persist($activity);
         $this->om->flush();
