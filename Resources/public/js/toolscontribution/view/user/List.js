@@ -71,6 +71,10 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
             ],
             dockedItems: [
                 {
+                    security: {
+                        role: 'ROLE_MANAGE_USER_PROFILES',
+                        strategy: 'hide'
+                    },
                     xtype: 'toolbar',
                     dock: 'top',
                     items: [
@@ -100,11 +104,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                                         itemId: 'deleteBtn',
                                         text: this.deleteBtnText,
                                         scale: 'medium',
-                                        iconCls: 'mfc-icon-delete-24',
-                                        security: {
-                                            role: 'ROLE_MANAGE_USER_PROFILES',
-                                            strategy: 'hide'
-                                        }
+                                        iconCls: 'mfc-icon-delete-24'
                                     }
                                 ]
                             })
@@ -115,11 +115,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                             itemId: 'editGroupsBtn',
                             iconCls: 'modera-backend-security-icon-group-24',
                             text:me.groupsBtnText,
-                            scale: 'medium',
-                            security: {
-                                role: 'ROLE_MANAGE_USER_PROFILES',
-                                strategy: 'hide'
-                            }
+                            scale: 'medium'
                         },
                         {
                             disabled: true,
@@ -127,11 +123,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                             itemId: 'editPasswordBtn',
                             iconCls: 'modera-backend-security-icon-password-24',
                             text: me.changePasswordBtnText,
-                            scale: 'medium',
-                            security: {
-                                role: 'ROLE_MANAGE_USER_PROFILES',
-                                strategy: 'hide'
-                            }
+                            scale: 'medium'
                         }
                     ]
                 },
@@ -155,19 +147,19 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
             'newrecord',
             /**
              * @event editrecord
-             * @param {Modera.backend.security.toolscontribution.view.UsersList} me
+             * @param {Modera.backend.security.toolscontribution.view.user.List} me
              * @param {Object} params
              */
             'editrecord',
             /**
              * @event editpassword
-             * @param {Modera.backend.security.toolscontribution.view.UsersList} me
+             * @param {Modera.backend.security.toolscontribution.view.user.List} me
              * @param {Object} params
              */
             'editpassword',
             /**
              * @event editgroups
-             * @param {Modera.backend.security.toolscontribution.view.UsersList} me
+             * @param {Modera.backend.security.toolscontribution.view.user.List} me
              * @param {Object} params
              */
             'editgroups'

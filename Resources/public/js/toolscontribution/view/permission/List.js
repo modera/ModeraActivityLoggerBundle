@@ -38,9 +38,6 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
             viewConfig: {
                 markDirty:false
             },
-            security: {
-                role: 'ROLE_MANAGE_PERMISSIONS'
-            },
             columns: [
                 {
                     dataIndex: 'name',
@@ -76,6 +73,10 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
         });
 
         me.on('cellclick', function(view, td, cellIndex, record, tr, rowIndex, e) {
+            if (!me.config.hasAccess) {
+                return false;
+            }
+
             var column = me.columns[cellIndex];
             if (column['groupId']) {
                 me.toggleChecker(tr, column, record);
@@ -85,6 +86,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
 
     // private
     getCheckerColumnConfig: function(config) {
+        var me = this;
+
         return Ext.apply({
             flex: 1,
             dataIndex: 'groups',
@@ -103,7 +106,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
 
                 meta.style = 'cursor:pointer;';
 
-                if (this.disabled) {
+                if (this.disabled || !me.config.hasAccess) {
                     meta.tdCls += ' ' + this.disabledCls;
                 }
 

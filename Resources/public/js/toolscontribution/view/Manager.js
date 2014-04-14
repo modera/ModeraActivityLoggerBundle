@@ -98,7 +98,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
                         {
                             itemId: 'permissions',
                             xtype: 'modera-backend-security-permission-list',
-                            groupsStore: config['groupsStore']
+                            groupsStore: config['groupsStore'],
+                            hasAccess: config.hasPermissionsAccess
                         }
                     ]
                 }

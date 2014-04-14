@@ -36,6 +36,11 @@
 
             <tag name="modera_security_aware_js_runtime.client_di_service_defs_provider" />
         </service>
-    </services>
 
+        <service id="modera_backend_security.contributions.permission_categories_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\PermissionCategoriesProvider">
+
+            <tag name="modera_security.permission_categories_provider" />
+        </service>
+    </services>
 </container>

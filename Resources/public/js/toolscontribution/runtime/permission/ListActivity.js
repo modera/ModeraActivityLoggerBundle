@@ -22,17 +22,21 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.permission.ListAct
 
     // override
     doCreateUi: function(params, callback) {
+        var sm = this.workbench.getService('security_manager');
+
         var groupsStore = Ext.create('Modera.backend.security.toolscontribution.store.Groups', {
             autoLoad: false
         });
         groupsStore.load({
             callback: function() {
+                sm.isAllowed('ROLE_MANAGE_PERMISSIONS', function(isAllowed) {
+                    var grid = Ext.create('Modera.backend.security.toolscontribution.view.permission.List', {
+                        groupsStore: groupsStore,
+                        hasAccess: isAllowed
+                    });
 
-                var grid = Ext.create('Modera.backend.security.toolscontribution.view.permission.List', {
-                    groupsStore: groupsStore
+                    callback(grid);
                 });
-
-                callback(grid);
             }
         });
     },

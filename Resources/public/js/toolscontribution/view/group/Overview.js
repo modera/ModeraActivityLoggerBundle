@@ -31,43 +31,54 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.Overview', {
                     itemId: 'groups',
                     monitorModel: ['modera.security_bundle.group', 'modera.security_bundle.user'],
                     flex: 2,
-                    frame: true,
+//                    frame: true,
                     rounded: true,
-                    tbar: [
+                    border: true,
+                    dockedItems: [
                         {
-                            itemId: 'addNewGroupBtn',
-                            text: this.newGroupBtnText,
-                            iconCls: 'mfc-icon-add-24',
-                            scale: 'medium',
                             security: {
                                 role: 'ROLE_MANAGE_PERMISSIONS',
                                 strategy: 'hide'
-                            }
-                        },
-                        '->',
-                        {
-                            xtype: 'splitbutton',
-                            itemId: 'editGroupBtn',
-                            disabled: true,
-                            text: this.editSelectedBtnText,
-                            iconCls: 'mfc-icon-edit-24',
-                            scale: 'medium',
-                            selectionAware: true,
-                            extensionPoint: 'groupActions',
-                            menu: Ext.create('Ext.menu.Menu', {
-                                items: [
-                                    {
-                                        itemId: 'deleteBtn',
-                                        text: this.deleteBtnText,
-                                        scale: 'medium',
-                                        iconCls: 'mfc-icon-delete-24',
-                                        security: {
-                                            role: 'ROLE_MANAGE_PERMISSIONS',
-                                            strategy: 'hide'
-                                        }
+                            },
+                            xtype: 'toolbar',
+                            dock: 'top',
+                            items: [
+                                {
+                                    itemId: 'addNewGroupBtn',
+                                    text: this.newGroupBtnText,
+                                    iconCls: 'mfc-icon-add-24',
+                                    scale: 'medium',
+                                    security: {
+                                        role: 'ROLE_MANAGE_PERMISSIONS',
+                                        strategy: 'hide'
                                     }
-                                ]
-                            })
+                                },
+                                '->',
+                                {
+                                    xtype: 'splitbutton',
+                                    itemId: 'editGroupBtn',
+                                    disabled: true,
+                                    text: this.editSelectedBtnText,
+                                    iconCls: 'mfc-icon-edit-24',
+                                    scale: 'medium',
+                                    selectionAware: true,
+                                    extensionPoint: 'groupActions',
+                                    menu: Ext.create('Ext.menu.Menu', {
+                                        items: [
+                                            {
+                                                itemId: 'deleteBtn',
+                                                text: this.deleteBtnText,
+                                                scale: 'medium',
+                                                iconCls: 'mfc-icon-delete-24',
+                                                security: {
+                                                    role: 'ROLE_MANAGE_PERMISSIONS',
+                                                    strategy: 'hide'
+                                                }
+                                            }
+                                        ]
+                                    })
+                                }
+                            ]
                         }
                     ],
                     xtype: 'grid',

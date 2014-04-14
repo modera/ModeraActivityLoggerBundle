@@ -27,20 +27,23 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
 
     // override
     doCreateUi: function(params, onReadyCallback) {
-        var sectionName = params.section || 'users';
+        var sm = this.workbench.getService('security_manager');
 
         var groupsStore = Ext.create('Modera.backend.security.toolscontribution.store.Groups', {
             autoLoad: false
         });
         groupsStore.load({
-            callback: function() {
+            callback: function() { // ROLE_MANAGE_PERMISSIONS
 
-                var panel = Ext.create('Modera.backend.security.toolscontribution.view.Manager', {
-                    sectionName: sectionName,
-                    groupsStore: groupsStore
+                sm.isAllowed('ROLE_MANAGE_PERMISSIONS', function(permissionsAccess) {
+                    var panel = Ext.create('Modera.backend.security.toolscontribution.view.Manager', {
+                        sectionName: params.section,
+                        groupsStore: groupsStore,
+                        hasPermissionsAccess: permissionsAccess
+                    });
+
+                    onReadyCallback(panel);
                 });
-
-                onReadyCallback(panel);
             }
         });
     },
