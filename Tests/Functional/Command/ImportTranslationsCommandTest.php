@@ -41,7 +41,7 @@ class ImportTranslationsCommandTest extends FunctionalTestCase
 
     protected function launchImportCommand()
     {
-        $app = new Application(self::$kernel->getContainer()->get('kernel'));
+        $app = new Application(self::$container->get('kernel'));
         $app->setAutoExit(false);
         $input = new ArrayInput(array(
             'command' => 'modera:translations:import',
@@ -52,8 +52,10 @@ class ImportTranslationsCommandTest extends FunctionalTestCase
         $this->assertEquals(0, $result);
     }
 
-    private function assertToken(TranslationToken $token)
+    private function assertToken($token)
     {
+        /* @var TranslationToken $token */
+        $this->assertInstanceOf(TranslationToken::clazz(), $token);
         $this->assertFalse($token->isObsolete());
         $this->assertEquals('ModeraTranslationsDummyBundle', $token->getBundleName());
         $this->assertEquals('messages', $token->getDomain());
@@ -90,18 +92,16 @@ class ImportTranslationsCommandTest extends FunctionalTestCase
         $token = self::$em->getRepository(TranslationToken::clazz())->findOneBy(array(
             'source' => 'template'
         ));
-        $this->assertTrue(($token instanceof TranslationToken));
         $this->assertToken($token);
 
         $token = self::$em->getRepository(TranslationToken::clazz())->findOneBy(array(
             'source' => 'php-classes'
         ));
-        $this->assertTrue(($token instanceof TranslationToken));
         $this->assertToken($token);
 
         $token = self::$em->getRepository(TranslationToken::clazz())->findOneBy(array(
             'source' => 'undefined'
         ));
-        $this->assertFalse(($token instanceof TranslationToken));
+        $this->assertFalse($token instanceof TranslationToken);
     }
 }

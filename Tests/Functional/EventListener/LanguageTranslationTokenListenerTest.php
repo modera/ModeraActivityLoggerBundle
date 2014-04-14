@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\TranslationsBundle\Tests\Functional;
+namespace Modera\TranslationsBundle\Tests\Functional\EventListener;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
