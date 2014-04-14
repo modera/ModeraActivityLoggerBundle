@@ -30,19 +30,9 @@ public function registerBundles()
 $ php app/console doctrine:schema:update --force
 ```
 
-### Step4: Import translations
-
-``` bash
-$ php app/console modera:translations:import
-```
-
-### Step5: Compile translations
-
-``` bash
-$ php app/console modera:translations:compile
-```
-
 ## Example of Usage
+
+### Step1: Register translations
 
 ``` xml
 <!--
@@ -63,6 +53,20 @@ $ php app/console modera:translations:compile
     <tag name="modera_translations.translation_handler" />
 </service>
 
+```
+
+### Step2: Import translations
+
+``` bash
+$ php app/console modera:translations:import
+```
+
+### Step3: Translate translations in database.
+
+### Step4: Compile translations
+
+``` bash
+$ php app/console modera:translations:compile
 ```
 
 ## License
