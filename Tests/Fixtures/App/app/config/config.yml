@@ -1,7 +1,15 @@
+parameters:
+    locale: en
+
 framework:
     secret:          Hell yeah!
     csrf_protection: true
     session:         ~
+    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    default_locale:  "%locale%"
+    translator:      { fallback: %locale% }
+    templating:
+        engines: ['twig']
 
 # Doctrine Configuration
 doctrine:

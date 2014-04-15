@@ -1,7 +1,8 @@
 <?php
 
-namespace Modera\TranslationsBundle\Tests\Functional;
+namespace Modera\TranslationsBundle\Tests\Functional\EventListener;
 
+use Doctrine\ORM\Tools\SchemaTool;
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\LanguagesBundle\Entity\Language;
 use Modera\TranslationsBundle\Entity\TranslationToken;
@@ -13,6 +14,30 @@ use Modera\TranslationsBundle\Entity\LanguageTranslationToken;
  */
 class LanguageTranslationTokenListenerTest extends FunctionalTestCase
 {
+    /**
+     * @var SchemaTool
+     */
+    static private $st;
+
+    // override
+    static public function doSetUpBeforeClass()
+    {
+        self::$st = new SchemaTool(self::$em);
+        self::$st->createSchema([self::$em->getClassMetadata(Language::clazz())]);
+        self::$st->createSchema([self::$em->getClassMetadata(TranslationToken::clazz())]);
+        self::$st->createSchema([self::$em->getClassMetadata(LanguageTranslationToken::clazz())]);
+
+    }
+
+    // override
+    static public function doTearDownAfterClass()
+    {
+        self::$st->dropSchema([self::$em->getClassMetadata(Language::clazz())]);
+        self::$st->dropSchema([self::$em->getClassMetadata(TranslationToken::clazz())]);
+        self::$st->dropSchema([self::$em->getClassMetadata(LanguageTranslationToken::clazz())]);
+    }
+
+
     private function createLanguageTranslationToken($locale, $translation, TranslationToken $token)
     {
         $language = new Language;
