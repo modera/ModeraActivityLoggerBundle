@@ -1,56 +1,51 @@
 # ModeraLanguagesBundle
 
+Bundle provide set of basic utilities that allow you to define your site languages configuration in a config file and
+then have it synchronized with database so you can establish database relations between languages and some other
+entities that your project has.
+
 ## Installation
 
 ### Step 1: update your vendors by running
 
-``` bash
-$ php composer.phar require modera/languages-bundle:dev-master
-```
+    $ php composer.phar require modera/languages-bundle:dev-master
 
 ### Step2: Enable the bundle
 
-``` php
-<?php
-// app/AppKernel.php
+    <?php
+    // app/AppKernel.php
 
-public function registerBundles()
-{
-    $bundles = array(
-        // ...
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
 
-        new Modera\LanguagesBundle\ModeraLanguagesBundle(),
-    );
-}
-```
+            new Modera\LanguagesBundle\ModeraLanguagesBundle(),
+        );
+    }
 
 ### Step3: Add config
 
-``` yaml
-// app/config/config.yml
+This is a sample configuration:
 
-modera_languages:
-    - { locale: en }
-    - { locale: ru, is_enabled: false }
-    - { locale: et }
-```
+    // app/config/config.yml
+
+    modera_languages:
+        - { locale: en }
+        - { locale: ru, is_enabled: false }
+        - { locale: et }
+
+Later if you remove a language from `modera_languages` and run `modera:languages:config-sync` command then a database
+record which corresponded to a deleted from a config file language will be marked as `isEnabled = false`.
 
 ### Step4: Create schema
 
-``` bash
-$ php app/console doctrine:schema:update --force
-```
+    $ php app/console doctrine:schema:update --force
 
 ### Step5: Synchronize languages config with database.
 
-``` bash
-$ php app/console modera:languages:config-sync
-```
+    $ php app/console modera:languages:config-sync
 
 ## License
 
-This bundle is under the MIT license. See the complete license in the bundle:
-
-```
-LICENSE
-```
+This bundle is under the MIT license.
