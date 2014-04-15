@@ -1,4 +1,4 @@
-# ModeraLanguagesBundle
+# ModeraLanguagesBundle [![Build Status](https://travis-ci.org/modera/ModeraLanguagesBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraLanguagesBundle)
 
 Bundle provide set of basic utilities that allow you to define your site languages configuration in a config file and
 then have it synchronized with database so you can establish database relations between languages and some other
