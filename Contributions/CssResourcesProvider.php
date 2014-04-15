@@ -32,7 +32,7 @@ class CssResourcesProvider implements ContributorInterface
     {
         return array(
             $this->themeIntegrationConfig['theme_path'] . '/build/resources/modera-theme-all-debug.css',
-            $this->mjrInteggrationConfig['runtime_path'] . '/build/resources/modera-runtime-all-debug.css'
+            $this->mjrInteggrationConfig['runtime_path'] . '/build/resources/MJR-all-debug.css'
         );
     }
 }
