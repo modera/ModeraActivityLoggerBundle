@@ -17,4 +17,24 @@
         </service>
     </services>
     -->
+
+    <services>
+        <service id="modera_backend_tools_settings.contributions.tools_sections_provider"
+                 class="Modera\BackendToolsSettingsBundle\Contributions\ToolsSectionsProvider">
+
+            <tag name="modera_backend_tools.sections_provider" />
+        </service>
+
+        <service id="modera_backend_tools_settings.contributions.sections_provider"
+                 class="Modera\BackendToolsSettingsBundle\Contributions\SectionsProvider">
+
+            <tag name="mf.jsruntimeintegration.sections_provider" />
+        </service>
+
+        <service id="modera_backend_tools_settings.contributions.css_resources_provider"
+                 class="Modera\BackendToolsSettingsBundle\Contributions\CssResourcesProvider">
+
+            <tag name="mf.jsruntimeintegration.css_resources_provider" />
+        </service>
+    </services>
 </container>
