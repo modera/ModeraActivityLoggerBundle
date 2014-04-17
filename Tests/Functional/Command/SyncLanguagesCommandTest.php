@@ -24,14 +24,14 @@ class SyncLanguagesCommandTest extends FunctionalTestCase
     static public function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
-        self::$st->createSchema([self::$em->getClassMetadata(Language::clazz())]);
+        self::$st->createSchema(array(self::$em->getClassMetadata(Language::clazz())));
 
     }
 
     // override
     static public function doTearDownAfterClass()
     {
-        self::$st->dropSchema([self::$em->getClassMetadata(Language::clazz())]);
+        self::$st->dropSchema(array(self::$em->getClassMetadata(Language::clazz())));
     }
 
     /**
