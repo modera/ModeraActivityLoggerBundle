@@ -12,6 +12,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.PasswordWindow',
     repeatPasswordLabelText: '... again',
     generatePasswordBtnText: 'Generate',
     wrongPasswordText: 'Passwords must be equal',
+    sendPasswordText: 'Send password to user`s e-mail',
 
     // override
     constructor: function(config) {
@@ -61,19 +62,29 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.PasswordWindow',
                                     anchor: '0',
                                     labelAlign: 'right',
                                     allowBlank: false,
-                                    inputType: 'password',
                                     enableKeyEvents: true
                                 },
                                 items: [
                                     {
                                         name: 'plainPassword',
                                         fieldLabel: me.passwordLabelText,
-                                        emptyText: me.placeHolderText
+                                        emptyText: me.placeHolderText,
+                                        inputType: 'password'
                                     },
                                     {
                                         name: '_plainPassword',
                                         fieldLabel: me.repeatPasswordLabelText,
-                                        emptyText: me.placeHolderText
+                                        emptyText: me.placeHolderText,
+                                        inputType: 'password'
+                                    },
+                                    {
+                                        xtype: 'checkbox',
+                                        name: 'sendPassword',
+                                        fieldLabel: '&nbsp;',
+                                        labelSeparator: '',
+                                        boxLabel: me.sendPasswordText,
+                                        allowBlank: true,
+                                        disabled: false
                                     }
                                 ],
                                 flex: 1

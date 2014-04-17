@@ -12,7 +12,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.NewWindow', {
     lastNameLabelText: 'Last name',
     usernameLabelText: 'Principal',
     emailLabelText: 'Email',
-    passwordLabelText: 'Password',
+    sendPasswordText: 'Generate and send password to provided e-mail',
 
     // override
     constructor: function(config) {
@@ -56,21 +56,47 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.NewWindow', {
                         emptyText: me.placeHolderText
                     },
                     {
+                        itemId: 'email',
                         name: 'email',
+                        vtype: 'email',
                         fieldLabel: me.emailLabelText,
                         emptyText: me.placeHolderText
-                    }/*,
+                    },
                     {
-                        name: 'plainPassword',
-                        fieldLabel: me.passwordLabelText,
-                        emptyText: me.placeHolderText
-                    }*/
+                        itemId: 'sendPassword',
+                        xtype: 'checkbox',
+                        name: 'sendPassword',
+                        fieldLabel: '&nbsp;',
+                        labelSeparator: '',
+                        boxLabel: me.sendPasswordText,
+                        allowBlank: true,
+                        disabled: true
+                    }
                 ]
             }
         };
 
         this.config = Ext.apply(defaults, config || {});
         this.callParent([this.config]);
+
+        this.assignListeners();
+    },
+
+    // private
+    assignListeners: function() {
+        var me = this;
+        var validate = function(field) {
+            var checkbox = me.down('#sendPassword');
+
+            if ((field.getValue() != '') && field.isValid()) {
+                checkbox.setDisabled(false);
+            } else {
+                checkbox.setDisabled(true);
+                checkbox.setValue(false);
+            }
+        };
+        me.down('#email').on('change', validate);
+        me.down('#email').on('validitychange', validate);
     },
 
     loadData: function(data) {

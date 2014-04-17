@@ -42,5 +42,11 @@
 
             <tag name="modera_security.permission_categories_provider" />
         </service>
+
+        <service id="modera_backend_security.service.mail_service"
+                 class="Modera\BackendSecurityBundle\Service\MailService">
+
+            <argument type="service" id="mailer" />
+        </service>
     </services>
 </container>

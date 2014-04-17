@@ -13,6 +13,7 @@ use Modera\TranslationsBundle\Helper\T;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+use Modera\BackendSecurityBundle\Service\MailService;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -86,7 +87,13 @@ class UsersController extends AbstractCrudController
                 } else {
                     $plainPassword = $self->generatePassword();
                 }
+
                 $self->setPassword($entity, $plainPassword);
+                if (isset($params['sendPassword']) && $params['sendPassword'] != '') {
+                    /* @var MailService $mailService */
+                    $mailService = $container->get('modera_backend_security.service.mail_service');
+                    $mailService->sendPassword($entity, $plainPassword);
+                }
             },
             'map_data_on_update' => function(array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
                 $defaultMapper->mapData($params, $entity);
@@ -98,6 +105,11 @@ class UsersController extends AbstractCrudController
 
                 if (isset($params['plainPassword']) && $params['plainPassword']) {
                     $self->setPassword($entity, $params['plainPassword']);
+                    if (isset($params['sendPassword']) && $params['sendPassword'] != '') {
+                        /* @var MailService $mailService */
+                        $mailService = $container->get('modera_backend_security.service.mail_service');
+                        $mailService->sendPassword($entity, $params['plainPassword']);
+                    }
 
                     $activityMsg = T::trans('Password has been changed for user "%user%".', array('%user%' => $entity->getUsername()));
                     $activityContext = array(
