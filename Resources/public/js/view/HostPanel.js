@@ -61,6 +61,9 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                         xtype: 'grid',
                         hideHeaders: true,
                         border: false,
+                        bodyBorder: false,
+                        columnLines: false,
+                        rowLines: false,
                         cls: 'sections-grid',
                         margin: '0 11 0 0',
                         columns: [
