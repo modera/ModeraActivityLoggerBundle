@@ -33,7 +33,7 @@ class UpgradeCommandTest extends FunctionalTestCase
     // override
     static public function doSetUpBeforeClass()
     {
-        self::$basePath = dirname(self::$kernel->getContainer()->get('kernel')->getRootdir());
+        self::$basePath = dirname(self::$kernel->getRootdir());
         self::$composerFile = new JsonFile(self::$basePath . '/composer.json');
         self::$composerBackup = self::$composerFile->read();
     }
@@ -49,7 +49,7 @@ class UpgradeCommandTest extends FunctionalTestCase
      */
     private function getApplication()
     {
-        $app = new Application(self::$kernel->getContainer()->get('kernel'));
+        $app = new Application(self::$kernel);
         $app->setAutoExit(false);
         return $app;
     }
@@ -78,33 +78,41 @@ class UpgradeCommandTest extends FunctionalTestCase
             'name'    => 'modera/upgrade-bundle-test',
             'require' => array(
                 'test/dependency_1' => 'dev-master',
-            ),
+            )
         );
         $this->assertEquals($data, self::$composerFile->read());
 
-        $data['version'] = '0.1.0';
-        $data['require'] = array(
-            'test/dependency_1' => '0.1.0',
-            'test/dependency_2' => '0.1.0',
-            'test/dependency_3' => '0.1.0',
-        );
+        $expectedData = array_merge($data, array(
+            'version' => '0.1.0',
+            'require' => array(
+                'test/dependency_1' => '0.1.0',
+                'test/dependency_2' => '0.1.0',
+                'test/dependency_3' => '0.1.0',
+            )
+        ));
+
         $this->runUpdateDependenciesCommand();
-        $this->assertEquals($data, self::$composerFile->read());
+
+        $this->assertEquals($expectedData, self::$composerFile->read());
         $this->assertTrue(is_file(self::$basePath . '/composer.backup.json'));
         unlink(self::$basePath . '/composer.backup.json');
+
         $this->runCommandsCommand();
 
         $tmp = self::$composerFile->read();
         $tmp['require']['test/dependency_1'] = 'dev-master';
         self::$composerFile->write($tmp);
 
-        $data['version'] = '0.1.1';
-        $data['require'] = array(
-            'test/dependency_1' => '0.1.1',
-            'test/dependency_2' => '0.1.0',
-        );
+        $expectedData = array_merge($expectedData, array(
+            'version' => '0.1.1',
+            'require' => array(
+                'test/dependency_1' => '0.1.1',
+                'test/dependency_2' => '0.1.0'
+            )
+        ));
+
         $this->runUpdateDependenciesCommand();
-        $this->assertEquals($data, self::$composerFile->read());
+        $this->assertEquals($expectedData, self::$composerFile->read());
         $this->assertTrue(is_file(self::$basePath . '/composer.v0.1.0.backup.json'));
         unlink(self::$basePath . '/composer.v0.1.0.backup.json');
         $this->runCommandsCommand();
@@ -113,14 +121,14 @@ class UpgradeCommandTest extends FunctionalTestCase
         $tmp['require']['test/dependency_2'] = 'dev-master';
         self::$composerFile->write($tmp);
 
-        $data['version'] = '0.1.2';
-        $data['require'] = array(
+        $expectedData['version'] = '0.1.2';
+        $expectedData['require'] = array(
             'test/dependency_1' => '0.1.1',
             'test/dependency_2' => '0.1.0',
             'test/dependency_4' => '0.1.0',
         );
         $this->runUpdateDependenciesCommand();
-        $this->assertEquals($data, self::$composerFile->read());
+        $this->assertEquals($expectedData, self::$composerFile->read());
         $this->assertTrue(is_file(self::$basePath . '/composer.v0.1.1.backup.json'));
         unlink(self::$basePath . '/composer.v0.1.1.backup.json');
         $this->runCommandsCommand();

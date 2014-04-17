@@ -49,7 +49,7 @@ class UpgradeCommand extends ContainerAwareCommand
             $version = isset($composerData['version']) ? $composerData['version'] : null;
 
             if ($version && $version == $versions[count($versions) - 1]) {
-                $output->writeln('<info>You have latest version</info>');
+                $output->writeln('<info>You have the latest version</info>');
                 return;
             }
 
@@ -125,7 +125,7 @@ class UpgradeCommand extends ContainerAwareCommand
 
             $composerFile->write($composerData);
 
-            $output->writeln('<info>Dependencies updated</info>');
+            $output->writeln("<info>composer.json 'requires' section has been updated to version $newVersion</info>");
 
             if (count($versionsData[$newVersion]['commands'])) {
                 $output->writeln('After composer update run:');
@@ -139,13 +139,20 @@ class UpgradeCommand extends ContainerAwareCommand
                 foreach ($commands as $command) {
                     $this->getApplication()->run(new StringInput($command), $output);
                 }
+
+                if (count($commands) == 0) {
+                    $output->writeln('<comment>No commands need to be run! Aborting ...</comment>');
+                }
             }
 
         } else {
+            $msg = [
+                'If you want to update dependencies then please use <info>--dependencies</info> flag for the command, ',
+                'if you need to have commands executed when a version is upgraded then use <info>--run-commands</info> flag instead.'
+            ];
 
-            $output->writeln('You must run:');
+            $output->writeln(implode($msg, ''));
             $output->writeln('<info>php composer.phar ' . $this->getName() . ' --dependencies</info>');
-
         }
     }
 
