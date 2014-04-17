@@ -71,11 +71,11 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                                 dataIndex: 'glyph',
                                 width: 30,
                                 renderer: function(v, md) {
+                                    md.tdCls = 'left';
+
                                     if (!v) {
                                         return '';
                                     }
-
-                                    md.tdCls = 'left';
 
                                     var glyph = FontAwesome.resolve(v),
                                         glyphParts = glyph.split('@');
