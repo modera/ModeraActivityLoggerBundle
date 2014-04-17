@@ -23,17 +23,9 @@ Ext.define('Modera.backend.tools.settings.runtime.HostActivity', {
 
     // private
     getSections: function(callback) {
-//        this.workbench.getService('config_provider').getConfig(function(config) {
-//            callback(config.settingsSections || []);
-//        });
-
-        callback([
-            {
-                id: 'dummy1',
-                name: 'Dummy 1',
-                activityClass: 'Modera.backend.tools.settings.runtime.DummyActivity'
-            }
-        ]);
+        this.workbench.getService('config_provider').getConfig(function(config) {
+            callback(config.settingsSections || []);
+        });
     },
 
     // override
