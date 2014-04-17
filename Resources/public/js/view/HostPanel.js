@@ -12,6 +12,7 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
     // l10n
     titleText: 'Settings',
     noSectionsMessageText: 'No sections available',
+    noSectionSelectedText: 'No section selected',
 
     /**
      * @param {Object} config
@@ -41,7 +42,7 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                         itemId: 'sectionNameBox',
                         xtype: 'box',
                         cls: 'text',
-                        text: 'Fuck yeah'
+                        html: this.noSectionSelectedText
                     },
                     '->'
                 ]
