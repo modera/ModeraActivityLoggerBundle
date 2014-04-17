@@ -4,8 +4,14 @@
 Ext.define('Modera.backend.tools.settings.view.HostPanel', {
     extend: 'Ext.panel.Panel',
 
+    requires: [
+        'MFC.container.Header',
+        'MFC.panel.Message'
+    ],
+
     // l10n
     titleText: 'Settings',
+    noSectionsMessageText: 'No sections available',
 
     /**
      * @param {Object} config
@@ -34,7 +40,8 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                     {
                         itemId: 'sectionNameBox',
                         xtype: 'box',
-                        cls: 'text'
+                        cls: 'text',
+                        text: 'Fuck yeah'
                     },
                     '->'
                 ]
@@ -86,10 +93,6 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                         ],
                         store: Ext.create('Ext.data.Store', {
                             fields: ['id', 'name', 'glyph'],
-                            data: [
-                                { id: 'dummy1', name: 'Dummy 1', glyph: 'folder-open' },
-                                { id: 'dummy2', name: 'Dummy 2', glyph: 'bolt' }
-                            ],
                             proxy: {
                                 type: 'memory'
                             }
@@ -101,15 +104,9 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                         flex: 1,
                         items: [
                             {
-
-                            },
-                            {
-                                activity: 'dummy1',
-                                layout: 'fit'
-                            },
-                            {
-                                activity: 'dummy2',
-                                layout: 'fit'
+                                border: true,
+                                xtype: 'mfc-pmsg',
+                                msg: this.noSectionsMessageText
                             }
                         ]
                     }
@@ -130,7 +127,21 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
         this.assignListeners();
     },
 
-    showSection: function(id) { // #B4D6E6
+    /**
+     * @param {Object} section
+     */
+    addSection: function(section) {
+        var ui = section.ui;
+        delete section.ui;
+
+        this.down('#sectionsGrid').getStore().add(section);
+        this.down('#hostPanel').add(ui);
+    },
+
+    /**
+     * @param {String} id
+     */
+    showSection: function(id) {
         var sectionsGrid = this.down('#sectionsGrid'),
             record = sectionsGrid.getStore().findRecord('id', id);
 

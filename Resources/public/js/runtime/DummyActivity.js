@@ -25,6 +25,7 @@ Ext.define('Modera.backend.tools.settings.runtime.DummyActivity', {
             html: this.config.text,
             border: true,
             bodyCls: 'container',
+            layout: 'fit',
             bbar: [
                 '->',
                 {
@@ -34,6 +35,8 @@ Ext.define('Modera.backend.tools.settings.runtime.DummyActivity', {
             ]
         });
 
-        callback(ui);
+        Ext.defer(function() {
+            callback(ui);
+        }, 2000);
     }
 });
