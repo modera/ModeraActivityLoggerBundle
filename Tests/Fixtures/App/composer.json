@@ -1,0 +1,6 @@
+{
+    "name": "modera/upgrade-bundle-test",
+    "require": {
+        "test/dependency_1": "dev-master"
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "0.1.0": {
+        "dependencies": {
+            "test/dependency_1": "0.1.0",
+            "test/dependency_2": "0.1.0",
+            "test/dependency_3": "0.1.0"
+        },
+        "commands": []
+    },
+    "0.1.1": {
+        "dependencies": {
+            "test/dependency_1": "0.1.1",
+            "test/dependency_2": "0.1.0"
+        },
+        "commands": [
+            "modera:upgrade"
+        ]
+    },
+    "0.1.2": {
+        "dependencies": {
+            "test/dependency_1": "0.1.1",
+            "test/dependency_2": "0.1.0",
+            "test/dependency_4": "0.1.0"
+        },
+        "commands": [
+            "help --format=json",
+            "modera:upgrade"
+        ]
+    }
+}
