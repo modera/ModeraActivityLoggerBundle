@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\ServerCrudBundle\Tests\Unit\Entity;
+namespace Modera\LanguagesBundle\Tests\Unit\Entity;
 
 use Modera\LanguagesBundle\Entity\Language;
 

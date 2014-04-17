@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\ServerCrudBundle\Tests\Functional\Command;
+namespace Modera\LanguagesBundle\Tests\Functional\Command;
 
 use Doctrine\ORM\Tools\SchemaTool;
 use Modera\LanguagesBundle\Entity\Language;
