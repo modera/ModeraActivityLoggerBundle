@@ -47,6 +47,14 @@
                  class="Modera\BackendSecurityBundle\Service\MailService">
 
             <argument type="service" id="mailer" />
+            <argument>%locale%</argument>
+        </service>
+
+        <service parent="modera_translations.handling.php_classes_translation_handler">
+
+            <argument>ModeraBackendSecurityBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
         </service>
     </services>
 </container>
