@@ -75,8 +75,14 @@ class UpgradeCommandTest extends FunctionalTestCase
     public function testUpgrade()
     {
         $data = array(
-            'name'    => 'modera/upgrade-bundle-test',
-            'require' => array(
+            'name'         => 'modera/upgrade-bundle-test',
+            'repositories' => array(
+                array(
+                    'type' => 'composer',
+                    'url'  => 'http://packages.org',
+                )
+            ),
+            'require'      => array(
                 'test/dependency_1' => 'dev-master',
             ),
         );
@@ -87,6 +93,10 @@ class UpgradeCommandTest extends FunctionalTestCase
             'test/dependency_1' => '0.1.0',
             'test/dependency_2' => '0.1.0',
             'test/dependency_3' => '0.1.0',
+        );
+        $data['repositories'][] = array(
+            'type' => 'vcs',
+            'url'  => 'ssh://git@dependency.git',
         );
         $this->runUpdateDependenciesCommand();
         $this->assertEquals($data, self::$composerFile->read());
@@ -103,6 +113,8 @@ class UpgradeCommandTest extends FunctionalTestCase
             'test/dependency_1' => '0.1.1',
             'test/dependency_2' => '0.1.0',
         );
+        unset($data['repositories'][1]);
+        $data['repositories'] = array_values($data['repositories']);
         $this->runUpdateDependenciesCommand();
         $this->assertEquals($data, self::$composerFile->read());
         $this->assertTrue(is_file(self::$basePath . '/composer.v0.1.0.backup.json'));

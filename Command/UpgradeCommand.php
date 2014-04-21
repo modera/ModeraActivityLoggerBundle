@@ -123,6 +123,24 @@ class UpgradeCommand extends ContainerAwareCommand
             $composerData['require'] = $dependencies;
             $composerData['version'] = $newVersion;
 
+            $repositories = isset($composerData['repositories']) ? $composerData['repositories'] : array();
+            if (isset($versionsData[$newVersion]['add-repositories'])) {
+                foreach ($versionsData[$newVersion]['add-repositories'] as $repo) {
+                    if (false === array_search($repo, $repositories)) {
+                        $repositories[] = $repo;
+                    }
+                }
+            }
+            if (isset($versionsData[$newVersion]['rm-repositories'])) {
+                foreach ($versionsData[$newVersion]['rm-repositories'] as $repo) {
+                    if (false !== ($key = array_search($repo, $repositories))) {
+                        unset($repositories[$key]);
+                    }
+                }
+                $repositories = array_values($repositories);
+            }
+            $composerData['repositories'] = $repositories;
+
             $composerFile->write($composerData);
 
             $output->writeln('<info>Dependencies updated</info>');

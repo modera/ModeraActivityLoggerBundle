@@ -1,5 +1,11 @@
 {
     "0.1.0": {
+        "add-repositories": [
+            {
+                "type": "vcs",
+                "url": "ssh://git@dependency.git"
+            }
+        ],
         "dependencies": {
             "test/dependency_1": "0.1.0",
             "test/dependency_2": "0.1.0",
@@ -8,6 +14,12 @@
         "commands": []
     },
     "0.1.1": {
+        "rm-repositories": [
+            {
+                "type": "vcs",
+                "url": "ssh://git@dependency.git"
+            }
+        ],
         "dependencies": {
             "test/dependency_1": "0.1.1",
             "test/dependency_2": "0.1.0"
