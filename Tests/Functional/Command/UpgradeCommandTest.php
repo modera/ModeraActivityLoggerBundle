@@ -33,7 +33,7 @@ class UpgradeCommandTest extends FunctionalTestCase
     // override
     static public function doSetUpBeforeClass()
     {
-        self::$basePath = dirname(self::$kernel->getContainer()->get('kernel')->getRootdir());
+        self::$basePath = dirname(self::$kernel->getRootdir());
         self::$composerFile = new JsonFile(self::$basePath . '/composer.json');
         self::$composerBackup = self::$composerFile->read();
     }
@@ -49,7 +49,7 @@ class UpgradeCommandTest extends FunctionalTestCase
      */
     private function getApplication()
     {
-        $app = new Application(self::$kernel->getContainer()->get('kernel'));
+        $app = new Application(self::$kernel);
         $app->setAutoExit(false);
         return $app;
     }
@@ -74,7 +74,7 @@ class UpgradeCommandTest extends FunctionalTestCase
 
     public function testUpgrade()
     {
-        $data = array(
+        $expectedData = array(
             'name'         => 'modera/upgrade-bundle-test',
             'repositories' => array(
                 array(
@@ -84,39 +84,40 @@ class UpgradeCommandTest extends FunctionalTestCase
             ),
             'require'      => array(
                 'test/dependency_1' => 'dev-master',
-            ),
+            )
         );
-        $this->assertEquals($data, self::$composerFile->read());
+        $this->assertEquals($expectedData, self::$composerFile->read());
 
-        $data['version'] = '0.1.0';
-        $data['require'] = array(
+        $expectedData['version'] = '0.1.0';
+        $expectedData['require'] = array(
             'test/dependency_1' => '0.1.0',
             'test/dependency_2' => '0.1.0',
             'test/dependency_3' => '0.1.0',
         );
-        $data['repositories'][] = array(
+        $expectedData['repositories'][] = array(
             'type' => 'vcs',
             'url'  => 'ssh://git@dependency.git',
         );
         $this->runUpdateDependenciesCommand();
-        $this->assertEquals($data, self::$composerFile->read());
+        $this->assertEquals($expectedData, self::$composerFile->read());
         $this->assertTrue(is_file(self::$basePath . '/composer.backup.json'));
         unlink(self::$basePath . '/composer.backup.json');
+
         $this->runCommandsCommand();
 
         $tmp = self::$composerFile->read();
         $tmp['require']['test/dependency_1'] = 'dev-master';
         self::$composerFile->write($tmp);
 
-        $data['version'] = '0.1.1';
-        $data['require'] = array(
+        $expectedData['version'] = '0.1.1';
+        $expectedData['require'] = array(
             'test/dependency_1' => '0.1.1',
             'test/dependency_2' => '0.1.0',
         );
-        unset($data['repositories'][1]);
-        $data['repositories'] = array_values($data['repositories']);
+        unset($expectedData['repositories'][1]);
+        $expectedData['repositories'] = array_values($expectedData['repositories']);
         $this->runUpdateDependenciesCommand();
-        $this->assertEquals($data, self::$composerFile->read());
+        $this->assertEquals($expectedData, self::$composerFile->read());
         $this->assertTrue(is_file(self::$basePath . '/composer.v0.1.0.backup.json'));
         unlink(self::$basePath . '/composer.v0.1.0.backup.json');
         $this->runCommandsCommand();
@@ -125,14 +126,14 @@ class UpgradeCommandTest extends FunctionalTestCase
         $tmp['require']['test/dependency_2'] = 'dev-master';
         self::$composerFile->write($tmp);
 
-        $data['version'] = '0.1.2';
-        $data['require'] = array(
+        $expectedData['version'] = '0.1.2';
+        $expectedData['require'] = array(
             'test/dependency_1' => '0.1.1',
             'test/dependency_2' => '0.1.0',
             'test/dependency_4' => '0.1.0',
         );
         $this->runUpdateDependenciesCommand();
-        $this->assertEquals($data, self::$composerFile->read());
+        $this->assertEquals($expectedData, self::$composerFile->read());
         $this->assertTrue(is_file(self::$basePath . '/composer.v0.1.1.backup.json'));
         unlink(self::$basePath . '/composer.v0.1.1.backup.json');
         $this->runCommandsCommand();
