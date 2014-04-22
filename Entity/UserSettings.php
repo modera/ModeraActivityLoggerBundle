@@ -30,7 +30,7 @@ class UserSettings
 
     /**
      * @var Language
-     * @ORM\OneToOne(targetEntity="Modera\LanguagesBundle\Entity\Language")
+     * @ORM\ManyToOne(targetEntity="Modera\LanguagesBundle\Entity\Language")
      */
     private $language;
 
