@@ -46,8 +46,10 @@
         <service id="modera_backend_security.service.mail_service"
                  class="Modera\BackendSecurityBundle\Service\MailService">
 
+            <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="mailer" />
             <argument>%locale%</argument>
+            <argument>%modera_backend_security.config.mail_sender%</argument>
         </service>
 
         <service parent="modera_translations.handling.php_classes_translation_handler">

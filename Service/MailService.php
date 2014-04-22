@@ -2,8 +2,10 @@
 
 namespace Modera\BackendSecurityBundle\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Modera\SecurityBundle\Entity\User;
 use Modera\TranslationsBundle\Helper\T;
+use Modera\BackendLanguagesBundle\Entity\UserSettings;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -11,6 +13,10 @@ use Modera\TranslationsBundle\Helper\T;
  */
 class MailService
 {
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
     /**
      * @var \Swift_Mailer
      */
@@ -22,12 +28,19 @@ class MailService
     private $defaultLocale;
 
     /**
+     * @var string
+     */
+    private $mailSender;
+
+    /**
      * @param \Swift_Mailer $mailer
      */
-    public function __construct(\Swift_Mailer $mailer, $defaultLocale = 'en')
+    public function __construct(EntityManagerInterface $em, \Swift_Mailer $mailer, $defaultLocale = 'en', $mailSender = 'no-reply@no-reply')
     {
+        $this->em = $em;
         $this->mailer = $mailer;
         $this->defaultLocale = $defaultLocale;
+        $this->mailSender = $mailSender;
     }
 
     /**
@@ -37,14 +50,17 @@ class MailService
      */
     public function sendPassword(User $user, $plainPassword)
     {
-        /* @var \Swift_Message $swiftMessage */
-        $swiftMessage = $this->mailer->createMessage();
+        /* @var \Swift_Message $message */
+        $message = $this->mailer->createMessage();
 
-        $from    = T::trans('no-reply@no-reply', array(), 'mail', $this->defaultLocale);
-        $to      = $user->getEmail();
-        $subject = T::trans('Your password', array(), 'mail', $this->defaultLocale);
-        $body    = T::trans('Your new password is: %plainPassword%', array('%plainPassword%' => $plainPassword), 'mail', $this->defaultLocale);
-        $message = $swiftMessage->setFrom($from)->setTo($to)->setSubject($subject)->setBody($body);
+        $locale  = $this->getLocale($user);
+        $subject = T::trans('Your password', array(), 'mail', $locale);
+        $body    = T::trans('Your new password is: %plainPassword%', array('%plainPassword%' => $plainPassword), 'mail', $locale);
+
+        $message->setFrom($this->mailSender);
+        $message->setTo($user->getEmail());
+        $message->setSubject($subject);
+        $message->setBody($body);
 
         $failedRecipients = array();
         if (!$this->mailer->send($message, $failedRecipients)) {
@@ -52,5 +68,19 @@ class MailService
         }
 
         return true;
+    }
+
+    /**
+     * @param User $user
+     * @return string
+     */
+    private function getLocale(User $user)
+    {
+        $settings = $this->em->getRepository(UserSettings::clazz())->findOneBy(array('user' => $user->getId()));
+        if ($settings && $settings->getLanguage() && $settings->getLanguage()->getEnabled()) {
+            return $settings->getLanguage()->getLocale();
+        }
+
+        return $this->defaultLocale;
     }
 }
