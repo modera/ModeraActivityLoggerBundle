@@ -46,34 +46,36 @@ class UpgradeCommand extends ContainerAwareCommand
 
             $newVersion = null;
             $versions = array_keys($versionsData);
-            $version = isset($composerData['version']) ? $composerData['version'] : null;
+            $currentVersion = isset($composerData['version']) ? $composerData['version'] : null;
 
-            if ($version && $version == $versions[count($versions) - 1]) {
-                $output->writeln('<info>You have the latest version</info>');
+            if ($currentVersion && $currentVersion == $versions[count($versions) - 1]) {
+                $output->writeln("<info>You have the latest version - $currentVersion</info>");
                 return;
             }
 
             // backup composer.json
             file_put_contents(
-                $basePath . '/composer' . ($version ? '.v' . $version : '') . '.backup.json',
+                $basePath . '/composer' . ($currentVersion ? '.v' . $currentVersion : '') . '.backup.json',
                 file_get_contents($basePath . '/composer.json')
             );
 
             $oldDependencies = $newDependencies = array();
-            if (!$version) {
+            if (!$currentVersion) {
                 $newVersion = array_keys($versionsData)[0];
                 $newDependencies = array_values($versionsData)[0]['dependencies'];
             } else {
                 foreach(array_keys($versions) as $k) {
-                    if ($versions[$k] == $version) {
+                    if ($versions[$k] == $currentVersion) {
                         $newVersion = $versions[$k + 1];
-                        $oldDependencies = $versionsData[$version]['dependencies'];
+                        $oldDependencies = $versionsData[$currentVersion]['dependencies'];
                         $newDependencies = $versionsData[$newVersion]['dependencies'];
                         break;
                     }
                 }
             }
             $diff = $this->diffDependencies($oldDependencies, $newDependencies);
+
+            $output->writeln("<info>Upgrading from $currentVersion to $newVersion</info>");
 
             $dependencies = $composerData['require'];
             foreach ($diff['added'] as $name => $ver) {
