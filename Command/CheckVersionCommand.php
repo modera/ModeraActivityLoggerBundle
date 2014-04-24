@@ -40,7 +40,7 @@ class CheckVersionCommand extends ContainerAwareCommand
 
         $packageJson = @file_get_contents($path);
         if (false === $packageJson) {
-            throw new \RuntimeException();
+            throw new \RuntimeException('Unable to find file ' . $path);
         }
 
         $packageJson = json_decode($packageJson, true);
