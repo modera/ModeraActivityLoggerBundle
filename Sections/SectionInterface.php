@@ -3,7 +3,7 @@
 namespace Modera\JSRuntimeIntegrationBundle\Sections;
 
 /**
- * Represents a section which can be loaded in backend
+ * Represents a section which can be loaded in backend.
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
@@ -29,7 +29,7 @@ interface SectionInterface
     public function getId();
 
     /**
-     * @return string  A javascript controller class name which will server as entry point to a section represented
+     * @return string  A javascript controller class name which will serve as entry point to a section represented
      *                 by this menu item.
      */
     public function getController();

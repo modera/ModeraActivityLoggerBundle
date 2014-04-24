@@ -3,6 +3,7 @@
 namespace Modera\JSRuntimeIntegrationBundle\Contributions\Config;
 
 use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
+use Modera\JSRuntimeIntegrationBundle\Config\MainConfigInterface;
 use Modera\JSRuntimeIntegrationBundle\Menu\MenuManager;
 use Modera\JSRuntimeIntegrationBundle\Sections\Section;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
@@ -15,20 +16,20 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class ConfigMerger implements ConfigMergerInterface
 {
-    private $bundleConfig;
+    private $mainConfig;
     private $menuMgr;
     private $sectionsProvider;
     private $classLoaderMappingsProvider;
 
     /**
-     * @param array       $bundleConfig
+     * @param array       $mainConfig
      * @param MenuManager $menuMgr
      */
     public function __construct(
-        array $bundleConfig, MenuManager $menuMgr, ContributorInterface $sectionsProvider, ContributorInterface $classLoaderMappingsProvider
+        MainConfigInterface $mainConfig, MenuManager $menuMgr, ContributorInterface $sectionsProvider, ContributorInterface $classLoaderMappingsProvider
     )
     {
-        $this->bundleConfig = $bundleConfig;
+        $this->mainConfig = $mainConfig;
         $this->menuMgr = $menuMgr;
         $this->sectionsProvider = $sectionsProvider;
         $this->classLoaderMappingsProvider = $classLoaderMappingsProvider;
@@ -61,9 +62,9 @@ class ConfigMerger implements ConfigMergerInterface
         }
 
         return array_merge($existingConfig, array(
-            'deploymentName' => $this->bundleConfig['deployment_name'],
-            'deploymentUrl' => $this->bundleConfig['deployment_url'],
-            'homeSection' => $this->bundleConfig['home_section'],
+            'deploymentName' => $this->mainConfig->getTitle(),
+            'deploymentUrl' => $this->mainConfig->getUrl(),
+            'homeSection' => $this->mainConfig->getHomeSection(),
             'sections' => $sections, // backend sections
             'menuItems' => $menuItems,
             'classLoaderMappings' => $this->classLoaderMappingsProvider->getItems()

@@ -2,6 +2,7 @@
 
 namespace Modera\JSRuntimeIntegrationBundle\Contributions\Config;
 
+use Modera\JSRuntimeIntegrationBundle\Config\MainConfigInterface;
 use Modera\JSRuntimeIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
 use Modera\JSRuntimeIntegrationBundle\Menu\MenuManager;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
@@ -29,10 +30,14 @@ class StandardConfigMergersProvider implements ContributorInterface
         /* @var ContributorInterface $loaderMappingsProvider */
         $loaderMappingsProvider = $container->get('mf.jsruntimeintegration.class_loader_mappings_provider');
 
-        $configKey = $container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        $bundleConfig = $container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        /* @var MainConfigInterface $mainConfig */
+        $mainConfig = $container->get(
+            $bundleConfig['main_config_provider']
+        );
 
         $this->items = array(
-            new ConfigMerger($configKey, $menuMgr, $sectionsProvider, $loaderMappingsProvider)
+            new ConfigMerger($mainConfig, $menuMgr, $sectionsProvider, $loaderMappingsProvider)
         );
     }
 
