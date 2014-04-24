@@ -25,7 +25,7 @@ class DefaultController extends AbstractCrudController
                             'id' => $entry->getId(),
                             'name' => $entry->getName(),
                             'readableName' => $entry->getReadableName(),
-//                            'readableValue' => $entry->getReadableValue(),
+                            'readableValue' => $entry->getReadableValue(),
                             'value' => $entry->getValue(),
                             'isReadOnly' => $entry->isReadOnly()
                         );
@@ -34,10 +34,14 @@ class DefaultController extends AbstractCrudController
                 'profiles' => ['list']
             ),
             'map_data_on_update' => function(array $params, ConfigurationEntry $entry) {
+                if ($entry->isReadOnly() || !$entry->isExposed()) {
+                    return;
+                }
+
                 if (isset($params['value'])) {
                     $entry->setValue($params['value']);
                 }
-            },
+            }
         );
     }
 }

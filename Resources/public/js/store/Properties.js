@@ -8,30 +8,25 @@ Ext.define('Modera.backend.configutils.store.Properties', {
      * @param {Object} config
      */
     constructor: function(config) {
-        $store = this;
-
         var defaults = {
-            fields: ['id', 'name', 'readableName', 'value', 'isReadOnly'],
+            fields: [
+                'id', 'name', 'readableName', 'readableValue', 'value', 'isReadOnly'
+            ],
             autoLoad: true,
             proxy: {
                 type: 'direct',
-//                directFn: Actions.ModeraBackendConfigUtils_Default.list,
-                api: {
-                    read: Actions.ModeraBackendConfigUtils_Default.list,
-                    update: Actions.ModeraBackendConfigUtils_Default.update
-                },
+                directFn: Actions.ModeraBackendConfigUtils_Default.list,
                 reader: {
                     type: 'json',
                     root: 'items'
                 },
-                writer: {
-                    type: 'json',
-                    root: 'record'
-                },
                 extraParams: {
                     hydration: {
                         profile: 'list'
-                    }
+                    },
+                    filter: [
+                        { property: 'isExposed', value: 'eq:true' }
+                    ]
                 }
             }
         };

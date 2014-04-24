@@ -8,7 +8,7 @@ Ext.define('Modera.backend.configutils.view.PropertiesGrid', {
     requires: [
         'MF.Util',
         'Ext.grid.plugin.CellEditing',
-        'Modera.backend.configutils.view.WidgetsPoolEditorColumn',
+        'MFC.grid.column.WidgetsPoolEditorColumn',
         'Modera.backend.configutils.store.Properties'
     ],
 
@@ -30,7 +30,7 @@ Ext.define('Modera.backend.configutils.view.PropertiesGrid', {
             border: true,
             hideHeaders: true,
             plugins: [
-                Ext.create('Ext.grid.plugin.CellEditing', {
+                Ext.create('MFC.grid.plugin.VolatileCellEditing', {
                     clicksToEdit: 1
                 })
             ],
@@ -40,10 +40,32 @@ Ext.define('Modera.backend.configutils.view.PropertiesGrid', {
                     flex: 1
                 },
                 {
-                    xtype: 'modera-configutils-widgetspooleditorcolumn',
+                    xtype: 'mfc-editorcolumn',
                     dataIndex: 'value',
                     flex: 1,
-                    editorsPool: config.editorsPool
+                    editorsFactory: function(record) {
+                        if (record.get('isReadOnly')) {
+                            return false;
+                        }
+
+                        var pool = config.editorsPool,
+                            name = record.get('name');
+
+                        if (pool[name]) {
+                            var editor = pool[name];
+
+                            if (Ext.isFunction(editor)) {
+                                return editor(record);
+                            } else { // widget definition or widget instance
+                                return editor;
+                            }
+                        }
+
+                        return false;
+                    },
+                    renderer: function(v, md, record) {
+                        return record.get('readableValue');
+                    }
                 }
             ]
         };
