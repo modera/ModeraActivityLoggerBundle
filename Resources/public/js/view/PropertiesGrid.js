@@ -15,6 +15,11 @@ Ext.define('Modera.backend.configutils.view.PropertiesGrid', {
     /**
      * @cfg {Object} editorsPool
      */
+    /**
+     * An optional function that if provided will be responsible for rendering value for "value" column.
+     *
+     * @cfg {Function} renderer
+     */
 
     /**
      * @param {Object} config
@@ -64,6 +69,9 @@ Ext.define('Modera.backend.configutils.view.PropertiesGrid', {
                         return false;
                     },
                     renderer: function(v, md, record) {
+                        if (Ext.isFunction(config.renderer)) {
+                            return config.renderer(v, md, record);
+                        }
                         return record.get('readableValue');
                     }
                 }
