@@ -23,7 +23,7 @@ class UpgradeCommand extends ContainerAwareCommand
             ->setDefinition([
                 new InputOption('dependencies', null, InputOption::VALUE_NONE, 'Update dependencies in "composer.json"'),
                 new InputOption('run-commands', null, InputOption::VALUE_NONE, 'Run commands'),
-                new InputOption('versions-path', null, InputOption::VALUE_OPTIONAL, 'versions.json path', dirname(__DIR__) . '/versions.json'),
+                new InputOption('versions-path', null, InputOption::VALUE_OPTIONAL, 'versions.json path', getcwd() . '/versions.json'),
             ])
         ;
     }
@@ -34,6 +34,8 @@ class UpgradeCommand extends ContainerAwareCommand
         $dependencies = $input->getOption('dependencies');
         $runCommands = $input->getOption('run-commands');
         $versionsPath = $input->getOption('versions-path');
+
+        $output->writeln("Reading upgrade instructions from '<info>$versionsPath</info>'.");
 
         $basePath = dirname($this->getContainer()->get('kernel')->getRootdir());
         $composerFile = new JsonFile($basePath . '/composer.json');
@@ -149,16 +151,21 @@ class UpgradeCommand extends ContainerAwareCommand
 
             if (count($versionsData[$newVersion]['commands'])) {
                 $output->writeln('After composer update run:');
-                $output->writeln('<info>php composer.phar ' . $this->getName() . ' --run-commands</info>');
+                $output->writeln('<info>php app/console ' . $this->getName() . ' --run-commands</info>');
             }
 
         } else if ($runCommands) {
 
             if (isset($composerData['version']) && isset($versionsData[$composerData['version']])) {
                 $commands = $versionsData[$composerData['version']]['commands'];
+
+                $this->getApplication()->setAutoExit(false);
                 foreach ($commands as $command) {
+                    $output->writeln("<comment>$command</comment>");
                     $this->getApplication()->run(new StringInput($command), $output);
+                    $output->write("\n");
                 }
+                $this->getApplication()->setAutoExit(true);
 
                 if (count($commands) == 0) {
                     $output->writeln('<comment>No commands need to be run! Aborting ...</comment>');
