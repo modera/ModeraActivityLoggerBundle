@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_config.init_configuration_entry_listener"
+                 class="Modera\ConfigBundle\Listener\InitConfigurationEntry">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="doctrine.event_listener" event="postLoad" />
+        </service>
+
+        <service id="modera_config.config_entries_installer"
+                 class="Modera\ConfigBundle\Config\ConfigEntriesInstaller">
+
+            <argument type="service" id="modera_config.config_entries_provider" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="modera_config.entity_repository_handler"
+                 class="Modera\ConfigBundle\Config\EntityRepositoryHandler">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="modera_config.as_is_handler"
+                 class="Modera\ConfigBundle\Config\AsIsHandler"
+        />
+
+        <service id="modera_config.boolean_handler"
+                 class="Modera\ConfigBundle\Config\BooleanHandler"
+            />
+
+        <service id="modera_config.configuration_entries_manager"
+                 class="Modera\ConfigBundle\Config\ConfigurationEntriesManager">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="modera_config.namespace_mappings_provider"
+                 class="Modera\ConfigBundle\Contributions\NamespaceMappingsProvider">
+
+            <tag name="ts.core.namespace_mappings_contributor" />
+        </service>
+
+        <service id="modera_config.contributions.cs_runtime_plugin_class_names_provider"
+                 class="Modera\ConfigBundle\Contributions\ClientSideRuntimePluginClassNamesProvider">
+
+            <tag name="ts.core.cs.runtime_plugin_class_names_provider" />
+        </service>
+    </services>
+</container>
