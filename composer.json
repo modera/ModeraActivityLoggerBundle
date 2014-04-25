@@ -16,7 +16,7 @@
         "modera/config-bundle": "dev-master"
     },
     "autoload": {
-        "psr-0": { "Modera\\DynamicallyConfigurableMJRBundle": "" }
+        "psr-0": { "Modera\\DynamicallyConfigurableAppBundle": "" }
     },
-    "target-dir": "Modera/DynamicallyConfigurableMJRBundle"
+    "target-dir": "Modera/DynamicallyConfigurableAppBundle"
 }
