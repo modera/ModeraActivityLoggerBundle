@@ -40,7 +40,11 @@ class ConfigurationEntryTest extends FunctionalTestCase
         $this->assertEquals(CE::TYPE_FLOAT, $floatValue2->setDenormalizedValue(0.009));
         $this->assertEquals(0.009, $floatValue2->getDenormalizedValue());
 
-        foreach (array($intEntry, $stringValue, $textValue, $arrayValue, $floatValue, $floatValue2) as $ce) {
+        $boolValue = new CE('entry7');
+        $this->assertEquals(CE::TYPE_BOOL, $boolValue->setDenormalizedValue(true));
+        $this->assertTrue(true === $boolValue->getDenormalizedValue());
+
+        foreach (array($intEntry, $stringValue, $textValue, $arrayValue, $floatValue, $floatValue2, $boolValue) as $ce) {
             $em->persist($ce);
             $em->flush();
             $this->assertNotNull($intEntry->getId());

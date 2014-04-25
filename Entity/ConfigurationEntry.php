@@ -26,13 +26,15 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     const TYPE_INT = 2;
     const TYPE_FLOAT = 3;
     const TYPE_ARRAY = 4;
+    const TYPE_BOOL = 5;
 
     static private $fieldsMapping = array(
         self::TYPE_INT => 'int',
         self::TYPE_STRING => 'string',
         self::TYPE_TEXT => 'text',
         self::TYPE_ARRAY => 'array',
-        self::TYPE_FLOAT => 'float'
+        self::TYPE_FLOAT => 'float',
+        self::TYPE_BOOL => 'bool'
     );
 
     /**
@@ -90,6 +92,11 @@ class ConfigurationEntry implements ConfigurationEntryInterface
      * @ORM\Column(type="decimal", columnDefinition="DECIMAL(20,4)")
      */
     private $floatValue;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $boolValue;
 
     /**
      * @ORM\Column(type="array")
@@ -353,9 +360,13 @@ class ConfigurationEntry implements ConfigurationEntryInterface
             return self::TYPE_INT;
         } else if (is_array($value)) {
             return self::TYPE_ARRAY;
+        } else if (is_bool($value)) {
+            return self::TYPE_BOOL;
         }
 
-        throw new \RuntimeException('Unable to guess type of provided value!');
+        throw new \RuntimeException(sprintf(
+            'Unable to guess type of provided value! ( %s )', $this->getName()
+        ));
     }
 
     /**

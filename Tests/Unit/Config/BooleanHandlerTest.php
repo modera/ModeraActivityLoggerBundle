@@ -81,6 +81,10 @@ class BooleanHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testConvertToStorageValue()
     {
-        $this->assertEquals('xxx', $this->handler->convertToStorageValue('xxx', $this->entry));
+        $this->assertTrue(false === $this->handler->convertToStorageValue('xxx', $this->entry));
+        $this->assertTrue(true === $this->handler->convertToStorageValue(1, $this->entry));
+        $this->assertTrue(true === $this->handler->convertToStorageValue('1', $this->entry));
+        $this->assertTrue(true === $this->handler->convertToStorageValue(true, $this->entry));
+        $this->assertTrue(true === $this->handler->convertToStorageValue('true', $this->entry));
     }
 }
