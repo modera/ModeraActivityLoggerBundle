@@ -87,14 +87,18 @@ Ext.define('Modera.backend.configutils.view.PropertiesGrid', {
     // private
     assignListeners: function() {
         this.on('edit', function(editor, e) {
-            var r = e.record;
+            var r = e.record,
+                oldValue = e.originalValue,
+                newValue = r.get('value');
 
-            Actions.ModeraBackendConfigUtils_Default.update({
-                record: {
-                    id: r.get('id'),
-                    value: r.get('value')
-                }
-            })
+            if (oldValue != newValue) {
+                Actions.ModeraBackendConfigUtils_Default.update({
+                    record: {
+                        id: r.get('id'),
+                        value: newValue
+                    }
+                });
+            }
         });
     }
 });
