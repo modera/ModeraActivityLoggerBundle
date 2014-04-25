@@ -37,6 +37,6 @@ class DictionaryHandler implements HandlerInterface
      */
     public function convertToStorageValue($input, ConfigurationEntry $entry)
     {
-        return $entry->getDenormalizedValue();
+        return $input;
     }
 }

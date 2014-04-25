@@ -55,11 +55,6 @@ class DictionaryHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testConvertToStorageValue()
     {
-        $this->entry
-            ->expects($this->atLeastOnce())
-            ->method('getDenormalizedValue')
-            ->will($this->returnValue('blah'));
-
-        $this->assertEquals('blah', $this->handler->convertToStorageValue('xxx', $this->entry));
+        $this->assertEquals('blah', $this->handler->convertToStorageValue('blah', $this->entry));
     }
 } 
