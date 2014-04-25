@@ -216,9 +216,9 @@ class UpgradeCommand extends ContainerAwareCommand
 
                 $this->getApplication()->setAutoExit(false);
                 foreach ($commands as $command) {
+                    $output->writeln('');
                     $output->writeln("<comment>$command</comment>");
                     $this->getApplication()->run(new StringInput($command), $output);
-                    $output->writeln('');
                 }
 
                 if (count($commands) == 0) {

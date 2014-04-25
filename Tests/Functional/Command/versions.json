@@ -13,8 +13,7 @@
             "test/dependency_1": "0.1.0",
             "test/dependency_2": "0.1.0",
             "test/dependency_3": "0.1.0"
-        },
-        "commands": []
+        }
     },
     "0.1.1": {
         "rm-repositories": [
