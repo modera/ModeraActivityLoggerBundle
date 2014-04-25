@@ -1,5 +1,9 @@
 {
     "0.1.0": {
+        "add-repositories": [],
+        "rm-repositories": [],
+        "add-bundles": [],
+        "rm-bundles": [],
         "dependencies": {},
         "commands": []
     }

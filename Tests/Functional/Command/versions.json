@@ -6,6 +6,9 @@
                 "url": "ssh://git@dependency.git"
             }
         ],
+        "add-bundles": [
+            "new Test\\AddBundle\\TestAddBundle()"
+        ],
         "dependencies": {
             "test/dependency_1": "0.1.0",
             "test/dependency_2": "0.1.0",
@@ -20,12 +23,15 @@
                 "url": "ssh://git@dependency.git"
             }
         ],
+        "rm-bundles": [
+            "new Test\\RemoveBundle\\TestRemoveBundle()"
+        ],
         "dependencies": {
             "test/dependency_1": "0.1.1",
             "test/dependency_2": "0.1.0"
         },
         "commands": [
-            "modera:upgrade"
+            "help --format=json"
         ]
     },
     "0.1.2": {
@@ -35,8 +41,7 @@
             "test/dependency_4": "0.1.0"
         },
         "commands": [
-            "help --format=json",
-            "modera:upgrade"
+            "help --format=txt"
         ]
     }
 }
