@@ -1,4 +1,5 @@
 /**
+ * @private
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  */
 Ext.define('Modera.backend.configutils.store.Properties', {
@@ -10,9 +11,9 @@ Ext.define('Modera.backend.configutils.store.Properties', {
     constructor: function(config) {
         var defaults = {
             fields: [
-                'id', 'name', 'readableName', 'readableValue', 'value', 'isReadOnly'
+                'id', 'name', 'readableName', 'readableValue', 'value', 'isReadOnly', 'editorConfig'
             ],
-            autoLoad: true,
+            remoteFilter: true,
             proxy: {
                 type: 'direct',
                 directFn: Actions.ModeraBackendConfigUtils_Default.list,
@@ -23,10 +24,7 @@ Ext.define('Modera.backend.configutils.store.Properties', {
                 extraParams: {
                     hydration: {
                         profile: 'list'
-                    },
-                    filter: [
-                        { property: 'isExposed', value: 'eq:true' }
-                    ]
+                    }
                 }
             }
         };

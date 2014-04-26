@@ -27,7 +27,8 @@ class DefaultController extends AbstractCrudController
                             'readableName' => $entry->getReadableName(),
                             'readableValue' => $entry->getReadableValue(),
                             'value' => $entry->getValue(),
-                            'isReadOnly' => $entry->isReadOnly()
+                            'isReadOnly' => $entry->isReadOnly(),
+                            'editorConfig' => $entry->getClientHandlerConfig()
                         );
                     }
                 ),
