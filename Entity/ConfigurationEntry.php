@@ -52,18 +52,31 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     private $name;
 
     /**
-     * User understandable name for configuration-entry.
+     * User understandable name for this configuration-entry.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     private $readableName;
 
     /**
+     * Optional name of category this configuration property should belong to.
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $category;
+
+    /**
+     * Optional configuration that will be used to configure implementation of
+     * {@class \Modera\ConfigBundle\Config\HandlerInterface}.
+     *
      * @ORM\Column(type="array")
      */
     private $serverHandlerConfig = array();
 
     /**
+     * Optional configuration that will be used on client-side ( frontend ) to configure editor for this configuration
+     * entry.
+     *
      * @ORM\Column(type="array")
      */
     private $clientHandlerConfig = array();
@@ -147,6 +160,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
         $me->setValue($def->getValue());
         $me->setServerHandlerConfig($def->getServerHandlerConfig());
         $me->setClientHandlerConfig($def->getClientHandlerConfig());
+        $me->setCategory($def->getCategory());
 
         return $me;
     }
@@ -196,10 +210,11 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
+     * @private
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    private function updateUpdatedAt()
+    public function updateUpdatedAt()
     {
         if (null !== $this->id) {
             $this->updatedAt = new \DateTime('now');
@@ -333,17 +348,22 @@ class ConfigurationEntry implements ConfigurationEntryInterface
         }
     }
 
+    /**
+     * Resets value of this configuration entry.
+     */
     public function reset()
     {
         foreach (self::$fieldsMapping as $type=>$name) {
-            $this->{$name.'Value'} = null;
+            $this->{$name . 'Value'} = null;
         }
         $this->arrayValue = array();
     }
 
     /**
      * @throws \RuntimeException
+     *
      * @param mixed $value
+     *
      * @return int
      */
     public function getFieldType($value)
@@ -370,6 +390,8 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
+     * @param mixed $value
+     *
      * @return string
      */
     private function getStorageFieldNameFromValue($value)
@@ -430,5 +452,15 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     public function getClientHandlerConfig()
     {
         return $this->clientHandlerConfig;
+    }
+
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

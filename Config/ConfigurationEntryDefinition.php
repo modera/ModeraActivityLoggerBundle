@@ -13,6 +13,7 @@ class ConfigurationEntryDefinition
     private $name;
     private $readableName;
     private $value;
+    private $category;
     private $serverHandlerConfig;
     private $clientHandlerConfig;
     private $isExposed;
@@ -22,13 +23,14 @@ class ConfigurationEntryDefinition
      * @param string $name
      * @param string $readableName
      * @param mixed $value
+     * @param string $category
      * @param array $serverHandlerConfig
      * @param array $clientHandlerConfig
      * @param bool $isReadOnly
      * @param bool $isExposed
      */
     public function __construct(
-        $name, $readableName, $value,
+        $name, $readableName, $value, $category,
         $serverHandlerConfig = null, $clientHandlerConfig = null,
         $isReadOnly = false, $isExposed = true
     )
@@ -36,6 +38,7 @@ class ConfigurationEntryDefinition
         $this->name = $name;
         $this->readableName = $readableName;
         $this->value = $value;
+        $this->category = $category;
         $this->serverHandlerConfig = $serverHandlerConfig ?: array();
         $this->clientHandlerConfig = $clientHandlerConfig ?: array();
         $this->isReadOnly = $isReadOnly;
@@ -96,5 +99,21 @@ class ConfigurationEntryDefinition
     public function getServerHandlerConfig()
     {
         return $this->serverHandlerConfig;
+    }
+
+    /**
+     * @param string $category
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 } 
