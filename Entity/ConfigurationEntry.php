@@ -4,6 +4,7 @@ namespace Modera\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Modera\ConfigBundle\Config\ConfigurationEntryDefinition;
+use Modera\ConfigBundle\Config\ValueUpdatedHandlerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Modera\ConfigBundle\Config\HandlerInterface;
@@ -68,6 +69,12 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     /**
      * Optional configuration that will be used to configure implementation of
      * {@class \Modera\ConfigBundle\Config\HandlerInterface}.
+     *
+     * Available configuration properties:
+     *
+     *  * update_handler  -- DI service ID that implements {@class ValueUpdatedHandlerInterface} that must be invoked
+     *                       when configuration entry is updated
+     * * handler -- DI service ID of a class that implements {@class \Modera\ConfigBundle\Config\HandlerInterface}
      *
      * @ORM\Column(type="array")
      */
@@ -222,6 +229,19 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
+     * @ORM\PreUpdate
+     */
+    public function invokeUpdateHandler()
+    {
+        if (isset($this->serverHandlerConfig['update_handler'])) {
+            /* @var ValueUpdatedHandlerInterface $updateHandler */
+            $updateHandler = $this->getContainer()->get($this->serverHandlerConfig['update_handler']);
+            $updateHandler->onUpdate($this);
+        }
+
+    }
+
+    /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
@@ -239,7 +259,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
      */
     private function hasServerHandler()
     {
-        return count($this->serverHandlerConfig) > 0;
+        return isset($this->serverHandlerConfig['handler']);
     }
 
     /**
@@ -258,11 +278,13 @@ class ConfigurationEntry implements ConfigurationEntryInterface
             ));
         }
 
-        if (!isset($this->serverHandlerConfig['id'])) {
-            throw new \RuntimeException();
+        if (!isset($this->serverHandlerConfig['handler'])) {
+            throw new \RuntimeException(sprintf(
+                "Configuration property '%s' doesn't have handler configured!", $this->getName()
+            ));
         }
 
-        $handlerServiceId = $this->serverHandlerConfig['id'];
+        $handlerServiceId = $this->serverHandlerConfig['handler'];
 
         $handler = $this->getContainer()->get($handlerServiceId);
         if (!($handler instanceof HandlerInterface)) {

@@ -102,7 +102,7 @@ class ConfigurationEntryTest extends FunctionalTestCase
 
         $ce = new CE('bar_prop');
         $ce->setServerHandlerConfig(array(
-            'id' => $handlerServiceId
+            'handler' => $handlerServiceId
         ));
         $ce->init($container);
         $ce->setDenormalizedValue('foo_val');
@@ -127,12 +127,38 @@ class ConfigurationEntryTest extends FunctionalTestCase
 
         $ce = new CE('bar_prop');
         $ce->setServerHandlerConfig(array(
-            'id' => $handlerServiceId
+            'handler' => $handlerServiceId
         ));
         $ce->init($container);
 
         $ce->setValue($clientValue);
         $this->assertEquals($convertedValue, $ce->getDenormalizedValue());
+    }
+
+    public function testUpdateHandler()
+    {
+        $id = 'update_handler';
+
+        $handler = $this->getMock('Modera\ConfigBundle\Config\ValueUpdatedHandlerInterface');
+        $container = $this->createMockContainer($id, $handler);
+
+        $ce = new CE('foo_prop');
+        $ce->setServerHandlerConfig(array(
+            'update_handler' => $id
+        ));
+        $ce->init($container);
+        $ce->setValue('foo');
+
+        self::$em->persist($ce);
+        self::$em->flush();
+
+        $handler->expects($this->atLeastOnce())
+            ->method('onUpdate')
+            ->with($this->equalTo($ce));
+
+        $ce->setValue('bar');
+
+        self::$em->flush();
     }
 
     /**
