@@ -70,6 +70,11 @@ class Repository
         $this->files = new ArrayCollection();
     }
 
+    private function getInterceptors()
+    {
+
+    }
+
     public function beforePut(\SplFileInfo $file)
     {
 
@@ -140,8 +145,9 @@ class Repository
     {
         if (!isset($config['filesystem'])) {
             throw InvalidRepositoryConfig::create('filesystem', $config);
-        } else if (!isset($config['storage_key_generator'])) {
-            throw InvalidRepositoryConfig::create('storage_key_generator', $config);
+        }
+        if (!isset($config['storage_key_generator'])) {
+            $config['storage_key_generator'] = 'modera_file_repository.repository.uniqid_key_generator';
         }
 
         $this->config = $config;
@@ -212,6 +218,4 @@ class Repository
     {
         return $this->files;
     }
-
-
 } 

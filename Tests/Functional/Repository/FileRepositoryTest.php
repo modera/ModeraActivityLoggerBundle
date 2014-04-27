@@ -79,5 +79,19 @@ class FileRepositoryTest extends FunctionalTestCase
         $this->assertEquals('txt', $storedFile->getExtension());
         $this->assertEquals('text/plain', $storedFile->getMimeType());
         $this->assertSame($repository, $storedFile->getRepository());
+        $this->assertEquals($fileContents, $storedFile->getContents());
+        $this->assertTrue('' != $storedFile->getChecksum());
+        $this->assertEquals($file->getSize(), $storedFile->getSize());
+
+        // ---
+
+        $fs = $storedFile->getRepository()->getFilesystem();
+
+        $this->assertTrue($fs->has($storedFile->getStorageKey()));
+
+        self::$em->remove($storedFile);
+        self::$em->flush();
+
+        $this->assertFalse($fs->has($storedFile->getStorageKey()));
     }
 }

@@ -78,9 +78,11 @@ class FileRepository
 
         $storedFile = $repository->createFile($file, $context);
 
-        $contents = @file_get_contents($file->getPath());
+        $contents = @file_get_contents($file->getPathname());
         if (false === $contents) {
-            throw new \RuntimeException();
+            throw new \RuntimeException(sprintf(
+                'Unable to read contents of "%s" file!', $file->getPath()
+            ));
         }
 
         $repository->onPut($storedFile, $file);

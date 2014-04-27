@@ -7,13 +7,14 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
- * When this entity is removed from database associated with it physical file be automatically removed.
+ * When this entity is removed from database associated with it physical file be automatically removed as well.
  *
  * Instances of this class are not meant to be created directly, please use
  * {@class \Modera\FileRepositoryBundle\Repository\FileRepository::put} instead.
  *
  * @ORM\Entity
  * @ORM\Table("modera_filerepository_storedfile")
+ * @ORM\HasLifecycleCallbacks
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
