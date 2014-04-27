@@ -10,6 +10,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Every repository is associated one underlying Gaufrette filesystem.
  *
+ * @ORM\Entity
+ * @ORM\Table("modera_filerepository_repository")
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */
@@ -44,7 +47,7 @@ class Repository
     private $label;
 
     /**
-     * @ORM\OneToMany(targetEntity="File", mappedBy="repository")
+     * @ORM\OneToMany(targetEntity="StoredFile", mappedBy="repository")
      */
     private $files;
 
@@ -123,4 +126,88 @@ class Repository
 
         return $result;
     }
+
+    // boilerplate:
+
+    /**
+     * @param array $config
+     */
+    public function setConfig($config)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $label
+     */
+    public function setLabel($label)
+    {
+        $this->label = $label;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLabel()
+    {
+        return $this->label;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $files
+     */
+    public function setFiles($files)
+    {
+        $this->files = $files;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFiles()
+    {
+        return $this->files;
+    }
+
+
 } 

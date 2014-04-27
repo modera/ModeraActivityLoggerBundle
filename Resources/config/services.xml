@@ -4,17 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
-    <parameters>
-        <parameter key="modera_file_repository.example.class">Modera\FileRepositoryBundle\Example</parameter>
-    </parameters>
-
     <services>
-        <service id="modera_file_repository.example" class="%modera_file_repository.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="modera_file_repository.event_listener.container_injector_listener"
+                 class="Modera\FileRepositoryBundle\EventListener\ContainerInjectorListener">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="doctrine.event_listener" event="postLoad" />
         </service>
     </services>
-    -->
 </container>

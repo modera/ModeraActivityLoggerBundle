@@ -2,6 +2,7 @@
 
 namespace Modera\FileRepositoryBundle\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -11,6 +12,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  *
  * Instances of this class are not meant to be created directly, please use
  * {@class \Modera\FileRepositoryBundle\Repository\FileRepository::put} instead.
+ *
+ * @ORM\Entity
+ * @ORM\Table("modera_filerepository_storedfile")
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
