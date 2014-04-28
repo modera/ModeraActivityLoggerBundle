@@ -30,7 +30,10 @@ class ContainerInjectorListenerTest extends FunctionalTestCase
 
     public function testHowWellContainerIsInjected()
     {
-        $repository = new Repository('test repo');
+        $repository = new Repository('test repo', array(
+            'filesystem' => '',
+            'storage_key_generator' => ''
+        ));
 
         self::$em->persist($repository);
         self::$em->flush();

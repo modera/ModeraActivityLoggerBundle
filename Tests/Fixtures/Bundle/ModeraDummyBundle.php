@@ -1,21 +1,19 @@
 <?php
 
-namespace Modera\TranslationsBundle\Tests\Fixtures\Bundle;
+namespace Modera\FileRepositoryBundle\Tests\Fixtures\Bundle;
 
 use Modera\TranslationsBundle\Tests\Fixtures\Bundle\DependencyInjection\ModeraTranslationsDummyExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * @author    Sergei Vizel <sergei.vizel@modera.org>
+ * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class ModeraTranslationsDummyBundle extends Bundle
+class ModeraDummyBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        parent::build($container);
-
-        $container->registerExtension(new ModeraTranslationsDummyExtension());
+        $container->setParameter('sys_temp_dir', sys_get_temp_dir());
     }
 }

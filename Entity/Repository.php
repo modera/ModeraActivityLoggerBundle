@@ -5,6 +5,8 @@ namespace Modera\FileRepositoryBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gaufrette\Filesystem;
+use Modera\FileRepositoryBundle\Exceptions\InvalidRepositoryConfig;
+use Sli\AuxBundle\Util\Toolkit;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -57,11 +59,13 @@ class Repository
     private $container;
 
     /**
-     * @param string $name
+     * @param $name
+     * @param array $config
      */
-    public function __construct($name)
+    public function __construct($name, array $config)
     {
         $this->name = $name;
+        $this->setConfig($config);
 
         $this->files = new ArrayCollection();
     }
@@ -99,7 +103,9 @@ class Repository
      */
     public function getFilesystem()
     {
-        return $this->container->get($this->config['filesystem']);
+        $map = $this->container->get('knp_gaufrette.filesystem_map');
+
+        return $map->get($this->config['filesystem']);
     }
 
     /**
@@ -127,15 +133,21 @@ class Repository
         return $result;
     }
 
-    // boilerplate:
-
     /**
      * @param array $config
      */
-    public function setConfig($config)
+    public function setConfig(array $config)
     {
+        if (!isset($config['filesystem'])) {
+            throw InvalidRepositoryConfig::create('filesystem', $config);
+        } else if (!isset($config['storage_key_generator'])) {
+            throw InvalidRepositoryConfig::create('storage_key_generator', $config);
+        }
+
         $this->config = $config;
     }
+
+    // boilerplate:
 
     /**
      * @return array
@@ -175,14 +187,6 @@ class Repository
     public function getLabel()
     {
         return $this->label;
-    }
-
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
     }
 
     /**

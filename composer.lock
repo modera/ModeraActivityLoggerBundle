@@ -667,12 +667,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "35c8cd7f237a9a114303d14d573a28fb7d91b35e"
+                "reference": "be94eb9d1f795f16d669f15fd4ed100582d71e65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/35c8cd7f237a9a114303d14d573a28fb7d91b35e",
-                "reference": "35c8cd7f237a9a114303d14d573a28fb7d91b35e",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/be94eb9d1f795f16d669f15fd4ed100582d71e65",
+                "reference": "be94eb9d1f795f16d669f15fd4ed100582d71e65",
                 "shasum": ""
             },
             "require": {
@@ -736,7 +736,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-04-25 05:22:33"
+            "time": "2014-04-28 02:38:51"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1017,20 +1017,21 @@
         },
         {
             "name": "symfony/icu",
-            "version": "1.0.x-dev",
+            "version": "1.2.x-dev",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975"
+                "reference": "98e197da54df1f966dd5e8a4992135703569c987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/fdba214b1e087c149843bde976263c53ac10c975",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/98e197da54df1f966dd5e8a4992135703569c987",
+                "reference": "98e197da54df1f966dd5e8a4992135703569c987",
                 "shasum": ""
             },
             "require": {
+                "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
             },
@@ -1060,7 +1061,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-10-04 09:12:07"
+            "time": "2013-10-04 10:06:38"
         },
         {
             "name": "symfony/symfony",
@@ -1068,12 +1069,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "9d0de5b57b7435bf6bad4d0e2b6d844370e62fc2"
+                "reference": "23286bc5127e4d75ac91db013a2ddee77cae8e7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/9d0de5b57b7435bf6bad4d0e2b6d844370e62fc2",
-                "reference": "9d0de5b57b7435bf6bad4d0e2b6d844370e62fc2",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/23286bc5127e4d75ac91db013a2ddee77cae8e7b",
+                "reference": "23286bc5127e4d75ac91db013a2ddee77cae8e7b",
                 "shasum": ""
             },
             "require": {
@@ -1176,7 +1177,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-04-25 12:08:25"
+            "time": "2014-04-28 05:15:04"
         },
         {
             "name": "twig/twig",

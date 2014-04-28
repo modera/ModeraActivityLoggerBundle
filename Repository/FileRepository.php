@@ -5,6 +5,7 @@ namespace Modera\FileRepositoryBundle\Repository;
 use Doctrine\ORM\EntityManager;
 use Gaufrette\Filesystem;
 use Modera\FileRepositoryBundle\Entity\Repository;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -12,17 +13,18 @@ use Modera\FileRepositoryBundle\Entity\Repository;
  */
 class FileRepository
 {
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
+    /* @var EntityManager $em */
     private $em;
+    /* @var ContainerInterface $container */
+    private $container;
 
     /**
-     * @param EntityManager $em
+     * @param ContainerInterface $container
      */
-    public function __construct(EntityManager $em)
+    public function __construct(ContainerInterface $container)
     {
-        $this->em = $em;
+        $this->em = $container->get('doctrine.orm.entity_manager');
+        $this->container = $container;
     }
 
     /**
@@ -37,19 +39,33 @@ class FileRepository
         ));
     }
 
+    /**
+     * @param string $name
+     * @param array $config
+     * @param string $label
+     *
+     * @return Repository
+     */
     public function createRepository($name, array $config, $label)
     {
-        $repository = new Repository($name);
+        $repository = new Repository($name, $config);
+        $repository->setLabel($label);
+        $repository->init($this->container);
 
-        // TODO inject container
+        $this->em->persist($repository);
+        $this->em->flush();
 
         return $repository;
     }
 
     /**
-     * @param string $repositoryName
-     * @param \SplFileInfo $file
      * @throws \RuntimeException
+     *
+     * @param $repositoryName
+     * @param \SplFileInfo $file
+     * @param array $context
+     *
+     * @return \Modera\FileRepositoryBundle\Entity\StoredFile
      */
     public function put($repositoryName, \SplFileInfo $file, array $context)
     {
@@ -84,8 +100,12 @@ class FileRepository
             if (!$storedFile->getId()) {
                 $fs->delete($storageKey);
             }
+
+            throw $e;
         }
 
         $repository->afterPut($storedFile, $file);
+
+        return $storedFile;
     }
 } 

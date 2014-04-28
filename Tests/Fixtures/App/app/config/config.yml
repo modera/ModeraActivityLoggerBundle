@@ -17,9 +17,19 @@ doctrine:
         port:     3306
         dbname:   modera_filerepository_bundle
         user:     root
-        password:
+        password: 123123
         charset:  UTF8
 
     orm:
         auto_generate_proxy_classes: true
         auto_mapping: true
+
+knp_gaufrette:
+    adapters:
+        local_adapter:
+            local:
+                directory: %sys_temp_dir%/dummy_fs
+    filesystems:
+        dummy_tmp_fs:
+            adapter: local_adapter
+            alias: dummy_tmp_fs

@@ -3,7 +3,6 @@
 namespace Modera\FileRepositoryBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -59,7 +58,7 @@ class StoredFile
     /**
      * Some value that your application logic can understand and identify a user. It could be user entity id, for example.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $author;
 
@@ -90,6 +89,11 @@ class StoredFile
      */
     private $mimeType;
 
+    /**
+     * @param Repository $repository
+     * @param \SplFileInfo $file
+     * @param array $context
+     */
     public function __construct(Repository $repository, \SplFileInfo $file, array $context = array())
     {
         $this->repository = $repository;
@@ -102,7 +106,6 @@ class StoredFile
         $this->createdAt = new \DateTime('now');
 
         $this->filename = $file->getFilename();
-        $this->createdAt = new \DateTime('now');
         $this->extension = $file->getExtension();
 
         if ($file instanceof File) {
@@ -112,6 +115,11 @@ class StoredFile
             $this->filename = $file->getClientOriginalName();
             $this->extension = $file->getClientOriginalExtension();
         }
+    }
+
+    static public function clazz()
+    {
+        return get_called_class();
     }
 
     /**
@@ -146,5 +154,85 @@ class StoredFile
     public function getChecksum()
     {
         return $this->repository->getFilesystem()->checksum($this->storageKey);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExtension()
+    {
+        return $this->extension;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getMimeType()
+    {
+        return $this->mimeType;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @return \Modera\FileRepositoryBundle\Entity\Repository
+     */
+    public function getRepository()
+    {
+        return $this->repository;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStorageKey()
+    {
+        return $this->storageKey;
     }
 } 
