@@ -82,8 +82,10 @@ class UpgradeCommand extends ContainerAwareCommand
                 foreach(array_keys($versions) as $k) {
                     if ($versions[$k] == $currentVersion) {
                         $newVersion = $versions[$k + 1];
-                        $oldDependencies = $versionsData[$currentVersion]['dependencies'];
-                        $newDependencies = $versionsData[$newVersion]['dependencies'];
+                        $oldDependencies = isset($versionsData[$currentVersion]['dependencies']) ? $versionsData[$currentVersion]['dependencies'] : array();
+                        $newDependencies = isset($versionsData[$newVersion]['dependencies'])
+                                         ? $versionsData[$newVersion]['dependencies']
+                                         : $versionsData[$currentVersion]['dependencies'];
                         break;
                     }
                 }
