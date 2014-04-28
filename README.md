@@ -25,7 +25,7 @@ how to contributor class could look like:
         {
             return array(
                 new StandardSection(
-                    'blog', 'Blog', 'Modera.backend.dcab.runtime.SettingsListActivity', 'gear', array('category' => 'blog')
+                    'blog', 'Blog', 'Modera.backend.configutils.runtime.SettingsListActivity', 'gear', array('category' => 'blog')
                 )
             );
         }
