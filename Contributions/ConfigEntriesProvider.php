@@ -22,11 +22,9 @@ class ConfigEntriesProvider implements ContributorInterface
         $no = T::trans('no');
 
         $kernelDebugServer = array(
-            'handler' => 'modera_config.boolean_handler',
+            'id' => 'modera_config.boolean_handler',
             'true_text' => $yes,
-            'false_text' => $no,
-
-            'update_handler' => 'modera_dynamically_configurable_app.value_handling.kernel_config_writer'
+            'false_text' => $no
         );
         $kernelDebugClient = array(
             'xtype' => 'combo',
@@ -34,13 +32,11 @@ class ConfigEntriesProvider implements ContributorInterface
         );
 
         $kernelEnvServer = array(
-            'handler' => 'modera_config.dictionary_handler',
+            'id' => 'modera_config.dictionary_handler',
             'dictionary' => array(
                 'prod' => $yes,
                 'dev' => $no
-            ),
-
-            'update_handler' => 'modera_dynamically_configurable_app.value_handling.kernel_config_writer',
+            )
         );
         $kernelEnvClient = array(
             'xtype' => 'combo',

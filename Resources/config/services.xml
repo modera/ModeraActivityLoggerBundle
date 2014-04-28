@@ -22,5 +22,11 @@
             <tag name="modera_translations.translation_handler" />
         </service>
 
+        <service id="modera_dynamically_configurable_app.contributions.class_loader_mappings_provider"
+                 class="Modera\DynamicallyConfigurableAppBundle\Contributions\ClassLoaderMappingsProvider">
+
+            <tag name="mf.jsruntimeintegration.class_loader_mappings_provider" />
+        </service>
+
     </services>
 </container>
