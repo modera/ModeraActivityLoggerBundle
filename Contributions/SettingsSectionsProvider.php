@@ -17,7 +17,9 @@ class SettingsSectionsProvider implements ContributorInterface
     public function getItems()
     {
         return array(
-            new StandardSection('general', 'General', 'Modera.backend.dcmjr.runtime.GeneralConfigActivity', 'gear')
+            new StandardSection(
+                'general', 'General', 'Modera.backend.dcab.runtime.SettingsListActivity', 'gear', array('category' => 'general')
+            )
         );
     }
 } 

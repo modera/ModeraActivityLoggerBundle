@@ -18,9 +18,9 @@ class ConfigEntriesProvider implements ContributorInterface
     public function getItems()
     {
         return array(
-            new CED(Bundle::CONFIG_TITLE, 'Site name', 'Modera Foundation'),
-            new CED(Bundle::CONFIG_URL, 'Default URL', ''),
-            new CED(Bundle::CONFIG_HOME_SECTION, 'Defautl section to open when user logs in to backend', 'dashboard')
+            new CED(Bundle::CONFIG_TITLE, 'Site name', 'Modera Foundation', 'general'),
+            new CED(Bundle::CONFIG_URL, 'Default URL', '', 'general'),
+            new CED(Bundle::CONFIG_HOME_SECTION, 'Defautl section to open when user logs in to backend', 'dashboard', 'general')
         );
     }
 }
