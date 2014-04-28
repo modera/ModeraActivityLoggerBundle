@@ -38,7 +38,8 @@ class SectionsConfigMerger implements ConfigMergerInterface
                 'id' => $section->getId(),
                 'name' => $section->getName(),
                 'activityClass' => $section->getActivityClass(),
-                'glyph' => $section->getGlyph()
+                'glyph' => $section->getGlyph(),
+                'meta' =>$section->getMeta()
             );
         }
 

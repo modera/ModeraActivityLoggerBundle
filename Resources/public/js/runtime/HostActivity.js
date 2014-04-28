@@ -36,9 +36,23 @@ Ext.define('Modera.backend.tools.settings.runtime.HostActivity', {
             callback(me.zones);
         } else {
             me.getSections(function(sections) {
-                var activities = {};
+                var activities = {},
+                    indexedParams = {};
                 Ext.each(sections, function(section) {
-                    activities[section.id] = Ext.create(section.activityClass, { id: section.id, name: section.name });
+                    var activity = Ext.create(section.activityClass, {
+                        id: section.id,
+                        name: section.name
+                    });
+
+                    activity.getSectionConfig = function() {
+                        return Ext.clone(section);
+                    };
+
+                    activities[section.id] = activity;
+
+                    if (Ext.isObject(section.meta['activationParams'])) {
+                        indexedParams[section.id] = section.meta.activationParams;
+                    }
                 });
 
                 me.zones = [
@@ -47,6 +61,11 @@ Ext.define('Modera.backend.tools.settings.runtime.HostActivity', {
                         controllingParam: 'section',
                         targetContainerResolver: '#hostPanel',
                         activities: activities,
+                        paramsFactory: function(contextParams, activity) {
+                            var id = activity.getSectionConfig().id;
+
+                            return indexedParams[id] ? indexedParams[id] : contextParams;
+                        },
                         controller: function(rootUi, zoneUi, activityIdToUse, onProcessedCallback) {
                             rootUi.showSection(activityIdToUse);
 

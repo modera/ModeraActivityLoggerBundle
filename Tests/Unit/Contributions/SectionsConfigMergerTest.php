@@ -27,6 +27,13 @@ class DummySection implements SectionInterface
     {
         return 'foo-ac';
     }
+
+    public function getMeta()
+    {
+        return array(
+            'megameta'
+        );
+    }
 }
 
 /**
@@ -71,5 +78,7 @@ class SectionsConfigMergerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($ds->getActivityClass(), $section['activityClass']);
         $this->assertArrayHasKey('glyph', $section);
         $this->assertEquals($ds->getGlyph(), $section['glyph']);
+        $this->assertArrayHasKey('meta', $section);
+        $this->assertEquals($ds->getMeta(), $section['meta']);
     }
 } 

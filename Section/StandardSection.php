@@ -12,18 +12,21 @@ class StandardSection implements SectionInterface
     private $name;
     private $activityClass;
     private $glyph;
+    private $meta;
 
     /**
      * @param string $id
      * @param string $name
      * @param string $activityClass
+     * @param array $meta
      */
-    public function __construct($id, $name, $activityClass, $glyph = null)
+    public function __construct($id, $name, $activityClass, $glyph = null, array $meta = array())
     {
         $this->id = $id;
         $this->name = $name;
         $this->activityClass = $activityClass;
         $this->glyph = $glyph;
+        $this->meta = $meta;
     }
 
     /**
@@ -56,5 +59,13 @@ class StandardSection implements SectionInterface
     public function getGlyph()
     {
         return $this->glyph;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMeta()
+    {
+        return $this->meta;
     }
 }

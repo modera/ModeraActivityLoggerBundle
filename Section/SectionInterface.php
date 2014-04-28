@@ -31,4 +31,9 @@ interface SectionInterface
      * @return string  Fully qualified javascript class name of activity class that will represent this section
      */
     public function getActivityClass();
+
+    /**
+     * @return array Optional metadata this this section may have.
+     */
+    public function getMeta();
 } 
