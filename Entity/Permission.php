@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Role\RoleInterface;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="modera_security_role")
+ * @ORM\Table(name="modera_security_permission")
  *
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
@@ -60,6 +60,9 @@ class Permission implements RoleInterface
      * @var User[]
      *
      * @ORM\ManyToMany(targetEntity="User", inversedBy="roles", cascade={"persist"})
+     * @ORM\JoinTable(
+     *     name="modera_security_permissionusers"
+     * )
      */
     private $users;
 
@@ -67,6 +70,9 @@ class Permission implements RoleInterface
      * @var Group[]
      *
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="roles", cascade={"persist"})
+     * @ORM\JoinTable(
+     *     name="modera_security_permissiongroups"
+     * )
      */
     private $groups;
 

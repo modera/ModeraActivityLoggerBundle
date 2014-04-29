@@ -8,11 +8,6 @@ services:
             - @security.http_utils
             - /
 
-    modera_security.security.authenticator:
-        class: Modera\SecurityBundle\Security\Authenticator
-        arguments:
-            - @security.encoder_factory
-
     modera_security.security.entity_user_provider:
         class: Modera\SecurityBundle\Security\EntityUserProvider
         arguments:
@@ -21,6 +16,12 @@ services:
 
     security.user_provider:
         alias: modera_security.security.entity_user_provider
+
+    xx:
+        class:  Modera\SecurityBundle\Security\AuthenticatedTokenFactory
+        arguments:
+            - @security.encoder_factory
+            -
 
 security:
     encoders:

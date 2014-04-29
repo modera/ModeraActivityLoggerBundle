@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\SecurityBundle\Tests\Unit;
+namespace Modera\SecurityBundle\Tests\Unit\Entity;
 
 use Modera\SecurityBundle\Model\Permission;
 

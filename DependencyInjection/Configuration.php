@@ -20,6 +20,33 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('modera_security');
 
+        $rootNode
+            ->children()
+                ->scalarNode('root_user_handler')
+                    ->cannotBeEmpty()
+                    ->defaultValue('modera_security.root_user_handler.semantic_config_root_user_handler')
+                ->end()
+                ->arrayNode('root_user')
+                    ->addDefaultsIfNotSet()
+                    ->cannotBeEmpty()
+                    ->children()
+                        // these configuration properties are only used when
+                        // 'modera_security.root_user_handler.semantic_config_root_user_handler' service is used
+                        // as 'root_user_handler'
+                        ->variableNode('query')
+                            ->defaultValue(array('id' => 1))
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->variableNode('roles') // * - means all privileges
+                            // it can also be array with roles names
+                            ->defaultValue('*')
+                            ->cannotBeEmpty()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
         return $treeBuilder;
     }
 }

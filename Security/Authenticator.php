@@ -21,17 +21,14 @@ use Modera\SecurityBundle\Entity\User;
  */
 class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationFailureHandlerInterface, AuthenticationSuccessHandlerInterface
 {
-    /**
-     * @var EncoderFactoryInterface
-     */
-    private $encoderFactory;
+    private $authenticatedTokenFactory;
 
     /**
-     * @param EncoderFactoryInterface $encoderFactory
+     * @param AuthenticatedTokenFactory $authenticatedTokenFactory
      */
-    public function __construct(EncoderFactoryInterface $encoderFactory)
+    public function __construct(AuthenticatedTokenFactory $authenticatedTokenFactory)
     {
-        $this->encoderFactory = $encoderFactory;
+        $this->authenticatedTokenFactory = $authenticatedTokenFactory;
     }
 
     /**
@@ -55,31 +52,9 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
      */
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
-        try {
-            $user = $userProvider->loadUserByUsername($token->getUsername());
-        } catch (UsernameNotFoundException $e) {
-            throw new AuthenticationException('Invalid username or password');
-        }
-
-        $encoder = $this->encoderFactory->getEncoder($user);
-        $passwordValid = $encoder->isPasswordValid(
-            $user->getPassword(),
-            $token->getCredentials(),
-            $user->getSalt()
+        return $this->authenticatedTokenFactory->authenticateToken(
+            $token, $userProvider, $providerKey
         );
-
-        if ($passwordValid) {
-            $t = new UsernamePasswordToken(
-                $user,
-                $token->getCredentials(),
-                $providerKey,
-                $user->getRoles()
-            );
-
-            return $t;
-        }
-
-        throw new AuthenticationException('Invalid username or password');
     }
 
     /**

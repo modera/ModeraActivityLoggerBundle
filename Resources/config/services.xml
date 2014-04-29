@@ -5,6 +5,20 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="modera_security.security.authenticated_token_factory"
+                 class="Modera\SecurityBundle\Security\AuthenticatedTokenFactory">
+
+            <argument type="service" id="security.encoder_factory" />
+            <!-- defined in \Modera\SecurityBundle\DependencyInjection\ModeraSecurityExtension  -->
+            <argument type="service" id="modera_security.root_user_handling.handler" />
+        </service>
+
+        <service id="modera_security.security.authenticator"
+                 class="Modera\SecurityBundle\Security\Authenticator">
+
+            <argument type="service" id="modera_security.security.authenticated_token_factory" />
+        </service>
+
         <service id="modera_security.contributions.routing_resources_provider"
                  class="Modera\SecurityBundle\Contributions\RoutingResourcesProvider">
 
@@ -18,6 +32,19 @@
             <argument type="service" id="modera_security.permission_categories_provider" />
             <argument type="service" id="modera_security.permissions_provider" />
         </service>
-    </services>
 
+        <service id="modera_security.root_user_handler.semantic_config_root_user_handler"
+                 class="Modera\SecurityBundle\RootUserHandling\SemanticConfigRootUserHandler">
+
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="modera_security.service.user_service"
+                 class="Modera\SecurityBundle\Service\UserService">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <!-- defined in \Modera\SecurityBundle\DependencyInjection\ModeraSecurityExtension  -->
+            <argument type="service" id="modera_security.root_user_handling.handler" />
+        </service>
+    </services>
 </container>

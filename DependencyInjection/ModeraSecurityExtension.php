@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ModeraSecurityExtension extends Extension
 {
+    const CONFIG_KEY = 'modera_security.config';
+
     /**
      * {@inheritDoc}
      */
@@ -24,5 +26,9 @@ class ModeraSecurityExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->setParameter(self::CONFIG_KEY, $config);
+
+        $container->setAlias('modera_security.root_user_handling.handler', $config['root_user_handler']);
     }
 }
