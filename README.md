@@ -1,4 +1,4 @@
-# ModeraFileRepositoryBundle
+# ModeraFileRepositoryBundle [![Build Status](https://travis-ci.org/modera/ModeraFileRepositoryBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraFileRepositoryBundle)
 
 This bundle provides a high level API for putting your files to virtual file repositories which internally
 use Gaufrette filesystem abstraction layer.
