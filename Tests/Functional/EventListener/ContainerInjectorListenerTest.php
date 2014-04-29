@@ -9,7 +9,7 @@ use Sli\AuxBundle\Util\Toolkit;
 
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
- */ 
+ */
 class ContainerInjectorListenerTest extends FunctionalTestCase
 {
     /* @var SchemaTool */
@@ -19,13 +19,13 @@ class ContainerInjectorListenerTest extends FunctionalTestCase
     static public function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
-        self::$st->createSchema([self::$em->getClassMetadata(Repository::clazz())]);
+        self::$st->createSchema(array(self::$em->getClassMetadata(Repository::clazz())));
     }
 
     // override
     static public function doTearDownAfterClass()
     {
-        self::$st->dropSchema([self::$em->getClassMetadata(Repository::clazz())]);
+        self::$st->dropSchema(array(self::$em->getClassMetadata(Repository::clazz())));
     }
 
     public function testHowWellContainerIsInjected()
