@@ -140,6 +140,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
         $me->setValue($def->getValue());
         $me->setServerHandlerConfig($def->getServerHandlerConfig());
         $me->setClientHandlerConfig($def->getClientHandlerConfig());
+        $me->setExposed($def->isExposed());
 
         return $me;
     }

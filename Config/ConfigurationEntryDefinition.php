@@ -45,7 +45,7 @@ class ConfigurationEntryDefinition
     /**
      * @return boolean
      */
-    public function issExposed()
+    public function isExposed()
     {
         return $this->isExposed;
     }
