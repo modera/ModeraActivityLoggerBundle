@@ -5,14 +5,10 @@ namespace Modera\ConfigBundle\Config;
 use Modera\ConfigBundle\Entity\ConfigurationEntry;
 
 /**
- * Exposes two configuration properties:
- * - true_text
- * - false_text
- *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class BooleanHandler implements HandlerInterface
+class DictionaryHandler implements HandlerInterface
 {
     /**
      * @inheritDoc
@@ -21,10 +17,11 @@ class BooleanHandler implements HandlerInterface
     {
         $cfg = $entry->getServerHandlerConfig();
 
-        $trueValue = isset($cfg['true_text']) ? $cfg['true_text'] : 'true';
-        $falseValue = isset($cfg['false_text']) ? $cfg['false_text'] : 'false';
+        if (isset($cfg['dictionary']) && isset($cfg['dictionary'][$entry->getDenormalizedValue()])) {
+            return $cfg['dictionary'][$entry->getDenormalizedValue()];
+        }
 
-        return $entry->getDenormalizedValue() == 1 ? $trueValue : $falseValue;
+        return false;
     }
 
     /**
@@ -40,6 +37,6 @@ class BooleanHandler implements HandlerInterface
      */
     public function convertToStorageValue($input, ConfigurationEntry $entry)
     {
-        return in_array($input, array(1, 'true')) ? true : false;
+        return $input;
     }
 }

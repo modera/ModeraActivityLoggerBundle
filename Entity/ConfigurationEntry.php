@@ -4,6 +4,7 @@ namespace Modera\ConfigBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Modera\ConfigBundle\Config\ConfigurationEntryDefinition;
+use Modera\ConfigBundle\Config\ValueUpdatedHandlerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Modera\ConfigBundle\Config\HandlerInterface;
@@ -26,13 +27,15 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     const TYPE_INT = 2;
     const TYPE_FLOAT = 3;
     const TYPE_ARRAY = 4;
+    const TYPE_BOOL = 5;
 
     static private $fieldsMapping = array(
         self::TYPE_INT => 'int',
         self::TYPE_STRING => 'string',
         self::TYPE_TEXT => 'text',
         self::TYPE_ARRAY => 'array',
-        self::TYPE_FLOAT => 'float'
+        self::TYPE_FLOAT => 'float',
+        self::TYPE_BOOL => 'bool'
     );
 
     /**
@@ -50,18 +53,37 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     private $name;
 
     /**
-     * User understandable name for configuration-entry.
+     * User understandable name for this configuration-entry.
      *
      * @ORM\Column(type="string", nullable=true)
      */
     private $readableName;
 
     /**
+     * Optional name of category this configuration property should belong to.
+     *
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $category;
+
+    /**
+     * Optional configuration that will be used to configure implementation of
+     * {@class \Modera\ConfigBundle\Config\HandlerInterface}.
+     *
+     * Available configuration properties:
+     *
+     *  * update_handler  -- DI service ID that implements {@class ValueUpdatedHandlerInterface} that must be invoked
+     *                       when configuration entry is updated
+     * * handler -- DI service ID of a class that implements {@class \Modera\ConfigBundle\Config\HandlerInterface}
+     *
      * @ORM\Column(type="array")
      */
     private $serverHandlerConfig = array();
 
     /**
+     * Optional configuration that will be used on client-side ( frontend ) to configure editor for this configuration
+     * entry.
+     *
      * @ORM\Column(type="array")
      */
     private $clientHandlerConfig = array();
@@ -90,6 +112,11 @@ class ConfigurationEntry implements ConfigurationEntryInterface
      * @ORM\Column(type="decimal", columnDefinition="DECIMAL(20,4)")
      */
     private $floatValue;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $boolValue;
 
     /**
      * @ORM\Column(type="array")
@@ -141,6 +168,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
         $me->setServerHandlerConfig($def->getServerHandlerConfig());
         $me->setClientHandlerConfig($def->getClientHandlerConfig());
         $me->setExposed($def->isExposed());
+        $me->setCategory($def->getCategory());
 
         return $me;
     }
@@ -190,14 +218,28 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
+     * @private
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    private function updateUpdatedAt()
+    public function updateUpdatedAt()
     {
         if (null !== $this->id) {
             $this->updatedAt = new \DateTime('now');
         }
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function invokeUpdateHandler()
+    {
+        if (isset($this->serverHandlerConfig['update_handler'])) {
+            /* @var ValueUpdatedHandlerInterface $updateHandler */
+            $updateHandler = $this->getContainer()->get($this->serverHandlerConfig['update_handler']);
+            $updateHandler->onUpdate($this);
+        }
+
     }
 
     /**
@@ -218,7 +260,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
      */
     private function hasServerHandler()
     {
-        return count($this->serverHandlerConfig) > 0;
+        return isset($this->serverHandlerConfig['handler']);
     }
 
     /**
@@ -237,11 +279,13 @@ class ConfigurationEntry implements ConfigurationEntryInterface
             ));
         }
 
-        if (!isset($this->serverHandlerConfig['id'])) {
-            throw new \RuntimeException();
+        if (!isset($this->serverHandlerConfig['handler'])) {
+            throw new \RuntimeException(sprintf(
+                "Configuration property '%s' doesn't have handler configured!", $this->getName()
+            ));
         }
 
-        $handlerServiceId = $this->serverHandlerConfig['id'];
+        $handlerServiceId = $this->serverHandlerConfig['handler'];
 
         $handler = $this->getContainer()->get($handlerServiceId);
         if (!($handler instanceof HandlerInterface)) {
@@ -327,17 +371,22 @@ class ConfigurationEntry implements ConfigurationEntryInterface
         }
     }
 
+    /**
+     * Resets value of this configuration entry.
+     */
     public function reset()
     {
         foreach (self::$fieldsMapping as $type=>$name) {
-            $this->{$name.'Value'} = null;
+            $this->{$name . 'Value'} = null;
         }
         $this->arrayValue = array();
     }
 
     /**
      * @throws \RuntimeException
+     *
      * @param mixed $value
+     *
      * @return int
      */
     public function getFieldType($value)
@@ -354,12 +403,18 @@ class ConfigurationEntry implements ConfigurationEntryInterface
             return self::TYPE_INT;
         } else if (is_array($value)) {
             return self::TYPE_ARRAY;
+        } else if (is_bool($value)) {
+            return self::TYPE_BOOL;
         }
 
-        throw new \RuntimeException('Unable to guess type of provided value!');
+        throw new \RuntimeException(sprintf(
+            'Unable to guess type of provided value! ( %s )', $this->getName()
+        ));
     }
 
     /**
+     * @param mixed $value
+     *
      * @return string
      */
     private function getStorageFieldNameFromValue($value)
@@ -420,5 +475,15 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     public function getClientHandlerConfig()
     {
         return $this->clientHandlerConfig;
+    }
+
+    public function setCategory($category)
+    {
+        $this->category = $category;
+    }
+
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

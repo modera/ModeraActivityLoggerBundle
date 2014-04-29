@@ -31,8 +31,12 @@
         />
 
         <service id="modera_config.boolean_handler"
-                 class="Modera\ConfigBundle\Config\BooleanHandler"
-            />
+             class="Modera\ConfigBundle\Config\BooleanHandler"
+        />
+
+        <service id="modera_config.dictionary_handler"
+                 class="Modera\ConfigBundle\Config\DictionaryHandler"
+        />
 
         <service id="modera_config.configuration_entries_manager"
                  class="Modera\ConfigBundle\Config\ConfigurationEntriesManager">
