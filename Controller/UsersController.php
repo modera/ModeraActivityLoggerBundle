@@ -5,6 +5,7 @@ namespace Modera\BackendSecurityBundle\Controller;
 use Modera\ActivityLoggerBundle\Manager\ActivityManagerInterface;
 use Modera\BackendSecurityBundle\ModeraBackendSecurityBundle;
 use Modera\SecurityBundle\Entity\User;
+use Modera\SecurityBundle\Service\UserService;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
 use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
@@ -126,6 +127,14 @@ class UsersController extends AbstractCrudController
                     $activityMgr->info($activityMsg, $activityContext);
                 }
             },
+            'remove_entities_handler' => function($entities, $params, $defaultHandler, ContainerInterface $container) {
+                /* @var UserService $userService */
+                $userService = $container->get('modera_security.service.user_service');
+
+                foreach ($entities as $entity) {
+                    $userService->remove($entity);
+                }
+            }
         );
     }
 
