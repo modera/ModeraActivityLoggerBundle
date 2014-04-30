@@ -26,7 +26,7 @@ class UserService
     }
 
     /**
-     * @throws \RuntimeException
+     * @throws \RuntimeException  If given used is root user and cannot be deleted
      *
      * @param User $user
      */
