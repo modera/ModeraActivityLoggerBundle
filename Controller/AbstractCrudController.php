@@ -74,6 +74,9 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
             'update_entity_handler' => function($entity, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
                 return $defaultHandler->update($entity);
             },
+            'remove_entities_handler' => function(array $entities, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
+                return $defaultHandler->remove($entities);
+            },
             'exception_handler' => function(\Exception $e, $operation, ExceptionHandlerInterface $defaultHandler, ContainerInterface $container) {
                 return $defaultHandler->createResponse($e, $operation);
             },
@@ -131,7 +134,7 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
     /**
      * @return PersistenceHandlerInterface
      */
-    private function getPersistenceHandler()
+    protected function getPersistenceHandler()
     {
         return $this->getConfiguredService('persistence_handler');
     }
@@ -395,7 +398,12 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
                 throw $e;
             }
 
-            $operationResult = $this->getPersistenceHandler()->remove($config['entity'], $params);
+            $persistenceHandler = $config['remove_entities_handler'];
+
+            $entities = $this->getPersistenceHandler()->query($config['entity'], $params);
+
+            /* @var OperationResult $operationResult */
+            $operationResult = $persistenceHandler($entities, $params, $this->getPersistenceHandler(), $this->container);
 
             return array_merge(
                 array('success' => true),

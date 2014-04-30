@@ -11,7 +11,7 @@ namespace Modera\ServerCrudBundle\Persistence;
 interface PersistenceHandlerInterface
 {
     /**
-     * Must returns field names which can be used to uniqually identify a record.
+     * Must returns field names which can be used to uniquely identify a record.
      *
      * @param string $entityClass
      *
@@ -42,12 +42,11 @@ interface PersistenceHandlerInterface
     public function query($entityClass, array $params);
 
     /**
-     * @param string $entityClass
-     * @param array  $params
+     * @param object[] $entities
      *
      * @return OperationResult
      */
-    public function remove($entityClass, array $params);
+    public function remove(array $entities);
 
     /**
      * @param string $entityClass

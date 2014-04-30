@@ -108,14 +108,16 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     /**
      * @inheritDoc
      */
-    public function remove($entityClass, array $params)
+    public function remove(array $entities)
     {
         $result = new OperationResult();
 
-        foreach ($this->queryBuilder->buildQuery($entityClass, $params)->getResult() as $entity) {
+        foreach ($entities as $entity) {
             $this->em->remove($entity);
 
-            $result->reportEntity($entityClass, $this->resolveEntityId($entity), OperationResult::TYPE_ENTITY_REMOVED);
+            $result->reportEntity(
+                get_class($entity), $this->resolveEntityId($entity), OperationResult::TYPE_ENTITY_REMOVED
+            );
         }
 
         $this->em->flush();

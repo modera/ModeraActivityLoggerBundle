@@ -96,14 +96,20 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
 
     private function loadSomeData()
     {
+        $users = array();
+
         for ($i=0; $i<10; $i++) {
             $user = new DummyUser();
             $user->firstname = 'Vassily ' . $i;
             $user->lastname = 'Pupkin ' . $i;
 
             self::$em->persist($user);
+
+            $users[] = $user;
         }
         self::$em->flush();
+
+        return $users;
     }
 
     public function testQuery()
@@ -139,16 +145,9 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
 
     public function testRemove()
     {
-        $this->loadSomeData();
+        $users = $this->loadSomeData();
 
-        $result = $this->getHandler()->remove(DummyUser::clazz(), array(
-            'filter' => array(
-                array(
-                    'property' => 'firstname',
-                    'value' => 'like:Vas%'
-                )
-            )
-        ));
+        $result = $this->getHandler()->remove($users);
 
         $this->assertInstanceOf(OperationResult::clazz(), $result);
         $this->assertEquals(10, count($result->getRemovedEntities()));
