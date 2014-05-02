@@ -28,7 +28,6 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
             frame: true,
             rounded: true,
             columnLines: true,
-            monitorModel: 'modera.security_bundle.user',
             emptyCls: 'mfc-grid-empty-text',
             store: store,
             features: [{

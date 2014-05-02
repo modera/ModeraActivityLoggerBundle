@@ -2,10 +2,19 @@
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', {
-    extend: 'MF.activation.activities.AbstractActivity',
+    extend: 'MF.activation.activities.AbstractCompositeActivity',
 
-    requires: [
-    ],
+    /**
+     * @private
+     * @property {Object[]} sections
+     */
+
+    // override
+    constructor: function() {
+        var me = this;
+        me.callParent(arguments);
+        me.sections = [];
+    },
 
     // override
     getId: function() {
@@ -18,39 +27,71 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
     },
 
     // override
+    doInit: function(callback) {
+        var me = this;
+        me.workbench.getService('config_provider').getConfig(function(config) {
+            me.sections = [
+                {
+                    name: 'users',
+                    uiClass: 'Modera.backend.security.toolscontribution.runtime.user.ListActivity'
+                },
+                {
+                    name: 'groups',
+                    uiClass: 'Modera.backend.security.toolscontribution.runtime.group.ListActivity'
+                },
+                {
+                    name: 'permissions',
+                    uiClass: 'Modera.backend.security.toolscontribution.runtime.permission.ListActivity',
+                    reconfigureOnActivate: true
+                }
+            ];
+            callback(me);
+        });
+    },
+
+    // override
+    getZones: function(callback) {
+        var me = this;
+
+        if (!me.zones) {
+            var zone = {
+                controllingParam: 'section',
+                activities: {},
+                controller: function(parentUi, zoneUi, sectionName, callback) {
+                    zoneUi.activateSection(sectionName, callback);
+                }
+            };
+
+            // dynamically populating possible sections
+            Ext.each(this.sections, function(sectionConfig) {
+                zone.activities[sectionConfig.name] = Ext.create(sectionConfig.uiClass);
+            });
+            me.zones = [zone];
+        }
+
+        callback(me.zones);
+    },
+
+    // override
     init: function(executionContext) {
         this.callParent(arguments);
-
         executionContext.getApplication().loadController('Modera.backend.security.toolscontribution.controller.Manager');
-        executionContext.getApplication().loadController('Modera.backend.security.toolscontribution.controller.Groups');
     },
 
     // override
     doCreateUi: function(params, onReadyCallback) {
-        var sm = this.workbench.getService('security_manager');
+        var me = this;
 
-        var groupsStore = Ext.create('Modera.backend.security.toolscontribution.store.Groups', {
-            autoLoad: false
+        var panel = Ext.create('Modera.backend.security.toolscontribution.view.Manager', {
+            sectionName: params.section
         });
-        groupsStore.load({
-            callback: function() { // ROLE_MANAGE_PERMISSIONS
-
-                sm.isAllowed('ROLE_MANAGE_PERMISSIONS', function(permissionsAccess) {
-                    var panel = Ext.create('Modera.backend.security.toolscontribution.view.Manager', {
-                        sectionName: params.section,
-                        groupsStore: groupsStore,
-                        hasPermissionsAccess: permissionsAccess
-                    });
-
-                    onReadyCallback(panel);
-                });
-            }
-        });
+        panel.addSections(me.sections);
+        me.setUpZones(panel);
+        onReadyCallback(panel);
     },
 
     // internal
     onSectionLoaded: function(section) {
-        var me = this;
         section.relayEvents(me.getUi(), ['handleaction']);
     },
 
@@ -74,10 +115,6 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
                 section: section
             })
         });
-
-        ui.down('modera-backend-security-permission-list').on('permissionchange', function(sourceComponent, params) {
-            Actions.ModeraBackendSecurity_Permissions.update({ record: params }, function(response) {});
-        });
     },
 
     // override
@@ -85,38 +122,5 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
         return {
             section: 'users'
         }
-    },
-
-    // override
-    attachContractListeners: function(ui) {
-        var me = this;
-        
-        var usersList = ui.down('modera-backend-security-user-list');
-        usersList.on('newrecord', function(sourceComponent) {
-            me.fireEvent('handleaction', 'newuser', sourceComponent);
-        });
-        usersList.on('editrecord', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'edituser', sourceComponent, params);
-        });
-        usersList.on('deleterecord', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'deleteuser', sourceComponent, params);
-        });
-        usersList.on('editpassword', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'editpassword', sourceComponent, params);
-        });
-        usersList.on('editgroups', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'editgroups', sourceComponent, params);
-        });
-
-        var groupsOverview = ui.down('modera-backend-security-group-overview');
-        groupsOverview.on('creategroup', function(sourceComponent) {
-            me.fireEvent('handleaction', 'newgroup', sourceComponent);
-        });
-        groupsOverview.on('deletegroup', function(sourceComponent, record) {
-            me.fireEvent('handleaction', 'deletegroup', sourceComponent, { id: record.get('id') });
-        });
-        groupsOverview.on('editgroup', function(sourceComponent, record) {
-            me.fireEvent('handleaction', 'editgroup', sourceComponent, { id: record.get('id') });
-        });
     }
 });

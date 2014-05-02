@@ -19,5 +19,44 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.Section', {
             deletegroup: Ext.create('Modera.backend.security.toolscontribution.runtime.group.DeleteWindowActivity'),
             editgroup: Ext.create('Modera.backend.security.toolscontribution.runtime.group.EditRecordWindowActivity')
         });
+    },
+
+    // override
+    activate: function(workbench, callback) {
+        var me = this;
+
+        if (!workbench.getPlugin('data-sync')) {
+            throw this.$className + '.activate(workbench, callback): No "data-sync" runtime plugin is detected';
+        }
+
+        me.getActivities(function(activities) {
+            me.registerActivitiesManager(workbench, Ext.Object.getValues(activities));
+
+            callback(function() {
+                workbench.getActivitiesManager().iterateActivities(function(activity) {
+                    if (activity['getZones'] && Ext.isFunction(activity.getZones)) {
+                        activity.getZones(function(zones) {
+                            Ext.each(zones, function(zoneConfig) {
+                                me.configureInteractions(workbench, zoneConfig.activities);
+                            });
+                        });
+                    }
+                });
+            });
+        });
+    },
+
+    // private
+    configureInteractions: function(workbench, activities) {
+        var me = this;
+        Ext.each(Ext.Object.getValues(activities), function(activity) {
+            activity.on('handleaction', function(actionName, sourceComponent, params) {
+                if (workbench.getActivitiesManager().getActivity(actionName)) {
+                    workbench.launchActivity(actionName, params || {});
+                } else if (workbench.getSection(actionName)) {
+                    workbench.activateSection(actionName, params || {});
+                }
+            });
+        });
     }
 });

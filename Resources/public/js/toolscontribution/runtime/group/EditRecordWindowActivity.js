@@ -8,6 +8,11 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.group.EditRecordWi
         'Modera.backend.security.toolscontribution.view.group.NewAndEditWindow'
     ],
 
+    // override
+    getId: function() {
+        return 'edit-group';
+    },
+
     getSecurityConfig: function() {
         return {
             role: 'ROLE_MANAGE_PERMISSIONS'

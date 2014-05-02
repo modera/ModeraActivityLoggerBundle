@@ -8,6 +8,11 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.group.DeleteWindow
         'MFC.window.DeleteRecordConfirmationWindow'
     ],
 
+    // override
+    getId: function() {
+        return 'delete-group';
+    },
+
     getSecurityConfig: function() {
         return {
             role: 'ROLE_MANAGE_PERMISSIONS'

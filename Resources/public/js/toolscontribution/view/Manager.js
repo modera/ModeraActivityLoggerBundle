@@ -6,10 +6,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
     alias: 'widget.modera-backend-security-manager',
 
     requires: [
-        'MFC.container.Header',
-        'Modera.backend.security.toolscontribution.view.user.List',
-        'Modera.backend.security.toolscontribution.view.group.Overview',
-        'Modera.backend.security.toolscontribution.view.permission.List'
+        'MFC.container.Header'
     ],
 
     // l10n
@@ -85,23 +82,10 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
                     region: 'center',
                     xtype: 'container',
                     layout: 'card',
-                    activeItem: config.sectionName,
-                    items: [
-                        {
-                            itemId: 'users',
-                            xtype: 'modera-backend-security-user-list'
-                        },
-                        {
-                            itemId: 'groups',
-                            xtype: 'modera-backend-security-group-overview'
-                        },
-                        {
-                            itemId: 'permissions',
-                            xtype: 'modera-backend-security-permission-list',
-                            groupsStore: config['groupsStore'],
-                            hasAccess: config.hasPermissionsAccess
-                        }
-                    ]
+                    defaults: {
+                        border: false,
+                        layout: 'fit'
+                    }
                 }
             ]
         };
@@ -130,10 +114,34 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
         btnGroup.items.each(function(btn) {
             btn.toggle(sectionName == btn.getItemId());
         });
-        me.down('#baseContainer').getLayout().setActiveItem(sectionName);
+
+        var baseContainer = me.down('#baseContainer');
+        var oldActivityContainer = baseContainer.getLayout().getActiveItem(),
+            newActivityContainer = baseContainer.down(Ext.String.format('component[activity={0}]', sectionName));
+
+        if (newActivityContainer.reconfigureOnActivate) {
+            newActivityContainer.isActivityActivated = false;
+        }
+        baseContainer.getLayout().setActiveItem(newActivityContainer);
+        me.fireEvent('activitychange', me, newActivityContainer, oldActivityContainer);
 
         if (callback) {
             callback();
         }
+    },
+
+    /**
+     * @param sections
+     */
+    addSections: function(sections) {
+        var me = this;
+
+        Ext.each(sections, function(sectionConfig) {
+            me.down('#baseContainer').add({
+                xtype: 'container',
+                activity: sectionConfig.name,
+                reconfigureOnActivate: sectionConfig.reconfigureOnActivate || false
+            })
+        });
     }
 });

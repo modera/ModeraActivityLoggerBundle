@@ -25,5 +25,20 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.group.ListActivity
         var grid = Ext.create('Modera.backend.security.toolscontribution.view.group.Overview');
 
         callback(grid);
+    },
+
+    // override
+    attachContractListeners: function(ui) {
+        var me = this;
+
+        ui.on('creategroup', function(sourceComponent) {
+            me.fireEvent('handleaction', 'new-group', sourceComponent);
+        });
+        ui.on('deletegroup', function(sourceComponent, record) {
+            me.fireEvent('handleaction', 'delete-group', sourceComponent, { id: record.get('id') });
+        });
+        ui.on('editgroup', function(sourceComponent, record) {
+            me.fireEvent('handleaction', 'edit-group', sourceComponent, { id: record.get('id') });
+        });
     }
 });
