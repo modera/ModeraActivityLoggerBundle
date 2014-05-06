@@ -13,15 +13,6 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
     constructor: function(config) {
         var me = this;
 
-        var columns = [];
-        var groupsStore = config['groupsStore'];
-        groupsStore.each(function(group) {
-            columns.push(me.getCheckerColumnConfig({
-                groupId: group.get('id'),
-                text: group.get('name')
-            }));
-        });
-
         var store = Ext.create('Modera.backend.security.toolscontribution.store.Permissions');
 
         var defaults = {
@@ -35,17 +26,18 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
                 groupHeaderTpl: '{name}'
             }],
             viewConfig: {
-                markDirty:false
+                loadMask: false,
+                markDirty: false
             },
-            columns: [
-                {
-                    dataIndex: 'name',
-                    flex: 4,
-                    sortable: false,
-                    hideable: false,
-                    closable: false
+            monitorModel: {
+                name: 'modera.security_bundle.group',
+                handler: function() {
+                    config['groupsStore'].load(function() {
+                        me.reconfigure(store, me.generateColumns(config['groupsStore']));
+                    });
                 }
-            ].concat(columns)
+            },
+            columns: me.generateColumns(config['groupsStore'])
         };
 
         me.config = Ext.apply(defaults, config || {});
@@ -61,6 +53,28 @@ Ext.define('Modera.backend.security.toolscontribution.view.permission.List', {
         );
 
         me.assignListeners();
+    },
+
+    // private
+    generateColumns: function(groupsStore) {
+        var me = this;
+        var columns = [
+            {
+                dataIndex: 'name',
+                flex: 4,
+                sortable: false,
+                hideable: false,
+                closable: false
+            }
+        ];
+        groupsStore.each(function(group) {
+            columns.push(me.getCheckerColumnConfig({
+                groupId: group.get('id'),
+                text: group.get('name')
+            }));
+        });
+
+        return columns;
     },
 
     // private

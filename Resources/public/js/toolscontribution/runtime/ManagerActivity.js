@@ -41,8 +41,7 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
                 },
                 {
                     name: 'permissions',
-                    uiClass: 'Modera.backend.security.toolscontribution.runtime.permission.ListActivity',
-                    reconfigureOnActivate: true
+                    uiClass: 'Modera.backend.security.toolscontribution.runtime.permission.ListActivity'
                 }
             ];
             callback(me);
