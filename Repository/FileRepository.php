@@ -41,6 +41,19 @@ class FileRepository
 
     /**
      * @param string $name
+     *
+     * @return boolean
+     */
+    public function repositoryExists($name)
+    {
+        $q = $this->em->createQuery(sprintf('SELECT COUNT(e.id) FROM %s e WHERE e.name = ?0', Repository::clazz()));
+        $q->setParameter(0, $name);
+
+        return $q->getSingleScalarResult() != 0;
+    }
+
+    /**
+     * @param string $name
      * @param array $config
      * @param string $label
      *
@@ -67,11 +80,11 @@ class FileRepository
      *
      * @return \Modera\FileRepositoryBundle\Entity\StoredFile
      */
-    public function put($repositoryName, \SplFileInfo $file, array $context)
+    public function put($repositoryName, \SplFileInfo $file, array $context = array())
     {
         $repository = $this->getRepository($repositoryName);
         if (!$repository) {
-            throw new \RuntimeException();
+            throw new \RuntimeException("Unable to find repository '$repositoryName'.");
         }
 
         $repository->beforePut($file);

@@ -49,7 +49,11 @@ class FileRepositoryTest extends FunctionalTestCase
             'filesystem' => 'dummy_tmp_fs'
         );
 
+        $this->assertFalse($fr->repositoryExists('dummy_repository'));
+
         $repository = $fr->createRepository('dummy_repository', $repositoryConfig, 'My dummy repository');
+
+        $this->assertTrue($fr->repositoryExists('dummy_repository'));
 
         $this->assertInstanceOf(Repository::clazz(), $repository);
         $this->assertNotNull($repository->getId());
@@ -71,6 +75,11 @@ class FileRepositoryTest extends FunctionalTestCase
 
         $storedFile = $fr->put($repository->getName(), $file, array());
 
+        self::$em->clear(); // this way we will make sure that data is actually persisted in database
+
+        /* @var StoredFile $storedFile */
+        $storedFile = self::$em->find(StoredFile::clazz(), $storedFile->getId());
+
         $this->assertInstanceOf(StoredFile::clazz(), $storedFile);
         $this->assertNotNull($storedFile->getId());
         $this->assertNotNull($storedFile->getStorageKey());
@@ -78,7 +87,7 @@ class FileRepositoryTest extends FunctionalTestCase
         $this->assertNotNull($storedFile->getCreatedAt());
         $this->assertEquals('txt', $storedFile->getExtension());
         $this->assertEquals('text/plain', $storedFile->getMimeType());
-        $this->assertSame($repository, $storedFile->getRepository());
+        $this->assertSame($repository->getId(), $storedFile->getRepository()->getId());
         $this->assertEquals($fileContents, $storedFile->getContents());
         $this->assertTrue('' != $storedFile->getChecksum());
         $this->assertEquals($file->getSize(), $storedFile->getSize());

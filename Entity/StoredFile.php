@@ -46,6 +46,8 @@ class StoredFile
      * Full filename. For example - /dir1/dir2/file.txt
      *
      * @var string
+     *
+     * @ORM\Column(type="string")
      */
     private $filename;
 

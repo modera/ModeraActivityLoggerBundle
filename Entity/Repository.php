@@ -34,6 +34,8 @@ class Repository
      *                   this repository.
      *  * storage_key_generator -- DI service ID of class which implements {@class StorageKeyGeneratorInterface}.
      *
+     * @ORM\Column(type="array")
+     *
      * @var array
      */
     private $config = array();

@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "e522190a504dcead9c1ba66aca04edc5",
+    "hash": "d6752a589b11c7b62337d49bd8b95eb1",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -44,7 +44,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -63,9 +63,9 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
+                    "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
                 }
             ],
@@ -119,7 +119,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -259,7 +259,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -278,7 +278,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -301,12 +301,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/dbal.git",
-                "reference": "62e530073cba7c479b48c1d517565adfa6ba9d51"
+                "reference": "321e496350c55b326940ffde86f4c9efb87f8736"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/dbal/zipball/62e530073cba7c479b48c1d517565adfa6ba9d51",
-                "reference": "62e530073cba7c479b48c1d517565adfa6ba9d51",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/321e496350c55b326940ffde86f4c9efb87f8736",
+                "reference": "321e496350c55b326940ffde86f4c9efb87f8736",
                 "shasum": ""
             },
             "require": {
@@ -314,7 +314,7 @@
                 "php": ">=5.3.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "3.7.*",
+                "phpunit/phpunit": "4.0.*",
                 "symfony/console": "2.*"
             },
             "suggest": {
@@ -364,7 +364,7 @@
                 "persistence",
                 "queryobject"
             ],
-            "time": "2014-04-25 21:40:27"
+            "time": "2014-05-05 19:57:41"
         },
         {
             "name": "doctrine/doctrine-bundle",
@@ -569,7 +569,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -588,7 +588,7 @@
                     "email": "kontakt@beberlei.de"
                 },
                 {
-                    "name": "Johannes Schmitt",
+                    "name": "Johannes M. Schmitt",
                     "email": "schmittjoh@gmail.com",
                     "homepage": "http://jmsyst.com",
                     "role": "Developer of wrapped JMSSerializerBundle"
@@ -667,12 +667,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "be94eb9d1f795f16d669f15fd4ed100582d71e65"
+                "reference": "94837a0105eec91f572ef18dc140779586f931a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/be94eb9d1f795f16d669f15fd4ed100582d71e65",
-                "reference": "be94eb9d1f795f16d669f15fd4ed100582d71e65",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/94837a0105eec91f572ef18dc140779586f931a6",
+                "reference": "94837a0105eec91f572ef18dc140779586f931a6",
                 "shasum": ""
             },
             "require": {
@@ -711,7 +711,7 @@
             ],
             "authors": [
                 {
-                    "name": "Jonathan Wage",
+                    "name": "Jonathan H. Wage",
                     "email": "jonwage@gmail.com",
                     "homepage": "http://www.jwage.com/",
                     "role": "Creator"
@@ -736,7 +736,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-04-28 02:38:51"
+            "time": "2014-05-02 23:43:38"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -790,16 +790,16 @@
         },
         {
             "name": "knplabs/gaufrette",
-            "version": "dev-master",
+            "version": "v0.1.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/Gaufrette.git",
-                "reference": "c2b6af8eb6fc093409ee0753137817dce1673763"
+                "reference": "4663c6605e3c96d4b9affa1c38dc66a4d8e1fedf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/Gaufrette/zipball/c2b6af8eb6fc093409ee0753137817dce1673763",
-                "reference": "c2b6af8eb6fc093409ee0753137817dce1673763",
+                "url": "https://api.github.com/repos/KnpLabs/Gaufrette/zipball/4663c6605e3c96d4b9affa1c38dc66a4d8e1fedf",
+                "reference": "4663c6605e3c96d4b9affa1c38dc66a4d8e1fedf",
                 "shasum": ""
             },
             "require": {
@@ -817,7 +817,7 @@
                 "phpspec/phpspec": "2.0.*",
                 "phpunit/phpunit": "3.7.*",
                 "rackspace/php-cloudfiles": "*",
-                "rackspace/php-opencloud": "1.9.*"
+                "rackspace/php-opencloud": "1.6.*"
             },
             "suggest": {
                 "amazonwebservices/aws-sdk-for-php": "to use the legacy Amazon S3 adapters",
@@ -869,25 +869,25 @@
                 "filesystem",
                 "media"
             ],
-            "time": "2014-03-24 21:53:22"
+            "time": "2014-02-24 18:17:33"
         },
         {
             "name": "knplabs/knp-gaufrette-bundle",
-            "version": "dev-master",
+            "version": "v0.1.7",
             "target-dir": "Knp/Bundle/GaufretteBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/KnpLabs/KnpGaufretteBundle.git",
-                "reference": "ae598e6114b4274b8e9edcabe44d4522318dc4ad"
+                "reference": "f33008584345452c3122bb4eaac0ded1d6084c51"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/KnpLabs/KnpGaufretteBundle/zipball/ae598e6114b4274b8e9edcabe44d4522318dc4ad",
-                "reference": "ae598e6114b4274b8e9edcabe44d4522318dc4ad",
+                "url": "https://api.github.com/repos/KnpLabs/KnpGaufretteBundle/zipball/f33008584345452c3122bb4eaac0ded1d6084c51",
+                "reference": "f33008584345452c3122bb4eaac0ded1d6084c51",
                 "shasum": ""
             },
             "require": {
-                "knplabs/gaufrette": "0.2.*@dev",
+                "knplabs/gaufrette": "~0.1.7",
                 "symfony/framework-bundle": "2.*"
             },
             "require-dev": {
@@ -929,7 +929,7 @@
                 "filesystem",
                 "media"
             ],
-            "time": "2014-03-27 08:59:55"
+            "time": "2014-03-24 22:15:03"
         },
         {
             "name": "modera/foundation-bundle",
@@ -1069,12 +1069,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "23286bc5127e4d75ac91db013a2ddee77cae8e7b"
+                "reference": "896a351d0d78167f3b33513e11dd3c2a5849d9d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/23286bc5127e4d75ac91db013a2ddee77cae8e7b",
-                "reference": "23286bc5127e4d75ac91db013a2ddee77cae8e7b",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/896a351d0d78167f3b33513e11dd3c2a5849d9d2",
+                "reference": "896a351d0d78167f3b33513e11dd3c2a5849d9d2",
                 "shasum": ""
             },
             "require": {
@@ -1177,7 +1177,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2014-04-28 05:15:04"
+            "time": "2014-05-05 11:55:24"
         },
         {
             "name": "twig/twig",
@@ -1185,12 +1185,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabpot/Twig.git",
-                "reference": "28256f5eda6174c8f9ffd32ec7313da12cb07805"
+                "reference": "052eb5d1ed1b5b7755525e4e7af26faea1619747"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/28256f5eda6174c8f9ffd32ec7313da12cb07805",
-                "reference": "28256f5eda6174c8f9ffd32ec7313da12cb07805",
+                "url": "https://api.github.com/repos/fabpot/Twig/zipball/052eb5d1ed1b5b7755525e4e7af26faea1619747",
+                "reference": "052eb5d1ed1b5b7755525e4e7af26faea1619747",
                 "shasum": ""
             },
             "require": {
@@ -1234,7 +1234,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2014-04-23 20:31:20"
+            "time": "2014-05-05 08:48:03"
         }
     ],
     "packages-dev": [
@@ -1488,12 +1488,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a702318e713e482a746bc15cea01b61403d7dcdb"
+                "reference": "ae6cefd7cc84586a5ef27e04bae11ee940ec63dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a702318e713e482a746bc15cea01b61403d7dcdb",
-                "reference": "a702318e713e482a746bc15cea01b61403d7dcdb",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ae6cefd7cc84586a5ef27e04bae11ee940ec63dc",
+                "reference": "ae6cefd7cc84586a5ef27e04bae11ee940ec63dc",
                 "shasum": ""
             },
             "require": {
@@ -1553,7 +1553,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-04-26 05:26:20"
+            "time": "2014-04-30 12:24:19"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1662,7 +1662,6 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "modera/foundation-bundle": 20,
-        "knplabs/knp-gaufrette-bundle": 20,
         "sergeil/aux-bundle": 20
     },
     "platform": {
