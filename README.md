@@ -8,8 +8,9 @@ Add this dependency to your composer.json:
 
     "modera/file-uploader-bundle": "dev-master"
 
-Update your AppKernel class and add this bundle there:
+Update your AppKernel class and add these bundles there:
 
+    new Modera\FileRepositoryBundle\ModeraFileRepositoryBundle(), // if you still don't have it
     new Modera\FileUploaderBundle\ModeraFileUploaderBundle()
 
 Update your routing.yml file and add these lines there:
@@ -40,7 +41,9 @@ put to a configured repository. For example, javascript pseudo code:
         }
     });
 
-Request parameter `_repository` will be used to determine what repository to use to store uploaded files.
+Request parameter `_repository` will be used to determine what repository to use to store uploaded files. By default
+all repositories are exposed to web and files can be uploaded to them, this feature is controller by `expose_all_repositories`
+configuration property.
 
 ## Licensing
 

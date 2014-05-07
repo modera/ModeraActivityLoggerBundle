@@ -11,6 +11,8 @@ class AppKernel extends Kernel
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
 
+            new Modera\FileRepositoryBundle\ModeraFileRepositoryBundle(),
+
             new Modera\FileUploaderBundle\ModeraFileUploaderBundle()
         );
     }
