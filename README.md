@@ -54,4 +54,15 @@ When you create a repository you can use these configuration properties to tweak
                             files. If this configuration property is not provided when repository is created then
                             `Modera\FileRepositoryBundle\Repository\UniqidKeyGenerator` class will be used.
 
+## Command line
+
+Bundle ships commands that allow you to perform some standards operations on your repositories and files:
+
+ * modera:file-repository:create
+ * modera:file-repository:list
+ * modera:file-repository:delete-repository
+ * modera:file-repository:put-file
+ * modera:file-repository:list-files
+ * modera:file-repository:download-file
+ * modera:file-repository:delete-file
 

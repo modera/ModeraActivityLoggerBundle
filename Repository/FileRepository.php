@@ -54,12 +54,12 @@ class FileRepository
 
     /**
      * @param string $name
-     * @param array $config
+     * @param array $config  For available options see Repository::$config
      * @param string $label
      *
      * @return Repository
      */
-    public function createRepository($name, array $config, $label)
+    public function createRepository($name, array $config, $label = null)
     {
         $repository = new Repository($name, $config);
         $repository->setLabel($label);

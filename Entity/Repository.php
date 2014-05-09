@@ -51,7 +51,7 @@ class Repository
     private $label;
 
     /**
-     * @ORM\OneToMany(targetEntity="StoredFile", mappedBy="repository")
+     * @ORM\OneToMany(targetEntity="StoredFile", mappedBy="repository", cascade={"REMOVE"})
      */
     private $files;
 
@@ -214,7 +214,7 @@ class Repository
     }
 
     /**
-     * @return mixed
+     * @return StoredFile[]
      */
     public function getFiles()
     {
