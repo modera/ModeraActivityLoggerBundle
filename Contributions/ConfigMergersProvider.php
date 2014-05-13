@@ -3,7 +3,7 @@
 namespace Modera\BackendTranslationsToolBundle\Contributions;
 
 use Sli\ExpanderBundle\Ext\ContributorInterface;
-use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
+use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
 use Modera\BackendTranslationsToolBundle\Filtering\FilterInterface;
 use Modera\BackendTranslationsToolBundle\Contributions\FiltersProvider;
 

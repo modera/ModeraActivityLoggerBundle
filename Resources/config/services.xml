@@ -29,7 +29,7 @@
 
             <argument type="service" id="modera_backend_translations_tool.contributions.filters_provider" />
 
-            <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
+            <tag name="modera_mjr_integration.config.config_mergers_provider" />
         </service>
 
         <service id="modera_backend_translations_tool.contributions.tools_sections_provider"
@@ -41,13 +41,13 @@
         <service id="modera_backend_translations_tool.contributions.sections_provider"
                  class="Modera\BackendTranslationsToolBundle\Contributions\SectionsProvider">
 
-            <tag name="mf.jsruntimeintegration.sections_provider" />
+            <tag name="modera_mjr_integration.sections_provider" />
         </service>
 
         <service id="modera_backend_translations_tool.contributions.css_resources_provider"
                  class="Modera\BackendTranslationsToolBundle\Contributions\CssResourcesProvider">
 
-            <tag name="mf.jsruntimeintegration.css_resources_provider" />
+            <tag name="modera_mjr_integration.css_resources_provider" />
         </service>
 
         <service id="modera_backend_translations_tool.extractor.extjs_extractor"
