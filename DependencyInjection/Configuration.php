@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('modera_js_runtime_integration');
+        $rootNode = $treeBuilder->root('modera_mjr_integration');
 
         $rootNode
             ->children()
