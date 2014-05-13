@@ -3,7 +3,7 @@
 namespace Modera\DynamicallyConfigurableMJRBundle\MJR;
 
 use Modera\ConfigBundle\Config\ConfigurationEntriesManagerInterface;
-use Modera\JSRuntimeIntegrationBundle\Config\MainConfigInterface;
+use Modera\MjrIntegrationBundle\Config\MainConfigInterface;
 use Modera\DynamicallyConfigurableMJRBundle\ModeraDynamicallyConfigurableMJRBundle as Bundle;
 
 /**
