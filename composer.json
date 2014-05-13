@@ -16,7 +16,7 @@
         "modera/js-runtime": "@dev"
     },
     "autoload": {
-        "psr-0": { "Modera\\JSRuntimeIntegrationBundle": "" }
+        "psr-0": { "Modera\\MjrIntegrationBundle": "" }
     },
-    "target-dir": "Modera/JSRuntimeIntegrationBundle"
+    "target-dir": "Modera/MjrIntegrationBundle"
 }
