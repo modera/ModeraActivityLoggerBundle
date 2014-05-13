@@ -1,7 +1,7 @@
 /**
  * @author Sergei Vizel <sergei.vizel@modera.org>
  */
-Ext.define('Modera.securityawarejsruntime.runtime.ProfileContextMenuPlugin', {
+Ext.define('Modera.mjrsecurityintegration.runtime.ProfileContextMenuPlugin', {
     extend: 'MF.runtime.extensibility.AbstractPlugin',
 
     requires: [

@@ -2,8 +2,7 @@
 
 namespace Modera\MJRSecurityIntegrationBundle\Contributions;
 
-use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
-use Modera\MJRSecurityIntegrationBundle\ModeraSecurityAwareJSRuntimeBundle;
+use Modera\MJRSecurityIntegrationBundle\ModeraMJRSecurityIntegrationBundle;
 use Modera\SecurityBundle\Model\Permission;
 use Modera\TranslationsBundle\Helper\T;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
@@ -25,7 +24,7 @@ class PermissionsProvider implements ContributorInterface
             $this->items = [
                 new Permission(
                     T::trans('Access administration interface'),
-                    ModeraSecurityAwareJSRuntimeBundle::ROLE_BACKEND_USER,
+                    ModeraMJRSecurityIntegrationBundle::ROLE_BACKEND_USER,
                     'site'
                 )
             ];

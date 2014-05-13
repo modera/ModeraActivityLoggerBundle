@@ -4,7 +4,7 @@ namespace Modera\MJRSecurityIntegrationBundle\Controller;
 
 use Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager;
 use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
-use Modera\MJRSecurityIntegrationBundle\DependencyInjection\MJRSecurityIntegrationBundleExtension;
+use Modera\MJRSecurityIntegrationBundle\DependencyInjection\ModeraMJRSecurityIntegrationExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,7 +27,7 @@ class IndexController extends Controller
     public function indexAction()
     {
         $runtimeConfig = $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
-        $securedRuntimeConfig = $this->container->getParameter(MJRSecurityIntegrationBundleExtension::CONFIG_KEY);
+        $securedRuntimeConfig = $this->container->getParameter(ModeraMJRSecurityIntegrationExtension::CONFIG_KEY);
 
         /* @var ContributorInterface $cssResourcesProvider */
         $cssResourcesProvider = $this->get('modera_mjr_integration.css_resources_provider');

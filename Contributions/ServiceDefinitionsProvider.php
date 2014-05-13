@@ -3,6 +3,7 @@
 namespace Modera\MJRSecurityIntegrationBundle\Contributions;
 
 use Modera\MJRSecurityIntegrationBundle\DependencyInjection\MJRSecurityIntegrationBundleExtension;
+use Modera\MJRSecurityIntegrationBundle\DependencyInjection\ModeraMJRSecurityIntegrationExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -43,7 +44,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
      */
     public function getItems()
     {
-        $bundleConfig = $this->container->getParameter(MJRSecurityIntegrationBundleExtension::CONFIG_KEY);
+        $bundleConfig = $this->container->getParameter(ModeraMJRSecurityIntegrationExtension::CONFIG_KEY);
 
         return array(
             'security_manager' => array(
@@ -60,7 +61,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
                 )
             ),
             'profile_context_menu' => array(
-                'className' => 'Modera.securityawarejsruntime.runtime.ProfileContextMenuPlugin',
+                'className' => 'Modera.mjrsecurityintegration.runtime.ProfileContextMenuPlugin',
                 'tags'      => ['runtime_plugin'],
             ),
             'modera_backend_security.activation_security_interceptor' => array(

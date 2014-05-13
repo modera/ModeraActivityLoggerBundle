@@ -15,7 +15,7 @@ class ClassLoaderMappingsProvider implements ContributorInterface
     public function __construct()
     {
         $this->items = array(
-            'Modera.securityawarejsruntime' => '/bundles/moderasecurityawarejsruntime/js'
+            'Modera.mjrsecurityintegration' => '/bundles/moderamjrsecurityintegration/js'
         );
     }
 
