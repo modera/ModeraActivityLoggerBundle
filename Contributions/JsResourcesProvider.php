@@ -2,7 +2,7 @@
 
 namespace Modera\MjrIntegrationBundle\Contributions;
 
-use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -32,7 +32,7 @@ class JsResourcesProvider implements ContributorInterface
     public function __construct(ContainerInterface $container)
     {
         $this->router = $container->get('router');
-        $this->bundleConfig = $container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        $this->bundleConfig = $container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
 
         /* @var Kernel $kernel */
         $kernel = $container->get('kernel');

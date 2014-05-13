@@ -2,7 +2,7 @@
 
 namespace Modera\MjrIntegrationBundle\Contributions;
 
-use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,7 +29,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
      */
     public function getItems()
     {
-        $bundleConfig = $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        $bundleConfig = $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
 
         return array(
             'config_provider' => array(

@@ -3,7 +3,7 @@
 namespace Modera\MjrIntegrationBundle\Contributions\Config;
 
 use Modera\MjrIntegrationBundle\Config\MainConfigInterface;
-use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Modera\MjrIntegrationBundle\Menu\MenuManager;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -30,7 +30,7 @@ class StandardConfigMergersProvider implements ContributorInterface
         /* @var ContributorInterface $loaderMappingsProvider */
         $loaderMappingsProvider = $container->get('modera_mjr_integration.class_loader_mappings_provider');
 
-        $bundleConfig = $container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        $bundleConfig = $container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
         /* @var MainConfigInterface $mainConfig */
         $mainConfig = $container->get(
             $bundleConfig['main_config_provider']

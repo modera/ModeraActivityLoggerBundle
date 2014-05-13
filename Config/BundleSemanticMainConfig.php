@@ -2,7 +2,7 @@
 
 namespace Modera\MjrIntegrationBundle\Config;
 
-use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -22,7 +22,7 @@ class BundleSemanticMainConfig implements MainConfigInterface
      */
     public function __construct(ContainerInterface $container)
     {
-        $this->config = $container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        $this->config = $container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
     }
 
     /**

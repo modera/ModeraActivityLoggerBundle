@@ -2,7 +2,7 @@
 
 namespace Modera\MjrIntegrationBundle\Command;
 
-use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -30,7 +30,7 @@ class CheckVersionCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $config = $this->getContainer()->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        $config = $this->getContainer()->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
 
         $mjrPath = implode(DIRECTORY_SEPARATOR, array(
             getcwd(), 'web', substr($config['runtime_path'], 1)
