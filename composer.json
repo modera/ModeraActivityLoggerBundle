@@ -20,7 +20,7 @@
         "modera/security-bundle": "dev-master",
         "modera/js-runtime": "@dev",
         "modera/backend-tools-bundle": "@dev",
-        "modera/js-runtime-integration-bundle": "@dev",
+        "modera/mjr-integration-bundle": "@dev",
         "modera/backend-languages-bundle": "dev-master",
         "modera/translations-bundle": "dev-master"
     },
