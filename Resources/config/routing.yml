@@ -1,9 +1,9 @@
 
 modera_mjr_integration:
-    resource: "@ModeraJSRuntimeIntegrationBundle/Controller/"
+    resource: "@ModeraMjrIntegrationBundle/Controller/"
     type:     annotation
     prefix:   /backend
 
 mf_font_awesome:
     path:      /font-awesome.js
-    defaults:  { _controller: ModeraJSRuntimeIntegrationBundle:Index:fontAwesome }
+    defaults:  { _controller: ModeraMjrIntegrationBundle:Index:fontAwesome }

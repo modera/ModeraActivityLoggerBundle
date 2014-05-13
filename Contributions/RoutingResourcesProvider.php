@@ -16,7 +16,7 @@ class RoutingResourcesProvider implements ContributorInterface
     public function getItems()
     {
         return array(
-            '@ModeraJSRuntimeIntegrationBundle/Resources/config/routing.yml'
+            '@ModeraMjrIntegrationBundle/Resources/config/routing.yml'
         );
     }
 }
