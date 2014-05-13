@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ModeraMJRSecurityIntegrationExtension extends Extension
 {
-    const CONFIG_KEY = 'modera_mjr_integration.config';
+    const CONFIG_KEY = 'modera_mjr_security_integration.config';
 
     /**
      * {@inheritDoc}
