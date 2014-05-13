@@ -8,7 +8,7 @@
         <service id="modera_backend_config_utils.contributions.class_loader_mappings_provider"
                  class="Modera\BackendConfigUtilsBundle\Contributions\ClassLoaderMappingsProvider">
 
-            <tag name="mf.jsruntimeintegration.class_loader_mappings_provider" />
+            <tag name="modera_mjr_integration.class_loader_mappings_provider" />
         </service>
     </services>
 </container>
