@@ -1,11 +1,11 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Contributions\Config;
+namespace Modera\MjrIntegrationBundle\Contributions\Config;
 
-use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
-use Modera\JSRuntimeIntegrationBundle\Config\MainConfigInterface;
-use Modera\JSRuntimeIntegrationBundle\Menu\MenuManager;
-use Modera\JSRuntimeIntegrationBundle\Sections\Section;
+use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
+use Modera\MjrIntegrationBundle\Config\MainConfigInterface;
+use Modera\MjrIntegrationBundle\Menu\MenuManager;
+use Modera\MjrIntegrationBundle\Sections\Section;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**

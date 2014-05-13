@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Config;
+namespace Modera\MjrIntegrationBundle\Config;
 
 /**
  * Implementations of this interface are responsible for contributing configuration which later will be exposed

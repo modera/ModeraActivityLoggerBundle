@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\ClientSideDependencyInjection;
+namespace Modera\MjrIntegrationBundle\ClientSideDependencyInjection;
 
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Tests\Unit\Config;
+namespace Modera\MjrIntegrationBundle\Tests\Unit\Config;
 
-use Modera\JSRuntimeIntegrationBundle\Config\CallbackConfigMerger;
+use Modera\MjrIntegrationBundle\Config\CallbackConfigMerger;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

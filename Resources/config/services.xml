@@ -5,62 +5,64 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="mf.jsruntimeintegration.menu.menu_manager"
-                 class="Modera\JSRuntimeIntegrationBundle\Menu\MenuManager">
+        <!-- modera_mjr_integration -->
 
-            <argument type="service" id="mf.jsruntimeintegration.menu.menu_items_provider" />
+        <service id="modera_mjr_integration.menu.menu_manager"
+                 class="Modera\MjrIntegrationBundle\Menu\MenuManager">
+
+            <argument type="service" id="modera_mjr_integration.menu.menu_items_provider" />
         </service>
 
-        <service id="mf.jsruntimeintegrationbundle.contributions.config.standard_config_provider"
-                 class="Modera\JSRuntimeIntegrationBundle\Contributions\Config\StandardConfigMergersProvider">
+        <service id="modera_mjr_integrationbundle.contributions.config.standard_config_provider"
+                 class="Modera\MjrIntegrationBundle\Contributions\Config\StandardConfigMergersProvider">
 
             <argument type="service" id="service_container" />
 
-            <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
+            <tag name="modera_mjr_integration.config.config_mergers_provider" />
         </service>
 
-        <service id="mf.jsruntimeintegrationbundle.csdi.service_definitions_manager"
-                 class="Modera\JSRuntimeIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager">
+        <service id="modera_mjr_integrationbundle.csdi.service_definitions_manager"
+                 class="Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager">
 
-            <argument type="service" id="mf.jsruntimeintegration.csdi.service_definitions_provider" />
+            <argument type="service" id="modera_mjr_integration.csdi.service_definitions_provider" />
         </service>
 
-        <service id="mf.jsruntimeintegrationbundle.contributions.service_definitions_provider"
-                 class="Modera\JSRuntimeIntegrationBundle\Contributions\ServiceDefinitionsProvider">
+        <service id="modera_mjr_integrationbundle.contributions.service_definitions_provider"
+                 class="Modera\MjrIntegrationBundle\Contributions\ServiceDefinitionsProvider">
 
             <argument type="service" id="service_container" />
 
-            <tag name="mf.jsruntimeintegration.csdi.service_definitions_provider" />
+            <tag name="modera_mjr_integration.csdi.service_definitions_provider" />
         </service>
 
-        <service id="mf.jsruntimeintegration.config.config_manager"
-                 class="Modera\JSRuntimeIntegrationBundle\Config\ConfigManager">
+        <service id="modera_mjr_integration.config.config_manager"
+                 class="Modera\MjrIntegrationBundle\Config\ConfigManager">
 
-            <argument type="service" id="mf.jsruntimeintegration.config.config_mergers_provider" />
+            <argument type="service" id="modera_mjr_integration.config.config_mergers_provider" />
         </service>
 
-        <service id="mf.jsruntimeintegration.contributions.js_resources_provider"
-                 class="Modera\JSRuntimeIntegrationBundle\Contributions\JsResourcesProvider">
+        <service id="modera_mjr_integration.contributions.js_resources_provider"
+                 class="Modera\MjrIntegrationBundle\Contributions\JsResourcesProvider">
 
             <argument type="service" id="service_container" />
 
-            <tag name="mf.jsruntimeintegration.js_resources_provider" />
+            <tag name="modera_mjr_integration.js_resources_provider" />
         </service>
 
-        <service id="mf.jsruntimeintegration.contributions.css_resources_provider"
-                 class="Modera\JSRuntimeIntegrationBundle\Contributions\CssResourcesProvider">
+        <service id="modera_mjr_integration.contributions.css_resources_provider"
+                 class="Modera\MjrIntegrationBundle\Contributions\CssResourcesProvider">
 
-            <tag name="mf.jsruntimeintegration.css_resources_provider" />
+            <tag name="modera_mjr_integration.css_resources_provider" />
         </service>
 
         <service id="jsruntimeintegration.contributions.routing_resources_provider"
-                 class="Modera\JSRuntimeIntegrationBundle\Contributions\RoutingResourcesProvider">
+                 class="Modera\MjrIntegrationBundle\Contributions\RoutingResourcesProvider">
 
             <tag name="modera_routing.routing_resources_provider" />
         </service>
 
         <service id="modera_js_runtime_integration.config.bundle_semantic_config"
-                 class="Modera\JSRuntimeIntegrationBundle\Config\BundleSemanticMainConfig">
+                 class="Modera\MjrIntegrationBundle\Config\BundleSemanticMainConfig">
 
             <argument type="service" id="service_container" />
         </service>

@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Command;
+namespace Modera\MjrIntegrationBundle\Command;
 
-use Modera\JSRuntimeIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

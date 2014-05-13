@@ -1,12 +1,12 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Controller;
+namespace Modera\MjrIntegrationBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Modera\JSRuntimeIntegrationBundle\Config\ConfigManager;
+use Modera\MjrIntegrationBundle\Config\ConfigManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Modera\JSRuntimeIntegrationBundle\Model\FontAwesome;
+use Modera\MjrIntegrationBundle\Model\FontAwesome;
 
 /**
  * Exposes actions which can be used by client-side runtime to configure/manage its state.
@@ -26,7 +26,7 @@ class IndexController extends Controller
     public function getConfigAction()
     {
         /* @var ConfigManager $configManager */
-        $configManager = $this->get('mf.jsruntimeintegration.config.config_manager');
+        $configManager = $this->get('modera_mjr_integration.config.config_manager');
 
         return new Response(json_encode($configManager->getConfig(), \JSON_PRETTY_PRINT));
     }

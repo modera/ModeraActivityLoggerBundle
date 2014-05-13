@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\DependencyInjection;
+namespace Modera\MjrIntegrationBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,10 +12,10 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class ModeraJSRuntimeIntegrationExtension extends Extension
+class ModeraMjrIntegrationExtension extends Extension
 {
-    const CONFIG_KEY = 'mf.jsruntimeintegration.config';
-    const CONFIG_APP_NAME  = 'mf.jsruntimeintegration.config.app_name';
+    const CONFIG_KEY = 'modera_mjr_integration.config';
+    const CONFIG_APP_NAME  = 'modera_mjr_integration.config.app_name';
 
     /**
      * {@inheritDoc}

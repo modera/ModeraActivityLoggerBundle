@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Tests\Unit\Config;
+namespace Modera\MjrIntegrationBundle\Tests\Unit\Config;
 
-use Modera\JSRuntimeIntegrationBundle\Model\FontAwesome;
+use Modera\MjrIntegrationBundle\Model\FontAwesome;
 use Symfony\Component\Yaml\Yaml;
 
 /**

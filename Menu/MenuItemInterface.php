@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Menu;
+namespace Modera\MjrIntegrationBundle\Menu;
 
-use Modera\JSRuntimeIntegrationBundle\Sections\SectionInterface;
+use Modera\MjrIntegrationBundle\Sections\SectionInterface;
 
 /**
  * Represents a menu item which will be rendered on client-side. All META_* constants are just a recommendation

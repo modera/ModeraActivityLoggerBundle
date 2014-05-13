@@ -1,14 +1,14 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Config;
+namespace Modera\MjrIntegrationBundle\Config;
 
-use Modera\JSRuntimeIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * This implementation will read config from bundle's semantic config.
  *
- * @see \Modera\JSRuntimeIntegrationBundle\DependencyInjection\Configuration
+ * @see \Modera\MjrIntegrationBundle\DependencyInjection\Configuration
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation

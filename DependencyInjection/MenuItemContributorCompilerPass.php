@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\DependencyInjection;
+namespace Modera\MjrIntegrationBundle\DependencyInjection;
 
-use Modera\JSRuntimeIntegrationBundle\Contributions\ConfigMenuItemsProvider;
+use Modera\MjrIntegrationBundle\Contributions\ConfigMenuItemsProvider;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
@@ -21,7 +21,7 @@ class MenuItemContributorCompilerPass implements CompilerPassInterface
         $config = $container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
 
         $def = new Definition(ConfigMenuItemsProvider::clazz(), array($config));
-        $def->addTag('mf.jsruntimeintegration.menu.menu_items_provider');
+        $def->addTag('modera_mjr_integration.menu.menu_items_provider');
 
         $container->addDefinitions(array(
             'modera_js_runtime_integration.contributions.menu_items_provider' => $def

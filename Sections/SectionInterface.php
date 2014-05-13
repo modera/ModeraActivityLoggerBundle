@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Sections;
+namespace Modera\MjrIntegrationBundle\Sections;
 
 /**
  * Represents a section which can be loaded in backend.

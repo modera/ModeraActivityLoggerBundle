@@ -1,8 +1,8 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Menu;
+namespace Modera\MjrIntegrationBundle\Menu;
 
-use Modera\JSRuntimeIntegrationBundle\Sections\Section;
+use Modera\MjrIntegrationBundle\Sections\Section;
 
 /**
  * Default immutable implementation.

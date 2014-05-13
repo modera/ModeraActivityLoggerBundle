@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\DependencyInjection;
+namespace Modera\MjrIntegrationBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -79,7 +79,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('deployment_url')
                     ->defaultValue(null)
                 ->end()
-                // DI service ID that implements \Modera\JSRuntimeIntegrationBundle\Config\MainConfigInterface
+                // DI service ID that implements \Modera\MjrIntegrationBundle\Config\MainConfigInterface
                 ->scalarNode('main_config_provider')
                     ->defaultValue('modera_js_runtime_integration.config.bundle_semantic_config')
                 ->end()

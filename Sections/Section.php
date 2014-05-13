@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Sections;
+namespace Modera\MjrIntegrationBundle\Sections;
 
 /**
  * A default immutable implementation.

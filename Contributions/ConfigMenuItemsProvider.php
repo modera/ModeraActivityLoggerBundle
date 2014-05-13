@@ -1,16 +1,16 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Contributions;
+namespace Modera\MjrIntegrationBundle\Contributions;
 
-use Modera\JSRuntimeIntegrationBundle\Menu\MenuItem;
-use Modera\JSRuntimeIntegrationBundle\Menu\MenuItemInterface;
+use Modera\MjrIntegrationBundle\Menu\MenuItem;
+use Modera\MjrIntegrationBundle\Menu\MenuItemInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Sli\ExpanderBundle\Ext\OrderedContributorInterface;
 
 /**
  * Contributes js-runtime menu items based on a config defined in "modera_js_runtime_integration" namespace.
  *
- * @see \Modera\JSRuntimeIntegrationBundle\DependencyInjection\Configuration
+ * @see \Modera\MjrIntegrationBundle\DependencyInjection\Configuration
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Model;
+namespace Modera\MjrIntegrationBundle\Model;
 
 use Symfony\Component\Yaml\Yaml;
 

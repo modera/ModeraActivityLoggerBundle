@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Contributions;
+namespace Modera\MjrIntegrationBundle\Contributions;
 
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 

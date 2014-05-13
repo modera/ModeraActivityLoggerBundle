@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Config;
+namespace Modera\MjrIntegrationBundle\Config;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\JSRuntimeIntegrationBundle\Menu;
+namespace Modera\MjrIntegrationBundle\Menu;
 
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
