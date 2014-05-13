@@ -3,9 +3,9 @@
 namespace Modera\BackendToolsBundle\Contributions;
 
 use Modera\BackendToolsBundle\ModeraBackendToolsBundle;
-use Modera\JSRuntimeIntegrationBundle\Menu\MenuItem;
-use Modera\JSRuntimeIntegrationBundle\Menu\MenuItemInterface;
-use Modera\JSRuntimeIntegrationBundle\Model\FontAwesome;
+use Modera\MjrIntegrationBundle\Menu\MenuItem;
+use Modera\MjrIntegrationBundle\Menu\MenuItemInterface;
+use Modera\MjrIntegrationBundle\Model\FontAwesome;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
