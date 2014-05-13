@@ -31,7 +31,7 @@ class ModeraBackendDashboardExtensionTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($builder->has('modera_backend_dashboard.contributions.menu_items_provider'));
         $menuProvider = $builder->getDefinition('modera_backend_dashboard.contributions.menu_items_provider');
         $this->assertEquals('Modera\BackendDashboardBundle\Contributions\MenuItemsProvider', $menuProvider->getClass());
-        $this->assertTrue($menuProvider->hasTag('mf.jsruntimeintegration.menu.menu_items_provider'));
+        $this->assertTrue($menuProvider->hasTag('modera_mjr_integration.menu.menu_items_provider'));
 
 
         $this->assertTrue($builder->has('modera_backend_dashboard.contributions.dashboard_provider'));
@@ -56,6 +56,6 @@ class ModeraBackendDashboardExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($builder->has('modera_backend_dashboard.contributions.config_mergers_provider'));
         $configProvider = $builder->getDefinition('modera_backend_dashboard.contributions.config_mergers_provider');
-        $this->assertTrue($configProvider->hasTag('mf.jsruntimeintegration.config.config_mergers_provider'));
+        $this->assertTrue($configProvider->hasTag('modera_mjr_integration.config.config_mergers_provider'));
     }
 } 

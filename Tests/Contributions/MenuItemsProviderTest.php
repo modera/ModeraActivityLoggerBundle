@@ -19,7 +19,7 @@ class MenuItemsProviderTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals(1, count($items));
 
-        $this->assertInstanceOf('Modera\JSRuntimeIntegrationBundle\Menu\MenuItem', $items[0]);
+        $this->assertInstanceOf('Modera\MjrIntegrationBundle\Menu\MenuItem', $items[0]);
     }
 
     public function testOrder()

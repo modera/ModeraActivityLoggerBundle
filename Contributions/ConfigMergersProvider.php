@@ -7,12 +7,12 @@ use Modera\BackendDashboardBundle\Dashboard\DashboardInterface;
 use Modera\BackendDashboardBundle\Dashboard\SimpleDashboard;
 use Modera\BackendDashboardBundle\Entity\GroupSettings;
 use Modera\BackendDashboardBundle\Entity\UserSettings;
-use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
+use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
 use Modera\SecurityBundle\Entity\User;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use Modera\JSRuntimeIntegrationBundle\Config\CallbackConfigMerger;
+use Modera\MjrIntegrationBundle\Config\CallbackConfigMerger;
 
 /**
  * Adds dashboard list to config for backend. It allows

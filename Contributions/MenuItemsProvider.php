@@ -2,9 +2,9 @@
 
 namespace Modera\BackendDashboardBundle\Contributions;
 
-use Modera\JSRuntimeIntegrationBundle\Menu\MenuItem;
-use Modera\JSRuntimeIntegrationBundle\Menu\MenuItemInterface;
-use Modera\JSRuntimeIntegrationBundle\Model\FontAwesome;
+use Modera\MjrIntegrationBundle\Menu\MenuItem;
+use Modera\MjrIntegrationBundle\Menu\MenuItemInterface;
+use Modera\MjrIntegrationBundle\Model\FontAwesome;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Sli\ExpanderBundle\Ext\OrderedContributorInterface;
 
