@@ -45,6 +45,7 @@ class UpgradeCommand extends ContainerAwareCommand
         $runCommandsOption = $input->getOption('run-commands');
 
         $versionsPathArg = $input->getArgument('versions-path');
+        $versionJsonPath = getcwd() . '/modera-version.txt';
 
         $output->writeln('');
 
@@ -65,20 +66,15 @@ class UpgradeCommand extends ContainerAwareCommand
         $composerFile = new JsonFile($basePath . '/composer.json');
         $versionsFile = new JsonFile($versionsPathArg);
 
-        $currentComposerFileContents = $composerFile->read();
-        $currentVersionsFileContents = $versionsFile->read();
+        $composerFileContents = $composerFile->read();
+        $versionsFileContents = $versionsFile->read();
 
-        $composerExtraContents = $this->getArrayValue(
-            $currentComposerFileContents, 'extra', array()
-        );
+        $currentVersion = @file_get_contents($versionJsonPath);
 
         if ($dependenciesOption) {
 
             $newVersion = null;
-            $versions = array_keys($currentVersionsFileContents);
-            $currentVersion = $this->getArrayValue(
-                $composerExtraContents, 'modera-version'
-            );
+            $versions = array_keys($versionsFileContents);
 
             if ($currentVersion && $currentVersion == $versions[count($versions) - 1]) {
                 $output->writeln("<info>You have the latest version $currentVersion</info>");
@@ -98,7 +94,7 @@ class UpgradeCommand extends ContainerAwareCommand
             if (!$currentVersion) {
                 $newVersion = $versions[0];
                 $newDependencies = $this->getArrayValue(
-                    $currentVersionsFileContents[$newVersion], 'dependencies', array()
+                    $versionsFileContents[$newVersion], 'dependencies', array()
                 );
             } else {
                 foreach(array_keys($versions) as $k) {
@@ -106,7 +102,7 @@ class UpgradeCommand extends ContainerAwareCommand
                         $key = $k;
                         while ($key >= 0) {
                             $oldDependencies = $this->getArrayValue(
-                                $currentVersionsFileContents[$versions[$key]], 'dependencies'
+                                $versionsFileContents[$versions[$key]], 'dependencies'
                             );
                             if (is_array($oldDependencies)) {
                                 break;
@@ -117,7 +113,7 @@ class UpgradeCommand extends ContainerAwareCommand
 
                         $newVersion = $versions[$k + 1];
                         $newDependencies = $this->getArrayValue(
-                            $currentVersionsFileContents[$newVersion], 'dependencies', $oldDependencies
+                            $versionsFileContents[$newVersion], 'dependencies', $oldDependencies
                         );
                         break;
                     }
@@ -126,7 +122,7 @@ class UpgradeCommand extends ContainerAwareCommand
             $dependenciesDiff = $this->diffDependencies($oldDependencies, $newDependencies);
             $output->writeln(sprintf('<info>Upgrading from %s to %s</info>', $currentVersion ?: '-', $newVersion));
 
-            $dependenciesOption = $currentComposerFileContents['require'];
+            $dependenciesOption = $composerFileContents['require'];
             foreach ($dependenciesDiff['added'] as $name => $ver) {
                 if (!isset($dependenciesOption[$name])) {
                     $dependenciesOption[$name] = $ver;
@@ -195,18 +191,17 @@ class UpgradeCommand extends ContainerAwareCommand
                     }
                 }
             }
-            $currentComposerFileContents['require'] = $dependenciesOption;
-            $currentComposerFileContents['extra']['modera-version'] = $newVersion;
+            $composerFileContents['require'] = $dependenciesOption;
 
             // manage repositories
             $repositories = $this->getArrayValue(
-                $currentComposerFileContents, 'repositories', array()
+                $composerFileContents, 'repositories', array()
             );
             $addRepositories = $this->getArrayValue(
-                $currentVersionsFileContents[$newVersion], 'add-repositories'
+                $versionsFileContents[$newVersion], 'add-repositories'
             );
             $rmRepositories = $this->getArrayValue(
-                $currentVersionsFileContents[$newVersion], 'rm-repositories'
+                $versionsFileContents[$newVersion], 'rm-repositories'
             );
             if ($addRepositories) {
                 foreach ($addRepositories as $repo) {
@@ -223,59 +218,59 @@ class UpgradeCommand extends ContainerAwareCommand
                 }
                 $repositories = array_values($repositories);
             }
-            $currentComposerFileContents['repositories'] = $repositories;
+            $composerFileContents['repositories'] = $repositories;
+
+            // write modera-version.txt
+            file_put_contents($versionJsonPath, $newVersion);
 
             // write composer.json
-            $composerFile->write($currentComposerFileContents);
+            $composerFile->write($composerFileContents);
 
             // interactions
             $output->writeln("<info>composer.json 'requires' section has been updated to version $newVersion</info>");
 
-            if (count($this->getArrayValue($currentVersionsFileContents[$newVersion], 'add-bundles'))) {
+            if (count($this->getArrayValue($versionsFileContents[$newVersion], 'add-bundles'))) {
                 $output->writeln("<comment>Add bundle(s) to app/AppKernel.php</comment>");
-                foreach ($currentVersionsFileContents[$newVersion]['add-bundles'] as $bundle) {
+                foreach ($versionsFileContents[$newVersion]['add-bundles'] as $bundle) {
                     $output->writeln('    ' . $bundle);
                 }
             }
-            if (count($this->getArrayValue($currentVersionsFileContents[$newVersion], 'rm-bundles'))) {
+            if (count($this->getArrayValue($versionsFileContents[$newVersion], 'rm-bundles'))) {
                 $output->writeln("<comment>Remove bundle(s) from app/AppKernel.php</comment>");
-                foreach ($currentVersionsFileContents[$newVersion]['rm-bundles'] as $bundle) {
+                foreach ($versionsFileContents[$newVersion]['rm-bundles'] as $bundle) {
                     $output->writeln('    ' . $bundle);
                 }
             }
 
-            if (count($this->getArrayValue($currentVersionsFileContents[$newVersion], 'instructions'))) {
-                foreach ($currentVersionsFileContents[$newVersion]['instructions'] as $instruction) {
+            if (count($this->getArrayValue($versionsFileContents[$newVersion], 'instructions'))) {
+                foreach ($versionsFileContents[$newVersion]['instructions'] as $instruction) {
                     $output->writeln(sprintf('<comment>%s</comment>', $instruction));
                 }
             }
 
-            if (count($this->getArrayValue($currentVersionsFileContents[$newVersion], 'commands'))) {
+            if (count($this->getArrayValue($versionsFileContents[$newVersion], 'commands'))) {
                 $output->writeln('After composer update run:');
                 $output->writeln('<info>php app/console ' . $this->getName() . ' --run-commands</info>');
             }
 
         } else if ($runCommandsOption) {
 
-            $moderaVersion = $this->getArrayValue(
-                $composerExtraContents, 'modera-version'
-            );
-            if ($moderaVersion) {
+            if ($currentVersion) {
                 $versionData = $this->getArrayValue(
-                    $currentVersionsFileContents, $moderaVersion, array()
+                    $versionsFileContents, $currentVersion, array()
                 );
                 $commands = $this->getArrayValue(
                     $versionData, 'commands', array()
                 );
 
-                $this->getApplication()->setAutoExit(false);
-                foreach ($commands as $command) {
-                    $output->writeln('');
-                    $output->writeln("<comment>$command</comment>");
-                    $this->getApplication()->run(new StringInput($command), $output);
-                }
-
-                if (count($commands) == 0) {
+                if (count($commands) > 0) {
+                    $this->getApplication()->setAutoExit(false);
+                    foreach ($commands as $command) {
+                        $output->writeln('');
+                        $output->writeln("<comment>$command</comment>");
+                        $this->getApplication()->run(new StringInput($command), $output);
+                    }
+                } else {
                     $output->writeln('<comment>No commands need to be run! Aborting ...</comment>');
                 }
             }

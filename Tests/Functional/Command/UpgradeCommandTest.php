@@ -32,18 +32,37 @@ class UpgradeCommandTest extends FunctionalTestCase
      */
     static private $composerBackup;
 
+    /**
+     * @var string
+     */
+    static private $versionFilePath;
+
     // override
     static public function doSetUpBeforeClass()
     {
         self::$basePath = dirname(self::$kernel->getRootdir());
         self::$composerFile = new JsonFile(self::$basePath . '/composer.json');
         self::$composerBackup = self::$composerFile->read();
+
+        self::$versionFilePath = getcwd() . '/modera-version.txt';
+        if (file_exists(self::$versionFilePath)) {
+            unlink(self::$versionFilePath);
+        }
     }
 
     // override
     static public function doTearDownAfterClass()
     {
         self::$composerFile->write(self::$composerBackup);
+        unlink(self::$versionFilePath);
+    }
+
+    /**
+     * @return string
+     */
+    private function getCurrentVersion()
+    {
+        return @file_get_contents(self::$versionFilePath);
     }
 
     /**
@@ -94,7 +113,6 @@ class UpgradeCommandTest extends FunctionalTestCase
         $this->assertEquals($expectedData, self::$composerFile->read());
 
         // 0.1.0 version check
-        $expectedData['extra']['modera-version'] = '0.1.0';
         $expectedData['require'] = array(
             'test/dependency_1' => '0.1.0',
             'test/dependency_2' => '0.1.0',
@@ -106,6 +124,7 @@ class UpgradeCommandTest extends FunctionalTestCase
         );
         $this->runUpdateDependenciesCommand($output);
         $str = $output->fetch();
+        $this->assertEquals('0.1.0', $this->getCurrentVersion());
         $this->assertEquals(1, substr_count($str, 'new Test\AddBundle\TestAddBundle()'));
         $this->assertEquals(0, substr_count($str, 'new Test\RemoveBundle\TestRemoveBundle()'));
         $this->assertEquals($expectedData, self::$composerFile->read());
@@ -124,7 +143,6 @@ class UpgradeCommandTest extends FunctionalTestCase
         self::$composerFile->write($tmp);
 
         // 0.1.1 version check
-        $expectedData['extra']['modera-version'] = '0.1.1';
         $expectedData['require'] = array(
             'test/dependency_1' => '0.1.1',
             'test/dependency_2' => '0.1.0',
@@ -133,6 +151,7 @@ class UpgradeCommandTest extends FunctionalTestCase
         $expectedData['repositories'] = array_values($expectedData['repositories']);
         $this->runUpdateDependenciesCommand($output);
         $str = $output->fetch();
+        $this->assertEquals('0.1.1', $this->getCurrentVersion());
         $this->assertEquals(0, substr_count($str, 'new Test\AddBundle\TestAddBundle()'));
         $this->assertEquals(1, substr_count($str, 'new Test\RemoveBundle\TestRemoveBundle()'));
         $this->assertEquals($expectedData, self::$composerFile->read());
@@ -151,7 +170,6 @@ class UpgradeCommandTest extends FunctionalTestCase
         self::$composerFile->write($tmp);
 
         // 0.1.2 version check
-        $expectedData['extra']['modera-version'] = '0.1.2';
         $expectedData['require'] = array(
             'test/dependency_1' => '0.1.1',
             'test/dependency_2' => '0.1.0',
@@ -159,6 +177,7 @@ class UpgradeCommandTest extends FunctionalTestCase
         );
         $this->runUpdateDependenciesCommand($output);
         $str = $output->fetch();
+        $this->assertEquals('0.1.2', $this->getCurrentVersion());
         $this->assertEquals(0, substr_count($str, 'new Test\AddBundle\TestAddBundle()'));
         $this->assertEquals(0, substr_count($str, 'new Test\RemoveBundle\TestRemoveBundle()'));
         $this->assertEquals($expectedData, self::$composerFile->read());
@@ -172,9 +191,9 @@ class UpgradeCommandTest extends FunctionalTestCase
         $this->assertEquals(1, substr_count($str, 'help --format=txt'));
 
         // 0.1.3 version check
-        $expectedData['extra']['modera-version'] = '0.1.3';
         $this->runUpdateDependenciesCommand($output);
         $str = $output->fetch();
+        $this->assertEquals('0.1.3', $this->getCurrentVersion());
         $this->assertEquals(1, substr_count($str, 'Some foo instruction'));
         $this->assertEquals(0, substr_count($str, 'Some bar instruction'));
         $this->assertEquals(0, substr_count($str, 'Some baz instruction'));
@@ -183,9 +202,9 @@ class UpgradeCommandTest extends FunctionalTestCase
         unlink(self::$basePath . '/composer.v0.1.2.backup.json');
 
         // 0.1.4 version check
-        $expectedData['extra']['modera-version'] = '0.1.4';
         $this->runUpdateDependenciesCommand($output);
         $str = $output->fetch();
+        $this->assertEquals('0.1.4', $this->getCurrentVersion());
         $this->assertEquals(0, substr_count($str, 'Some foo instruction'));
         $this->assertEquals(1, substr_count($str, 'Some bar instruction'));
         $this->assertEquals(0, substr_count($str, 'Some baz instruction'));
@@ -194,13 +213,13 @@ class UpgradeCommandTest extends FunctionalTestCase
         unlink(self::$basePath . '/composer.v0.1.3.backup.json');
 
         // 0.1.5 version check
-        $expectedData['extra']['modera-version'] = '0.1.5';
         $expectedData['require'] = array(
             'test/dependency_1' => '0.1.1',
             'test/dependency_4' => '0.1.1',
         );
         $this->runUpdateDependenciesCommand($output);
         $str = $output->fetch();
+        $this->assertEquals('0.1.5', $this->getCurrentVersion());
         $this->assertEquals(0, substr_count($str, 'Some foo instruction'));
         $this->assertEquals(0, substr_count($str, 'Some bar instruction'));
         $this->assertEquals(1, substr_count($str, 'Some baz instruction'));
