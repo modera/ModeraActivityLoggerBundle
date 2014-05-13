@@ -1,5 +1,5 @@
 {
-    "name": "modera/security-aware-js-runtime-bundle",
+    "name": "modera/mjr-security-integration-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",
@@ -22,7 +22,7 @@
         "modera/mjr-integration-bundle": "@dev"
     },
     "autoload": {
-        "psr-0": { "Modera\\SecurityAwareJSRuntimeBundle": "" }
+        "psr-0": { "Modera\\MJRSecurityIntegrationBundle": "" }
     },
-    "target-dir": "Modera/SecurityAwareJSRuntimeBundle"
+    "target-dir": "Modera/MJRSecurityIntegrationBundle"
 }
