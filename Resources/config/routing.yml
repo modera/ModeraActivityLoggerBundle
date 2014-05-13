@@ -1,8 +1,8 @@
-mjr_security_integration:
+modera_mjr_security_integration:
     resource: "@ModeraMJRSecurityIntegrationBundle/Controller/"
     type:     annotation
     prefix:   /backend
 
-mjr_security_integration.index.application:
+modera_mjr_security_integration.index.application:
     path:      /%modera_mjr_integration.config.app_name%/Application.js
     defaults:  { _controller: ModeraMJRSecurityIntegrationBundle:Index:application }

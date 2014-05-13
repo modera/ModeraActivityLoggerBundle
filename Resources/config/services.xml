@@ -19,28 +19,28 @@
             <tag name="modera_mjr_integration.class_loader_mappings_provider" />
         </service>
 
-        <service id="mjr_security_integration.contributions.config_mergers_provider"
+        <service id="modera_mjr_security_integration.contributions.config_mergers_provider"
                  class="Modera\MJRSecurityIntegrationBundle\Contributions\ConfigMergersProvider">
 
             <argument type="service" id="security.context" />
-            <argument type="service" id="mjr_security_integration.client_di_service_defs_provider" />
+            <argument type="service" id="modera_mjr_security_integration.client_di_service_defs_provider" />
 
             <tag name="modera_mjr_integration.config.config_mergers_provider" />
         </service>
 
-        <service id="mjr_security_integration.contributions.routing_resources_provider"
+        <service id="modera_mjr_security_integration.contributions.routing_resources_provider"
                  class="Modera\MJRSecurityIntegrationBundle\Contributions\RoutingResourcesProvider">
 
             <tag name="modera_routing.routing_resources_provider" />
         </service>
 
-        <service id="mjr_security_integration.contributions.permission_categories_provider"
+        <service id="modera_mjr_security_integration.contributions.permission_categories_provider"
                  class="Modera\MJRSecurityIntegrationBundle\Contributions\PermissionCategoriesProvider">
 
             <tag name="modera_security.permission_categories_provider" />
         </service>
 
-        <service id="mjr_security_integration.contributions.permissions_provider"
+        <service id="modera_mjr_security_integration.contributions.permissions_provider"
                  class="Modera\MJRSecurityIntegrationBundle\Contributions\PermissionsProvider">
 
             <tag name="modera_security.permissions_provider" />

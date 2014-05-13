@@ -38,7 +38,7 @@ class IndexController extends Controller
         /* @var RouterInterface $router */
         $router = $this->get('router');
         // converting URL like /app_dev.php/backend/ModeraFoundation/Application.js to /app_dev.php/backend/ModeraFoundation
-        $appLoadingPath = $router->generate('mjr_security_integration.index.application');
+        $appLoadingPath = $router->generate('modera_mjr_security_integration.index.application');
         $appLoadingPath = substr($appLoadingPath, 0, strpos($appLoadingPath, 'Application.js') - 1);
 
         return array(

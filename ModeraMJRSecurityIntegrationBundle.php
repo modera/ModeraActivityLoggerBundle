@@ -22,7 +22,7 @@ class ModeraMJRSecurityIntegrationBundle extends Bundle
         // allows to contribute client-side DI container service definitions that will be configured only
         // after user has successfully authenticated
         $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('mjr_security_integration.client_di_service_defs_provider')
+            new CompositeContributorsProviderCompilerPass('modera_mjr_security_integration.client_di_service_defs_provider')
         );
     }
 }
