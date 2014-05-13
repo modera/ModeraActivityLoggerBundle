@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="mf.securityawarejsruntime.contributions.service_definitions_provider"
+        <service id="modera_mjr_integration.contributions.service_definitions_provider"
                  class="Modera\MJRSecurityIntegrationBundle\Contributions\ServiceDefinitionsProvider">
 
             <argument type="service" id="service_container" />

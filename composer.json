@@ -3,12 +3,6 @@
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderajsruntimeintegrationbundle.git"
-        }
-    ],
     "authors": [
         {
             "name": "Sergei Lissovski",
