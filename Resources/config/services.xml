@@ -14,13 +14,13 @@
         <service id="modera_backend_tools_settings.contributions.mjr_sections_provider"
                  class="Modera\BackendToolsSettingsBundle\Contributions\SectionsProvider">
 
-            <tag name="mf.jsruntimeintegration.sections_provider" />
+            <tag name="modera_mjr_integration.sections_provider" />
         </service>
 
         <service id="modera_backend_tools_settings.contributions.css_resources_provider"
                  class="Modera\BackendToolsSettingsBundle\Contributions\CssResourcesProvider">
 
-            <tag name="mf.jsruntimeintegration.css_resources_provider" />
+            <tag name="modera_mjr_integration.css_resources_provider" />
         </service>
 
         <service id="modera_backend_tools_settings.contributions.sections_config_merger"
@@ -34,7 +34,7 @@
 
             <argument type="service" id="modera_backend_tools_settings.contributions.sections_config_merger" />
 
-            <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
+            <tag name="modera_mjr_integration.config.config_mergers_provider" />
         </service>
     </services>
 </container>

@@ -3,7 +3,7 @@
 namespace Modera\BackendToolsSettingsBundle\Contributions;
 
 use Modera\BackendToolsSettingsBundle\Section\SectionInterface;
-use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
+use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
