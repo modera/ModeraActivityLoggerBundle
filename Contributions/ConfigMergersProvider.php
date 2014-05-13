@@ -5,7 +5,7 @@ namespace Modera\BackendLanguagesBundle\Contributions;
 use Doctrine\ORM\EntityManager;
 use Modera\LanguagesBundle\Entity\Language;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
-use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
+use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>

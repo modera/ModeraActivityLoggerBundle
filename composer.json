@@ -12,7 +12,7 @@
         "php": ">=5.4.0",
         "symfony/framework-bundle": "~2.0",
         "modera/js-runtime": "@dev",
-        "modera/js-runtime-integration-bundle": "@dev",
+        "modera/mjr-integration-bundle": "@dev",
         "modera/languages-bundle": "dev-master",
         "sergeil/extjslocalization-bundle": "dev-master"
     },

@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Modera\SecurityBundle\Entity\User;
 use Modera\BackendLanguagesBundle\Entity\UserSettings;
-use Modera\JSRuntimeIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
 
 /**
  * Provides service definitions for client-side dependency injection container.
