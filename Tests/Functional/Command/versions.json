@@ -42,5 +42,24 @@
         "commands": [
             "help --format=txt"
         ]
+    },
+    "0.1.3": {
+        "instructions": [
+            "Some foo instruction"
+        ]
+    },
+    "0.1.4": {
+        "instructions": [
+            "Some bar instruction"
+        ]
+    },
+    "0.1.5": {
+        "dependencies": {
+            "test/dependency_1": "0.1.1",
+            "test/dependency_4": "0.1.1"
+        },
+        "instructions": [
+            "Some baz instruction"
+        ]
     }
 }

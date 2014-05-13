@@ -5,6 +5,7 @@
         "add-bundles": [],
         "rm-bundles": [],
         "dependencies": {},
-        "commands": []
+        "commands": [],
+        "instructions": []
     }
 }

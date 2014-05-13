@@ -28,7 +28,6 @@ class UpgradeCommand extends ContainerAwareCommand
             ->setDefinition([
                 new InputOption('dependencies', null, InputOption::VALUE_NONE, 'Update dependencies in "composer.json"'),
                 new InputOption('run-commands', null, InputOption::VALUE_NONE, 'Run commands'),
-//                new InputOption('versions-path', null, InputOption::VALUE_OPTIONAL, 'versions.json path', getcwd() . '/versions.json'),
                 new InputArgument('versions-path', InputArgument::OPTIONAL, 'versions.json path', getcwd() . '/versions.json')
             ])
         ;
@@ -45,7 +44,6 @@ class UpgradeCommand extends ContainerAwareCommand
         $dependenciesOption = $input->getOption('dependencies');
         $runCommandsOption = $input->getOption('run-commands');
 
-//        $versionsPathOption = $input->getOption('versions-path');
         $versionsPathArg = $input->getArgument('versions-path');
 
         $output->writeln('');
@@ -70,11 +68,17 @@ class UpgradeCommand extends ContainerAwareCommand
         $currentComposerFileContents = $composerFile->read();
         $currentVersionsFileContents = $versionsFile->read();
 
+        $composerExtraContents = $this->getArrayValue(
+            $currentComposerFileContents, 'extra', array()
+        );
+
         if ($dependenciesOption) {
 
             $newVersion = null;
             $versions = array_keys($currentVersionsFileContents);
-            $currentVersion = isset($currentComposerFileContents['extra']['modera-version']) ? $currentComposerFileContents['extra']['modera-version'] : null;
+            $currentVersion = $this->getArrayValue(
+                $composerExtraContents, 'modera-version'
+            );
 
             if ($currentVersion && $currentVersion == $versions[count($versions) - 1]) {
                 $output->writeln("<info>You have the latest version $currentVersion</info>");
@@ -89,22 +93,32 @@ class UpgradeCommand extends ContainerAwareCommand
                 file_get_contents($basePath . '/composer.json')
             );
 
+            // manage dependencies
             $oldDependencies = $newDependencies = array();
             if (!$currentVersion) {
-                $newVersion = array_keys($currentVersionsFileContents)[0];
-                $newDependencies = array_values($currentVersionsFileContents)[0]['dependencies'];
+                $newVersion = $versions[0];
+                $newDependencies = $this->getArrayValue(
+                    $currentVersionsFileContents[$newVersion], 'dependencies', array()
+                );
             } else {
                 foreach(array_keys($versions) as $k) {
                     if ($versions[$k] == $currentVersion) {
+                        $key = $k;
+                        while ($key >= 0) {
+                            $oldDependencies = $this->getArrayValue(
+                                $currentVersionsFileContents[$versions[$key]], 'dependencies'
+                            );
+                            if (is_array($oldDependencies)) {
+                                break;
+                            }
+                            $oldDependencies = array();
+                            --$key;
+                        }
+
                         $newVersion = $versions[$k + 1];
-
-                        $oldDependencies = isset($currentVersionsFileContents[$currentVersion]['dependencies'])
-                                         ? $currentVersionsFileContents[$currentVersion]['dependencies'] :
-                                           array();
-
-                        $newDependencies = isset($currentVersionsFileContents[$newVersion]['dependencies'])
-                                         ? $currentVersionsFileContents[$newVersion]['dependencies']
-                                         : $currentVersionsFileContents[$currentVersion]['dependencies'];
+                        $newDependencies = $this->getArrayValue(
+                            $currentVersionsFileContents[$newVersion], 'dependencies', $oldDependencies
+                        );
                         break;
                     }
                 }
@@ -123,7 +137,6 @@ class UpgradeCommand extends ContainerAwareCommand
                                 'Dependency "%s:%s" already exists. ',
                                 'Would you like to change it to "%s:%s"? (Y/n)',
                             '</question>',
-
                         ]), $name, $dependenciesOption[$name], $name, $ver);
 
                         if ($dialog->askConfirmation($output, $msg)) {
@@ -133,7 +146,11 @@ class UpgradeCommand extends ContainerAwareCommand
                 }
             }
             foreach ($dependenciesDiff['changed'] as $name => $ver) {
-                if (!isset($dependenciesOption[$name]) || $oldDependencies[$name] == $dependenciesOption[$name] || $ver == $dependenciesOption[$name]) {
+                if (
+                       !isset($dependenciesOption[$name])
+                    || $oldDependencies[$name] == $dependenciesOption[$name]
+                    || $ver == $dependenciesOption[$name]
+                ) {
                     $dependenciesOption[$name] = $ver;
                 } else {
                     $msg = sprintf(implode('', [
@@ -141,7 +158,6 @@ class UpgradeCommand extends ContainerAwareCommand
                             'Dependency "%s:%s" already changed. ',
                             'Would you like to change it to "%s:%s"? (Y/n)',
                         '</question>',
-
                     ]), $name, $dependenciesOption[$name], $name, $ver);
 
                     if ($dialog->askConfirmation($output, $msg)) {
@@ -156,7 +172,6 @@ class UpgradeCommand extends ContainerAwareCommand
                             'Dependency "%s" has been removed. ',
                             'Would you like to remove it? (Y/n)',
                         '</question>',
-
                     ]), $name);
 
                     if ($dialog->askConfirmation($output, $msg)) {
@@ -173,7 +188,6 @@ class UpgradeCommand extends ContainerAwareCommand
                             'Dependency "%s:%s" has been manually changed. ',
                             'Would you like to restore it to "%s:%s"? (Y/n)',
                         '</question>',
-
                     ]), $name, $dependenciesOption[$name], $name, $ver);
 
                     if ($dialog->askConfirmation($output, $msg)) {
@@ -184,16 +198,25 @@ class UpgradeCommand extends ContainerAwareCommand
             $currentComposerFileContents['require'] = $dependenciesOption;
             $currentComposerFileContents['extra']['modera-version'] = $newVersion;
 
-            $repositories = isset($currentComposerFileContents['repositories']) ? $currentComposerFileContents['repositories'] : array();
-            if (isset($currentVersionsFileContents[$newVersion]['add-repositories'])) {
-                foreach ($currentVersionsFileContents[$newVersion]['add-repositories'] as $repo) {
+            // manage repositories
+            $repositories = $this->getArrayValue(
+                $currentComposerFileContents, 'repositories', array()
+            );
+            $addRepositories = $this->getArrayValue(
+                $currentVersionsFileContents[$newVersion], 'add-repositories'
+            );
+            $rmRepositories = $this->getArrayValue(
+                $currentVersionsFileContents[$newVersion], 'rm-repositories'
+            );
+            if ($addRepositories) {
+                foreach ($addRepositories as $repo) {
                     if (false === array_search($repo, $repositories)) {
                         $repositories[] = $repo;
                     }
                 }
             }
-            if (isset($currentVersionsFileContents[$newVersion]['rm-repositories'])) {
-                foreach ($currentVersionsFileContents[$newVersion]['rm-repositories'] as $repo) {
+            if ($rmRepositories) {
+                foreach ($rmRepositories as $repo) {
                     if (false !== ($key = array_search($repo, $repositories))) {
                         unset($repositories[$key]);
                     }
@@ -202,34 +225,48 @@ class UpgradeCommand extends ContainerAwareCommand
             }
             $currentComposerFileContents['repositories'] = $repositories;
 
+            // write composer.json
             $composerFile->write($currentComposerFileContents);
 
+            // interactions
             $output->writeln("<info>composer.json 'requires' section has been updated to version $newVersion</info>");
 
-            if (isset($currentVersionsFileContents[$newVersion]['add-bundles']) && count($currentVersionsFileContents[$newVersion]['add-bundles'])) {
+            if (count($this->getArrayValue($currentVersionsFileContents[$newVersion], 'add-bundles'))) {
                 $output->writeln("<comment>Add bundle(s) to app/AppKernel.php</comment>");
                 foreach ($currentVersionsFileContents[$newVersion]['add-bundles'] as $bundle) {
                     $output->writeln('    ' . $bundle);
                 }
             }
-            if (isset($currentVersionsFileContents[$newVersion]['rm-bundles']) && count($currentVersionsFileContents[$newVersion]['rm-bundles'])) {
+            if (count($this->getArrayValue($currentVersionsFileContents[$newVersion], 'rm-bundles'))) {
                 $output->writeln("<comment>Remove bundle(s) from app/AppKernel.php</comment>");
                 foreach ($currentVersionsFileContents[$newVersion]['rm-bundles'] as $bundle) {
                     $output->writeln('    ' . $bundle);
                 }
             }
 
-            if (isset($currentVersionsFileContents[$newVersion]['commands']) && count($currentVersionsFileContents[$newVersion]['commands'])) {
+            if (count($this->getArrayValue($currentVersionsFileContents[$newVersion], 'instructions'))) {
+                foreach ($currentVersionsFileContents[$newVersion]['instructions'] as $instruction) {
+                    $output->writeln(sprintf('<comment>%s</comment>', $instruction));
+                }
+            }
+
+            if (count($this->getArrayValue($currentVersionsFileContents[$newVersion], 'commands'))) {
                 $output->writeln('After composer update run:');
                 $output->writeln('<info>php app/console ' . $this->getName() . ' --run-commands</info>');
             }
 
         } else if ($runCommandsOption) {
 
-            $extra = isset($currentComposerFileContents['extra']) ? $currentComposerFileContents['extra'] : array();
-            if (isset($extra['modera-version']) && isset($currentVersionsFileContents[$extra['modera-version']])) {
-                $versionData = $currentVersionsFileContents[$currentComposerFileContents['extra']['modera-version']];
-                $commands = isset($versionData['commands']) ? $versionData['commands'] : array();
+            $moderaVersion = $this->getArrayValue(
+                $composerExtraContents, 'modera-version'
+            );
+            if ($moderaVersion) {
+                $versionData = $this->getArrayValue(
+                    $currentVersionsFileContents, $moderaVersion, array()
+                );
+                $commands = $this->getArrayValue(
+                    $versionData, 'commands', array()
+                );
 
                 $this->getApplication()->setAutoExit(false);
                 foreach ($commands as $command) {
@@ -246,6 +283,21 @@ class UpgradeCommand extends ContainerAwareCommand
         }
 
         $output->writeln('');
+    }
+
+    /**
+     * @param array $arr
+     * @param $key
+     * @param null $default
+     * @return mixed
+     */
+    private function getArrayValue(array $arr, $key, $default = null)
+    {
+        if (isset($arr[$key])) {
+            return $arr[$key];
+        }
+
+        return $default;
     }
 
     /**

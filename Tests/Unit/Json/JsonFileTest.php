@@ -19,6 +19,15 @@ class JsonFileTest extends \PHPUnit_Framework_TestCase
         $jsonFile->read();
     }
 
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testJsonError()
+    {
+        $jsonFile = new JsonFile(__DIR__ . '/test_error.json');
+        $jsonFile->read();
+    }
+
     public function testSuccessfulRead()
     {
         $jsonFile = new JsonFile(__DIR__ . '/test_read.json');
