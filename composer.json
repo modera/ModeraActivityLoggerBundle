@@ -1,5 +1,5 @@
 {
-    "name": "modera/js-runtime-integration-bundle",
+    "name": "modera/mjr-integration-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
     "minimum-stability": "dev",
