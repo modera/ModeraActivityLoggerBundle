@@ -59,7 +59,7 @@
             <tag name="modera_routing.routing_resources_provider" />
         </service>
 
-        <service id="modera_js_runtime_integration.config.bundle_semantic_config"
+        <service id="modera_mjr_integration.config.bundle_semantic_config"
                  class="Modera\MjrIntegrationBundle\Config\BundleSemanticMainConfig">
 
             <argument type="service" id="service_container" />

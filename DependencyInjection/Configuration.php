@@ -66,22 +66,22 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('get-config')
                 ->end()
-                // this property will be used ony if 'main_config_provider' contains 'modera_js_runtime_integration.config.bundle_semantic_config'
+                // this property will be used ony if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
                 ->scalarNode('home_section')
                     ->defaultValue('home')
                     ->cannotBeEmpty()
                 ->end()
-                // this property will be used ony if 'main_config_provider' contains 'modera_js_runtime_integration.config.bundle_semantic_config'
+                // this property will be used ony if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
                 ->scalarNode('deployment_name')
                     ->defaultValue(null)
                 ->end()
-                // this property will be used ony if 'main_config_provider' contains 'modera_js_runtime_integration.config.bundle_semantic_config'
+                // this property will be used ony if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
                 ->scalarNode('deployment_url')
                     ->defaultValue(null)
                 ->end()
                 // DI service ID that implements \Modera\MjrIntegrationBundle\Config\MainConfigInterface
                 ->scalarNode('main_config_provider')
-                    ->defaultValue('modera_js_runtime_integration.config.bundle_semantic_config')
+                    ->defaultValue('modera_mjr_integration.config.bundle_semantic_config')
                 ->end()
                 // this is going to be used as configuration parameter for instance of Ext.app.Application and
                 // corresponding server controller's action that will be responsible for generating subclass

@@ -24,7 +24,7 @@ class MenuItemContributorCompilerPass implements CompilerPassInterface
         $def->addTag('modera_mjr_integration.menu.menu_items_provider');
 
         $container->addDefinitions(array(
-            'modera_js_runtime_integration.contributions.menu_items_provider' => $def
+            'modera_mjr_integration.contributions.menu_items_provider' => $def
         ));
     }
 } 

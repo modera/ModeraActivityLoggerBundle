@@ -8,7 +8,7 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Sli\ExpanderBundle\Ext\OrderedContributorInterface;
 
 /**
- * Contributes js-runtime menu items based on a config defined in "modera_js_runtime_integration" namespace.
+ * Contributes js-runtime menu items based on a config defined in "modera_mjr_integration" namespace.
  *
  * @see \Modera\MjrIntegrationBundle\DependencyInjection\Configuration
  *
