@@ -1,9 +1,8 @@
 <?php
 
-namespace Modera\SecurityAwareJSRuntimeBundle\Contributions;
+namespace Modera\MJRSecurityIntegrationBundle\Contributions;
 
-use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
-use Modera\SecurityAwareJSRuntimeBundle\DependencyInjection\ModeraSecurityAwareJSRuntimeExtension;
+use Modera\MJRSecurityIntegrationBundle\DependencyInjection\MJRSecurityIntegrationBundleExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -44,7 +43,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
      */
     public function getItems()
     {
-        $bundleConfig = $this->container->getParameter(ModeraSecurityAwareJSRuntimeExtension::CONFIG_KEY);
+        $bundleConfig = $this->container->getParameter(MJRSecurityIntegrationBundleExtension::CONFIG_KEY);
 
         return array(
             'security_manager' => array(

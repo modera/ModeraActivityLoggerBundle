@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\SecurityAwareJSRuntimeBundle\Contributions;
+namespace Modera\MJRSecurityIntegrationBundle\Contributions;
 
 use Modera\SecurityBundle\Model\PermissionCategory;
 use Modera\TranslationsBundle\Helper\T;

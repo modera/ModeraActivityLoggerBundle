@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\SecurityAwareJSRuntimeBundle\DependencyInjection;
+namespace Modera\MJRSecurityIntegrationBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class ModeraSecurityAwareJSRuntimeExtension extends Extension
+class ModeraMJRSecurityIntegrationExtension extends Extension
 {
     const CONFIG_KEY = 'mf.securityawarejsruntime.config';
 
@@ -25,7 +25,7 @@ class ModeraSecurityAwareJSRuntimeExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         if (count($config, true) == 0) {
-            throw new \RuntimeException('Bundle "ModeraSecurityAwareJSRuntimeBundle" must be configured in config.yml!');
+            throw new \RuntimeException('Bundle "ModeraMJRSecurityIntegrationBundle" must be configured in config.yml!');
         }
 
         $container->setParameter(self::CONFIG_KEY, $config);

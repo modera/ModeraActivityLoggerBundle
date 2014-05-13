@@ -1,9 +1,9 @@
 <?php
 
-namespace Modera\SecurityAwareJSRuntimeBundle\Tests\Unit\Contributions;
+namespace Modera\MJRSecurityIntegrationBundle\Tests\Unit\Contributions;
 
 use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
-use Modera\SecurityAwareJSRuntimeBundle\Contributions\ConfigMergersProvider;
+use Modera\MJRSecurityIntegrationBundle\Contributions\ConfigMergersProvider;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\Security\Core\Role\Role;
 

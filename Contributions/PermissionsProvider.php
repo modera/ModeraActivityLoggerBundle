@@ -1,9 +1,9 @@
 <?php
 
-namespace Modera\SecurityAwareJSRuntimeBundle\Contributions;
+namespace Modera\MJRSecurityIntegrationBundle\Contributions;
 
 use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
-use Modera\SecurityAwareJSRuntimeBundle\ModeraSecurityAwareJSRuntimeBundle;
+use Modera\MJRSecurityIntegrationBundle\ModeraSecurityAwareJSRuntimeBundle;
 use Modera\SecurityBundle\Model\Permission;
 use Modera\TranslationsBundle\Helper\T;
 use Sli\ExpanderBundle\Ext\ContributorInterface;

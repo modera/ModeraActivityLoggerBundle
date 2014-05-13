@@ -1,10 +1,10 @@
 <?php
 
-namespace Modera\SecurityAwareJSRuntimeBundle\Controller;
+namespace Modera\MJRSecurityIntegrationBundle\Controller;
 
 use Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager;
 use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
-use Modera\SecurityAwareJSRuntimeBundle\DependencyInjection\ModeraSecurityAwareJSRuntimeExtension;
+use Modera\MJRSecurityIntegrationBundle\DependencyInjection\MJRSecurityIntegrationBundleExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -27,7 +27,7 @@ class IndexController extends Controller
     public function indexAction()
     {
         $runtimeConfig = $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
-        $securedRuntimeConfig = $this->container->getParameter(ModeraSecurityAwareJSRuntimeExtension::CONFIG_KEY);
+        $securedRuntimeConfig = $this->container->getParameter(MJRSecurityIntegrationBundleExtension::CONFIG_KEY);
 
         /* @var ContributorInterface $cssResourcesProvider */
         $cssResourcesProvider = $this->get('modera_mjr_integration.css_resources_provider');
@@ -38,7 +38,7 @@ class IndexController extends Controller
         /* @var RouterInterface $router */
         $router = $this->get('router');
         // converting URL like /app_dev.php/backend/ModeraFoundation/Application.js to /app_dev.php/backend/ModeraFoundation
-        $appLoadingPath = $router->generate('modera_security_aware_js_runtime.index.application');
+        $appLoadingPath = $router->generate('mjr_security_integration.index.application');
         $appLoadingPath = substr($appLoadingPath, 0, strpos($appLoadingPath, 'Application.js') - 1);
 
         return array(
@@ -53,14 +53,14 @@ class IndexController extends Controller
      * Dynamically generates an entry point to backend application.
      *
      * @see Resources/config/routing.yml
-     * @see \Modera\SecurityAwareJSRuntimeBundle\Contributions\RoutingResourcesProvider
+     * @see \Modera\MJRSecurityIntegrationBundle\Contributions\RoutingResourcesProvider
      *
      * @Template
      */
     public function applicationAction()
     {
         /* @var ServiceDefinitionsManager $definitionsMgr */
-        $definitionsMgr = $this->container->get('modera_mjr_integrationbundle.csdi.service_definitions_manager');
+        $definitionsMgr = $this->container->get('modera_mjr_integration.csdi.service_definitions_manager');
 
         return array(
             'container_services' => $definitionsMgr->getDefinitions(),

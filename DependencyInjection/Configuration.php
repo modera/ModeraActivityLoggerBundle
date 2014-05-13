@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\SecurityAwareJSRuntimeBundle\DependencyInjection;
+namespace Modera\MJRSecurityIntegrationBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('modera_security_aware_js_runtime');
+        $rootNode = $treeBuilder->root('mjr_security_integration');
 
         $rootNode
             ->children()

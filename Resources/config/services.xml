@@ -6,7 +6,7 @@
 
     <services>
         <service id="mf.securityawarejsruntime.contributions.service_definitions_provider"
-                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\ServiceDefinitionsProvider">
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\ServiceDefinitionsProvider">
 
             <argument type="service" id="service_container" />
 
@@ -14,34 +14,34 @@
         </service>
 
         <service id="modera_mjr_integration.contributions.class_loader_mappings_provider"
-                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\ClassLoaderMappingsProvider">
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\ClassLoaderMappingsProvider">
 
             <tag name="modera_mjr_integration.class_loader_mappings_provider" />
         </service>
 
-        <service id="modera_security_aware_js_runtime.contributions.config_mergers_provider"
-                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\ConfigMergersProvider">
+        <service id="mjr_security_integration.contributions.config_mergers_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\ConfigMergersProvider">
 
             <argument type="service" id="security.context" />
-            <argument type="service" id="modera_security_aware_js_runtime.client_di_service_defs_provider" />
+            <argument type="service" id="mjr_security_integration.client_di_service_defs_provider" />
 
             <tag name="modera_mjr_integration.config.config_mergers_provider" />
         </service>
 
-        <service id="modera_security_aware_js_runtime.contributions.routing_resources_provider"
-                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\RoutingResourcesProvider">
+        <service id="mjr_security_integration.contributions.routing_resources_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\RoutingResourcesProvider">
 
             <tag name="modera_routing.routing_resources_provider" />
         </service>
 
-        <service id="modera_security_aware_js_runtime.contributions.permission_categories_provider"
-                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\PermissionCategoriesProvider">
+        <service id="mjr_security_integration.contributions.permission_categories_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\PermissionCategoriesProvider">
 
             <tag name="modera_security.permission_categories_provider" />
         </service>
 
-        <service id="modera_security_aware_js_runtime.contributions.permissions_provider"
-                 class="Modera\SecurityAwareJSRuntimeBundle\Contributions\PermissionsProvider">
+        <service id="mjr_security_integration.contributions.permissions_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\PermissionsProvider">
 
             <tag name="modera_security.permissions_provider" />
         </service>
