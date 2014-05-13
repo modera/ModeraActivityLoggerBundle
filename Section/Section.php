@@ -20,15 +20,15 @@ class Section implements SectionInterface
     private $sectionActivationParams;
 
     /**
-     * @param $name
-     * @param $section
+     * @param string $name
+     * @param string $section
      * @param string $description
      * @param string $glyph
      * @param string $iconClass
      * @param array $sectionActivationParams
      * @param array $meta
      */
-    public function __construct($name, $section, $description = '', $glyph = '', $iconSrc = '', $iconClass = '', array $sectionActivationParams = array(),array $meta = array())
+    public function __construct($name, $section, $description = '', $glyph = '', $iconSrc = '', $iconClass = '', array $sectionActivationParams = array(), array $meta = array())
     {
         $this->name = $name;
         $this->section = $section;
@@ -41,7 +41,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getDescription()
     {
@@ -49,7 +49,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getGlyph()
     {
@@ -57,7 +57,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getIconSrc()
     {
@@ -65,7 +65,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getIconClass()
     {
@@ -73,7 +73,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getMeta()
     {
@@ -81,7 +81,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @return string
+     * @inheritDoc
      */
     public function getName()
     {
@@ -89,7 +89,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function getSection()
     {
@@ -97,7 +97,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @return array
+     * @inheritDoc
      */
     public function getSectionActivationParams()
     {
