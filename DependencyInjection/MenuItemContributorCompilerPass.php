@@ -18,7 +18,7 @@ class MenuItemContributorCompilerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $config = $container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        $config = $container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
 
         $def = new Definition(ConfigMenuItemsProvider::clazz(), array($config));
         $def->addTag('modera_mjr_integration.menu.menu_items_provider');
