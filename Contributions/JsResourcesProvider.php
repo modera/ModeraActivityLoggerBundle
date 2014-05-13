@@ -51,7 +51,7 @@ class JsResourcesProvider implements ContributorInterface
             $this->router->generate('api'),
             '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment-with-langs.min.js',
             $this->router->generate('mf_font_awesome'),
-            '/bundles/moderajsruntimeintegration/js/orientationchange.js',
+            '/bundles/moderamjrintegration/js/orientationchange.js',
         );
     }
 }
