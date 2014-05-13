@@ -5,7 +5,7 @@ namespace Modera\BackendToolsActivityLogBundle\Contributions;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
- * @author    Sergei Vizel <sergei.vizel@modera.org>
+ * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */
 class CssResourcesProvider implements ContributorInterface

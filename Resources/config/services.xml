@@ -14,19 +14,19 @@
         <service id="modera_backend_tools_activity_log.contributions.sections_provider"
                  class="Modera\BackendToolsActivityLogBundle\Contributions\SectionsProvider">
 
-            <tag name="mf.jsruntimeintegration.sections_provider" />
+            <tag name="modera_mjr_integration.sections_provider" />
+        </service>
+
+        <service id="modera_backend_tools_activity_log.contributions.css_resources_provider"
+                 class="Modera\BackendToolsActivityLogBundle\Contributions\CssResourcesProvider">
+
+            <tag name="modera_mjr_integration.css_resources_provider" />
         </service>
 
         <service id="modera_backend_tools_activity_log.activity_author_resolver"
                  class="Modera\BackendToolsActivityLogBundle\AuthorResolving\ActivityAuthorResolver">
 
             <argument type="service" id="doctrine.orm.entity_manager" />
-        </service>
-
-        <service id="modera_backend_tools_activity_log.contributions.css_resources_provider"
-                 class="Modera\BackendToolsActivityLogBundle\Contributions\CssResourcesProvider">
-
-            <tag name="mf.jsruntimeintegration.css_resources_provider" />
         </service>
 
         <service parent="modera_translations.handling.php_classes_translation_handler">
