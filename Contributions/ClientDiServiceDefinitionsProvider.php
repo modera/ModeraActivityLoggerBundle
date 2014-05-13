@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Modera\SecurityBundle\Entity\User;
 use Modera\BackendLanguagesBundle\Entity\UserSettings;
-use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 
 /**
  * Provides service definitions for client-side dependency injection container.
@@ -53,7 +53,7 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
         /* @var Router $router */
         $router = $this->container->get('router');
         $locale = $request->getLocale();
-        $runtimeConfig = $this->container->getParameter(ModeraJSRuntimeIntegrationExtension::CONFIG_KEY);
+        $runtimeConfig = $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
 
         $token = $sc->getToken();
         if ($token->isAuthenticated() && $token->getUser() instanceof User) {
