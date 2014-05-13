@@ -2,7 +2,7 @@
 
 namespace Modera\BackendModuleBundle\Contributions;
 
-use Modera\JSRuntimeIntegrationBundle\Sections\Section;
+use Modera\MjrIntegrationBundle\Sections\Section;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**

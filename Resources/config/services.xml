@@ -17,13 +17,13 @@
         <service id="modera_backend_module.contributions.sections_provider"
                  class="Modera\BackendModuleBundle\Contributions\SectionsProvider">
 
-            <tag name="mf.jsruntimeintegration.sections_provider" />
+            <tag name="modera_mjr_integration.sections_provider" />
         </service>
 
         <service id="modera_backend_module.contributions.css_resources_provider"
                  class="Modera\BackendModuleBundle\Contributions\CssResourcesProvider">
 
-            <tag name="mf.jsruntimeintegration.css_resources_provider" />
+            <tag name="modera_mjr_integration.css_resources_provider" />
         </service>
 
         <service id="modera_backend_module.contributions.permission_provider"
