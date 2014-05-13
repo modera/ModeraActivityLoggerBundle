@@ -2,8 +2,8 @@
 
 namespace Modera\SecurityAwareJSRuntimeBundle\Controller;
 
-use Modera\JSRuntimeIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager;
-use Modera\JSRuntimeIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
+use Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager;
+use Modera\MjrIntegrationBundle\DependencyInjection\ModeraJSRuntimeIntegrationExtension;
 use Modera\SecurityAwareJSRuntimeBundle\DependencyInjection\ModeraSecurityAwareJSRuntimeExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -30,10 +30,10 @@ class IndexController extends Controller
         $securedRuntimeConfig = $this->container->getParameter(ModeraSecurityAwareJSRuntimeExtension::CONFIG_KEY);
 
         /* @var ContributorInterface $cssResourcesProvider */
-        $cssResourcesProvider = $this->get('mf.jsruntimeintegration.css_resources_provider');
+        $cssResourcesProvider = $this->get('modera_mjr_integration.css_resources_provider');
 
         /* @var ContributorInterface $cssResourcesProvider */
-        $jsResourcesProvider = $this->get('mf.jsruntimeintegration.js_resources_provider');
+        $jsResourcesProvider = $this->get('modera_mjr_integration.js_resources_provider');
 
         /* @var RouterInterface $router */
         $router = $this->get('router');
@@ -60,7 +60,7 @@ class IndexController extends Controller
     public function applicationAction()
     {
         /* @var ServiceDefinitionsManager $definitionsMgr */
-        $definitionsMgr = $this->container->get('mf.jsruntimeintegrationbundle.csdi.service_definitions_manager');
+        $definitionsMgr = $this->container->get('modera_mjr_integrationbundle.csdi.service_definitions_manager');
 
         return array(
             'container_services' => $definitionsMgr->getDefinitions(),

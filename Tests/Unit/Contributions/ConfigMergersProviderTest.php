@@ -2,7 +2,7 @@
 
 namespace Modera\SecurityAwareJSRuntimeBundle\Tests\Unit\Contributions;
 
-use Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface;
+use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
 use Modera\SecurityAwareJSRuntimeBundle\Contributions\ConfigMergersProvider;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\Security\Core\Role\Role;
@@ -49,8 +49,8 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
         /* @var ConfigMergerInterface $clientDiDefinitionsProviderMerger */
         $clientDiDefinitionsProviderMerger = $mergers[1];
 
-        $this->assertInstanceOf('Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface', $securityRolesMerger);
-        $this->assertInstanceOf('Modera\JSRuntimeIntegrationBundle\Config\ConfigMergerInterface', $clientDiDefinitionsProviderMerger);
+        $this->assertInstanceOf('Modera\MjrIntegrationBundle\Config\ConfigMergerInterface', $securityRolesMerger);
+        $this->assertInstanceOf('Modera\MjrIntegrationBundle\Config\ConfigMergerInterface', $clientDiDefinitionsProviderMerger);
 
         $existingConfig = array(
             'something' => 'blah'

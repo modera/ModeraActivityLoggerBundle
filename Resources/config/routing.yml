@@ -5,5 +5,5 @@ modera_security_aware_js_runtime:
     prefix:   /backend
 
 modera_security_aware_js_runtime.index.application:
-    path:      /%mf.jsruntimeintegration.config.app_name%/Application.js
+    path:      /%modera_mjr_integration.config.app_name%/Application.js
     defaults:  { _controller: ModeraSecurityAwareJSRuntimeBundle:Index:application }

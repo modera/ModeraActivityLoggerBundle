@@ -19,7 +19,7 @@
     "require": {
         "php": ">=5.3.0",
         "symfony/framework-bundle": "~2.0",
-        "modera/js-runtime-integration-bundle": "@dev"
+        "modera/mjr-integration-bundle": "@dev"
     },
     "autoload": {
         "psr-0": { "Modera\\SecurityAwareJSRuntimeBundle": "" }

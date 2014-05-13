@@ -10,13 +10,13 @@
 
             <argument type="service" id="service_container" />
 
-            <tag name="mf.jsruntimeintegration.csdi.service_definitions_provider" />
+            <tag name="modera_mjr_integration.csdi.service_definitions_provider" />
         </service>
 
-        <service id="mf.jsruntimeintegration.contributions.class_loader_mappings_provider"
+        <service id="modera_mjr_integration.contributions.class_loader_mappings_provider"
                  class="Modera\SecurityAwareJSRuntimeBundle\Contributions\ClassLoaderMappingsProvider">
 
-            <tag name="mf.jsruntimeintegration.class_loader_mappings_provider" />
+            <tag name="modera_mjr_integration.class_loader_mappings_provider" />
         </service>
 
         <service id="modera_security_aware_js_runtime.contributions.config_mergers_provider"
@@ -25,7 +25,7 @@
             <argument type="service" id="security.context" />
             <argument type="service" id="modera_security_aware_js_runtime.client_di_service_defs_provider" />
 
-            <tag name="mf.jsruntimeintegration.config.config_mergers_provider" />
+            <tag name="modera_mjr_integration.config.config_mergers_provider" />
         </service>
 
         <service id="modera_security_aware_js_runtime.contributions.routing_resources_provider"

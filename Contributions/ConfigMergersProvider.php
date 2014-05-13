@@ -4,7 +4,7 @@ namespace Modera\SecurityAwareJSRuntimeBundle\Contributions;
 
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
-use Modera\JSRuntimeIntegrationBundle\Config\CallbackConfigMerger;
+use Modera\MjrIntegrationBundle\Config\CallbackConfigMerger;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
