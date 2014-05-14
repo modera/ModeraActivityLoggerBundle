@@ -7,6 +7,9 @@ use Modera\MjrIntegrationBundle\Config\MainConfigInterface;
 use Modera\DynamicallyConfigurableMJRBundle\ModeraDynamicallyConfigurableMJRBundle as Bundle;
 
 /**
+ * This implementation read configuration properties stored in central settings storage provided by
+ * {@class \Modera\ConfigBundle\ModeraConfigBundle}.
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */

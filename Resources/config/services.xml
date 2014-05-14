@@ -22,5 +22,11 @@
 
             <argument type="service" id="modera_config.configuration_entries_manager" />
         </service>
+
+        <service id="modera_dynamically_configurable_mjr.contributions.class_loader_mappings_provider"
+                 class="Modera\DynamicallyConfigurableMJRBundle\Contributions\ClassLoaderMappingsProvider">
+
+            <tag name="modera_mjr_integration.class_loader_mappings_provider" />
+        </service>
     </services>
 </container>
