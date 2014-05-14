@@ -35,7 +35,7 @@ class KernelConfigWriter implements ValueUpdatedHandlerInterface
         $kernelJson = json_decode($kernelJson, true);
 
         if ($entry->getName() == Bundle::CONFIG_KERNEL_DEBUG) {
-            $kernelJson['debug'] = $entry->getValue();
+            $kernelJson['debug'] = $entry->getValue() == 'true';
         } else if ($entry->getName() == Bundle::CONFIG_KERNEL_ENV) {
             $kernelJson['env'] = $entry->getValue();
         }

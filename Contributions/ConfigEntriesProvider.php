@@ -23,6 +23,7 @@ class ConfigEntriesProvider implements ContributorInterface
 
         $kernelDebugServer = array(
             'id' => 'modera_config.boolean_handler',
+            'update_handler' => 'modera_dynamically_configurable_app.value_handling.kernel_config_writer',
             'true_text' => $yes,
             'false_text' => $no
         );
@@ -33,6 +34,7 @@ class ConfigEntriesProvider implements ContributorInterface
 
         $kernelEnvServer = array(
             'id' => 'modera_config.dictionary_handler',
+            'update_handler' => 'modera_dynamically_configurable_app.value_handling.kernel_config_writer',
             'dictionary' => array(
                 'prod' => $yes,
                 'dev' => $no
