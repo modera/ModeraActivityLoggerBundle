@@ -8,7 +8,7 @@ use Modera\MJRSecurityIntegrationBundle\DependencyInjection\ModeraMJRSecurityInt
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -21,7 +21,6 @@ class IndexController extends Controller
 {
     /**
      * @Route("/")
-     * @Template
      * @return array
      */
     public function indexAction()
@@ -41,12 +40,20 @@ class IndexController extends Controller
         $appLoadingPath = $router->generate('modera_mjr_security_integration.index.application');
         $appLoadingPath = substr($appLoadingPath, 0, strpos($appLoadingPath, 'Application.js') - 1);
 
-        return array(
-            'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
-            'css_resources' => $cssResourcesProvider->getItems(),
-            'js_resources' => $jsResourcesProvider->getItems(),
-            'app_loading_path' => $appLoadingPath
+        $content = $this->renderView(
+            'ModeraMJRSecurityIntegrationBundle:Index:index.html.twig',
+            array(
+                'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
+                'css_resources' => $cssResourcesProvider->getItems(),
+                'js_resources' => $jsResourcesProvider->getItems(),
+                'app_loading_path' => $appLoadingPath
+            )
         );
+
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'text/html');
+
+        return $response;
     }
 
     /**
@@ -54,17 +61,23 @@ class IndexController extends Controller
      *
      * @see Resources/config/routing.yml
      * @see \Modera\MJRSecurityIntegrationBundle\Contributions\RoutingResourcesProvider
-     *
-     * @Template
      */
     public function applicationAction()
     {
         /* @var ServiceDefinitionsManager $definitionsMgr */
         $definitionsMgr = $this->container->get('modera_mjr_integration.csdi.service_definitions_manager');
 
-        return array(
-            'container_services' => $definitionsMgr->getDefinitions(),
-            'config' => $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY)
+        $content = $this->renderView(
+            'ModeraMJRSecurityIntegrationBundle:Index:application.html.twig',
+            array(
+                'container_services' => $definitionsMgr->getDefinitions(),
+                'config' => $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY)
+            )
         );
+
+        $response = new Response($content);
+        $response->headers->set('Content-Type', 'text/javascript');
+
+        return $response;
     }
 }
