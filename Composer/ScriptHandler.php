@@ -138,9 +138,7 @@ class ScriptHandler extends AbstractScriptHandler
     protected static function createRegisterBundlesFile(Composer $composer)
     {
         $options = ComposerService::getOptions($composer);
-
-        $file = $options['file'];
-        $bundles = $options['register-bundles'];
+        $bundles = ComposerService::getRegisterBundles($composer);
 
         $data = array('<?php return array(');
         foreach ($bundles as $bundleClassName) {
@@ -148,8 +146,8 @@ class ScriptHandler extends AbstractScriptHandler
         }
         $data[] = ');';
 
-        if (file_exists($file)) {
-            file_put_contents($file, implode("\n", $data) . "\n");
+        if (file_exists($options['file'])) {
+            file_put_contents($options['file'], implode("\n", $data) . "\n");
         }
     }
 
