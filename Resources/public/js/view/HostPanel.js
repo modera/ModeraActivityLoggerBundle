@@ -72,16 +72,15 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                                 width: 30,
                                 renderer: function(v, md) {
                                     md.tdCls = 'left';
-
                                     if (!v) {
                                         return '';
                                     }
 
-                                    var glyph = FontAwesome.resolve(v),
+                                    var glyph = v.search('@') > 0 ? v : FontAwesome.resolve(v),
                                         glyphParts = glyph.split('@');
 
                                     return Ext.String.format(
-                                        '<span style="font-family: FontAwesome;">{0}</span>', '&#' + glyphParts[0] + ';'
+                                        '<span style="font-family: {1};">{0}</span>', '&#' + glyphParts[0] + ';', glyphParts[1]
                                     )
                                 }
                             },
