@@ -4,7 +4,6 @@ namespace Modera\MJRThemeIntegrationBundle\Contributions;
 
 use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Modera\MJRThemeIntegrationBundle\DependencyInjection\ModeraMJRThemeIntegrationExtension;
-use Modera\SecurityAwareJSRuntimeBundle\DependencyInjection\ModeraSecurityAwareJSRuntimeExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
