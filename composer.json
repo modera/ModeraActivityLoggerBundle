@@ -78,7 +78,7 @@
     "require": {
         "php": ">=5.4.0",
         "sergeil/expander-bundle": "@dev",
-        "modera/js-runtime": "@dev",
+        "modera/mjr": "dev-master",
         "modera/foundation-bundle": "@dev",
         "modera/mjr-integration-bundle": "@dev"
     },
