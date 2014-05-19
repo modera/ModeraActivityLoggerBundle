@@ -18,7 +18,7 @@
         "php": ">=5.3.0",
         "symfony/framework-bundle": "~2.0",
         "modera/security-bundle": "dev-master",
-        "modera/js-runtime": "@dev",
+        "modera/mjr": "dev-master",
         "modera/backend-tools-bundle": "@dev",
         "modera/mjr-integration-bundle": "@dev",
         "modera/backend-languages-bundle": "dev-master",
