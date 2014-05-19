@@ -17,7 +17,7 @@
     "require": {
         "php": ">=5.3.0",
         "symfony/framework-bundle": "~2.0",
-        "modera/js-runtime": "@dev",
+        "modera/mjr": "dev-master",
         "modera/backend-tools-bundle": "@dev",
         "modera/mjr-integration-bundle": "@dev",
         "modera/module-bundle": "@dev"
