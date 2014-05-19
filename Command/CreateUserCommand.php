@@ -8,6 +8,7 @@ use Modera\SecurityBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 
@@ -23,6 +24,10 @@ class CreateUserCommand extends ContainerAwareCommand
         $this
             ->setName('modera:security:create-user')
             ->setDescription('Allows to create a sample user that you can later user to authenticate to backend.')
+            ->addOption('no-interactions', null, InputOption::VALUE_NONE)
+            ->addOption('username', null, InputOption::VALUE_OPTIONAL)
+            ->addOption('email', null, InputOption::VALUE_OPTIONAL)
+            ->addOption('password', null, InputOption::VALUE_OPTIONAL)
         ;
     }
 
@@ -36,23 +41,29 @@ class CreateUserCommand extends ContainerAwareCommand
         /* @var EntityManager $em */
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
-        /* @var DialogHelper $dialog */
-        $dialog = $this->getHelper('dialog');
+        $username = $input->getOption('username');
+        $email = $input->getOption('email');
+        $password = $input->getOption('password');
 
-        $output->writeln('<info>This command will let you to create a test user that you can user to authenticated to administration interface</info>');
-        $output->write(PHP_EOL);
+        if (false === $input->getOption('no-interactions')) {
+            /* @var DialogHelper $dialog */
+            $dialog = $this->getHelper('dialog');
 
-        $username = $dialog->ask($output, '<question>Username:</question> ');
-        $email = $dialog->ask($output, '<question>Email:</question> ');
+            $output->writeln('<info>This command will let you to create a test user that you can user to authenticated to administration interface</info>');
+            $output->write(PHP_EOL);
 
-        do {
-            $password = $dialog->askHiddenResponse($output, '<question>Password:</question> ');
-            $passwordConfirm = $dialog->askHiddenResponse($output, '<question>Password again:</question> ');
+            $username = $dialog->ask($output, '<question>Username:</question> ');
+            $email = $dialog->ask($output, '<question>Email:</question> ');
 
-            if ($password != $passwordConfirm) {
-                $output->writeln('<error>Entered passwords do not match, please try again</error>');
-            }
-        } while ($password != $passwordConfirm);
+            do {
+                $password = $dialog->askHiddenResponse($output, '<question>Password:</question> ');
+                $passwordConfirm = $dialog->askHiddenResponse($output, '<question>Password again:</question> ');
+
+                if ($password != $passwordConfirm) {
+                    $output->writeln('<error>Entered passwords do not match, please try again</error>');
+                }
+            } while ($password != $passwordConfirm);
+        }
 
         /* @var EncoderFactoryInterface $encoderFactory */
         $encoderFactory = $this->getContainer()->get('security.encoder_factory');
