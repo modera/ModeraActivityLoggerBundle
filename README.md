@@ -50,7 +50,7 @@ Update your `app/config/config.yml` file and add languages that you later you wi
         - { locale: ru, is_enabled: false }
         - { locale: et }
 
-## Example of Usage
+## Documentation
 
 Bundles ships two command line tasks:
 
@@ -128,3 +128,8 @@ Once translation tokens have been extracted to database, translated you probably
 to physical files so Symfony translation mechanism could detect them and use when translating messages. For this
 to happen you need to run `modera:translations:compile` tasks. During execution this task will compile all translation
 tokens from database to root `Resources` directory of your application.
+
+## Licensing
+
+This bundle is under the MIT license. See the complete license in the bundle:
+Resources/meta/LICENSE
