@@ -19,6 +19,16 @@ What this bundle does:
  * Provides a simple yet powerful client-server communication protocol
  * Simplifies functional testing of your controller
 
+## Installation
+
+Add this dependency to your composer.json:
+
+    "modera/server-crud-bundle": "dev-master"
+
+Update your AppKernel class and add ModeraFoundationBundle declaration there:
+
+    new Modera\ServerCrudBundle\ModeraServerCrudBundle(),
+
 ## Documentation
 
 For detailed documentation describing how to use this bundle and its components please read  `Resources/doc/index.md`.
