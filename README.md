@@ -1,7 +1,20 @@
 # ModeraFileRepositoryBundle [![Build Status](https://travis-ci.org/modera/ModeraFileRepositoryBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraFileRepositoryBundle)
 
-This bundle provides a high level API for putting your files to virtual file repositories which internally
-use Gaufrette filesystem abstraction layer.
+This bundle provides a high level API for putting your files to virtual file repositories which internally use Gaufrette
+filesystem abstraction layer.
+
+## Installation
+
+Add this dependency to your composer.json:
+
+    "modera/file-repository-bundle": "dev-master"
+
+Update your AppKernel class and add these bundles there:
+
+    new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(), // if you still don't have it
+    new Modera\FileRepositoryBundle\ModeraFileRepositoryBundle(),
+
+## Documentation
 
 This bundle proves useful when you need to have a consistent way of storing your files with an ability
 to later reference these files in your domain model or query them ( using Doctrine ORM ). Configuration
@@ -10,8 +23,10 @@ process consists of two steps:
  * Configuring Gaufrette filesystem adapter
  * Creating a virtual repository
 
-This is sample filesystem configuration using Gaufrette:
+This is a sample filesystem configuration using Gaufrette which creates a filesystem which will use local
+`/path/to/my/filesystem` path to store files:
 
+    # app/config/config.yml
     knp_gaufrette:
         adapters:
             local_fs:
@@ -44,7 +59,7 @@ entity is removed, its physical file stored in a configured filesystem will be a
 descriptive record saved in database contains a bunch of useful information like mime-type, file extension etc, please
 see StoredFile's entity fields for more details.
 
-## Repository configuration
+### Repository configuration
 
 When you create a repository you can use these configuration properties to tweak behaviour of your repository:
 
@@ -54,7 +69,7 @@ When you create a repository you can use these configuration properties to tweak
                             files. If this configuration property is not provided when repository is created then
                             `Modera\FileRepositoryBundle\Repository\UniqidKeyGenerator` class will be used.
 
-## Command line
+### Command line
 
 Bundle ships commands that allow you to perform some standards operations on your repositories and files:
 
@@ -65,4 +80,9 @@ Bundle ships commands that allow you to perform some standards operations on you
  * modera:file-repository:list-files
  * modera:file-repository:download-file
  * modera:file-repository:delete-file
+
+## Licensing
+
+This bundle is under the MIT license. See the complete license in the bundle:
+Resources/meta/LICENSE
 
