@@ -11,7 +11,7 @@ to log your activities.
 
 Add this dependency to your composer.json:
 
-    "modera/file-repository-bundle": "dev-master"
+    "modera/activity-logger-bundle": "dev-master"
 
 Update your AppKernel class and add this:
 
