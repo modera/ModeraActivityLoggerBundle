@@ -4,6 +4,21 @@ Bundle provides facilities that let you to log different domain events that occu
 later you are able to query those logged events ( they are called Activities in scope of this bundle ). The point
 here is that later those activities can be reviewed by ordinary users to see what has been happening in the system.
 
+Unless you need to query activities in your application logic please rely on a generic Psr's LoggerInterface interface
+to log your activities.
+
+## Installation
+
+Add this dependency to your composer.json:
+
+    "modera/file-repository-bundle": "dev-master"
+
+Update your AppKernel class and add this:
+
+    new Modera\ActivityLoggerBundle\ModeraActivityLoggerBundle(),
+
+## Documentation
+
 To log your activities you will be using an implementation of standard `Psr\Log\LoggerInterface` interface which
 means that your application won't directly depend on this bundle but rather will rely on a generic interface that later
 you can switch ( say that you decided to use some default Monolog log handler ) if needed.
@@ -14,5 +29,7 @@ Bundle declares two additional interfaces - `Modera\ActivityLoggerBundle\Manager
 ActivityInterface. By default the bundle provides one implementation of ActivityManagerInterface which stores activities
 using Doctrine ORM's EntityManager - `Modera\ActivityLoggerBundle\Manager\DoctrineOrmActivityManager`.
 
-Unless you need to query activities in your application logic please rely on a generic Psr's LoggerInterface interface
-to log your activities.
+## Licensing
+
+This bundle is under the MIT license. See the complete license in the bundle:
+Resources/meta/LICENSE
