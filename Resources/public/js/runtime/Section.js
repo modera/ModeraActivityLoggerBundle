@@ -22,8 +22,10 @@ Ext.define('Modera.backend.tools.activitylog.runtime.Section', {
     },
 
     // override
-    canHandleIntent: function(ir) {
-        ir.assertExactName('show_activity_details').assertHasExactParam('id').done();
+    canHandleIntent: function(dispatchedIntent) {
+        dispatchedIntent.assertExactName('show_activity_details')
+                        .assertHasExactParam('id')
+                        .done();
     },
 
     // override
