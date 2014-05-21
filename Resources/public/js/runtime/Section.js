@@ -21,21 +21,21 @@ Ext.define('Modera.backend.tools.activitylog.runtime.Section', {
         callback();
     },
 
-    canHandleIntent: function(intent, cb) {
-        cb('show_activity_details' == intent.name && intent.params && intent.params.hasOwnProperty('id'));
+    // override
+    canHandleIntent: function(ir) {
+        ir.assertExactName('show_activity_details').assertHasExactParam('id').done();
     },
 
     // override
-    handleIntent: function(intent) {
+    handleIntent: function(intent, cb) {
         var me = this;
-        this.canHandleIntent(intent, function(result) {
-            if (result) {
-                me.application.getContainer().get('workbench').getActivitiesManager().launchActivity(
-                    'activity-details', { id: intent.params.id }
-                );
 
-                cb();
-            }
-        });
+        me.application.getContainer().get('workbench').getActivitiesManager().launchActivity(
+            'activity-details', { id: intent.params.id }
+        );
+
+        if (Ext.isFunction(cb)) {
+            cb();
+        }
     }
 });

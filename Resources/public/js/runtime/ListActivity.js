@@ -29,6 +29,8 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
 
     // override
     attachListeners: function(ui) {
+        var me = this;
+
         var intentMgr = this.workbench.getService('intent_manager');
 
         ui.on('showactivityentrydetails', function(panel, data) {
@@ -37,6 +39,13 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
                 params: data
             });
         });
+
+        var header = ui.down('mfc-header');
+        if (header) {
+            header.on('close', function() {
+                me.workbench.activateSection('tools');
+            })
+        }
     },
 
     // override
@@ -61,13 +70,6 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
                     'sort-direction': column.sortState
                 });
             });
-        }
-
-        var header = ui.down('mfc-header');
-        if (header) {
-            header.on('close', function() {
-                ec.getApplication().getContainer().get('workbench').activateSection('tools');
-            })
         }
     },
 
