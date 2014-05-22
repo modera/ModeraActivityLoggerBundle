@@ -37,7 +37,7 @@ Ext.define('Modera.backend.tools.activitylog.runtime.ListActivity', {
             intentMgr.dispatch({
                 name: 'show_activity_details',
                 params: data
-            });
+            }, Ext.emptyFn, ['use_first_handler']);
         });
 
         var header = ui.down('mfc-header');
