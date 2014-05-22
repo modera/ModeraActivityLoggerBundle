@@ -14,7 +14,7 @@ use Sli\ExpanderBundle\Ext\OrderedContributorInterface;
  * @author    Alex Rudakov <alexandr.rudakov@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class MenuItemsProvider implements ContributorInterface, OrderedContributorInterface
+class MenuItemsProvider implements OrderedContributorInterface
 {
     private $items;
 
