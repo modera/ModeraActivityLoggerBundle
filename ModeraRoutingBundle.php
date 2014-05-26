@@ -2,6 +2,7 @@
 
 namespace Modera\RoutingBundle;
 
+use Sli\ExpanderBundle\Ext\ExtensionPoint;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Sli\ExpanderBundle\DependencyInjection\CompositeContributorsProviderCompilerPass;
@@ -17,8 +18,8 @@ class ModeraRoutingBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('modera_routing.routing_resources_provider')
-        );
+        $routingResourcesProvider = new ExtensionPoint('modera_routing.routing_resources_provider');
+        $routingResourcesProvider->setDescription('Allows to dynamically add routing files.');
+        $container->addCompilerPass($routingResourcesProvider->createCompilerPass());
     }
 }
