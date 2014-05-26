@@ -3,6 +3,7 @@
 namespace Modera\MJRSecurityIntegrationBundle;
 
 use Sli\ExpanderBundle\DependencyInjection\CompositeContributorsProviderCompilerPass;
+use Sli\ExpanderBundle\Ext\ExtensionPoint;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -17,12 +18,13 @@ class ModeraMJRSecurityIntegrationBundle extends Bundle
 {
     const ROLE_BACKEND_USER = 'ROLE_BACKEND_USER';
 
+    // override
     public function build(ContainerBuilder $container)
     {
-        // allows to contribute client-side DI container service definitions that will be configured only
-        // after user has successfully authenticated
-        $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('modera_mjr_security_integration.client_di_service_defs_provider')
+        $clientDiServiceDefinitionsProvider = new ExtensionPoint('modera_mjr_security_integration.client_di_service_defs_provider');
+        $clientDiServiceDefinitionsProvider->setDescription(
+            'Allows to contribute client-side DI container service definitions that will be configured only after user has successfully authenticated.'
         );
+        $container->addCompilerPass($clientDiServiceDefinitionsProvider->createCompilerPass());
     }
 }
