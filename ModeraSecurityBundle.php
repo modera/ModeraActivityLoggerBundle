@@ -3,6 +3,7 @@
 namespace Modera\SecurityBundle;
 
 use Sli\ExpanderBundle\DependencyInjection\CompositeContributorsProviderCompilerPass;
+use Sli\ExpanderBundle\Ext\ExtensionPoint;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -14,12 +15,14 @@ class ModeraSecurityBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('modera_security.permissions_provider')
+        $permissionsProviders = new ExtensionPoint('modera_security.permissions_provider');
+        $permissionsProviders->setDescription(
+            'Allows to contribute new permissions that later can be installed by modera:security:install-permissions command.'
         );
+        $container->addCompilerPass($permissionsProviders->createCompilerPass());
 
-        $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('modera_security.permission_categories_provider')
-        );
+        $permissionCategoriesProviders = new ExtensionPoint('modera_security.permission_categories_provider');
+        $permissionCategoriesProviders->setDescription('Allows to contribute new permission categories.');
+        $container->addCompilerPass($permissionCategoriesProviders->createCompilerPass());
     }
 }
