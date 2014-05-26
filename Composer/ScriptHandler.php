@@ -129,25 +129,37 @@ class ScriptHandler extends AbstractScriptHandler
      */
     public static function registerBundles(CommandEvent $event)
     {
-        static::createRegisterBundlesFile($event->getComposer());
+        $options = static::getOptions($event);
+        $appDir = $options['symfony-app-dir'];
+
+        if (!is_dir($appDir)) {
+            echo 'The symfony-app-dir ('.$appDir.') specified in composer.json was not found in ' . getcwd() . ', can not register the bundles.' . PHP_EOL;
+            return;
+        }
+
+        $bundlesFile = 'modules/bundles.php';
+        $bundles = ComposerService::getRegisterBundles($event->getComposer());
+
+        static::createRegisterBundlesFile($bundles, $appDir . '/' . $bundlesFile);
+        static::executeCommand($event, $appDir, 'modera:module:register ' . $bundlesFile, $options['process-timeout']);
     }
 
     /**
-     * @param Composer $composer
+     * @param array $bundles
+     * @param $outputFile
      */
-    protected static function createRegisterBundlesFile(Composer $composer)
+    protected static function createRegisterBundlesFile(array $bundles, $outputFile)
     {
-        $options = ComposerService::getOptions($composer);
-        $bundles = ComposerService::getRegisterBundles($composer);
-
         $data = array('<?php return array(');
         foreach ($bundles as $bundleClassName) {
             $data[] = '    new ' . $bundleClassName . '(),';
         }
         $data[] = ');';
 
-        if (file_exists($options['file'])) {
-            file_put_contents($options['file'], implode("\n", $data) . "\n");
+        if (file_exists($outputFile)) {
+            file_put_contents($outputFile, implode("\n", $data) . "\n");
+        } else {
+            throw new \RuntimeException(sprintf('The "%s" file must be created.', $outputFile));
         }
     }
 
