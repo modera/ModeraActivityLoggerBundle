@@ -46,12 +46,16 @@
             <argument type="service" id="service_container" />
         </service>
 
-        <service id="modera_server_crud.exception_handling.handler"
+        <service id="modera_server_crud.exception_handling.env_aware_handler"
                  class="Modera\ServerCrudBundle\ExceptionHandling\EnvAwareExceptionHandler">
 
             <argument type="service" id="modera_server_crud.exception_handling.handlers_provider" />
             <argument type="service" id="kernel" />
         </service>
+
+        <service id="modera_server_crud.exception_handling.bypass_handler"
+                 class="Modera\ServerCrudBundle\ExceptionHandling\BypassExceptionHandler"
+        />
 
         <service id="modera_server_crud.new_values_factory.default_new_values_factory"
                  class="Modera\ServerCrudBundle\NewValuesFactory\DefaultNewValuesFactory">

@@ -47,7 +47,7 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('exception_handler')
-                    ->defaultValue('modera_server_crud.exception_handling.handler')
+                    ->defaultValue('modera_server_crud.exception_handling.env_aware_handler')
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('hydrator')
