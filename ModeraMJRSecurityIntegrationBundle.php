@@ -21,7 +21,7 @@ class ModeraMJRSecurityIntegrationBundle extends Bundle
     // override
     public function build(ContainerBuilder $container)
     {
-        $clientDiServiceDefinitionsProvider = new ExtensionPoint('modera_mjr_security_integration.client_di_service_defs_provider');
+        $clientDiServiceDefinitionsProvider = new ExtensionPoint('modera_mjr_security_integration.client_di_service_defs');
         $clientDiServiceDefinitionsProvider->setDescription(
             'Allows to contribute client-side DI container service definitions that will be configured only after user has successfully authenticated.'
         );
