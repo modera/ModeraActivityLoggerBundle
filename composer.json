@@ -2,7 +2,6 @@
     "name": "modera/backend-tools-activity-log-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Sergei Lissovski",
@@ -12,10 +11,10 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "sergeil/expander-bundle": "@dev",
+        "sergeil/expander-bundle": "dev-master",
         "symfony/symfony": "~2.0",
         "symfony/framework-bundle": "~2.0",
-        "modera/translations-bundle": "@dev"
+        "modera/translations-bundle": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*"
