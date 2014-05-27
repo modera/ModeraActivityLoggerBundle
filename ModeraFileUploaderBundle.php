@@ -14,7 +14,7 @@ class ModeraFileUploaderBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $gatewaysProvider = new ExtensionPoint('modera_file_uploader.uploading.gateways_provider');
+        $gatewaysProvider = new ExtensionPoint('modera_file_uploader.uploading.gateways');
         $gatewaysProvider->setDescription('Allows to contribute new uploader gateways.');
         $container->addCompilerPass($gatewaysProvider->createCompilerPass());
     }
