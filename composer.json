@@ -2,73 +2,10 @@
     "name": "modera/backend-dashboard-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Aleksandr Rudakov",
             "email": "alexandr.rudakov@modera.org"
-        }
-    ],
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.dev.modera.org"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/cravler/direct-bundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderafoundationbundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderaroutingbundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderajsruntimeintegrationbundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderasecurityawarejsruntimebundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderabackenddashboardbundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderabackenddashboardbundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderabackendmodulebundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/composer-symfony-web-asset-installer-plugin.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/jsruntime.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/extjs-workspace.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/module.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderaservercrudbundle.git"
-        },
-        {
-            "type": "vcs",
-            "url": "ssh://git@stash.dev.modera.org:7999/mf/moderaadmingeneratorbundle.git"
         }
     ],
     "require-dev": {
@@ -77,10 +14,10 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "sergeil/expander-bundle": "@dev",
+        "sergeil/expander-bundle": "dev-master",
         "modera/mjr": "dev-master",
-        "modera/foundation-bundle": "@dev",
-        "modera/mjr-integration-bundle": "@dev"
+        "modera/foundation-bundle": "dev-master",
+        "modera/mjr-integration-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Modera\\BackendDashboardBundle": "" }
