@@ -18,7 +18,7 @@ class ModeraRoutingBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $routingResourcesProvider = new ExtensionPoint('modera_routing.routing_resources_provider');
+        $routingResourcesProvider = new ExtensionPoint('modera_routing.routing_resources');
         $routingResourcesProvider->setDescription('Allows to dynamically add routing files.');
         $container->addCompilerPass($routingResourcesProvider->createCompilerPass());
     }
