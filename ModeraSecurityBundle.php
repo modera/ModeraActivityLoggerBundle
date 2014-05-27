@@ -15,13 +15,13 @@ class ModeraSecurityBundle extends Bundle
 {
     public function build(ContainerBuilder $container)
     {
-        $permissionsProviders = new ExtensionPoint('modera_security.permissions_provider');
+        $permissionsProviders = new ExtensionPoint('modera_security.permissions');
         $permissionsProviders->setDescription(
             'Allows to contribute new permissions that later can be installed by modera:security:install-permissions command.'
         );
         $container->addCompilerPass($permissionsProviders->createCompilerPass());
 
-        $permissionCategoriesProviders = new ExtensionPoint('modera_security.permission_categories_provider');
+        $permissionCategoriesProviders = new ExtensionPoint('modera_security.permission_categories');
         $permissionCategoriesProviders->setDescription('Allows to contribute new permission categories.');
         $container->addCompilerPass($permissionCategoriesProviders->createCompilerPass());
     }
