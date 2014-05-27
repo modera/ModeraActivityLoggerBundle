@@ -20,10 +20,15 @@
         "modera/mjr": "dev-master",
         "modera/backend-tools-bundle": "dev-master",
         "modera/mjr-integration-bundle": "dev-master",
-        "modera/module-bundle": "dev-master"
+        "modera/module-bundle": "1.0.*"
     },
     "autoload": {
         "psr-0": { "Modera\\BackendModuleBundle": "" }
     },
-    "target-dir": "Modera/BackendModuleBundle"
+    "target-dir": "Modera/BackendModuleBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
