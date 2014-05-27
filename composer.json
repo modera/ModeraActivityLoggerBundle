@@ -2,7 +2,6 @@
     "name": "modera/server-crud-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Sergei Lissovski",
@@ -12,13 +11,13 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "sergeil/aux-bundle": "@dev",
-        "sergeil/expander-bundle": "@dev",
+        "sergeil/aux-bundle": "dev-master",
+        "sergeil/expander-bundle": "dev-master",
         "symfony/symfony": "~2.0",
         "symfony/framework-bundle": "~2.0",
         "symfony/property-access": "~2.0",
-        "modera/foundation-bundle": "@dev",
-        "sergeil/extjsintegration-bundle": "@dev",
+        "modera/foundation-bundle": "dev-master",
+        "sergeil/extjsintegration-bundle": "dev-master",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2"
     },
