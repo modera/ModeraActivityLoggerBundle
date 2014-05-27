@@ -6,6 +6,9 @@ namespace Modera\ServerCrudBundle\Intercepting;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 
 /**
+ * Methods of this class will be invoked right before main logic is executed, if you throw an exception then
+ * original method won't be executed.
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */
