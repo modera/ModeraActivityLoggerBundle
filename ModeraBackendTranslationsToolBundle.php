@@ -2,6 +2,7 @@
 
 namespace Modera\BackendTranslationsToolBundle;
 
+use Sli\ExpanderBundle\Ext\ExtensionPoint;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Sli\ExpanderBundle\DependencyInjection\CompositeContributorsProviderCompilerPass;
@@ -17,8 +18,9 @@ class ModeraBackendTranslationsToolBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(
-            new CompositeContributorsProviderCompilerPass('modera_backend_translations_tool.filters_provider')
-        );
+        $filtersProvider = new ExtensionPoint('modera_backend_translations_tool.filters');
+        $filtersProvider->setDescription('Allows to add a new server-side filter (all/new/obsolete filters are implemented using this extension point).');
+
+        $container->addCompilerPass($filtersProvider->createCompilerPass());
     }
 }
