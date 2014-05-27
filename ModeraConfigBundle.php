@@ -14,7 +14,7 @@ class ModeraConfigBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $configEntriesProvider = new ExtensionPoint('modera_config.config_entries_provider');
+        $configEntriesProvider = new ExtensionPoint('modera_config.config_entries');
         $configEntriesProvider->setDescription(
             'Allow to contribute new configuration properties. See ConfigurationEntryInterface.'
         );
