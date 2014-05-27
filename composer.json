@@ -2,7 +2,6 @@
     "name": "modera/backend-security-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Sergei Vizel",
@@ -19,8 +18,8 @@
         "symfony/framework-bundle": "~2.0",
         "modera/security-bundle": "dev-master",
         "modera/mjr": "dev-master",
-        "modera/backend-tools-bundle": "@dev",
-        "modera/mjr-integration-bundle": "@dev",
+        "modera/backend-tools-bundle": "dev-master",
+        "modera/mjr-integration-bundle": "dev-master",
         "modera/backend-languages-bundle": "dev-master",
         "modera/translations-bundle": "dev-master"
     },
