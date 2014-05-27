@@ -2,7 +2,6 @@
     "name": "modera/dynamically-configurable-mjr-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Sergei Lissovski",
@@ -14,7 +13,7 @@
         "php": ">=5.3.0",
         "symfony/framework-bundle": "~2.0",
         "modera/config-bundle": "dev-master",
-        "modera/mjr-integration-bundle": "@dev"
+        "modera/mjr-integration-bundle": "dev-master"
     },
     "autoload": {
         "psr-0": { "Modera\\DynamicallyConfigurableMJRBundle": "" }
