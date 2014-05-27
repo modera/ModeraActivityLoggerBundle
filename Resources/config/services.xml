@@ -66,7 +66,7 @@
         <service id="modera_server_crud.intercepting.interceptors_manager"
                  class="Modera\ServerCrudBundle\Intercepting\InterceptorsManager">
 
-            <argument type="service" id="modera_server_crud.intercepting.cai_providers" />
+            <argument type="service" id="modera_server_crud.intercepting.cai_provider" />
         </service>
 
         <service id="modera_server_crud.contributions.controller_action_interceptors_provider"
@@ -74,7 +74,7 @@
 
             <argument type="service" id="service_container" />
 
-            <tag name="modera_server_crud.intercepting.cai_providers" />
+            <tag name="modera_server_crud.intercepting.cai_provider" />
         </service>
     </services>
 </container>

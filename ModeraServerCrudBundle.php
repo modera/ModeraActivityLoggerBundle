@@ -15,13 +15,13 @@ class ModeraServerCrudBundle extends Bundle
     public function build(ContainerBuilder $container)
     {
         // also see \Modera\ServerCrudBundle\ExceptionHandling\EnvAwareExceptionHandler
-        $exceptionHandlersProvider = new ExtensionPoint('modera_server_crud.exception_handling.handlers_provider');
+        $exceptionHandlersProvider = new ExtensionPoint('modera_server_crud.exception_handling.handlers');
         $exceptionHandlersProvider->setDescription('Allows to add additional exception handlers that will be used by AbstractCrudController.');
         $container->addCompilerPass($exceptionHandlersProvider->createCompilerPass());
 
         // see \Modera\ServerCrudBundle\Controller\AbstractCrudController::interceptAction
         // CAP stands for "Controller Action Interceptor"
-        $caiProviders = new ExtensionPoint('modera_server_crud.intercepting.cai_providers');
+        $caiProviders = new ExtensionPoint('modera_server_crud.intercepting.cai');
         $caiProviders->setDescription('Allows to contribute Controller Action Interceptors used by AbstractCrudController.');
         $container->addCompilerPass($caiProviders->createCompilerPass());
     }
