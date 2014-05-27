@@ -18,6 +18,6 @@ class ModeraServerCrudExtensionTest extends \PHPUnit_Framework_TestCase
 
         $ext->load(array(), $container);
 
-        $this->assertEquals(1, count($container->findTaggedServiceIds('modera_server_crud.intercepting.cai_providers')));
+        $this->assertEquals(1, count($container->findTaggedServiceIds('modera_server_crud.intercepting.cai_provider')));
     }
 } 

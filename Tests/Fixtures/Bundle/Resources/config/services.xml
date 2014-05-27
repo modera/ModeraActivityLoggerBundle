@@ -8,7 +8,7 @@
         <service id="modera_server_crud_dummy_bundle.contributions.controller_action_interceptors_provider"
                  class="Modera\ServerCrudBundle\Tests\Fixtures\Bundle\Contributions\ControllerActionInterceptorsProvider">
 
-            <tag name="modera_server_crud.intercepting.cai_providers" />
+            <tag name="modera_server_crud.intercepting.cai_provider" />
         </service>
     </services>
 </container>
