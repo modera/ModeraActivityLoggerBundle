@@ -11,10 +11,15 @@
     "require": {
         "php": ">=5.3.0",
         "symfony/framework-bundle": "~2.0",
-        "modera/module": "dev-master"
+        "modera/module": "1.0.*"
     },
     "autoload": {
         "psr-0": { "Modera\\ModuleBundle": "" }
     },
-    "target-dir": "Modera/ModuleBundle"
+    "target-dir": "Modera/ModuleBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
 }
