@@ -1,0 +1,27 @@
+Ext.override(Ext.Loader, {
+    getPath: function(className) {
+        var path = '',
+            paths = Ext.Loader.config.paths,
+            prefix = Ext.Loader.getPrefix(className);
+
+        if (prefix.length > 0) {
+            if (prefix === className) {
+                return paths[prefix];
+            }
+
+            path = paths[prefix];
+            className = className.substring(prefix.length + 1);
+        }
+
+        if (path.length > 0) {
+            path += '/';
+        }
+
+        var slashDotSlashRe = /\/\.\//g,
+            dotRe = /\./g;
+
+        // these paths won't look nice but will do the trick - urls will contain version number and when
+        // a new version of the product is deployed the caches will be invalidated by a browser
+        return path.replace(slashDotSlashRe, '/') + className.replace(dotRe, "/") + '.js?v=' + '{{ version }}';
+    }
+});
