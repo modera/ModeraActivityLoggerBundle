@@ -80,6 +80,11 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     private $gender;
 
     /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $state;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="users", cascade={"persist"})
      * @ORM\JoinTable(
      *   name="modera_security_users_groups",
@@ -365,7 +370,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
     public function getGender()
     {
@@ -378,11 +383,31 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     public function setGender($gender)
     {
         $gender = strtolower($gender);
-        if (!in_array($gender, array('m', 'f'))) {
+        if (!in_array($gender, array(self::GENDER_MALE, self::GENDER_FEMALE))) {
             $gender = null;
         }
 
         $this->gender = $gender;
+    }
+
+    /**
+     * @return int
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @param int $state
+     */
+    public function setState($state)
+    {
+        if (self::STATE_ACTIVE !== $state) {
+            $state = self::STATE_NEW;
+        }
+
+        $this->state = $state;
     }
 
     /**

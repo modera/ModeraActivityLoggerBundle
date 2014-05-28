@@ -16,6 +16,7 @@
         <service id="modera_security.security.authenticator"
                  class="Modera\SecurityBundle\Security\Authenticator">
 
+            <argument type="service" id="doctrine" />
             <argument type="service" id="modera_security.security.authenticated_token_factory" />
         </service>
 

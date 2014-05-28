@@ -8,10 +8,17 @@ namespace Modera\SecurityBundle\Model;
  */
 interface UserInterface
 {
+    const GENDER_MALE = 'm';
+    const GENDER_FEMALE = 'f';
+
+    const STATE_NEW = 0;
+    const STATE_ACTIVE = 1;
+
     public function getEmail();
     public function getFirstName();
     public function getLastName();
     public function getMiddleName();
     public function getFullName();
     public function getGender();
+    public function getState();
 }

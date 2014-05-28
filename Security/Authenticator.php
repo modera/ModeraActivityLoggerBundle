@@ -2,6 +2,8 @@
 
 namespace Modera\SecurityBundle\Security;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
@@ -14,6 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerInterface;
 use Modera\SecurityBundle\Entity\User;
+use Modera\SecurityBundle\Model\UserInterface;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -21,13 +24,18 @@ use Modera\SecurityBundle\Entity\User;
  */
 class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationFailureHandlerInterface, AuthenticationSuccessHandlerInterface
 {
+    /**
+     * @var ObjectManager
+     */
+    private $om;
     private $authenticatedTokenFactory;
 
     /**
      * @param AuthenticatedTokenFactory $authenticatedTokenFactory
      */
-    public function __construct(AuthenticatedTokenFactory $authenticatedTokenFactory)
+    public function __construct(RegistryInterface $doctrine, AuthenticatedTokenFactory $authenticatedTokenFactory)
     {
+        $this->om = $doctrine->getManager();
         $this->authenticatedTokenFactory = $authenticatedTokenFactory;
     }
 
@@ -90,6 +98,13 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
+        $user = $token->getUser();
+        if ($user instanceof UserInterface && UserInterface::STATE_NEW == $user->getState()) {
+            $user->setState(UserInterface::STATE_ACTIVE);
+            $this->om->persist($user);
+            $this->om->flush();
+        }
+
         if ($request->isXmlHttpRequest()) {
             $result = static::getAuthenticationResponse($token);
 
