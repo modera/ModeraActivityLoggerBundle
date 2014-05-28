@@ -18,12 +18,15 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
     lastNameColumnHeaderText: 'Last name',
     usernameColumnHeaderText: 'Principal',
     emailColumnHeaderText: 'Email',
+    stateColumnHeaderText: 'State',
     groupsColumnHeaderText: 'Membership',
     addBtnText: 'New user',
     editBtnText: 'Edit selected',
     groupsBtnText: 'Group membership...',
     changePasswordBtnText: 'Change password',
     deleteBtnText: 'Delete',
+    stateNewText: 'New',
+    stateActiveText: 'Active',
 
     // override
     constructor: function(config) {
@@ -63,7 +66,17 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                     renderer: me.defaultRenderer()
                 },
                 {
+                    width: 80,
+                    text: me.stateColumnHeaderText,
+                    dataIndex: 'state',
+                    renderer: function(v) {
+                        var state = 1 === v ? 'Active' : 'New';
+                        return me['state' + state + 'Text'];
+                    }
+                },
+                {
                     flex: 1,
+                    sortable: false,
                     text: me.groupsColumnHeaderText,
                     dataIndex: 'groups',
                     renderer: me.defaultRenderer()

@@ -66,6 +66,7 @@ class UsersController extends AbstractCrudController
                             'firstName'  => $user->getFirstName(),
                             'lastName'   => $user->getLastName(),
                             'middleName' => $user->getMiddleName(),
+                            'state'      => $user->getState(),
                             'groups'     => $groups,
                         );
                     },
