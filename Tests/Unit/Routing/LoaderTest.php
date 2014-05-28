@@ -31,6 +31,8 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
     public function testLoad()
     {
+        $this->assertFalse($this->loader->isLoaded());
+
         $route = new RouteCollection();
         $route->add('foo', new Route('/article/create'));
         $rootRoutingLoader = \Phake::mock('Symfony\Component\Config\Loader\LoaderInterface');
@@ -48,5 +50,16 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($routes));
         $this->assertArrayHasKey('foo', $routes);
         $this->assertSame('/article/create', $routes['foo']->getPath());
+
+        $this->assertTrue($this->loader->isLoaded());
+
+        $thrownException = null;
+        try {
+            $this->loader->load('blah');
+        } catch (\RuntimeException $e) {
+            $thrownException = $e;
+        }
+
+        $this->assertNotNull($thrownException);
     }
 } 
