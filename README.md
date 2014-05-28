@@ -1,51 +1,49 @@
-ModeraRoutingBundle
-==============
+# ModeraRoutingBundle [![Build Status](https://travis-ci.org/modera/ModeraRoutingBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraRoutingBundle)
 
-## Configuration
+This bundle makes it possible for bundles to dynamically include routing files so you don't need to manually register
+them in root `app/config/routing.yml` file.
 
-app/config/routing.yml
+## Installation
 
-```
+Add this dependency to your composer.json:
 
-_modera_routing:
-    resource: "@ModeraRoutingBundle/Resources/config/routing.yml"
+    "modera/routing-bundle": "dev-master"
 
-```
+Update your AppKernel class and add these bundles there:
 
-## Example
+    new Sli\ExpanderBundle\SliExpanderBundle(),
+    new Modera\RoutingBundle\ModeraRoutingBundle(),
 
-Modera\ExampleBundle\Contributions\RoutingResourcesProvider.php
+At finally update your root routing.yml (`app/config/routing.yml`) file by adding this line there:
 
-```
+    _modera_routing:
+        resource: "@ModeraRoutingBundle/Resources/config/routing.yml"
 
-<?php
+## Documentation
 
-namespace Modera\ExampleBundle\Contributions;
+Internally `ModeraRoutingBundle` relies on `SliExpanderBundle` to leverage a consistent approach to creating extension
+points. Shortly speaking, in order for a bundle to contribute routing resources it has to do two things:
 
-use Sli\ExpanderBundle\Ext\ContributorInterface;
+ 1. Create a contributor class which implements \Sli\ExpanderBundle\Ext\ContributorInterface
+ 2. Register it in a service container with tag `modera_routing.routing_resources_provider`.
 
-class RoutingResourcesProvider implements ContributorInterface
-{
-    /**
-     * @inheritDoc
-     */
-    public function getItems()
+This is how your contributor class may look like:
+
+    namespace Modera\ExampleBundle\Contributions;
+
+    use Sli\ExpanderBundle\Ext\ContributorInterface;
+
+    class RoutingResourcesProvider implements ContributorInterface
     {
-        return array(
-            '@ModeraExampleBundle/Resources/config/routing.yml'
-        );
+        public function getItems()
+        {
+            return array(
+                '@ModeraExampleBundle/Resources/config/routing.yml'
+            );
+        }
     }
-}
 
-```
-
-Modera\ExampleBundle\Resurces\config\services.xml
-
-```
-
-<services>
-
-...
+And here we have its service container definition:
 
     <service id="modera_example.contributions.routing_resources_provider"
              class="Modera\ExampleBundle\Contributions\RoutingResourcesProvider">
@@ -53,9 +51,7 @@ Modera\ExampleBundle\Resurces\config\services.xml
         <tag name="modera_routing.routing_resources_provider" />
     </service>
 
-...
+## Licensing
 
-</services>
-
-
-```
+This bundle is under the MIT license. See the complete license in the bundle:
+Resources/meta/LICENSE

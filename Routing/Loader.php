@@ -10,6 +10,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
+ * Collects dynamically contributed routing resources.
+ *
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2013 Modera Foundation
  */
@@ -23,7 +25,7 @@ class Loader implements LoaderInterface
     /**
      * @var ContributorInterface
      */
-    protected $resourcesProvider;
+    private $resourcesProvider;
 
     /**
      * @var FileLocatorInterface
@@ -33,10 +35,12 @@ class Loader implements LoaderInterface
     /**
      * @var bool
      */
-    private $loaded = false;
+    private $isLoaded = false;
 
     /**
      * @param ContainerInterface $container
+     * @param ContributorInterface $resourcesProvider
+     * @param FileLocatorInterface $locator
      */
     public function __construct(ContainerInterface $container, ContributorInterface $resourcesProvider, FileLocatorInterface $locator)
     {
@@ -48,32 +52,29 @@ class Loader implements LoaderInterface
     /**
      * @return LoaderInterface
      */
-    private function getLoader()
+    private function getRootRoutingLoader()
     {
+        // we cannot use this in a class constructor because it will result in a circular dependency exception
         return $this->container->get('routing.loader');
     }
 
     /**
-     * @param mixed $resource
-     * @param string $type
-     * @return RouteCollection
-     * @throws \RuntimeException
+     * @inheritDoc
      */
     public function load($resource, $type = null)
     {
-        if (true === $this->loaded) {
+        if (true === $this->isLoaded) {
             throw new \RuntimeException('Do not add the "modera_routing" loader twice');
         }
 
         $collection = new RouteCollection();
-        $resources = $this->resourcesProvider->getItems();
 
-        foreach ($resources as $resource) {
+        foreach ($this->resourcesProvider->getItems() as $resource) {
             $resource = $this->locator->locate($resource);
-            $collection->addCollection($this->getLoader()->load($resource));
+            $collection->addCollection($this->getRootRoutingLoader()->load($resource));
         }
 
-        $this->loaded = true;
+        $this->isLoaded = true;
 
         return $collection;
     }
@@ -89,18 +90,24 @@ class Loader implements LoaderInterface
     }
 
     /**
-     * @return LoaderResolverInterface|void
+     * @inheritDoc
      */
     public function getResolver()
     {
-        //
     }
 
     /**
-     * @param LoaderResolverInterface $resolver
+     * @inheritDoc
      */
     public function setResolver(LoaderResolverInterface $resolver)
     {
-        //
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLoaded()
+    {
+        return $this->isLoaded;
     }
 }
