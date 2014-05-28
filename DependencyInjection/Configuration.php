@@ -54,7 +54,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('runtime_path')
                     ->cannotBeEmpty()
-                    ->defaultValue('/modera/js-runtime/src')
+                    ->defaultValue('/modera/mjr/src')
                 ->end()
                 ->scalarNode('viewport_class') // for example: MF.runtime.applications.authenticationaware.view.Viewport
                     ->cannotBeEmpty()
