@@ -26,19 +26,16 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardListDashboardActivity', {
             callback(ui);
 
         });
-
     },
-
 
     // private
     attachListeners: function(ui) {
         var me = this;
 
         ui.on('changedashboard', function(panel, dashboard) {
-
-            me.workbench.getActivitiesManager().launchActivity('home', {'name': dashboard.name})
-
-            console.log(dashboard)
+            me.workbench.launchActivity('home', {
+                name: dashboard.get('name')
+            });
         });
     }
 

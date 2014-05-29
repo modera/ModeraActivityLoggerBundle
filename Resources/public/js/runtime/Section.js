@@ -15,8 +15,6 @@ Ext.define('Modera.backend.dashboard.runtime.Section', {
         }
     },
 
-
-
     // override
     activate: function(workbench, callback) {
         var me = this;

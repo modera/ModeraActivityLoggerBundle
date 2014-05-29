@@ -11,8 +11,7 @@ Ext.define('Modera.backend.dashboard.store.Dashboards', {
                 'name', //
                 'label',
                 'uiClass',
-                'default',
-//
+                'default'//,
 //                'glyph',
 //                'iconSrc',
 //                'iconCls'

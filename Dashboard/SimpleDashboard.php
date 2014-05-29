@@ -27,7 +27,7 @@ class SimpleDashboard implements DashboardInterface
      * @param string $description
      * @param string $icon
      */
-    public function __construct($name, $label, $uiClass, $description='', $icon='modera-backend-module-tools-icon')
+    public function __construct($name, $label, $uiClass, $description='', $icon='modera-backend-dashboard-default-icon')
     {
         $this->label = $label;
         $this->name = $name;

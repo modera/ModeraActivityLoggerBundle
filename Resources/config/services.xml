@@ -37,5 +37,11 @@
 
             <tag name="doctrine.event_listener" event="onFlush"  />
         </service>
+
+        <service id="modera_backend_dashboard.contributions.css_resources_provider"
+                 class="Modera\BackendDashboardBundle\Contributions\CssResourcesProvider">
+
+            <tag name="modera_mjr_integration.css_resources_provider" />
+        </service>
     </services>
 </container>
