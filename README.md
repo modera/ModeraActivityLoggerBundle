@@ -25,7 +25,7 @@ Optionally you may specify a version number using bundle's semantic config, to d
 
 ### Apache2
 
-To instruct client's browser that it has use cache we will need to have `mod_expires` apache module installed. On Debian
+To instruct client's browser that it should use cache we will need to have `mod_expires` apache module installed. On Debian
 like system this can be done by issuing these commands:
 
     $ sudo a2enmod expires
@@ -33,11 +33,24 @@ like system this can be done by issuing these commands:
 
 Once the module is enabled you can take `Resources/server/.htaccess` file shipped with this bundle and put it to
 your web directory. Feel free to tweak provided .htaccess, since the only real thing that you need from it is
-`<IfModule mod_expires.c>` section.
+`<IfModule mod_expires.c>` section. If caching still doesn't work make sure that support for .htaccess files is enabled
+(check your virtual hosts definition in `/etc/apache2/sites-enabled/` directory or if you don't use virtual hosts
+ then take a look at `/etc/apache2/apache2.conf`, please make sure that configuration property `AllowOverride` is set
+ to `All` in `<Directory>` configuration section).
 
 ### Nginx
 
-TODO
+Update your virtual host ( default location on Debian-like system is `/etc/nginx/sites-enabled` ) and to your `server`
+configuration section add this:
+
+    location ~*\.js\?v=$ {
+        expires 1y;
+    }
+
+And then restart nginx:
+
+    $ sudo service restart nginx
+
 
 # Documentation
 
