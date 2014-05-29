@@ -2,6 +2,7 @@
 
 namespace Modera\MJRSecurityIntegrationBundle;
 
+use Sli\ExpanderBundle\Contributing\ExtensionPointsAwareBundleInterface;
 use Sli\ExpanderBundle\DependencyInjection\CompositeContributorsProviderCompilerPass;
 use Sli\ExpanderBundle\Ext\ExtensionPoint;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

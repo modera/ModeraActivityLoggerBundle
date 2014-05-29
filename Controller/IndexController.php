@@ -9,6 +9,7 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
@@ -40,13 +41,17 @@ class IndexController extends Controller
         $appLoadingPath = $router->generate('modera_mjr_security_integration.index.application');
         $appLoadingPath = substr($appLoadingPath, 0, strpos($appLoadingPath, 'Application.js') - 1);
 
+        /* @var Kernel $kernel */
+        $kernel = $this->get('kernel');
+
         $content = $this->renderView(
             'ModeraMJRSecurityIntegrationBundle:Index:index.html.twig',
             array(
                 'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
                 'css_resources' => $cssResourcesProvider->getItems(),
                 'js_resources' => $jsResourcesProvider->getItems(),
-                'app_loading_path' => $appLoadingPath
+                'app_loading_path' => $appLoadingPath,
+                'disable_caching' => $kernel->getEnvironment() != 'prod'
             )
         );
 
@@ -66,7 +71,6 @@ class IndexController extends Controller
     {
         /* @var ServiceDefinitionsManager $definitionsMgr */
         $definitionsMgr = $this->container->get('modera_mjr_integration.csdi.service_definitions_manager');
-
         $content = $this->renderView(
             'ModeraMJRSecurityIntegrationBundle:Index:application.html.twig',
             array(
@@ -76,7 +80,7 @@ class IndexController extends Controller
         );
 
         $response = new Response($content);
-        $response->headers->set('Content-Type', 'text/javascript');
+        $response->headers->set('Content-Type', 'application/javascript');
 
         return $response;
     }

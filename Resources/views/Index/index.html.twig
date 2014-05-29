@@ -32,6 +32,7 @@
 <script type="text/javascript">
     Ext.Loader.setConfig({
         enabled: true,
+        disableCaching: {{ disable_caching ? 'true' : 'false' }},
         paths: {
             MFC: '{{ asset(config.runtime_path) }}/src/MFC',
             MF: '{{ asset(config.runtime_path) }}/src/MF',
