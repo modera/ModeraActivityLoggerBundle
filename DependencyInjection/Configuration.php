@@ -22,9 +22,6 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('is_enabled')
-                    ->defaultValue(true)
-                ->end()
                 ->scalarNode('version')->end()
                 ->scalarNode('url')
                     ->defaultValue('extjs-class-loader.js')

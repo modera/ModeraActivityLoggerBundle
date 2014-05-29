@@ -5,9 +5,12 @@ namespace Modera\MJRCacheAwareClassLoaderBundle\Controller;
 use Modera\MJRCacheAwareClassLoaderBundle\VersionResolving\VersionResolverInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @author    Sergei Lissovski <sergei.lissovski@modera.org>
+ * @copyright 2014 Modera Foundation
+ */
 class DefaultController extends Controller
 {
     /**
