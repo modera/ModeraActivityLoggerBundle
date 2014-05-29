@@ -82,7 +82,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    protected $state;
+    protected $state = self::STATE_NEW;
 
     /**
      * @ORM\ManyToMany(targetEntity="Group", inversedBy="users", cascade={"persist"})
