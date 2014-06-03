@@ -51,10 +51,15 @@ Ext.define('Modera.backend.dashboard.runtime.SettingsWindowContributor', {
 
     // private
     onUserContributedButtonClicked: function(btn) {
-        var user = btn.up('modera-backend-security-user-list').getSelectionModel().getSelection()[0];
+        var users = btn.up('modera-backend-security-user-list').getSelectionModel().getSelection();
+
+        var ids = [];
+        Ext.each(users, function(user) {
+            ids.push(user.get('id'));
+        });
 
         this.application.getContainer().get('workbench').launchActivity('user-dashboard-settings', {
-            id: user.get('id')
+            id: ids.length > 1 ? ids : ids[0]
         });
     },
 

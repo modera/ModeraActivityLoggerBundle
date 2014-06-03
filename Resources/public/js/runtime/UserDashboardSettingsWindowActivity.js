@@ -26,21 +26,25 @@ Ext.define('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity
 
     // override
     doCreateUi: function(params, onReadyCallback) {
-        var query = {
-            filter: this.getFilter(params),
-            hydration: {
-                profile: 'main'
-            }
-        };
-        this.getEndpoint().get(query, function(response) {
-            if (response.success) {
-                var window = Ext.create('Modera.backend.dashboard.view.DashboardSettingsWindow', {
-                    data: response.result
-                });
+        if (Ext.isArray(params.id)) {
+            alert('Not implemented');
+        } else {
+            var query = {
+                filter: this.getFilter(params),
+                hydration: {
+                    profile: 'main'
+                }
+            };
+            this.getEndpoint().get(query, function(response) {
+                if (response.success) {
+                    var window = Ext.create('Modera.backend.dashboard.view.DashboardSettingsWindow', {
+                        data: response.result
+                    });
 
-                onReadyCallback(window);
-            }
-        });
+                    onReadyCallback(window);
+                }
+            });
+        }
     },
 
     // private
@@ -58,4 +62,4 @@ Ext.define('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity
             })
         });
     }
-})
+});
