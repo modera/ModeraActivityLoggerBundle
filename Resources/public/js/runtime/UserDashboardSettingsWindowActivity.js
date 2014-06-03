@@ -26,22 +26,53 @@ Ext.define('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity
 
     // override
     doCreateUi: function(params, onReadyCallback) {
-        if (Ext.isArray(params.id)) {
-            alert('Not implemented');
-        } else {
+        var me = this;
+        var loadData = function(params, callback) {
             var query = {
-                filter: this.getFilter(params),
+                filter: me.getFilter(params),
                 hydration: {
                     profile: 'main'
                 }
             };
-            this.getEndpoint().get(query, function(response) {
-                if (response.success) {
-                    var window = Ext.create('Modera.backend.dashboard.view.DashboardSettingsWindow', {
-                        data: response.result
-                    });
+            me.getEndpoint().get(query, callback);
+        };
 
-                    onReadyCallback(window);
+        var createWindow = function(data) {
+            var window = Ext.create('Modera.backend.dashboard.view.DashboardSettingsWindow', {
+                data: data
+            });
+            onReadyCallback(window);
+        };
+
+        if (Ext.isArray(params.id)) {
+
+            var ids = [];
+            var dashboardSettings = null;
+            Ext.each(params.id, function(id) {
+                loadData({ id: id }, function(response) {
+                    if (response.success) {
+                        dashboardSettings = response.result['dashboardSettings'];
+                        Ext.each(dashboardSettings, function(row) {
+                            row['hasAccess'] = false;
+                            row['isDefault'] = false;
+                        });
+                        ids.push(response.result['id']);
+
+                        if (params.id.length == ids.length) {
+                            createWindow({
+                                id: ids,
+                                title: '',
+                                dashboardSettings: dashboardSettings
+                            });
+                        }
+                    }
+                });
+            });
+        } else {
+
+            loadData(params, function(response) {
+                if (response.success) {
+                    createWindow(response.result);
                 }
             });
         }
@@ -50,10 +81,23 @@ Ext.define('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity
     // private
     attachListeners: function(ui) {
         var me = this;
-        ui.on('update', function(w, data) {
+        ui.on('update', function(w, values) {
             w.disable();
 
-            me.getEndpoint().update({ record: data }, function(result) {
+            var records = [];
+            if (Ext.isArray(values['id'])) {
+
+                Ext.each(values['id'], function(id) {
+                    var data = Ext.clone(values);
+                    data['id'] = id;
+                    records.push(data);
+                });
+            } else {
+
+                records.push(values);
+            }
+
+            me.getEndpoint().batchUpdate({ records: records }, function(result) {
                 w.enable();
 
                 if (result.success) {
