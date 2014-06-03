@@ -23,7 +23,6 @@ class UserSettingsController extends AbstractCrudController
                     'main-form' => function(UserSettings $settings) {
                         return array(
                             'id'       => $settings->getId(),
-                            'user_id'  => $settings->getUser()->getId(),
                             'username' => $settings->getUser()->getUsername(),
                             'language' => $settings->getLanguage() ? $settings->getLanguage()->getId() : null,
                         );

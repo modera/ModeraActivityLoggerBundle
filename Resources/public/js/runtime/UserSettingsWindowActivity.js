@@ -19,81 +19,56 @@ Ext.define('Modera.backend.languages.runtime.UserSettingsWindowActivity', {
 
         var window = Ext.create('Modera.backend.languages.view.UserSettingsWindow');
 
+        var loadData = function(userId, callback) {
+            var requestParams = {
+                record: {
+                    user: userId
+                },
+                filter: [
+                    { property: 'user.id', value: 'eq:' + userId }
+                ],
+                hydration: {
+                    profile: 'main-form'
+                }
+            };
+            Actions.ModeraBackendLanguages_UserSettings.getOrCreate(requestParams, callback);
+        };
+
+        var onLoad = function(data) {
+            window.loadData(data);
+            callback(window);
+        };
+
         me.workbench.getService('config_provider').getConfig(function(config) {
             var languagesConfig = config['modera_backend_languages'] || {};
             var languages = languagesConfig['languages'] || [];
             window.down('#languages').getStore().loadData(languages);
-        });
 
-        if (Ext.isArray(params.userId)) {
+            if (Ext.isArray(params.userId)) {
 
-            var onLoad = function(ids) {
-                window.loadData({
-                    id: ids
-                });
-                callback(window);
-            };
-
-            var requestParams = {
-                filter: [
-                    { property: 'user.id', value: 'in:' + params.userId.join(',') }
-                ],
-                hydration: {
-                    profile: 'main-form'
-                }
-            };
-            Actions.ModeraBackendLanguages_UserSettings.list(requestParams, function(response) {
                 var ids = [];
-                var users = [];
-                Ext.each(response.items, function(item) {
-                    ids.push(item['id']);
-                    users.push(item['user_id']);
-                });
+                Ext.each(params.userId, function(id) {
+                    loadData(id, function(response) {
+                        if (response.success) {
+                            ids.push(response.result['id']);
 
-                if (params.userId.length !== users.length) {
-                    Ext.each(params.userId, function(id) {
-                        if (users.indexOf(id) == -1) {
-                            Actions.ModeraBackendLanguages_UserSettings.create({
-                                record: {
-                                    user: id
-                                },
-                                hydration: {
-                                    profile: 'main-form'
-                                }
-                            }, function(response) {
-                                var item = response.result;
-                                ids.push(item['id'])
-                                users.push(item['user_id']);
-                                if (params.userId.length == users.length) {
-                                    onLoad(ids);
-                                }
-                            });
+                            if (params.userId.length == ids.length) {
+                                onLoad({
+                                    id: ids
+                                });
+                            }
                         }
                     });
-                } else {
-                    onLoad(ids);
-                }
-            });
-        } else {
+                });
+            } else {
 
-            var requestParams = {
-                record: {
-                    user: params.userId
-                },
-                filter: [
-                    { property: 'user.id', value: 'eq:' + params.userId }
-                ],
-                hydration: {
-                    profile: 'main-form'
-                }
-            };
-            Actions.ModeraBackendLanguages_UserSettings.getOrCreate(requestParams, function(response) {
-                if (response) {
-                    window.loadData(response.result);
-                }
-                callback(window);
-            });
-        }
+                loadData(params.userId, function(response) {
+                    if (response.success) {
+                        onLoad(response.result);
+                    }
+                });
+            }
+        });
     },
 
     // protected
