@@ -23,6 +23,8 @@ class UserSettingsController extends AbstractCrudController
                     'main-form' => function(UserSettings $settings) {
                         return array(
                             'id'       => $settings->getId(),
+                            'user_id'  => $settings->getUser()->getId(),
+                            'username' => $settings->getUser()->getUsername(),
                             'language' => $settings->getLanguage() ? $settings->getLanguage()->getId() : null,
                         );
                     },
@@ -32,5 +34,17 @@ class UserSettingsController extends AbstractCrudController
                 )
             ),
         );
+    }
+
+    /**
+     * @Remote
+     */
+    public function getOrCreateAction(array $params)
+    {
+        try {
+            return $this->getAction($params);
+        } catch (\Exception $e) {
+            return $this->createAction($params);
+        }
     }
 }

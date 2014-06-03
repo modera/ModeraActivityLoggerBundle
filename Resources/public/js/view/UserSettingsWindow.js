@@ -6,7 +6,8 @@ Ext.define('Modera.backend.languages.view.UserSettingsWindow', {
     alias: 'widget.modera-backend-languages-usersettingswindow',
 
     // l10n
-    editRecordTitle: 'Language preference',
+    editRecordTitle: 'Language preference for "{0}"',
+    usersCountText: '{0} users',
 
     // override
     constructor: function(config) {
@@ -58,5 +59,12 @@ Ext.define('Modera.backend.languages.view.UserSettingsWindow', {
     loadData: function(data) {
         var me = this;
         me.down('form').getForm().setValues(data);
+
+        if (Ext.isArray(data['id'])) {
+            var title = Ext.String.format(me.usersCountText, data['id'].length);
+            me.setTitle(Ext.String.format(me.editRecordTitle, title));
+        } else {
+            me.setTitle(Ext.String.format(me.editRecordTitle, data['username']));
+        }
     }
 });

@@ -13,9 +13,6 @@ Ext.define('Modera.backend.languages.runtime.UserSettingsWindowActivity', {
         return 'edit-language';
     },
 
-    // l10n
-    windowTitileText: 'Language preference',
-
     // override
     doCreateUi: function(params, callback) {
         var me = this;
@@ -28,20 +25,75 @@ Ext.define('Modera.backend.languages.runtime.UserSettingsWindowActivity', {
             window.down('#languages').getStore().loadData(languages);
         });
 
-        me.userId = params.userId;
+        if (Ext.isArray(params.userId)) {
 
-        var requestParams = {
-            filter: [
-                { property: 'user.id', value: 'eq:' + me.userId }
-            ],
-            hydration: {
-                profile: 'main-form'
-            }
-        };
-        Actions.ModeraBackendLanguages_UserSettings.get(requestParams, function(response) {
-            window.loadData(response.result);
-            callback(window);
-        });
+            var onLoad = function(ids) {
+                window.loadData({
+                    id: ids
+                });
+                callback(window);
+            };
+
+            var requestParams = {
+                filter: [
+                    { property: 'user.id', value: 'in:' + params.userId.join(',') }
+                ],
+                hydration: {
+                    profile: 'main-form'
+                }
+            };
+            Actions.ModeraBackendLanguages_UserSettings.list(requestParams, function(response) {
+                var ids = [];
+                var users = [];
+                Ext.each(response.items, function(item) {
+                    ids.push(item['id']);
+                    users.push(item['user_id']);
+                });
+
+                if (params.userId.length !== users.length) {
+                    Ext.each(params.userId, function(id) {
+                        if (users.indexOf(id) == -1) {
+                            Actions.ModeraBackendLanguages_UserSettings.create({
+                                record: {
+                                    user: id
+                                },
+                                hydration: {
+                                    profile: 'main-form'
+                                }
+                            }, function(response) {
+                                var item = response.result;
+                                ids.push(item['id'])
+                                users.push(item['user_id']);
+                                if (params.userId.length == users.length) {
+                                    onLoad(ids);
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    onLoad(ids);
+                }
+            });
+        } else {
+
+            var requestParams = {
+                record: {
+                    user: params.userId
+                },
+                filter: [
+                    { property: 'user.id', value: 'eq:' + params.userId }
+                ],
+                hydration: {
+                    profile: 'main-form'
+                }
+            };
+            Actions.ModeraBackendLanguages_UserSettings.getOrCreate(requestParams, function(response) {
+                if (response) {
+                    window.loadData(response.result);
+                }
+                callback(window);
+            });
+        }
     },
 
     // protected
@@ -50,23 +102,16 @@ Ext.define('Modera.backend.languages.runtime.UserSettingsWindowActivity', {
 
         ui.on('saveandclose', function(window) {
             var values = window.down('form').getForm().getValues();
-            var action = 'update';
-            if (!values['id']) {
-                var action = 'create';
-                values['user'] = me.userId;
-            }
 
-            Actions.ModeraBackendLanguages_UserSettings[action]({ record: values }, function(response) {
+            var records = [];
+            Ext.each(values['id'].split(','), function(id) {
+                var data = Ext.clone(values);
+                data['id'] = id;
+                records.push(data);
+            });
+
+            Actions.ModeraBackendLanguages_UserSettings.batchUpdate({ records: records }, function(response) {
                 if (response.success) {
-
-                    if (me.section) {
-                        if ('update' == action) {
-                            me.section.fireEvent('recordsupdated', response['updated_models']);
-                        } else {
-                            me.section.fireEvent('recordscreated', response['created_models']);
-                        }
-                    }
-
                     window.close();
                 } else {
                     window.showErrors(response);

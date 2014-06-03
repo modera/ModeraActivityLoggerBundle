@@ -55,7 +55,7 @@ Ext.define('Modera.backend.languages.runtime.UserSettingsWindowContributor', {
                     contributedBy: me,
                     handler: callback,
                     scope: me
-                })
+                });
             }
         };
 
@@ -78,10 +78,15 @@ Ext.define('Modera.backend.languages.runtime.UserSettingsWindowContributor', {
     onUserContributedButtonClicked: function(btn) {
         var me = this;
 
-        var user = btn.up('modera-backend-security-user-list').getSelectionModel().getSelection()[0];
         var workbench = me.application.getContainer().get('workbench');
+        var users = btn.up('modera-backend-security-user-list').getSelectionModel().getSelection();
+
+        var ids = [];
+        Ext.each(users, function(user) {
+            ids.push(user.get('id'));
+        });
         workbench.launchActivity('edit-language', {
-            userId: user.get('id')
+            userId: ids.length > 1 ? ids : ids[0]
         });
     }
 });
