@@ -15,7 +15,7 @@ doctrine:
         port:     3306
         dbname:   modera_server_crud
         user:     root
-        password:
+        password: 123123
         charset:  UTF8
 
     orm:

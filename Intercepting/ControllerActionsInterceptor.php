@@ -30,6 +30,13 @@ class ControllerActionsInterceptor implements ControllerActionsInterceptorInterf
     /**
      * @inheritDoc
      */
+    public function onBatchUpdate(array $params, AbstractCrudController $controller)
+    {
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function onGet(array $params, AbstractCrudController $controller)
     {
     }

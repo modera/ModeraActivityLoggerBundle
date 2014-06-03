@@ -55,7 +55,7 @@ class OperationResult
     /**
      * @return array[]
      */
-    public function getUpdateEntities()
+    public function getUpdatedEntities()
     {
         return $this->findEntriesByOperation(self::TYPE_ENTITY_UPDATED);
     }
@@ -100,6 +100,27 @@ class OperationResult
         }
 
         return $result;
+    }
+
+    /**
+     * @param OperationResult $result
+     *
+     * @return OperationResult  A new instance of OperationResult is returned
+     */
+    public function merge(OperationResult $result)
+    {
+        $new = new self();
+        foreach (array_merge($this->getCreatedEntities(), $result->getCreatedEntities()) as $entry) {
+            $new->reportEntity($entry['entity_class'], $entry['id'], self::TYPE_ENTITY_CREATED);
+        }
+        foreach (array_merge($this->getUpdatedEntities(), $result->getUpdatedEntities()) as $entry) {
+            $new->reportEntity($entry['entity_class'], $entry['id'], self::TYPE_ENTITY_UPDATED);
+        }
+        foreach (array_merge($this->getRemovedEntities(), $result->getRemovedEntities()) as $entry) {
+            $new->reportEntity($entry['entity_class'], $entry['id'], self::TYPE_ENTITY_REMOVED);
+        }
+
+        return $new;
     }
 
     static public function clazz()

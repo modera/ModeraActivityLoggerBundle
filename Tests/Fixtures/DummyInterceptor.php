@@ -29,6 +29,13 @@ class DummyInterceptor implements ControllerActionsInterceptorInterface
         $this->invocations['update'][] = array($params, $controller);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function onBatchUpdate(array $params, AbstractCrudController $controller)
+    {
+        $this->invocations['batchUpdate'][] = array($params, $controller);
+    }
 
     public function onGet(array $params, AbstractCrudController $controller)
     {

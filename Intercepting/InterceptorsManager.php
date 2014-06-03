@@ -35,7 +35,7 @@ class InterceptorsManager
      */
     public function intercept($actionName, array $params, AbstractCrudController $controller)
     {
-        if (!in_array($actionName, array('create', 'get', 'list', 'remove', 'update', 'getNewRecordValues'))) {
+        if (!in_array($actionName, array('create', 'get', 'list', 'remove', 'update', 'getNewRecordValues', 'batchUpdate'))) {
             throw new \InvalidArgumentException(sprintf(
                 'Action name can only be either of these: create, get, list or remove, update, getNewRecordValues, but "%s" given',
                 $actionName

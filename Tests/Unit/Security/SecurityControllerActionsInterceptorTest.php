@@ -72,6 +72,7 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
                     'list' => 'ROLE_LIST',
                     'remove' => 'ROLE_REMOVE',
                     'getNewRecordValues' => 'ROLE_GRV',
+                    'batchUpdate' => 'ROLE_BATCH_UPDATE'
                 )
             )
         );
@@ -104,6 +105,7 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
                     'list' => 'ROLE_LIST',
                     'remove' => 'ROLE_REMOVE',
                     'getNewRecordValues' => 'ROLE_GRV',
+                    'batchUpdate' => 'ROLE_BATCH_UPDATE'
                 )
             )
         );
@@ -132,6 +134,16 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
     public function testOnUpdateAllowed()
     {
         $this->assertAccessAllowed('update');
+    }
+
+    public function testOnBatchUpdate()
+    {
+        $this->assertExceptionThrown('batchUpdate');
+    }
+
+    public function testOnBatchUpdateAllowed()
+    {
+        $this->assertAccessAllowed('batchUpdate');
     }
 
     public function testOnGet()

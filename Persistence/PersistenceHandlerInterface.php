@@ -34,6 +34,13 @@ interface PersistenceHandlerInterface
     public function update($entity);
 
     /**
+     * @param object[] $entities
+     *
+     * @return OperationResult
+     */
+    public function updateBatch(array $entities);
+
+    /**
      * @param string $entityClass
      * @param array  $params
      *
