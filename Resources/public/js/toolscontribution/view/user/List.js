@@ -32,7 +32,9 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
     constructor: function(config) {
         var me = this;
 
-        var store = Ext.create('Modera.backend.security.toolscontribution.store.Users');
+        config = config || {};
+
+        var store = config.store || Ext.create('Modera.backend.security.toolscontribution.store.Users');
 
         var defaults = {
             rounded: true,
@@ -40,27 +42,28 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
             monitorModel: 'modera.security_bundle.user',
             emptyCls: 'mfc-grid-empty-text',
             store: store,
+            selType: 'checkboxmodel',
             columns: [
                 {
-                    width: 250,
+                    width: 160,
                     text: me.firstNameColumnHeaderText,
                     dataIndex: 'firstName',
                     renderer: me.defaultRenderer()
                 },
                 {
-                    width: 250,
+                    width: 160,
                     text: me.lastNameColumnHeaderText,
                     dataIndex: 'lastName',
                     renderer: me.defaultRenderer()
                 },
                 {
-                    width: 250,
+                    width: 160,
                     text: me.usernameColumnHeaderText,
                     dataIndex: 'username',
                     renderer: me.defaultRenderer()
                 },
                 {
-                    width: 250,
+                    width: 260,
                     text: me.emailColumnHeaderText,
                     dataIndex: 'email',
                     renderer: me.defaultRenderer()
@@ -92,6 +95,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                     dock: 'top',
                     items: [
                         {
+                            hidden: config.hideViewAwareComponents || false,
                             itemId: 'newRecordBtn',
                             iconCls: 'mfc-icon-add-24',
                             text: me.addBtnText,
@@ -106,6 +110,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                             xtype: 'splitbutton',
                             disabled: true,
                             selectionAware: true,
+                            multipleSelectionSupported: true,
                             itemId: 'editRecordBtn',
                             iconCls: 'mfc-icon-edit-24',
                             text: me.editBtnText,
@@ -115,7 +120,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                                 items: [
                                     {
                                         itemId: 'deleteBtn',
-                                        text: this.deleteBtnText,
+                                        text: me.deleteBtnText,
                                         scale: 'medium',
                                         iconCls: 'mfc-icon-delete-24'
                                     }
@@ -125,12 +130,14 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                         {
                             disabled: true,
                             selectionAware: true,
+                            multipleSelectionSupported: true,
                             itemId: 'editGroupsBtn',
                             iconCls: 'modera-backend-security-icon-group-24',
-                            text:me.groupsBtnText,
+                            text: me.groupsBtnText,
                             scale: 'medium'
                         },
                         {
+                            hidden: config.hideViewAwareComponents || false,
                             disabled: true,
                             selectionAware: true,
                             itemId: 'editPasswordBtn',
@@ -194,7 +201,24 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
 
     // private
     getSelectedRecord: function() {
-        return this.getSelectionModel().getSelection()[0];
+        return this.getSelectedRecords()[0];
+    },
+
+    // private
+    getSelectedRecords: function() {
+        return this.getSelectionModel().getSelection();
+    },
+
+    // private
+    getSelectedIds: function() {
+        var records = this.getSelectedRecords();
+
+        var ids = [];
+        Ext.each(records, function(record) {
+            ids.push(record.get('id'));
+        });
+
+        return ids;
     },
 
     // private
@@ -205,12 +229,28 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
             me.fireEvent('newrecord', me);
         });
 
-        me.down('#editRecordBtn').on('click', function() {
-            me.fireEvent('editrecord', me, { id: me.getSelectedRecord().get('id') });
+        me.on('selectionchange', function() {
+            var btn = me.down('#editRecordBtn');
+            if (me.getSelectedRecords().length > 1) {
+                btn.btnEl.addCls('modera-backend-security-btn-disabled');
+            } else {
+                btn.btnEl.removeCls('modera-backend-security-btn-disabled');
+            }
+        });
+
+        me.down('#editRecordBtn').on('click', function(btn) {
+            var records = me.getSelectedRecords();
+            if (records.length > 1) {
+                btn.maybeShowMenu();
+            } else {
+                me.fireEvent('editrecord', me, { id: records[0].get('id') });
+            }
+
         });
 
         me.down('#deleteBtn').on('click', function() {
-            me.fireEvent('deleterecord', me, { id: me.getSelectedRecord().get('id') });
+            var ids = me.getSelectedIds();
+            me.fireEvent('deleterecord', me, { id: ids.length > 1 ? ids : ids[0] });
         });
 
         me.down('#editPasswordBtn').on('click', function() {
@@ -218,7 +258,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
         });
 
         me.down('#editGroupsBtn').on('click', function() {
-            me.fireEvent('editgroups', me, { id: me.getSelectedRecord().get('id') });
+            var ids = me.getSelectedIds();
+            me.fireEvent('editgroups', me, { id: ids.length > 1 ? ids : ids[0] });
         });
     }
 });

@@ -6,7 +6,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.GroupUsers', {
     alias: 'widget.modera-backend-security-group-groupusers',
 
     requires: [
-        'Modera.backend.security.toolscontribution.store.GroupUsers'
+        'Modera.backend.security.toolscontribution.store.GroupUsers',
+        'Modera.backend.security.toolscontribution.view.user.List'
     ],
 
     // l10n
@@ -35,10 +36,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.GroupUsers', {
                 },
                 {
                     itemId: 'users',
-                    monitorModel: 'modera.security_bundle.user',
-                    xtype: 'grid',
-                    rounded: true,
-                    frame: true,
+                    xtype: 'modera-backend-security-user-list',
+                    hideViewAwareComponents: true,
                     columns: [
                         {
                             text: this.userIdColumnText,
@@ -64,6 +63,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.GroupUsers', {
 
     // private
     assignListeners: function() {
-
+        this.relayEvents(this.down('modera-backend-security-user-list'), [
+            'editrecord', 'deleterecord', 'editgroups'
+        ]);
     }
 });

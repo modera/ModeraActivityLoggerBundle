@@ -11,6 +11,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.EditGroupsWindow
 
     // l10n
     recordTitle: 'Change group for "{0}"',
+    usersCountText: '{0} users',
     availableGroupsText: 'Groups available',
     assignedGroupsText: 'Groups assigned',
     noGroupsText: 'no groups',
@@ -145,10 +146,16 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.EditGroupsWindow
         var me = this;
 
         me.down('form').getForm().setValues(data);
-        me.setTitle(Ext.String.format(me.recordTitle, data['username']));
-        me.down('#available').getStore().filterByUser(data['id'], 'notIn');
-        me.down('#assigned').getStore().filterByUser(data['id'], 'in');
 
+        if (Ext.isArray(data['id'])) {
+            var title = Ext.String.format(me.usersCountText, data['id'].length);
+            me.setTitle(Ext.String.format(me.recordTitle, title));
+            me.down('#available').getStore().load();
+        } else {
+            me.setTitle(Ext.String.format(me.recordTitle, data['username']));
+            me.down('#available').getStore().filterByUser(data['id'], 'notIn');
+            me.down('#assigned').getStore().filterByUser(data['id'], 'in');
+        }
     },
 
     getAssignedGroupsIds: function() {

@@ -40,5 +40,15 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.group.ListActivity
         ui.on('editgroup', function(sourceComponent, record) {
             me.fireEvent('handleaction', 'edit-group', sourceComponent, { id: record.get('id') });
         });
+
+        ui.on('editrecord', function(sourceComponent, params) {
+            me.fireEvent('handleaction', 'edit-user', sourceComponent, params);
+        });
+        ui.on('deleterecord', function(sourceComponent, params) {
+            me.fireEvent('handleaction', 'delete-user', sourceComponent, params);
+        });
+        ui.on('editgroups', function(sourceComponent, params) {
+            me.fireEvent('handleaction', 'edit-groups', sourceComponent, params);
+        });
     }
 });

@@ -162,6 +162,10 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.Overview', {
                 me.down('#groupUsers').getLayout().setActiveItem('placeholder');
             }
         });
+
+        this.relayEvents(me.down('#groupUsers'), [
+            'editrecord', 'deleterecord', 'editgroups'
+        ]);
     },
 
     /**
