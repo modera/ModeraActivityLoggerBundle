@@ -14,7 +14,7 @@
     },
     "require": {
         "php": ">=5.4.0",
-        "sergeil/expander-bundle": "dev-master",
+        "sergeil/expander-bundle": "~1.0",
         "modera/mjr": "dev-master",
         "modera/foundation-bundle": "dev-master",
         "modera/mjr-integration-bundle": "dev-master"
