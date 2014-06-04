@@ -20,7 +20,7 @@
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
-        "sergeil/aux-bundle": "dev-master"
+        "sergeil/aux-bundle": "~1.0"
     },
     "autoload": {
         "psr-0": { "Modera\\FileRepositoryBundle": "" }
