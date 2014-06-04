@@ -10,6 +10,7 @@ use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
 use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
 use Modera\ServerCrudBundle\Hydration\HydrationProfile;
+use Modera\ServerCrudBundle\Persistence\OperationResult;
 use Modera\TranslationsBundle\Helper\T;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -132,9 +133,16 @@ class UsersController extends AbstractCrudController
                 /* @var UserService $userService */
                 $userService = $container->get('modera_security.service.user_service');
 
+                $operationResult = new OperationResult();
+
                 foreach ($entities as $entity) {
+                    /* @var User $entity*/
                     $userService->remove($entity);
+
+                    $operationResult->reportEntity(User::clazz(), $entity->getId(), OperationResult::TYPE_ENTITY_REMOVED);
                 }
+
+                return $operationResult;
             }
         );
     }
