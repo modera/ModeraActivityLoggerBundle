@@ -1,0 +1,25 @@
+imports:
+    - { resource: "@ModeraSecurityBundle/Resources/config/security.yml" }
+
+framework:
+    secret:          Hell yeah!
+    csrf_protection: true
+    session:         ~
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     127.0.0.1
+        port:     3306
+        dbname:   modera_security_bundle
+        user:     root
+        password:
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true

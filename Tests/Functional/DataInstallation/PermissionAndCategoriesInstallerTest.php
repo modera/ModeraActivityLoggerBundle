@@ -2,6 +2,7 @@
 
 namespace Modera\SecurityBundle\Tests\Functional\DataInstallation;
 
+use Doctrine\ORM\Tools\SchemaTool;
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\SecurityBundle\DataInstallation\PermissionAndCategoriesInstaller;
 use Modera\SecurityBundle\Model\Permission;
@@ -17,12 +18,32 @@ use Modera\SecurityBundle\Entity\Permission as PermissionEntity;
 class PermissionAndCategoriesInstallerTest extends FunctionalTestCase
 {
     /**
+     * @var SchemaTool
+     */
+    static private $st;
+
+    /**
      * @var PermissionAndCategoriesInstaller
      */
     private $installer;
 
     private $permissionCategoriesProvider;
     private $permissionsProvider;
+
+    // override
+    static public function doSetUpBeforeClass()
+    {
+        self::$st = new SchemaTool(self::$em);
+        self::$st->createSchema(array(self::$em->getClassMetadata(PermissionEntity::clazz())));
+        self::$st->createSchema(array(self::$em->getClassMetadata(PermissionCategoryEntity::clazz())));
+    }
+
+    // override
+    static public function doTearDownAfterClass()
+    {
+        self::$st->dropSchema(array(self::$em->getClassMetadata(PermissionEntity::clazz())));
+        self::$st->dropSchema(array(self::$em->getClassMetadata(PermissionCategoryEntity::clazz())));
+    }
 
     public function doSetUp()
     {
