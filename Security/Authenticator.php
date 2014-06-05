@@ -134,7 +134,6 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
                 );
             }
 
-
             /* @var User $user */
             $user = $token->getUser();
             $response = array(

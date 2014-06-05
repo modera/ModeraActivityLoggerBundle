@@ -17,7 +17,7 @@ doctrine:
         port:     3306
         dbname:   modera_security_bundle
         user:     root
-        password:
+        password: 
         charset:  UTF8
 
     orm:
