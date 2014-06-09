@@ -22,6 +22,7 @@
         padding: 2px !important;
 
         &.left {
+            font-size: 18px;
             @include border-radius(3px 0px 0px 3px);
             text-align: center;
             color: #DDDDDD;
