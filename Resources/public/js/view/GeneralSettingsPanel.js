@@ -21,13 +21,14 @@ Ext.define('Modera.backend.dcmjr.view.GeneralSettingsPanel', {
      */
     constructor: function(config) {
         var defaults = {
-            border: true,
+            frame: true,
             bodyPadding: 35,
             items: {
                 xtype: 'form',
                 defaults: {
                     labelAlign: 'right',
-                    labelWidth: 150
+                    labelWidth: 150,
+                    anchor: '100%'
                 },
                 items: [
                     {
