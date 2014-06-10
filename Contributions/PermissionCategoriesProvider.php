@@ -3,7 +3,7 @@
 namespace Modera\BackendSecurityBundle\Contributions;
 
 use Modera\SecurityBundle\Model\PermissionCategory;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**

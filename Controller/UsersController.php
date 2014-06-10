@@ -11,7 +11,7 @@ use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
 use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
 use Modera\ServerCrudBundle\Hydration\HydrationProfile;
 use Modera\ServerCrudBundle\Persistence\OperationResult;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;

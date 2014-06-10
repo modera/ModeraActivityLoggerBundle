@@ -4,7 +4,7 @@ namespace Modera\BackendSecurityBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Modera\SecurityBundle\Entity\User;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 use Modera\BackendLanguagesBundle\Entity\UserSettings;
 
 /**
