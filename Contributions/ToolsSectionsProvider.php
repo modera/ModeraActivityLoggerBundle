@@ -3,7 +3,7 @@
 namespace Modera\BackendToolsSettingsBundle\Contributions;
 
 use Modera\BackendToolsBundle\Section\Section;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
