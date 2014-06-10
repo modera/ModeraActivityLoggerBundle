@@ -5,7 +5,7 @@ namespace Modera\SecurityBundle\Service;
 use Doctrine\ORM\EntityManager;
 use Modera\SecurityBundle\Entity\User;
 use Modera\SecurityBundle\RootUserHandling\RootUserHandlerInterface;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
