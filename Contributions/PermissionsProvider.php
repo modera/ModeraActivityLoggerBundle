@@ -4,7 +4,7 @@ namespace Modera\BackendModuleBundle\Contributions;
 
 use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
 use Modera\SecurityBundle\Model\Permission;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
