@@ -18,7 +18,7 @@
         "doctrine/doctrine-bundle": "~1.2"
     },
     "require-dev": {
-        "modera/foundation-bundle": "dev-master",
+        "modera/foundation-bundle": "~1.0",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
