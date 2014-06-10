@@ -45,14 +45,32 @@ class TranslationsController extends AbstractCrudController
     {
         try {
             $filterId = null;
+            $filterValue = null;
             if (isset($params['filter'])) {
                 foreach ($params['filter'] as $filter) {
                     if ('__filter__' == $filter['property']) {
-                        $filterId = $filter['value'];
+                        $parts = explode('-', $filter['value'], 2);
+                        $filterId = $parts[0];
+                        if (isset($parts[1])) {
+                            $filterValue = $parts[1];
+                        }
                         break;
                     }
                 }
-                $params['filter'] = null;
+
+                if ($filterValue) {
+                    $params['filter'] = [
+                        [
+                            array('property' => 'tokenName', 'value' => 'like:%' . $filterValue . '%'),
+                            array(
+                                'property' => 'languageTranslationTokens.translation',
+                                'value' => 'like:%' . $filterValue . '%'
+                            ),
+                        ]
+                    ];
+                } else {
+                    $params['filter'] = null;
+                }
             }
 
             if (!$filterId) {

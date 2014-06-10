@@ -8,6 +8,7 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
         'MFC.container.Header',
         'MFC.container.Message',
         //'MFC.HasSelectionAwareComponentsPlugin',
+        'MFC.form.field.plugin.FieldInputFinishedPlugin',
         'Modera.backend.translationstool.toolscontribution.store.Translations'
     ],
 
@@ -49,6 +50,10 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
             });
         });
 
+        var parts = config['activeFilter'].split('-');
+        var filterId = parts.shift();
+        var filterValue = parts.join('-');
+
         var toolbarItems = [];
         if (config['filters'].length) {
             toolbarItems.push({
@@ -59,11 +64,23 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
                 toolbarItems.push({
                     itemId: filter.id,
                     text: filter.name,
-                    pressed: filter.id === config['activeFilter'],
+                    pressed: filter.id === filterId,
                     allowDepress: false,
                     scale: 'medium',
                     toggleGroup: 'show'
                 });
+            });
+
+            toolbarItems.push({
+                itemId: 'filter',
+                xtype: 'textfield',
+                emptyText: 'type here to filter...',
+                plugins: [Ext.create('MFC.form.field.plugin.FieldInputFinishedPlugin', {
+                    timeout: 800
+                })],
+                enableKeyEvents: true,
+                height: 30,
+                value: filterValue
             });
         }
 
@@ -255,6 +272,13 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
         if (pos) {
             me.getSelectionModel().setCurrentPosition(pos);
         }
+
+        if (me.filterFocus) {
+            setTimeout(function() {
+                me.down('#filter').focus();
+                me.filterFocus = false;
+            }, 200);
+        }
     },
 
     // public
@@ -311,12 +335,31 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
     assignListeners: function() {
         var me = this;
 
+        me.prevPosition = null;
+        me.filterFocus = false;
+
         me.on('headerclick', me.onHeaderClick);
 
         Ext.each(me.query('button[toggleGroup=show]'), function(item) {
             item.on('click', function(btn) {
-                me.fireEvent('filterchanged', me, { id: btn.getItemId() });
+                var id = btn.getItemId();
+                if (me.down('#filter').getValue().length) {
+                    id += '-' + me.down('#filter').getValue();
+                }
+                me.fireEvent('filterchanged', me, { id: id });
+                me.prevPosition = null;
             });
+        });
+
+
+        me.down('#filter').on('inputfinished', function(field, e) {
+            var id = me.down('button[toggleGroup=show][pressed=true]').getItemId();
+            if (field.getValue().length) {
+                id += '-' + field.getValue();
+            }
+            me.fireEvent('filterchanged', me, { id: id });
+            me.prevPosition = null;
+            me.filterFocus = true;
         });
 
         me.down('#import').on('click', function(btn) {
@@ -332,17 +375,19 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
             me.fireEvent('delete', me, models);
         });
 
-        me.prevPosition = null;
         me.on('beforeselect', function(sm, record, index) {
             var position = sm.getCurrentPosition();
             var column = me.columns[position.column];
-            if (column['languageId']) {
-                me.prevPosition = position;
-            } else {
-                if (me.prevPosition) {
-                    sm.setCurrentPosition(me.prevPosition);
+
+            if (column) {
+                if (column['languageId']) {
+                    me.prevPosition = position;
+                } else {
+                    if (me.prevPosition) {
+                        me.selectCell(me.prevPosition);
+                    }
+                    return false;
                 }
-                return false;
             }
         });
 

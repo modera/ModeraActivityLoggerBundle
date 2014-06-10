@@ -29,7 +29,10 @@ class ObsoleteTranslationTokensFilter extends AbstractTranslationTokensFilter
      */
     public function getCount(array $params)
     {
-        $params['filter'] = $this->getFilter();
+        if (!isset($params['filter'])) {
+            $params['filter'] = array();
+        }
+        $params['filter'] = array_merge($params['filter'], $this->getFilter());
         return parent::getCount($params);
     }
 
@@ -38,7 +41,10 @@ class ObsoleteTranslationTokensFilter extends AbstractTranslationTokensFilter
      */
     public function getResult(array $params)
     {
-        $params['filter'] = $this->getFilter();
+        if (!isset($params['filter'])) {
+            $params['filter'] = array();
+        }
+        $params['filter'] = array_merge($params['filter'], $this->getFilter());
         return parent::getResult($params);
     }
 

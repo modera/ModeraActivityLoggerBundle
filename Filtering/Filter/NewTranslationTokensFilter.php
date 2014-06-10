@@ -30,8 +30,9 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
     public function getCount(array $params)
     {
         if (!isset($params['filter'])) {
-            $params['filter'] = $this->getFilter();
+            $params['filter'] = array();
         }
+        $params['filter'] = array_merge($params['filter'], $this->getFilter());
         return parent::getCount($params);
     }
 
@@ -40,7 +41,10 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
      */
     public function getResult(array $params)
     {
-        $params['filter'] = $this->getFilter();
+        if (!isset($params['filter'])) {
+            $params['filter'] = array();
+        }
+        $params['filter'] = array_merge($params['filter'], $this->getFilter());
         return parent::getResult($params);
     }
 
@@ -49,24 +53,28 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
      */
     private function getFilter()
     {
-        try {
-            $q = $this->em()->createQuery(
-                'SELECT IDENTITY(ltt.translationToken) as translationToken ' .
-                'FROM ModeraTranslationsBundle:LanguageTranslationToken ltt ' .
-                'LEFT JOIN ltt.language l ' .
-                'WHERE ltt.isNew=true AND l.isEnabled=true GROUP BY ltt.translationToken'
-            );
-            $result = $q->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
-        } catch (\Exception $e) {
-            $result = array();
+        static $filter = null;
+
+        if (null === $filter) {
+            try {
+                $q = $this->em()->createQuery(
+                    'SELECT IDENTITY(ltt.translationToken) as translationToken ' .
+                    'FROM ModeraTranslationsBundle:LanguageTranslationToken ltt ' .
+                    'LEFT JOIN ltt.language l ' .
+                    'WHERE ltt.isNew=true AND l.isEnabled=true GROUP BY ltt.translationToken'
+                );
+                $result = $q->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
+            } catch (\Exception $e) {
+                $result = array();
+            }
+
+            $ids = array_map(function($row) {
+                return $row['translationToken'];
+            }, $result);
+
+            $filter[] = ['property' => 'isObsolete', 'value' => 'eq:false'];
+            $filter[] = ['property' => 'id', 'value' => 'in:' . implode(',', $ids)];
         }
-
-        $ids = array_map(function($row) {
-            return $row['translationToken'];
-        }, $result);
-
-        $filter[] = ['property' => 'isObsolete', 'value' => 'eq:false'];
-        $filter[] = ['property' => 'id', 'value' => 'in:' . implode(',', $ids)];
 
         return $filter;
     }
