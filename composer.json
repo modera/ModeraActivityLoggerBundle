@@ -20,7 +20,7 @@
         "modera/languages-bundle": "dev-master"
     },
     "require-dev": {
-        "modera/foundation-bundle": "dev-master",
+        "modera/foundation-bundle": "~1.0",
         "phake/phake": "2.0.*@dev",
         "phpunit/phpunit": "3.*"
     },
