@@ -3,7 +3,7 @@
 namespace Modera\DynamicallyConfigurableAppBundle\Contributions;
 
 use Modera\ConfigBundle\Config\ConfigurationEntryDefinition as CED;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Modera\DynamicallyConfigurableAppBundle\ModeraDynamicallyConfigurableAppBundle as Bundle;
 
