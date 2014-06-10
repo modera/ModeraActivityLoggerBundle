@@ -3,7 +3,7 @@
 namespace Modera\FileUploaderBundle\Controller;
 
 use Modera\FileUploaderBundle\Uploading\WebUploader;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
