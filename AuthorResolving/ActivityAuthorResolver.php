@@ -5,7 +5,7 @@ namespace Modera\BackendToolsActivityLogBundle\AuthorResolving;
 use Doctrine\Common\Persistence\ObjectManager;
 use Modera\ActivityLoggerBundle\Model\ActivityInterface;
 use Modera\SecurityBundle\Entity\User;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

@@ -6,7 +6,7 @@ use Sli\ExpanderBundle\Contributing\ExtensionPointsAwareBundleInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Modera\MjrIntegrationBundle\Sections\Section as MJRSection;
 use Modera\BackendToolsBundle\Section\Section as ToolsSection;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 
 class ModeraBackendToolsActivityLogBundle extends Bundle implements ExtensionPointsAwareBundleInterface
 {
