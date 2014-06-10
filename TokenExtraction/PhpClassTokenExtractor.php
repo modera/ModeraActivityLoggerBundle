@@ -11,10 +11,10 @@ use Symfony\Component\Translation\MessageCatalogue;
  * detect and extract tokens from your PHP classes:
  *
  * 1) Import T class from Helper package, for example:
- *    use Modera\TranslationsBundle\Helper\T;
+ *    use Modera\FoundationBundle\Translation\T;
  *
  * Do not use aliases! For example, this won't be detected ( yet ):
- *    use Modera\TranslationsBundle\Helper\T as Translator;
+ *    use Modera\FoundationBundle\Translation\T as Translator;
  * 2) In your code use method T::trans() or T::transChoice. Samples:
  *
  *    By using string literals:
@@ -349,7 +349,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
             }
 
             if (\T_USE === $token[0]) {
-                $expectedSequence = ['Modera', '\\', 'TranslationsBundle', '\\', 'Helper', '\\', 'T'];
+                $expectedSequence = ['Modera', '\\', 'FoundationBundle', '\\', 'Translation', '\\', 'T'];
 
                 $currentSequence = array_slice($tokens, $currentIndex + 1, count($expectedSequence));
 

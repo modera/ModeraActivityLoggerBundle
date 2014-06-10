@@ -2,7 +2,7 @@
 
 namespace Modera\TranslationsBundle\Tests\Fixtures\Bundle\Resources;
 
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>

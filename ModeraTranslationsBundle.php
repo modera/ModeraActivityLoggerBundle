@@ -5,7 +5,7 @@ namespace Modera\TranslationsBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Modera\TranslationsBundle\DependencyInjection\Compiler\TranslationHandlersCompilerPass;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -20,15 +20,6 @@ class ModeraTranslationsBundle extends Bundle
     {
         parent::build($container);
 
-        $container->addCompilerPass(new TranslationHandlersCompilerPass);
-    }
-
-    // override
-    public function boot()
-    {
-        $reflClass = new \ReflectionClass(T::clazz());
-        $reflProp = $reflClass->getProperty('container');
-        $reflProp->setAccessible(true);
-        $reflProp->setValue(null, $this->container);
+        $container->addCompilerPass(new TranslationHandlersCompilerPass());
     }
 }

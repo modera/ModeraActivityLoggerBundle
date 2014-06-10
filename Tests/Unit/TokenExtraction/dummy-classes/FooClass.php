@@ -3,7 +3,7 @@
 namespace Modera\TranslationsBundle\Tests\Unit\TokenExtraction;
 
 use Foo\Bar;
-use Modera\TranslationsBundle\Helper\T;
+use Modera\FoundationBundle\Translation\T;
 
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
