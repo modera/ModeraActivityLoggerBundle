@@ -1,9 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
     ],
-    "hash": "950ea07ad8b42044703064825b1ec563",
+    "hash": "60bbfe190a4b846a362a19212a9204b9",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -553,16 +554,16 @@
         },
         {
             "name": "doctrine/orm",
-            "version": "v2.4.2",
+            "version": "v2.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/doctrine2.git",
-                "reference": "0363a5548d9263f979f9ca149decb9cfc66419ab"
+                "reference": "8a13376d42b5ea467727ffe730aa0e14ca3c5e29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/0363a5548d9263f979f9ca149decb9cfc66419ab",
-                "reference": "0363a5548d9263f979f9ca149decb9cfc66419ab",
+                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/8a13376d42b5ea467727ffe730aa0e14ca3c5e29",
+                "reference": "8a13376d42b5ea467727ffe730aa0e14ca3c5e29",
                 "shasum": ""
             },
             "require": {
@@ -625,7 +626,7 @@
                 "database",
                 "orm"
             ],
-            "time": "2014-02-08 16:35:09"
+            "time": "2014-06-10 11:49:08"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -684,12 +685,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraLanguagesBundle.git",
-                "reference": "292fdb1dad307321381f2dc7e23b28ccf87f1ea5"
+                "reference": "51ba81b79972dc9ed39361d946587a2a7a2d8d3d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraLanguagesBundle/zipball/292fdb1dad307321381f2dc7e23b28ccf87f1ea5",
-                "reference": "292fdb1dad307321381f2dc7e23b28ccf87f1ea5",
+                "url": "https://api.github.com/repos/modera/ModeraLanguagesBundle/zipball/51ba81b79972dc9ed39361d946587a2a7a2d8d3d",
+                "reference": "51ba81b79972dc9ed39361d946587a2a7a2d8d3d",
                 "shasum": ""
             },
             "require": {
@@ -700,7 +701,7 @@
                 "symfony/intl": "~2.3"
             },
             "require-dev": {
-                "modera/foundation-bundle": "dev-master",
+                "modera/foundation-bundle": "~1.0",
                 "phpunit/phpunit": "3.7.*"
             },
             "type": "symfony-bundle",
@@ -719,7 +720,7 @@
                     "email": "sergei.vizel@modera.org"
                 }
             ],
-            "time": "2014-05-20 08:10:10"
+            "time": "2014-06-10 11:51:13"
         },
         {
             "name": "psr/log",
@@ -761,20 +762,21 @@
         },
         {
             "name": "symfony/icu",
-            "version": "v1.0.1",
+            "version": "v1.2.1",
             "target-dir": "Symfony/Component/Icu",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Icu.git",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975"
+                "reference": "98e197da54df1f966dd5e8a4992135703569c987"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Icu/zipball/fdba214b1e087c149843bde976263c53ac10c975",
-                "reference": "fdba214b1e087c149843bde976263c53ac10c975",
+                "url": "https://api.github.com/repos/symfony/Icu/zipball/98e197da54df1f966dd5e8a4992135703569c987",
+                "reference": "98e197da54df1f966dd5e8a4992135703569c987",
                 "shasum": ""
             },
             "require": {
+                "lib-icu": ">=4.4",
                 "php": ">=5.3.3",
                 "symfony/intl": "~2.3"
             },
@@ -804,7 +806,7 @@
                 "icu",
                 "intl"
             ],
-            "time": "2013-10-04 09:12:07"
+            "time": "2013-10-04 10:06:38"
         },
         {
             "name": "symfony/symfony",
@@ -983,17 +985,17 @@
     "packages-dev": [
         {
             "name": "modera/foundation-bundle",
-            "version": "dev-master",
+            "version": "v1.1.0",
             "target-dir": "Modera/FoundationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraFoundationBundle.git",
-                "reference": "b78c0d2e4f9ba0c2d80ee32af190cfaf534bf53b"
+                "reference": "cba55a285257de2d16109d72d342f9003e397342"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraFoundationBundle/zipball/b78c0d2e4f9ba0c2d80ee32af190cfaf534bf53b",
-                "reference": "b78c0d2e4f9ba0c2d80ee32af190cfaf534bf53b",
+                "url": "https://api.github.com/repos/modera/ModeraFoundationBundle/zipball/cba55a285257de2d16109d72d342f9003e397342",
+                "reference": "cba55a285257de2d16109d72d342f9003e397342",
                 "shasum": ""
             },
             "require": {
@@ -1020,7 +1022,7 @@
                     "homepage": "http://sergei.lissovski.org/"
                 }
             ],
-            "time": "2014-05-20 08:19:19"
+            "time": "2014-06-10 11:21:03"
         },
         {
             "name": "phake/phake",
@@ -1451,7 +1453,6 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "modera/languages-bundle": 20,
-        "modera/foundation-bundle": 20,
         "phake/phake": 20
     },
     "platform": {
