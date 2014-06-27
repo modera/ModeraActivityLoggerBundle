@@ -98,10 +98,22 @@ Ext.define('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity
             }
 
             me.getEndpoint().batchUpdate({ records: records }, function(result) {
-                w.enable();
-
                 if (result.success) {
-                    w.close();
+
+                    var callback = function () {
+                        w.enable();
+                        w.close();
+                    };
+
+                    var configProvider = me.workbench.getService('config_provider');
+                    if (configProvider) {
+                        configProvider.cachedConfig = undefined;
+                        configProvider.getConfig(callback);
+                    } else {
+                        callback();
+                    }
+                } else {
+                    w.enable();
                 }
             })
         });
