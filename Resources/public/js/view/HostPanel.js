@@ -25,7 +25,7 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
             cls: 'modera-backend-tools-settings',
             tbar: {
                 xtype: 'mfc-header',
-                title: this.titleText,
+                text: this.titleText,
                 margin: '0 0 9 0',
                 cls: 'modera-backend-tools-settings-toolbar',
                 iconCls: 'modera-backend-tools-settings-icon',
