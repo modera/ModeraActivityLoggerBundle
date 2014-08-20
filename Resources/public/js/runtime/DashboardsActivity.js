@@ -13,6 +13,8 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsActivity', {
     constructor: function() {
         this.callParent(arguments);
 
+        this.attachListeners();
+
         this.dashboards = [];
     },
 
@@ -28,6 +30,10 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsActivity', {
 
     // override
     doInit: function(callback) {
+        this.loadConfig(callback);
+    },
+
+    loadConfig: function (callback) {
         var me = this;
 
         this.workbench.getService('config_provider').getConfig(function(config) {
@@ -96,5 +102,29 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsActivity', {
         }
 
         return { name: defaultDashboard.name };
+    },
+
+    attachListeners: function () {
+        var me = this;
+
+        this.dashboardUpdateListener = ModeraFoundation.app.on('dashboardsettingsupdated', this.reloadActivity, me, {destroyable: true});
+        me.on('deactivated', this.detachListeners, me);
+    },
+
+    detachListeners: function () {
+        this.dashboardUpdateListener.destroy();
+    },
+
+    reloadActivity: function () {
+        var me = this;
+
+        var activityManager = me.workbench.getActivitiesManager(),
+            isHomeActivity = activityManager.hasActivity('home');
+
+        if (isHomeActivity) {
+            me.loadConfig(Ext.emptyFn);
+
+            me.workbench.launchActivity('home');
+        }
     }
 });

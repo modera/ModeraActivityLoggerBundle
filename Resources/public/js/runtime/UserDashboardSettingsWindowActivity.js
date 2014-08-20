@@ -103,12 +103,18 @@ Ext.define('Modera.backend.dashboard.runtime.UserDashboardSettingsWindowActivity
                     var callback = function () {
                         w.enable();
                         w.close();
+                        ModeraFoundation.app.fireEvent('dashboardsettingsupdated');
                     };
 
                     var configProvider = me.workbench.getService('config_provider');
                     if (configProvider) {
+                        var oldConfig = configProvider.cachedConfig;
                         configProvider.cachedConfig = undefined;
-                        configProvider.getConfig(callback);
+                        configProvider.getConfig(function (newConfig) {
+                            Ext.applyIf(newConfig, oldConfig);
+
+                            callback();
+                        });
                     } else {
                         callback();
                     }
