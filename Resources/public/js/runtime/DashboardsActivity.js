@@ -122,11 +122,7 @@ Ext.define('Modera.backend.dashboard.runtime.DashboardsActivity', {
             isHomeActivity = activityManager.hasActivity('home');
 
         if (isHomeActivity) {
-            me.loadConfig(Ext.emptyFn);
-
-            me.zones = undefined;
-
-            me.workbench.launchActivity('home');
+            me.workbench.activateSection('dashboard');
         }
     }
 });
