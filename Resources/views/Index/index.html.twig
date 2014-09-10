@@ -30,6 +30,12 @@
 {% endfor %}
 
 <script type="text/javascript">
+
+    Ext.Ajax.timeout = {{ config.extjs_ajax_timeout }};
+    Ext.override(Ext.form.Basic, { timeout: Ext.Ajax.timeout / 1000 });
+    Ext.override(Ext.data.proxy.Server, { timeout: Ext.Ajax.timeout });
+    Ext.override(Ext.data.Connection, { timeout: Ext.Ajax.timeout });
+
     Ext.Loader.setConfig({
         enabled: true,
         disableCaching: {{ disable_caching ? 'true' : 'false' }},

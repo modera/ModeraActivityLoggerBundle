@@ -34,6 +34,10 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                     ->cannotBeEmpty()
                 ->end()
+                ->scalarNode('extjs_ajax_timeout')
+                    ->cannotBeEmpty()
+                    ->defaultValue(60000)
+                ->end()
             ->end();
 
         return $treeBuilder;
