@@ -79,7 +79,7 @@ class ScriptHandler extends AbstractScriptHandler
 
             $options = ComposerService::getOptions($event->getComposer());
             if ($package->getType() != $options['type']) {
-                return;
+                //return;
             }
 
             $extra = $package->getExtra();
