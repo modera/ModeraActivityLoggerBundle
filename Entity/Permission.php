@@ -59,7 +59,7 @@ class Permission implements RoleInterface
     /**
      * @var User[]
      *
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="roles", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="permissions", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="modera_security_permissionusers"
      * )
@@ -69,7 +69,7 @@ class Permission implements RoleInterface
     /**
      * @var Group[]
      *
-     * @ORM\ManyToMany(targetEntity="Group", inversedBy="roles", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="permissions", cascade={"persist"})
      * @ORM\JoinTable(
      *     name="modera_security_permissiongroups"
      * )
