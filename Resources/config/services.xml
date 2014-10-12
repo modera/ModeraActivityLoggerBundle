@@ -17,6 +17,11 @@
                  class="Modera\FileRepositoryBundle\Repository\UniqidKeyGenerator">
         </service>
 
+        <service id="modera_file_repository.repository.uniqid_key_generator_preserved_extension"
+                 class="Modera\FileRepositoryBundle\Repository\UniqidKeyGenerator">
+            <argument type="string">true</argument>
+        </service>
+
         <service id="modera_file_repository.repository.file_repository"
                  class="Modera\FileRepositoryBundle\Repository\FileRepository">
 

@@ -8,11 +8,22 @@ namespace Modera\FileRepositoryBundle\Repository;
  */
 class UniqidKeyGenerator implements StorageKeyGeneratorInterface
 {
+    private $preserveExtension;
+
+    /**
+     * @param bool $preserveExtension  If this parameter is set to TRUE then when a filename is generated original's file
+     *                                 extension will be added to the new filename.
+     */
+    public function __construct($preserveExtension = false)
+    {
+        $this->preserveExtension = $preserveExtension;
+    }
+
     /**
      * @inheritDoc
      */
     public function generateStorageKey(\SplFileInfo $file, array $context = array())
     {
-        return uniqid();
+        return uniqid() . ($this->preserveExtension ? '.' . $file->getExtension() : '');
     }
 } 

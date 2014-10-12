@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\FileRepositoryBundle\Tests\Unit;
+namespace Modera\FileRepositoryBundle\Tests\Unit\Entity;
 
 use Modera\FileRepositoryBundle\Entity\Repository;
 use Modera\FileRepositoryBundle\Exceptions\InvalidRepositoryConfig;
