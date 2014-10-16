@@ -109,7 +109,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     private $intValue;
 
     /**
-     * @ORM\Column(type="decimal", precision=20, scale=4)
+     * @ORM\Column(type="decimal", precision=20, scale=4, nullable=true)
      */
     private $floatValue;
 
