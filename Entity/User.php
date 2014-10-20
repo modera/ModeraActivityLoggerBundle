@@ -243,11 +243,27 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
+     * @return bool
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
      * @return string
      */
     public function getEmail()
     {
         return $this->email;
+    }
+
+    /**
+     * @param bool $isActive
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
     }
 
     /**
