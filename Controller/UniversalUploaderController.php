@@ -38,6 +38,6 @@ class UniversalUploaderController extends Controller
             ));
         }
 
-        return $result;
+        return new JsonResponse($result);
     }
 } 

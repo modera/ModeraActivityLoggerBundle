@@ -51,14 +51,17 @@ class AllExposedRepositoriesGateway implements UploadGatewayInterface
     {
         $repositoryName = $this->getRepositoryName($request);
 
+        $ids = array();
         foreach ($request->files as $file) {
             if ($file) {
-                $this->fileRepository->put($repositoryName, $file);
+                $storedFile = $this->fileRepository->put($repositoryName, $file);
+                $ids[] = $storedFile->getId();
             }
         }
 
         return array(
-            'success' => true
+            'success' => true,
+            'ids'     => $ids,
         );
     }
 
