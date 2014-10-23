@@ -32,18 +32,15 @@ class KernelConfigWriter implements ValueUpdatedHandlerInterface
         if (false === $kernelJson) {
             throw new \RuntimeException('Unable to find kernel.json, looked in ' . $path);
         }
-        $kernelJson = implode("\n", array_slice(explode("\n", $kernelJson), 1));
         $kernelJson = json_decode($kernelJson, true);
 
+        $kernelJson['_comment'] = 'this file is used by web/app.php to control with what configuration AppKernel should be created with';
         if ($entry->getName() == Bundle::CONFIG_KERNEL_DEBUG) {
             $kernelJson['debug'] = $entry->getValue() == 'true';
         } else if ($entry->getName() == Bundle::CONFIG_KERNEL_ENV) {
             $kernelJson['env'] = $entry->getValue();
         }
 
-        $encodedKernelJson = "// this file is used by web/app.php to control with what configuration AppKernel should be created with\n";
-        $encodedKernelJson.= json_encode($kernelJson, \JSON_PRETTY_PRINT);
-
-        file_put_contents($path, $encodedKernelJson);
+        file_put_contents($path, json_encode($kernelJson, \JSON_PRETTY_PRINT));
     }
 } 
