@@ -7,6 +7,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.PasswordWindow',
 
     // l10n
     recordTitle: 'Change password for "{0}"',
+    recordNewTitle: 'Create password for user',
     placeHolderText: 'Type here',
     passwordLabelText: 'Password',
     repeatPasswordLabelText: '... again',
@@ -14,12 +15,18 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.PasswordWindow',
     wrongPasswordText: 'Passwords must be equal',
     sendPasswordText: 'Send password to user`s e-mail',
 
+    newUser: false,
+
     // override
     constructor: function(config) {
         var me = this;
 
+        if (config && config.newUser) {
+            me.newUser = config.newUser;
+        }
+
         var defaults = {
-            title: me.recordTitle,
+            title: (me.newUser)? me.recordNewTitle : me.recordTitle,
             groupName: 'compact-list',
             resizable: false,
             autoScroll: true,
@@ -82,6 +89,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.PasswordWindow',
                                         name: 'sendPassword',
                                         fieldLabel: '&nbsp;',
                                         labelSeparator: '',
+                                        hidden: me.newUser,
                                         boxLabel: me.sendPasswordText,
                                         allowBlank: true,
                                         disabled: false
@@ -93,6 +101,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.PasswordWindow',
                                 itemId: 'generatePassword',
                                 xtype: 'button',
                                 scale: 'medium',
+                                hidden: me.newUser,
                                 text: me.generatePasswordBtnText,
                                 margins: '0 0 0 5'
                             }
