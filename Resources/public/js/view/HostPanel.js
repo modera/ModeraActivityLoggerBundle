@@ -27,7 +27,7 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                 xtype: 'mfc-header',
                 text: this.titleText,
                 margin: '0 0 9 0',
-                cls: 'modera-backend-tools-settings-toolbar',
+                cls: 'tools-settings-toolbar',
                 iconCls: 'modera-backend-tools-settings-icon',
                 closeBtn: true,
                 items: [
@@ -64,7 +64,7 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                         bodyBorder: false,
                         columnLines: false,
                         rowLines: false,
-                        cls: 'sections-grid',
+                        cls: 'tools-settings-sections-grid',
                         margin: '0 11 0 0',
                         columns: [
                             {
