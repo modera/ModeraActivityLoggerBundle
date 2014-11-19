@@ -48,6 +48,6 @@ class MenuItemsProvider implements OrderedContributorInterface
      */
     public function getOrder()
     {
-        return 0;
+        return -999;
     }
 }
