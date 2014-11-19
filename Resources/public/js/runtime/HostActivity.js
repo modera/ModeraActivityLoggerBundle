@@ -62,9 +62,11 @@ Ext.define('Modera.backend.tools.settings.runtime.HostActivity', {
                         targetContainerResolver: '#hostPanel',
                         activities: activities,
                         paramsFactory: function(contextParams, activity) {
-                            var id = activity.getSectionConfig().id;
-
-                            return indexedParams[id] ? indexedParams[id] : contextParams;
+                            if (activity.getSectionConfig) {
+                                var id = activity.getSectionConfig().id;
+                                return indexedParams[id] ? indexedParams[id] : contextParams;
+                            }
+                            return contextParams;
                         },
                         controller: function(rootUi, zoneUi, activityIdToUse, onProcessedCallback) {
                             rootUi.showSection(activityIdToUse);

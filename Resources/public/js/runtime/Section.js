@@ -34,9 +34,11 @@ Ext.define('Modera.backend.tools.settings.runtime.Section', {
     configureInteractions: function(workbench, activities) {
         Ext.each(Ext.Object.getValues(activities), function(activity) {
             activity.on('handleaction', function(actionName, sourceComponent, params) {
-                var id = this.getSectionConfig()['id'] + '-' + actionName;
-                if (workbench.getActivitiesManager().getActivity(id)) {
-                    workbench.launchActivity(id, params || {});
+                if (this.getSectionConfig) {
+                    var id = this.getSectionConfig()['id'] + '-' + actionName;
+                    if (workbench.getActivitiesManager().getActivity(id)) {
+                        workbench.launchActivity(id, params || {});
+                    }
                 }
             });
         });
