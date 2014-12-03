@@ -28,4 +28,9 @@ class Session
      * @ORM\Column(type="integer", nullable=false)
      */
     protected $session_time;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    protected $session_lifetime;
 }
