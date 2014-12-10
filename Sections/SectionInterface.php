@@ -22,6 +22,10 @@ interface SectionInterface
      * A security role that authenticated user must have in order to access a section represented by the menu-item
      */
     const META_REQUIRED_ROLE_TO_ACCESS = 'required_role_to_access';
+    /**
+     * Activation parameters for section
+     */
+    const META_ACTIVATION_PARAMS = 'activation_params';
 
     /**
      * @return string  A short string which will be used to reference a section represented by this menu item.
