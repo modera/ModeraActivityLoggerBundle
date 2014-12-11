@@ -67,10 +67,28 @@ class Loader implements LoaderInterface
             throw new \RuntimeException('Do not add the "modera_routing" loader twice');
         }
 
-        $collection = new RouteCollection();
+        $resources = array();
+        $items = $this->resourcesProvider->getItems();
+        foreach ($items as $index => $resource) {
+            if (!is_array($resource)) {
+                $resource = array(
+                    'order'    => 0,
+                    'resource' => $resource,
+                );
+            }
+            $resource['index'] = $index;
+            $resources[] = $resource;
+        }
+        usort($resources, function($a, $b) {
+            if ($a['order'] == $b['order']) {
+                return ($a['index'] < $b['index']) ? -1 : 1;
+            }
+            return ($a['order'] < $b['order']) ? -1 : 1;
+        });
 
-        foreach ($this->resourcesProvider->getItems() as $resource) {
-            $resource = $this->locator->locate($resource);
+        $collection = new RouteCollection();
+        foreach ($resources as $item) {
+            $resource = $this->locator->locate($item['resource']);
             $collection->addCollection($this->getRootRoutingLoader()->load($resource));
         }
 
