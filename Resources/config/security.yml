@@ -56,5 +56,4 @@ security:
                 path:   _security_logout
                 success_handler: modera_security.security.logout_success_handler
 
-    access_control:
-        - { path: ^/backend/.+, roles: ROLE_BACKEND_USER }
+    access_control: %modera_security.config.access_control%
