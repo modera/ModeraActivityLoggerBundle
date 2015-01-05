@@ -1,0 +1,9 @@
+api:
+    pattern:  /api.js
+    defaults: { _controller: DirectBundle:Direct:getApi }
+remoting:
+    pattern:  /remoting.js
+    defaults: { _controller: DirectBundle:Direct:getRemoting }
+route:
+    pattern: /route
+    defaults: { _controller: DirectBundle:Direct:route }
