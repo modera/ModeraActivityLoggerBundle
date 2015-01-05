@@ -32,9 +32,17 @@ class DefaultController extends Controller
     /**
      * @return int
      */
-    private function getModuleClientPort()
+    private function getModuleServicePort()
     {
-        return 8021; //TODO: move to config
+        return 80; //TODO: move to config
+    }
+
+    /**
+     * @return string
+     */
+    private function getModuleServicePathPrefix()
+    {
+        return '/module-service'; //TODO: move to config
     }
 
     /**
@@ -205,10 +213,11 @@ class DefaultController extends Controller
      */
     private function remoteUrls($url)
     {
-        $port = $this->getModuleClientPort();
+        $port = $this->getModuleServicePort();
+        $pathPrefix = $this->getModuleServicePathPrefix();
         return array(
-            'call'   => $url . ':' . $port . '/call',
-            'status' => $url . ':' . $port . '/status',
+            'call'   => $url . ':' . $port . $pathPrefix . '/call',
+            'status' => $url . ':' . $port . $pathPrefix . '/status',
         );
     }
 
