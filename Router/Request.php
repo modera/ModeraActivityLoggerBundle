@@ -5,7 +5,7 @@ namespace Modera\DirectBundle\Router;
 class Request
 {
     /**
-     * The Symfony request object taked by DirectBundle controller.
+     * The Symfony request object taked by ModeraDirectBundle controller.
      * 
      * @var Symfony\Component\HttpFoundation\Request
      */

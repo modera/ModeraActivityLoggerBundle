@@ -1,9 +1,9 @@
 api:
     pattern:  /api.js
-    defaults: { _controller: DirectBundle:Direct:getApi }
+    defaults: { _controller: ModeraDirectBundle:Direct:getApi }
 remoting:
     pattern:  /remoting.js
-    defaults: { _controller: DirectBundle:Direct:getRemoting }
+    defaults: { _controller: ModeraDirectBundle:Direct:getRemoting }
 route:
     pattern: /route
-    defaults: { _controller: DirectBundle:Direct:route }
+    defaults: { _controller: ModeraDirectBundle:Direct:route }
