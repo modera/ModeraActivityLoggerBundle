@@ -30,11 +30,14 @@ DOC;
 <<<TEMPLATE
     public function registerModuleBundles(array \$bundles)
     {
-        \$moduleBundles = require_once '%s';
-        if (is_array(\$moduleBundles)) {
-            foreach (\$moduleBundles as \$bundle) {
-                if (!in_array(\$bundle, \$bundles)) {
-                    \$bundles[] = \$bundle;
+        \$moduleBundlesFile = __DIR__ . '/%s';
+        if (file_exists(\$moduleBundlesFile)) {
+            \$moduleBundles = require_once \$moduleBundlesFile;
+            if (is_array(\$moduleBundles)) {
+                foreach (\$moduleBundles as \$bundle) {
+                    if (!in_array(\$bundle, \$bundles)) {
+                        \$bundles[] = \$bundle;
+                    }
                 }
             }
         }
