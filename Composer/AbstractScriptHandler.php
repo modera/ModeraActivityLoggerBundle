@@ -7,8 +7,8 @@ use Symfony\Component\Process\Process;
 use Symfony\Component\Process\PhpExecutableFinder;
 
 /**
+ * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
- * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 abstract class AbstractScriptHandler
 {

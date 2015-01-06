@@ -9,10 +9,11 @@ use Composer\Script\PackageEvent;
 use Composer\DependencyResolver\Operation\UpdateOperation;
 use Symfony\Component\Yaml\Yaml;
 use Modera\Module\Service\ComposerService;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
+ * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2013 Modera Foundation
- * @author Sergei Vizel <sergei.vizel@modera.org>
  */
 class ScriptHandler extends AbstractScriptHandler
 {
@@ -137,7 +138,7 @@ class ScriptHandler extends AbstractScriptHandler
             return;
         }
 
-        $bundlesFile = 'modules/bundles.php';
+        $bundlesFile = 'AppModuleBundles.php';
         $bundles = ComposerService::getRegisterBundles($event->getComposer());
 
         static::createRegisterBundlesFile($bundles, $appDir . '/' . $bundlesFile);
@@ -156,9 +157,10 @@ class ScriptHandler extends AbstractScriptHandler
         }
         $data[] = ');';
 
-        if (file_exists($outputFile)) {
-            file_put_contents($outputFile, implode("\n", $data) . "\n");
-        } else {
+        $fs = new Filesystem();
+        $fs->dumpFile($outputFile, implode("\n", $data) . "\n");
+
+        if (!$fs->exists($outputFile)) {
             throw new \RuntimeException(sprintf('The "%s" file must be created.', $outputFile));
         }
     }
