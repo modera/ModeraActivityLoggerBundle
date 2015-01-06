@@ -11,5 +11,11 @@
             <!-- defined in \Modera\FileUploaderBundle\ModeraFileUploaderBundle -->
             <argument type="service" id="modera_file_uploader.uploading.gateways_provider" />
         </service>
+
+        <service id="modera_file_uploader.contributions.routing_resources_provider"
+                 class="Modera\FileUploaderBundle\Contributions\RoutingResourcesProvider">
+
+            <tag name="modera_routing.routing_resources_provider" />
+        </service>
     </services>
 </container>
