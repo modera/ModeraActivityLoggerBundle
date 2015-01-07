@@ -134,7 +134,7 @@ class ScriptHandler extends AbstractScriptHandler
         $appDir = $options['symfony-app-dir'];
 
         if (!is_dir($appDir)) {
-            echo 'The symfony-app-dir ('.$appDir.') specified in composer.json was not found in ' . getcwd() . ', can not register the bundles.' . PHP_EOL;
+            echo 'The symfony-app-dir (' . $appDir . ') specified in composer.json was not found in ' . getcwd() . '.' . PHP_EOL;
             return;
         }
 
@@ -176,11 +176,46 @@ class ScriptHandler extends AbstractScriptHandler
         $appDir = $options['symfony-app-dir'];
 
         if (!is_dir($appDir)) {
-            echo 'The symfony-app-dir ('.$appDir.') specified in composer.json was not found in '.getcwd().', can not clear the cache.'.PHP_EOL;
-
+            echo 'The symfony-app-dir (' . $appDir . ') specified in composer.json was not found in ' . getcwd() . '.' . PHP_EOL;
             return;
         }
 
         static::executeCommand($event, $appDir, 'cache:clear --env=prod --no-warmup', $options['process-timeout']);
+    }
+
+    /**
+     * Creates the configured databases.
+     *
+     * @param $event CommandEvent A instance
+     */
+    public function doctrineDatabaseCreate(CommandEvent $event)
+    {
+        $options = static::getOptions($event);
+        $appDir = $options['symfony-app-dir'];
+
+        if (!is_dir($appDir)) {
+            echo 'The symfony-app-dir (' . $appDir . ') specified in composer.json was not found in ' . getcwd() . '.' . PHP_EOL;
+            return;
+        }
+
+        static::executeCommand($event, $appDir, 'doctrine:database:create', $options['process-timeout']);
+    }
+
+    /**
+     * Executes the SQL needed to update the database schema to match the current mapping metadata.
+     *
+     * @param $event CommandEvent A instance
+     */
+    public function doctrineSchemaUpdate(CommandEvent $event)
+    {
+        $options = static::getOptions($event);
+        $appDir = $options['symfony-app-dir'];
+
+        if (!is_dir($appDir)) {
+            echo 'The symfony-app-dir (' . $appDir . ') specified in composer.json was not found in ' . getcwd() . '.' . PHP_EOL;
+            return;
+        }
+
+        static::executeCommand($event, $appDir, 'doctrine:schema:update --force', $options['process-timeout']);
     }
 }
