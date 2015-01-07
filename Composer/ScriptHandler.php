@@ -188,7 +188,7 @@ class ScriptHandler extends AbstractScriptHandler
      *
      * @param $event CommandEvent A instance
      */
-    public function doctrineDatabaseCreate(CommandEvent $event)
+    public static function doctrineDatabaseCreate(CommandEvent $event)
     {
         $options = static::getOptions($event);
         $appDir = $options['symfony-app-dir'];
@@ -206,7 +206,7 @@ class ScriptHandler extends AbstractScriptHandler
      *
      * @param $event CommandEvent A instance
      */
-    public function doctrineSchemaUpdate(CommandEvent $event)
+    public static function doctrineSchemaUpdate(CommandEvent $event)
     {
         $options = static::getOptions($event);
         $appDir = $options['symfony-app-dir'];
