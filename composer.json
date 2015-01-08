@@ -2,7 +2,6 @@
     "name": "modera/file-repository-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Sergei Lissovski",
@@ -25,5 +24,10 @@
     "autoload": {
         "psr-0": { "Modera\\FileRepositoryBundle": "" }
     },
-    "target-dir": "Modera/FileRepositoryBundle"
+    "target-dir": "Modera/FileRepositoryBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
