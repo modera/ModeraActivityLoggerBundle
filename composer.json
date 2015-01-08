@@ -19,5 +19,10 @@
     "autoload": {
         "psr-0": { "Modera\\UpgradeBundle": "" }
     },
-    "target-dir": "Modera/UpgradeBundle"
+    "target-dir": "Modera/UpgradeBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
