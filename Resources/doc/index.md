@@ -543,6 +543,88 @@ have updated our User entity to look like this:
         }
     }
 
+# Batch updates
+
+When you have a lot of data eventually you may want to add a support of batch editing, that is - let your users
+to modify several records by sending just one request to server. Luckily, AbstractCrudController class supports
+this features of the box. When it comes to batch records update you have two options how you structure a request:
+
+ * you specify a query and some data that you want to apply to all records that will be returned by given query
+ * you specify records that you want to update, where every record will contain an ID that it can be identified on
+   server-side by
+
+At first we will take a look at how you can apply same data to all records returned by a query. This how a typical
+request would look like:
+
+    $c->batchUpdateAction(array(
+        'queries' => array(
+            array(
+                'filter' => array(
+                    array(
+                        'property' => 'id',
+                        'value' => 'gt:5'
+                    )
+                )
+            )
+        ),
+        'record' => array(
+            'number' => '---'
+        )
+    ));
+
+Assuming that $c controller is configured to work with CreditCard entity all cards whose ID is greater than 5 will
+be updated. It is worth mentioning, that you may specify several queries in `queries` request parameter.
+
+Another way how you can update records in a batch manner is to use one-by-one update, in this case request will look
+like this:
+
+    $c->batchUpdateAction(array(
+        'records' => array(
+            array(
+                'id' => 5,
+                'number' => '4320495483905'
+            ),
+            array(
+                'id' => 19,
+                'number' => '4520495483948'
+            )
+        )
+    ));
+
+When this query is executed AbstractCrudController will fetch one by one two records and update them. It is
+very important not to forget to specify primary key values for your records so that server-side logic could use
+them to uniqually identify your records. In this example we use conventional automatically managed 'id' primary key field
+but AbstractCrudController doesn't limit you to that, it depends on an implementation of PersistenceHandlerInterface which
+is configured to be used by AbstractCrudController, default implementation DoctrinePersistenceHandler is able
+to deal with composite primary keys out of the box.
+
+There's one more important thing that we should mention before moving to the next section - errors handling. When it
+comes to handling errors during batch updates the whole pictures gets a bit more complicated than when you are dealing
+with single record updates. In other words - when you update one record and receive a response from server with errors
+you already know what record these errors relate to, in case of batch updates you still need to be able to that but it is
+that straightforward because, apparently, several records were attempted to be updated. To solve this problem whenever
+an error occurs on server-side response will have this structure:
+
+    array(
+        'success' => false,
+        'errors' => array(
+            array(
+                'id' => array(
+                    'id' => 5
+                ),
+                'errors' => array(
+                    'This credit card number is already in use!'
+                )
+            )
+        )
+    )
+
+In this example we showed you how a response would have looked like if there were a validation error during batch update.
+As you can see, every error entry consists of two keys - `id` and `errors`. `id` element will contain an ID
+that a record can be identified with, the reason why we need to use nested structure here is because of possible
+usage of composite primary keys. Also it is important to mention is that if one of records didn't pass a validation
+none of the records would be updated.
+
 # Advanced usage
 
 AbstractCrudController class uses many different services to process your requests and if it is needed you can easily

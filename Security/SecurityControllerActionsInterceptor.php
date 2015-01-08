@@ -91,6 +91,14 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     /**
      * @inheritDoc
      */
+    public function onBatchUpdate(array $params, AbstractCrudController $controller)
+    {
+        $this->checkAccess('batchUpdate', $params, $controller);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function onGet(array $params, AbstractCrudController $controller)
     {
         $this->checkAccess('get', $params, $controller);

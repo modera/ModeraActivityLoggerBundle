@@ -16,8 +16,8 @@
         "symfony/symfony": "~2.0",
         "symfony/framework-bundle": "~2.0",
         "symfony/property-access": "~2.0",
-        "modera/foundation-bundle": "dev-master",
-        "sergeil/extjsintegration-bundle": "dev-master",
+        "modera/foundation-bundle": "~1.0",
+        "sergeil/extjsintegration-bundle": "~1.0",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2"
     },
@@ -27,5 +27,10 @@
     "autoload": {
         "psr-0": { "Modera\\ServerCrudBundle": "" }
     },
-    "target-dir": "Modera/ServerCrudBundle"
+    "target-dir": "Modera/ServerCrudBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }

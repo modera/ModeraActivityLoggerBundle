@@ -539,6 +539,229 @@ class AbstractCrudControllerTest extends FunctionalTestCase
         $this->assertEquals('new body', $updatedArticle->body);
     }
 
+    private function createDummyArticles($total)
+    {
+        /* @var DummyArticle[] $entities */
+        $entities = array();
+        for ($i=0; $i<$total; $i++) {
+            $article = new DummyArticle();
+            $article->body = 'body' . $i;
+            $article->title = 'title' . $i;
+
+            $entities[] = $article;
+
+            self::$em->persist($article);
+        }
+        self::$em->flush();
+
+        return $entities;
+    }
+
+    /**
+     * @group MPFE-586-1
+     */
+    public function testBatchUpdateActionWithRecords()
+    {
+        $entities = $this->createDummyArticles(2);
+
+        $requestParams = array(
+            'records' => array(
+                array(
+                    'id' => $entities[0]->id,
+                    'body' => 'body0_foo',
+                    'title' => 'title0_foo'
+                ),
+                array(
+                    'id' => $entities[1]->id,
+                    'body' => 'body1_foo',
+                    'title' => 'title1_foo'
+                )
+            )
+        );
+        $result = $this->controller->batchUpdateAction($requestParams);
+
+        $this->assertValidInterceptorInvocation($requestParams, 'batchUpdate');
+
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('success', $result);
+        $this->assertTrue($result['success']);
+        $this->assertArrayHasKey('updated_models', $result);
+        $this->assertEquals(1, count($result['updated_models']));
+        $updatedModels = array_values($result['updated_models']);
+        $this->assertEquals(2, count($updatedModels[0]));
+        $this->assertTrue(in_array($entities[0]->id, $updatedModels[0]));
+        $this->assertTrue(in_array($entities[1]->id, $updatedModels[0]));
+
+        self::$em->clear();
+
+        $article1 = self::$em->find(DummyArticle::clazz(), $entities[0]->id);
+        $this->assertEquals('body0_foo', $article1->body);
+        $this->assertEquals('title0_foo', $article1->title);
+
+        $article2 = self::$em->find(DummyArticle::clazz(), $entities[1]->id);
+        $this->assertEquals('body1_foo', $article2->body);
+        $this->assertEquals('title1_foo', $article2->title);
+    }
+
+    /**
+     * @group MPFE-586
+     */
+    public function testBatchUpdateActionWithRecordsErrorHandling()
+    {
+        $entities = $this->createDummyArticles(2);
+
+        $result = $this->controller->batchUpdateAction(array(
+            'records' => array(
+                array(
+                    'id' => $entities[0]->id,
+                    'body' => 'body0_foo',
+                    'title' => ''
+                ),
+                array(
+                    'id' => $entities[1]->id,
+                    'body' => 'body1_foo',
+                    'title' => 'title1_foo'
+                )
+            )
+        ));
+
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('success', $result);
+        $this->assertFalse($result['success']);
+
+        $this->assertArrayHasKey('errors', $result);
+        $this->assertTrue(is_array($result['errors']));
+        $this->assertEquals(1, count($result['errors']));
+        $error = $result['errors'][0];
+
+        $this->assertArrayHasKey('id', $error);
+        $this->assertArrayHasKey('id', $error['id']);
+        $this->assertEquals($entities[0]->id, $error['id']['id']);
+
+        $this->assertArrayHasKey('errors', $error);
+
+        self::$em->clear();
+
+        // none of them must have been updated
+        $article1 = self::$em->find(DummyArticle::clazz(), $entities[0]->id);
+        $this->assertEquals('body0', $article1->body);
+        $this->assertEquals('title0', $article1->title);
+
+        $article2 = self::$em->find(DummyArticle::clazz(), $entities[1]->id);
+        $this->assertEquals('body1', $article2->body);
+        $this->assertEquals('title1', $article2->title);
+    }
+
+    /**
+     * @group MPFE-586
+     */
+    public function testBatchUpdateActionWithQueriesAndRecord()
+    {
+        $entities = $this->createDummyArticles(3);
+
+        $requestParams = array(
+            'queries' => array(
+                array(
+                    'filter' => array(
+                        array(
+                            'property' => 'id',
+                            'value' => 'eq:' . $entities[0]->id
+                        )
+                    )
+                ),
+                array(
+                    'filter' => array(
+                        array(
+                            'property' => 'title',
+                            'value' => 'eq:' . $entities[2]->title
+                        )
+                    )
+                )
+            ),
+            'record' => array(
+                'title' => 'hello'
+            )
+        );
+        $result = $this->controller->batchUpdateAction($requestParams);
+
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('success', $result);
+        $this->assertTrue($result['success']);
+
+        $this->assertArrayHasKey('updated_models', $result);
+        $this->assertEquals(1, count($result['updated_models']));
+        $updatedModels = array_values($result['updated_models']);
+        $this->assertTrue(is_array($updatedModels));
+        $this->assertEquals(1, count($updatedModels));
+        $this->assertEquals(2, count($updatedModels[0]));
+        $this->assertTrue(in_array($entities[0]->id, $updatedModels[0]));
+        $this->assertTrue(in_array($entities[2]->id, $updatedModels[0]));
+
+        self::$em->clear();
+
+        $article1 = self::$em->find(DummyArticle::clazz(), $entities[0]->id);
+        $this->assertEquals('hello', $article1->title);
+        $this->assertEquals($entities[0]->body, $article1->body);
+
+        $article3 = self::$em->find(DummyArticle::clazz(), $entities[2]->id);
+        $this->assertEquals('hello', $article3->title);
+        $this->assertEquals($entities[2]->body, $article3->body);
+
+        // should not have been updated
+        $article2 = self::$em->find(DummyArticle::clazz(), $entities[1]->id);
+        $this->assertEquals('title1', $article2->title);
+        $this->assertEquals($entities[1]->body, $article2->body);
+    }
+
+    public function testBatchUpdateActionWithQueriesAndRecordErrorHandling()
+    {
+        $entities = $this->createDummyArticles(3);
+
+        $result = $this->controller->batchUpdateAction(array(
+            'queries' => array(
+                array(
+                    'filter' => array(
+                        array(
+                            'property' => 'id',
+                            'value' => 'eq:' . $entities[0]->id
+                        )
+                    )
+                ),
+                array(
+                    'filter' => array(
+                        array(
+                            'property' => 'title',
+                            'value' => 'eq:' . $entities[2]->title
+                        )
+                    )
+                )
+            ),
+            'record' => array(
+                'title' => ''
+            )
+        ));
+
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('success', $result);
+        $this->assertFalse($result['success']);
+        $this->assertArrayHasKey('errors', $result);
+        $this->assertTrue(is_array($result['errors']));
+        $this->assertEquals(2, count($result['errors']));
+
+        $errors = $result['errors'];
+
+        $this->assertArrayHasKey('id', $errors[0]);
+        $this->assertTrue(is_array($errors[0]));
+        $this->assertArrayHasKey('id', $errors[0]['id']);
+        $this->assertEquals($entities[0]->id, $errors[0]['id']['id']);
+
+        $this->assertArrayHasKey('id', $errors[1]);
+        $this->assertTrue(is_array($errors[1]));
+        $this->assertArrayHasKey('id', $errors[1]['id']);
+        $this->assertEquals($entities[2]->id, $errors[1]['id']['id']);
+    }
+
+    // this test will result in having EM closed
     public function testUpdateActionWithException()
     {
         $articles = $this->loadDummyData();

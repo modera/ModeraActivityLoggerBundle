@@ -85,7 +85,7 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
 
         $result = $this->getHandler()->update($user);
 
-        $updatedEntities = $result->getUpdateEntities();
+        $updatedEntities = $result->getUpdatedEntities();
         $this->assertEquals(1, count($updatedEntities));
         $this->assertArrayHasKey(0, $updatedEntities);
         $this->assertArrayHasKey('entity_class', $updatedEntities[0]);
@@ -94,6 +94,9 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
         $this->assertEquals($user->id, $updatedEntities[0]['id']);
     }
 
+    /**
+     * @return DummyUser[]
+     */
     private function loadSomeData()
     {
         $users = array();
@@ -164,5 +167,34 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
         $this->assertTrue(is_array($fields));
         $this->assertEquals(1, count($fields));
         $this->assertTrue(in_array('id', $fields));
+    }
+
+    public function testUpdateBatch()
+    {
+        $users = $this->loadSomeData();
+
+        foreach ($users as $i=>$user) {
+            $user->firstname .= '' . $i;
+        }
+
+        $result = $this->getHandler()->updateBatch($users);
+
+        $updatedEntities = $result->getUpdatedEntities();
+        $this->assertEquals(count($users), count($updatedEntities));
+
+        self::$em->clear();
+
+        $ids = array();
+        foreach ($users as $user) {
+            $ids[] = $user->id;
+        }
+
+        foreach ($users as $user) {
+            $this->assertTrue(in_array($user->id, $ids));
+
+            $dbUser = self::$em->find(DummyUser::clazz(), $user->id);
+
+            $this->assertEquals($user->firstname, $dbUser->firstname);
+        }
     }
 }

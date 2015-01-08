@@ -88,6 +88,28 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
+     * @param object[] $entities
+     *
+     * @return OperationResult
+     */
+    public function updateBatch(array $entities)
+    {
+        $result = new OperationResult();
+
+        foreach ($entities as $entity) {
+            $this->em->persist($entity);
+
+            $result->reportEntity(
+                get_class($entity), $this->resolveEntityId($entity), OperationResult::TYPE_ENTITY_UPDATED
+            );
+        }
+
+        $this->em->flush();
+
+        return $result;
+    }
+
+    /**
      * @inheritDoc
      */
     public function query($entityClass, array $query)

@@ -2,6 +2,7 @@
 
 namespace Modera\ServerCrudBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\NoResultException;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
 use Modera\ServerCrudBundle\DependencyInjection\ModeraServerCrudExtension;
@@ -21,6 +22,7 @@ use Modera\ServerCrudBundle\Validation\DefaultEntityValidator;
 use Modera\ServerCrudBundle\Validation\ValidationResult;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Neton\DirectBundle\Annotation\Remote;
+use Sli\AuxBundle\Util\Toolkit;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -73,6 +75,9 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
             },
             'update_entity_handler' => function($entity, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
                 return $defaultHandler->update($entity);
+            },
+            'batch_update_entities_handler' => function(array $entities, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
+                return $defaultHandler->updateBatch($entities);
             },
             'remove_entities_handler' => function(array $entities, array $params, PersistenceHandlerInterface $defaultHandler, ContainerInterface $container) {
                 return $defaultHandler->remove($entities);
@@ -254,6 +259,13 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
         }
     }
 
+    /**
+     * @param array $params
+     * @param object $entity
+     * @param string $operationType
+     *
+     * @return array
+     */
     private function saveOrUpdateEntityAndCreateResponse(array $params, $entity, $operationType)
     {
         $config = $this->getPreparedConfig();
@@ -477,6 +489,144 @@ abstract class AbstractCrudController extends AbstractBaseController implements 
             $this->validateResultHasExactlyOneEntity($entities, $params);
 
             return $this->saveOrUpdateEntityAndCreateResponse($params, $entities[0], 'update');
+        } catch (\Exception $e) {
+            return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_UPDATE);
+        }
+    }
+
+    /**
+     * @Remote
+     */
+    public function batchUpdateAction(array $params)
+    {
+        $config = $this->getPreparedConfig();
+
+        try {
+            $persistenceHandler = $config['batch_update_entities_handler'];
+            $dataMapper = $config['map_data_on_update'];
+            $validator = $config['updated_entity_validator'];
+
+            $this->interceptAction('batchUpdate', $params);
+
+            if (   isset($params['queries']) && is_array($params['queries'])
+                && isset($params['record']) && is_array($params['record'])) {
+
+                if (!isset($params['record'])) {
+                    $e = new BadRequestException("'/record' hasn't been provided");
+                    $e->setParams($params);
+                    $e->setPath('/record');
+
+                    throw $e;
+                }
+
+                $entities = array();
+                foreach ($params['queries'] as $query) {
+                    $entities = array_merge($entities, $this->getPersistenceHandler()->query($config['entity'], $query));
+                }
+
+                $errors = array();
+                $operationResult = null;
+                foreach ($entities as $entity) {
+                    $dataMapper($params['record'], $entity, $this->getDataMapper(), $this->container);
+
+                    if ($validator) {
+                        /* @var ValidationResult $validationResult */
+                        $validationResult = $validator($params, $entity, $this->getEntityValidator(), $config, $this->container);
+                        if ($validationResult->hasErrors()) {
+                            $pkFields = $this->getPersistenceHandler()->resolveEntityPrimaryKeyFields($config['entity']);
+
+                            $ids = array();
+                            foreach($pkFields as $fieldName) {
+                                $ids[$fieldName] = Toolkit::getPropertyValue($entity, $fieldName);
+                            }
+
+                            $errors[] = array(
+                                'id' => $ids,
+                                'errors' => $validationResult->toArray()
+                            );
+                        }
+                    }
+                }
+
+                if (count($errors) == 0) {
+                    $operationResult = $persistenceHandler($entities, $params, $this->getPersistenceHandler(), $this->container);
+
+                    return array_merge($operationResult->toArray($this->getModelManager()), array(
+                        'success' => true
+                    ));
+                } else {
+                    return array(
+                        'success' => false,
+                        'errors' => $errors
+                    );
+                }
+            } else if (isset($params['records']) && is_array($params['records'])) {
+                $entities = array();
+                $errors = array();
+                foreach ($params['records'] as $recordParams) {
+                    $missingPkFields = array();
+                    $query = array();
+                    foreach ($this->getPersistenceHandler()->resolveEntityPrimaryKeyFields($config['entity']) as $fieldName) {
+                        if (isset($recordParams[$fieldName])) {
+                            $query[] = array(
+                                'property' => $fieldName,
+                                'value' => 'eq:' . $recordParams[$fieldName]
+                            );
+                        } else {
+                            $missingPkFields[] = $fieldName;
+                        }
+                    }
+
+                    if (count($missingPkFields) == 0) {
+                        $entity = $this->getPersistenceHandler()->query($config['entity'], array('filter' => $query));
+                        $this->validateResultHasExactlyOneEntity($entity, $params);
+                        $entity = $entity[0];
+
+                        $entities[] = $entity;
+
+                        $dataMapper($recordParams, $entity, $this->getDataMapper(), $this->container);
+
+                        if ($validator) {
+                            /* @var ValidationResult $validationResult */
+                            $validationResult = $validator($params, $entity, $this->getEntityValidator(), $config, $this->container);
+                            if ($validationResult->hasErrors()) {
+                                $pkFields = $this->getPersistenceHandler()->resolveEntityPrimaryKeyFields($config['entity']);
+
+                                $ids = array();
+                                foreach($pkFields as $fieldName) {
+                                    $ids[$fieldName] = Toolkit::getPropertyValue($entity, $fieldName);
+                                }
+
+                                $errors[] = array(
+                                    'id' => $ids,
+                                    'errors' => $validationResult->toArray()
+                                );
+                            }
+                        }
+                    }
+                }
+
+                if (count($errors) == 0) {
+                    $operationResult = $persistenceHandler($entities, $params, $this->getPersistenceHandler(), $this->container);
+
+                    return array_merge($operationResult->toArray($this->getModelManager()), array(
+                        'success' => true
+                    ));
+                } else {
+                    return array(
+                        'success' => false,
+                        'errors' => $errors
+                    );
+                }
+            } else {
+                $e = new BadRequestException(
+                    "Invalid request structure. Valid request would either contain 'queries' and 'record' or 'records' keys."
+                );
+                $e->setPath($params);
+                $e->setPath('/');
+
+                throw $e;
+            }
         } catch (\Exception $e) {
             return $this->createExceptionResponse($e, ExceptionHandlerInterface::OPERATION_UPDATE);
         }

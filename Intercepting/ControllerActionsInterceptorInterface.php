@@ -31,6 +31,14 @@ interface ControllerActionsInterceptorInterface
     public function onUpdate(array $params, AbstractCrudController $controller);
 
     /**
+     * @param array $params
+     * @param AbstractCrudController $controller
+     *
+     * @return void
+     */
+    public function onBatchUpdate(array $params, AbstractCrudController $controller);
+
+    /**
      * @param array                  $params
      * @param AbstractCrudController $controller
      *
