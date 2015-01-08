@@ -12,10 +12,15 @@
     "require": {
         "php": ">=5.3.0",
         "symfony/framework-bundle": "~2.0",
-        "modera/mjr-integration-bundle": "dev-master"
+        "modera/mjr-integration-bundle": "~1.0"
     },
     "autoload": {
         "psr-0": { "Modera\\MJRSecurityIntegrationBundle": "" }
     },
-    "target-dir": "Modera/MJRSecurityIntegrationBundle"
+    "target-dir": "Modera/MJRSecurityIntegrationBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
