@@ -27,5 +27,10 @@
     "autoload": {
         "psr-0": { "Modera\\ServerCrudBundle": "" }
     },
-    "target-dir": "Modera/ServerCrudBundle"
+    "target-dir": "Modera/ServerCrudBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
