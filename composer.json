@@ -21,5 +21,10 @@
     "autoload": {
         "psr-0": { "Modera\\RoutingBundle": "" }
     },
-    "target-dir": "Modera/RoutingBundle"
+    "target-dir": "Modera/RoutingBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
