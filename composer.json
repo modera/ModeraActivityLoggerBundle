@@ -17,5 +17,10 @@
     "autoload": {
         "psr-0": { "Modera\\ConfigBundle": "" }
     },
-    "target-dir": "Modera/ConfigBundle"
+    "target-dir": "Modera/ConfigBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
