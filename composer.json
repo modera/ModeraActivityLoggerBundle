@@ -23,6 +23,9 @@
     "extra": {
         "modera-module": {
             "register-bundle": "Modera\\DirectBundle\\ModeraDirectBundle"
+        },
+        "branch-alias": {
+            "dev-master": "1.0-dev"
         }
     }
 }
