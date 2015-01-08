@@ -180,25 +180,7 @@ class ScriptHandler extends AbstractScriptHandler
             return;
         }
 
-        static::executeCommand($event, $appDir, 'cache:clear --env=prod --no-warmup', $options['process-timeout']);
-    }
-
-    /**
-     * Creates the configured databases.
-     *
-     * @param $event CommandEvent A instance
-     */
-    public static function doctrineDatabaseCreate(CommandEvent $event)
-    {
-        $options = static::getOptions($event);
-        $appDir = $options['symfony-app-dir'];
-
-        if (!is_dir($appDir)) {
-            echo 'The symfony-app-dir (' . $appDir . ') specified in composer.json was not found in ' . getcwd() . '.' . PHP_EOL;
-            return;
-        }
-
-        static::executeCommand($event, $appDir, 'doctrine:database:create', $options['process-timeout']);
+        static::executeCommand($event, $appDir, 'cache:clear --env=prod --no-warmup --quiet', $options['process-timeout']);
     }
 
     /**
@@ -217,5 +199,26 @@ class ScriptHandler extends AbstractScriptHandler
         }
 
         static::executeCommand($event, $appDir, 'doctrine:schema:update --force', $options['process-timeout']);
+    }
+
+    /**
+     * Creates the configured databases and executes the SQL needed to update the database schema, if database not created.
+     *
+     * @param CommandEvent $event
+     */
+    public static function initDatabase(CommandEvent $event)
+    {
+        $options = static::getOptions($event);
+        $appDir = $options['symfony-app-dir'];
+
+        if (!is_dir($appDir)) {
+            echo 'The symfony-app-dir (' . $appDir . ') specified in composer.json was not found in ' . getcwd() . '.' . PHP_EOL;
+            return;
+        }
+
+        try {
+            static::executeCommand($event, $appDir, 'doctrine:database:create --quiet', $options['process-timeout']);
+            static::doctrineSchemaUpdate($event);
+        } catch (\RuntimeException $e) {}
     }
 }
