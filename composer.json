@@ -19,5 +19,10 @@
     "autoload": {
         "psr-0": { "Modera\\BackendToolsSettingsBundle": "" }
     },
-    "target-dir": "Modera/BackendToolsSettingsBundle"
+    "target-dir": "Modera/BackendToolsSettingsBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
