@@ -22,5 +22,10 @@
     "autoload": {
         "psr-0": { "Modera\\BackendToolsActivityLogBundle": "" }
     },
-    "target-dir": "Modera/BackendToolsActivityLogBundle"
+    "target-dir": "Modera/BackendToolsActivityLogBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
 }
