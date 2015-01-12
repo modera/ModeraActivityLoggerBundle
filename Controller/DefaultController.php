@@ -5,7 +5,7 @@ namespace Modera\BackendToolsBundle\Controller;
 use Modera\BackendToolsBundle\Section\Section;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
-use Neton\DirectBundle\Annotation\Remote;
+use Modera\DirectBundle\Annotation\Remote;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
