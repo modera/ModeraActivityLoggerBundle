@@ -14,7 +14,8 @@ use Modera\ConfigBundle\Config\ConfigurationEntryInterface;
  * Do no rely on methods exposed by this class outside this bundle, instead use methods declared by
  * {@class ConfigurationEntryInterface}.
  *
- * @author Sergei Lissovski <sergei.lissovski@modera.org>
+ * @author    Sergei Lissovski <sergei.lissovski@modera.org>
+ * @copyright 2014 Modera Foundation
  *
  * @ORM\Entity
  * @ORM\Table(name="modera_config_configurationproperty")

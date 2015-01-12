@@ -5,6 +5,16 @@ You can store any type of configuration property - your configuration property c
 integers, arrays ) or complex ones - like objects or references to entities, this is achieved by using so called
 "Handlers" ( implementations of `\Modera\ConfigBundle\Config\HandlerInterface` ).
 
+## Installation
+
+Add this dependency to your composer.json:
+
+    "modera/config-bundle": "dev-master"
+
+Update your AppKernel class and add this:
+
+    new Modera\ConfigBundle\ModeraConfigBundle(),
+
 ## Publishing configuration properties
 
 Before you can use your configuration properties you need to publish them. Publishing process consists of several steps:
@@ -93,3 +103,8 @@ implementations, that is, when you use `modera_config.configuration_entries_mana
 \Modera\ConfigBundle\Config\ConfigurationEntryInterface this way you will make your code portable. By default the bundle
 uses Doctrine ORM to store values for configuration entries but later some more storage mechanism may be added and if you
 rely on interfaces then you won't need to update your code to leverage new possible storage engines.
+
+## Licensing
+
+This bundle is under the MIT license. See the complete license in the bundle:
+Resources/meta/LICENSE
