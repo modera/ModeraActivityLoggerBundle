@@ -24,6 +24,7 @@
 
     $ php app/console modera:upgrade --dependencies
 
-## License
+## Licensing
 
-This bundle is under the MIT license.
+This bundle is under the MIT license. See the complete license in the bundle:
+Resources/meta/LICENSE
