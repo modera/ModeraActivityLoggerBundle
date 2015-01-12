@@ -4,7 +4,7 @@ namespace Modera\BackendTranslationsToolBundle\Controller;
 
 use Modera\BackendTranslationsToolBundle\Filtering\FilterInterface;
 use Modera\ServerCrudBundle\Exceptions\BadRequestException;
-use Neton\DirectBundle\Annotation\Remote;
+use Modera\DirectBundle\Annotation\Remote;
 use Modera\TranslationsBundle\Entity\TranslationToken;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Symfony\Component\Console\Input\ArrayInput;
