@@ -8,6 +8,10 @@ use Modera\MjrIntegrationBundle\Sections\Section as MJRSection;
 use Modera\BackendToolsBundle\Section\Section as ToolsSection;
 use Modera\FoundationBundle\Translation\T;
 
+/**
+ * @author    Sergei Lissovski <sergei.lissovski@modera.org>
+ * @copyright 2014 Modera Foundation
+ */
 class ModeraBackendToolsActivityLogBundle extends Bundle implements ExtensionPointsAwareBundleInterface
 {
     /**

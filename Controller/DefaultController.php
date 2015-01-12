@@ -2,17 +2,21 @@
 
 namespace Modera\BackendToolsActivityLogBundle\Controller;
 
-use Modera\ActivityLoggerBundle\Manager\ActivityManagerInterface;
+use Modera\DirectBundle\Annotation\Remote;
 use Modera\ActivityLoggerBundle\Model\ActivityInterface;
+use Modera\ActivityLoggerBundle\Manager\ActivityManagerInterface;
 use Modera\BackendToolsActivityLogBundle\AuthorResolving\ActivityAuthorResolver;
 use Modera\BackendToolsActivityLogBundle\AutoSuggest\FilterAutoSuggestService;
 use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
 use Modera\ServerCrudBundle\Hydration\HydrationService;
 use Sli\AuxBundle\Util\Toolkit;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Neton\DirectBundle\Annotation\Remote;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * @author    Sergei Lissovski <sergei.lissovski@modera.org>
+ * @copyright 2014 Modera Foundation
+ */
 class DefaultController extends Controller
 {
     /**
