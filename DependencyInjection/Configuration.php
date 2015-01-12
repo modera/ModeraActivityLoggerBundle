@@ -20,9 +20,16 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('modera_backend_module');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('module-service-path-prefix')
+                    ->defaultValue('/module-service')
+                ->end()
+                ->scalarNode('module-service-port')
+                    ->defaultValue(80)
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

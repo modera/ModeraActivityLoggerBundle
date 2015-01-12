@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ModeraBackendModuleExtension extends Extension
 {
+    const CONFIG_KEY = 'modera_backend_module.config';
+
     /**
      * {@inheritDoc}
      */
@@ -24,5 +26,11 @@ class ModeraBackendModuleExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->setParameter(self::CONFIG_KEY, $config);
+        foreach ($config as $key => $value) {
+            $container->setParameter(self::CONFIG_KEY . '.' . $key, $value);
+        }
+
     }
 }

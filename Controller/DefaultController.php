@@ -2,13 +2,18 @@
 
 namespace Modera\BackendModuleBundle\Controller;
 
-use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
-use Neton\DirectBundle\Annotation\Remote;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Modera\DirectBundle\Annotation\Remote;
 use Modera\Module\Repository\ModuleRepository;
+use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
+use Modera\BackendModuleBundle\DependencyInjection\ModeraBackendModuleExtension;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
+/**
+ * @author    Sergei Vizel <sergei.vizel@modera.org>
+ * @copyright 2014 Modera Foundation
+ */
 class DefaultController extends Controller
 {
     /**
@@ -34,7 +39,7 @@ class DefaultController extends Controller
      */
     private function getModuleServicePort()
     {
-        return 80; //TODO: move to config
+        return $this->container->getParameter(ModeraBackendModuleExtension::CONFIG_KEY . '.module-service-port');
     }
 
     /**
@@ -42,7 +47,7 @@ class DefaultController extends Controller
      */
     private function getModuleServicePathPrefix()
     {
-        return '/module-service'; //TODO: move to config
+        return $this->container->getParameter(ModeraBackendModuleExtension::CONFIG_KEY . '.module-service-path-prefix');
     }
 
     /**
@@ -157,6 +162,7 @@ class DefaultController extends Controller
      * @Remote
      *
      * @param array $params
+     * @return array
      */
     public function getInstalledModulesAction(array $params)
     {
@@ -178,6 +184,7 @@ class DefaultController extends Controller
      * @Remote
      *
      * @param array $params
+     * @return array
      */
     public function getAvailableModulesAction(array $params)
     {
@@ -199,6 +206,7 @@ class DefaultController extends Controller
      * @Remote
      *
      * @param array $params
+     * @return array|null
      */
     public function getModuleDetailsAction(array $params)
     {
@@ -225,6 +233,7 @@ class DefaultController extends Controller
      * @Remote
      *
      * @param array $params
+     * @return array
      */
     public function requireAction(array $params)
     {
@@ -254,6 +263,7 @@ class DefaultController extends Controller
      * @Remote
      *
      * @param array $params
+     * @return array
      */
     public function removeAction(array $params)
     {
@@ -275,6 +285,7 @@ class DefaultController extends Controller
      * @Remote
      *
      * @param array $params
+     * @return array
      */
     public function checkAction(array $params)
     {
