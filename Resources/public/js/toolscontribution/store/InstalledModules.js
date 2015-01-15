@@ -10,7 +10,8 @@ Ext.define('Modera.backend.module.toolscontribution.store.InstalledModules', {
                 'id', 'logo', 'name', 'description', 'license',
                 'lastVersion', 'currentVersion',
                 { name: 'installed', type: 'boolean' },
-                { name: 'updateAvailable', type: 'boolean' }
+                { name: 'updateAvailable', type: 'boolean' },
+                'isDependency'
             ],
             proxy: {
                 type: 'direct',

@@ -15,6 +15,7 @@ Ext.define('Modera.backend.module.toolscontribution.view.ModuleDetails', {
     licenseFieldText: 'License',
     authorsFieldText: 'Authors',
     installedStatusText: 'Installed',
+    dependencyStatusText: 'Dependency',
     currentVersionStatusText: 'Current version: {0}',
     installBtnText: 'Install the module',
     updateBtnText: 'Install update',
@@ -69,13 +70,19 @@ Ext.define('Modera.backend.module.toolscontribution.view.ModuleDetails', {
                         hidden: (!me.config.dto.installed && !me.config.dto.updateAvailable),
                         items: [
                             {
-                                hidden: (!me.config.dto.installed || me.config.dto.updateAvailable),
+                                hidden: (!me.config.dto.installed || me.config.dto.updateAvailable || me.config.dto.isDependency),
                                 xtype: 'box',
                                 cls: 'modera-backend-module-box-status mfc-box-status success',
                                 html: me.installedStatusText
                             },
                             {
-                                hidden: !me.config.dto.updateAvailable,
+                                hidden: !me.config.dto.isDependency,
+                                xtype: 'box',
+                                cls: 'modera-backend-module-box-status mfc-box-status warning',
+                                html: me.dependencyStatusText
+                            },
+                            {
+                                hidden: me.config.dto.isDependency || !me.config.dto.updateAvailable,
                                 xtype: 'box',
                                 cls: 'modera-backend-module-box-status mfc-box-status warning',
                                 html: Ext.String.format(me.currentVersionStatusText, me.config.dto.currentVersion)
@@ -96,14 +103,14 @@ Ext.define('Modera.backend.module.toolscontribution.view.ModuleDetails', {
                             {
                                 itemId: 'requireBtn',
                                 iconCls: 'modera-backend-module-icon ' + (me.config.dto.updateAvailable ? 'update24' : 'install24'),
-                                hidden: (me.config.dto.installed && !me.config.dto.updateAvailable),
+                                hidden: (me.config.dto.installed && !me.config.dto.updateAvailable && !me.config.dto.isDependency),
                                 xtype: 'button',
                                 text: (me.config.dto.updateAvailable ? me.updateBtnText : me.installBtnText)
                             },
                             {
                                 itemId: 'removeBtn',
                                 iconCls: 'modera-backend-module-icon remove24',
-                                hidden: !me.config.dto.installed,
+                                hidden: !me.config.dto.installed || me.config.dto.isDependency,
                                 xtype: 'button',
                                 text: me.removeBtnText
                             }

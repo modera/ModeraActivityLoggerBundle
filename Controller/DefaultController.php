@@ -87,7 +87,7 @@ class DefaultController extends Controller
 
         if ($installed) {
             $currentVersion = $this->getModuleRepository()->formatVersion($installed);
-            if ($installed->getPrettyVersion() !== $lastVersion) {
+            if ($installed->getSourceReference() !== $latest->getSource()->getReference()) {
                 $updateAvailable = true;
             }
         }
@@ -102,6 +102,7 @@ class DefaultController extends Controller
             'currentVersion'  => $currentVersion,
             'installed'       => $installed ? true : false,
             'updateAvailable' => $updateAvailable,
+            'isDependency'    => $this->getModuleRepository()->isInstalledAsDependency($latest->getName()),
         );
 
         if ($extended) {

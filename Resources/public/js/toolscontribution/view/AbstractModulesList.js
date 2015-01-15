@@ -46,7 +46,10 @@ Ext.define('Modera.backend.module.toolscontribution.view.AbstractModulesList', {
                     dataIndex: 'license',
                     renderer: function(value, p, record) {
                         var status = '';
-                        if (record.get('updateAvailable')) {
+                        if (record.get('isDependency')) {
+                            status = Ext.String.format(this.tplStatus, 'warning', 'dependency');
+                        }
+                        else if (record.get('updateAvailable')) {
                             status = Ext.String.format(this.tplStatus, 'warning', 'update');
                         }
                         else if (record.get('installed')) {
