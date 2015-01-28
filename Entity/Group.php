@@ -36,6 +36,14 @@ class Group
     private $name;
 
     /**
+     * Reference name that maybe used in code to refer exact group.
+     * Group with ref.name usually will be created through fixtures.
+     *
+     * @ORM\Column(type="string")
+     */
+    private $refName;
+
+    /**
      * @var Permission[]
      *
      * @ORM\ManyToMany(targetEntity="Permission", mappedBy="groups", cascade={"persist"})
@@ -134,5 +142,21 @@ class Group
     public function getPermissions()
     {
         return $this->permissions;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRefName()
+    {
+        return $this->refName;
+    }
+
+    /**
+     * @param mixed $refName
+     */
+    public function setRefName($refName)
+    {
+        $this->refName = $refName;
     }
 }
