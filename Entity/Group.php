@@ -39,7 +39,7 @@ class Group
      * Reference name that maybe used in code to refer exact group.
      * Group with ref.name usually will be created through fixtures.
      *
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $refName;
 
