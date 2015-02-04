@@ -6,31 +6,26 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="modera_security_session")
+ * @ORM\Table(name="modera_security_legacy_session")
  *
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2015 Modera Foundation
  */
-class Session
+class LegacySession
 {
     /**
      * @ORM\Id
-     * @ORM\Column(type="binary", length=128, nullable=false)
+     * @ORM\Column(type="string", length=255, nullable=false)
      */
     protected $session_id;
 
     /**
-     * @ORM\Column(type="blob", length=65532, nullable=false)
+     * @ORM\Column(type="text", nullable=false)
      */
     protected $session_value;
 
     /**
-     * @ORM\Column(type="integer", nullable=false, options={"unsigned"=true})
-     */
-    protected $session_time;
-
-    /**
      * @ORM\Column(type="integer", nullable=false)
      */
-    protected $session_lifetime;
+    protected $session_time;
 }

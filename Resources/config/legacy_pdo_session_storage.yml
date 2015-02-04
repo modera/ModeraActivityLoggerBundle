@@ -1,10 +1,9 @@
 parameters:
     pdo.db_options:
-        db_table:    modera_security_session
+        db_table:    modera_security_legacy_session
         db_id_col:   session_id
         db_data_col: session_value
         db_time_col: session_time
-        db_lifetime_col: session_lifetime
 
 services:
     pdo:
@@ -17,5 +16,5 @@ services:
             - [setAttribute, [3, 2]] # \PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION
 
     session.handler.pdo:
-        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\LegacyPdoSessionHandler
         arguments: ["@pdo", "%pdo.db_options%"]
