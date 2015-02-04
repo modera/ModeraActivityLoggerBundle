@@ -3,7 +3,6 @@
 namespace Modera\SecurityBundle\Command;
 
 use Doctrine\ORM\EntityManager;
-use Modera\SecurityBundle\Entity\Permission;
 use Modera\SecurityBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\DialogHelper;
@@ -23,7 +22,7 @@ class CreateUserCommand extends ContainerAwareCommand
     {
         $this
             ->setName('modera:security:create-user')
-            ->setDescription('Allows to create a sample user that you can later user to authenticate to backend.')
+            ->setDescription('Allows to create a user that you can later user to authenticate.')
             ->addOption('no-interactions', null, InputOption::VALUE_NONE)
             ->addOption('username', null, InputOption::VALUE_OPTIONAL)
             ->addOption('email', null, InputOption::VALUE_OPTIONAL)
@@ -72,12 +71,6 @@ class CreateUserCommand extends ContainerAwareCommand
         $user->setEmail($email);
         $user->setUsername($username);
         $user->setPassword($encoderFactory->getEncoder($user)->encodePassword($password, $user->getSalt()));
-
-        foreach ($em->getRepository(Permission::clazz())->findAll() as $permission) {
-            /* @var Permission $permission */
-
-            $user->addPermission($permission);
-        }
 
         $em->persist($user);
         $em->flush();

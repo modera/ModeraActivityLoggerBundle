@@ -45,12 +45,7 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('access_control')
-                    ->defaultValue(array(
-                        array(
-                            'path'  => '^/backend/.+',
-                            'roles' => 'ROLE_BACKEND_USER',
-                        )
-                    ))
+                    ->defaultValue(array())
                     ->prototype('array')
                         ->prototype('variable')->end()
                     ->end()

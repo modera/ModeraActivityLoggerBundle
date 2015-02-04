@@ -120,20 +120,6 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
     {
         $response = array('success' => false);
         if ($token->isAuthenticated() && $token->getUser() instanceof User) {
-
-            $roleNames = [];
-            foreach ($token->getRoles() as $roleName) {
-                $roleNames[] = $roleName->getRole();
-            }
-
-            // TODO HAAACK
-            if (!in_array('ROLE_BACKEND_USER', $roleNames)) {
-                return array(
-                    'success' => false,
-                    'message' => "You don't have required rights to access administration interface."
-                );
-            }
-
             /* @var User $user */
             $user = $token->getUser();
             $response = array(
