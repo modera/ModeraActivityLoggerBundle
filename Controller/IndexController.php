@@ -2,8 +2,10 @@
 
 namespace Modera\MJRSecurityIntegrationBundle\Controller;
 
+use Modera\SecurityBundle\Security\Authenticator;
 use Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager;
 use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
+use Modera\MJRSecurityIntegrationBundle\ModeraMJRSecurityIntegrationBundle;
 use Modera\MJRSecurityIntegrationBundle\DependencyInjection\ModeraMJRSecurityIntegrationExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -11,6 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Entry point to web application.
@@ -83,5 +88,47 @@ class IndexController extends Controller
         $response->headers->set('Content-Type', 'application/javascript');
 
         return $response;
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function isAuthenticatedAction(Request $request)
+    {
+        $this->initSession($request);
+
+        /* @var SecurityContextInterface $sc */
+        $sc = $this->get('security.context');
+        $token = $sc->getToken();
+
+        $response = Authenticator::getAuthenticationResponse($token);
+
+        if ($response['success']) {
+            $roleNames = [];
+            foreach ($token->getRoles() as $roleName) {
+                $roleNames[] = $roleName->getRole();
+            }
+
+            if (!in_array(ModeraMJRSecurityIntegrationBundle::ROLE_BACKEND_USER, $roleNames)) {
+                $response = array(
+                    'success' => false,
+                    'message' => "You don't have required rights to access administration interface."
+                );
+            }
+        }
+
+        return new JsonResponse($response);
+    }
+
+    /**
+     * @param Request $request
+     */
+    protected function initSession(Request $request)
+    {
+        $session = $request->getSession();
+        if ($session instanceof Session && !$session->getId()) {
+            $session->start();
+        }
     }
 }
