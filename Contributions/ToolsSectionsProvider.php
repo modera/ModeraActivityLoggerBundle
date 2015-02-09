@@ -5,7 +5,7 @@ namespace Modera\BackendModuleBundle\Contributions;
 use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
 use Modera\BackendToolsBundle\Section\Section;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Contributes a section to Backend/Tools
@@ -15,16 +15,16 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class ToolsSectionsProvider implements ContributorInterface
 {
-    private $securityContext;
+    private $authorizationChecker;
 
     private $items;
 
     /**
-     * @param SecurityContextInterface $securityContext
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -35,7 +35,7 @@ class ToolsSectionsProvider implements ContributorInterface
         if (!$this->items) {
             $this->items = [];
 
-            if ($this->securityContext->isGranted(ModeraBackendModuleBundle::ROLE_ACCESS_BACKEND_TOOLS_MODULES_SECTION)) {
+            if ($this->authorizationChecker->isGranted(ModeraBackendModuleBundle::ROLE_ACCESS_BACKEND_TOOLS_MODULES_SECTION)) {
                 $this->items[] = new Section(
                     'Modules',
                     'tools.modules',

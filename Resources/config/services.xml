@@ -9,7 +9,7 @@
         <service id="modera_backend_module.contributions.tools_sections_provider"
                  class="Modera\BackendModuleBundle\Contributions\ToolsSectionsProvider">
 
-            <argument type="service" id="security.context" />
+            <argument type="service" id="security.authorization_checker" />
 
             <tag name="modera_backend_tools.sections_provider" />
         </service>

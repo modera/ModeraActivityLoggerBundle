@@ -8,7 +8,7 @@ use Modera\BackendModuleBundle\ModeraBackendModuleBundle;
 use Modera\BackendModuleBundle\DependencyInjection\ModeraBackendModuleExtension;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -151,10 +151,10 @@ class DefaultController extends Controller
 
     private function checkAccess()
     {
-        /* @var SecurityContextInterface $sc */
-        $sc = $this->get('security.context');
+        /* @var AuthorizationCheckerInterface $authorizationChecker */
+        $authorizationChecker = $this->get('security.authorization_checker');
 
-        if (!$sc->isGranted(ModeraBackendModuleBundle::ROLE_ACCESS_BACKEND_TOOLS_MODULES_SECTION)) {
+        if (!$authorizationChecker->isGranted(ModeraBackendModuleBundle::ROLE_ACCESS_BACKEND_TOOLS_MODULES_SECTION)) {
             throw new AccessDeniedHttpException();
         }
     }
