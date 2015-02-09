@@ -14,7 +14,8 @@ use Modera\ServerCrudBundle\Persistence\OperationResult;
 use Modera\FoundationBundle\Translation\T;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Modera\BackendSecurityBundle\Service\MailService;
 
 /**
@@ -34,11 +35,13 @@ class UsersController extends AbstractCrudController
             'security' => array(
                 'actions' => array(
                     'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
-                    'update' => function(SecurityContextInterface $sc, array $params) {
+                    'update' => function(AuthorizationCheckerInterface $ac, array $params) use ($self) {
+                        /* @var TokenStorageInterface $ts */
+                        $ts = $self->get('security.token_storage');
                         /* @var User $user */
-                        $user = $sc->getToken()->getUser();
+                        $user = $ts->getToken()->getUser();
 
-                        if ($sc->isGranted(ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES)) {
+                        if ($ac->isGranted(ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES)) {
                             return true;
                         } else {
                             // irrespectively of what privileges user has we will always allow him to edit his
@@ -103,8 +106,8 @@ class UsersController extends AbstractCrudController
 
                 /* @var LoggerInterface $activityMgr */
                 $activityMgr = $container->get('modera_activity_logger.manager.activity_manager');
-                /* @var SecurityContextInterface $sc */
-                $sc = $container->get('security.context');
+                /* @var TokenStorageInterface $ts */
+                $ts = $container->get('security.token_storage');
 
                 if (isset($params['plainPassword']) && $params['plainPassword']) {
                     $self->setPassword($entity, $params['plainPassword']);
@@ -117,14 +120,14 @@ class UsersController extends AbstractCrudController
                     $activityMsg = T::trans('Password has been changed for user "%user%".', array('%user%' => $entity->getUsername()));
                     $activityContext = array(
                         'type' => 'user.password_changed',
-                        'author' => $sc->getToken()->getUser()->getId()
+                        'author' => $ts->getToken()->getUser()->getId()
                     );
                     $activityMgr->info($activityMsg, $activityContext);
                 } else {
                     $activityMsg = T::trans('Profile data is changed for user "%user%".', array('%user%' => $entity->getUsername()));
                     $activityContext = array(
                         'type' => 'user.profile_updated',
-                        'author' => $sc->getToken()->getUser()->getId()
+                        'author' => $ts->getToken()->getUser()->getId()
                     );
                     $activityMgr->info($activityMsg, $activityContext);
                 }
