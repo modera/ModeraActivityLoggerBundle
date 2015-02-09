@@ -11,7 +11,6 @@ use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
 use Modera\SecurityBundle\Entity\User;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 use Modera\MjrIntegrationBundle\Config\CallbackConfigMerger;
 
 /**
@@ -134,7 +133,7 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
         $em = $this->container->get('doctrine.orm.entity_manager');
 
         /** @var User $user */
-        $user = $this->container->get('security.context')->getToken()->getUser();
+        $user = $this->container->get('security.token_storage')->getToken()->getUser();
 
         $settings = [];
         foreach($user->getGroups() as $group) {
