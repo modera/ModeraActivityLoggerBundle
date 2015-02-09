@@ -22,7 +22,7 @@
         <service id="modera_mjr_security_integration.contributions.config_mergers_provider"
                  class="Modera\MJRSecurityIntegrationBundle\Contributions\ConfigMergersProvider">
 
-            <argument type="service" id="security.context" />
+            <argument type="service" id="security.token_storage" />
             <argument type="service" id="modera_mjr_security_integration.client_di_service_defs_provider" />
 
             <tag name="modera_mjr_integration.config.config_mergers_provider" />
