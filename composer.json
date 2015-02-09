@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
-        "symfony/framework-bundle": "~2.0",
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": "~2.6",
         "modera/mjr-integration-bundle": "~1.0"
     },
     "autoload": {
@@ -20,7 +20,7 @@
     "target-dir": "Modera/BackendToolsBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "2.0-dev"
         }
     }
 }

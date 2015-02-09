@@ -7,7 +7,7 @@ use Modera\MjrIntegrationBundle\Menu\MenuItem;
 use Modera\MjrIntegrationBundle\Menu\MenuItemInterface;
 use Modera\MjrIntegrationBundle\Model\FontAwesome;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Contributes js-runtime menu items.
@@ -17,13 +17,13 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class MenuItemsProvider implements ContributorInterface
 {
-    private $securityContext;
+    private $authorizationChecker;
 
     private $items;
 
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -34,7 +34,7 @@ class MenuItemsProvider implements ContributorInterface
         if (!$this->items) {
             $this->items = [];
 
-            if ($this->securityContext->isGranted(ModeraBackendToolsBundle::ROLE_ACCESS_TOOLS_SECTION)) {
+            if ($this->authorizationChecker->isGranted(ModeraBackendToolsBundle::ROLE_ACCESS_TOOLS_SECTION)) {
                 $this->items[] = new MenuItem('Tools', 'Modera.backend.tools.runtime.Section', 'tools', array(
                     MenuItemInterface::META_NAMESPACE => 'Modera.backend.tools',
                     MenuItemInterface::META_NAMESPACE_PATH => '/bundles/moderabackendtools/js'
