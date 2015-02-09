@@ -5,7 +5,7 @@ namespace Modera\ServerCrudBundle\Tests\Unit\Security;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\Security\AccessDeniedHttpException;
 use Modera\ServerCrudBundle\Security\SecurityControllerActionsInterceptor;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -14,15 +14,15 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCase
 {
     private $controller;
-    private $securityContext;
+    private $authorizationChecker;
     /* @var SecurityControllerActionsInterceptor */
     private $interceptor;
 
     protected function setUp()
     {
         $this->controller = $this->getMock(AbstractCrudController::clazz());
-        $this->securityContext = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
-        $this->interceptor = new SecurityControllerActionsInterceptor($this->securityContext);
+        $this->authorizationChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $this->interceptor = new SecurityControllerActionsInterceptor($this->authorizationChecker);
     }
 
     public function testCheckAccess()
@@ -53,9 +53,9 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
              ->will($this->returnValue($preparedConfig));
     }
 
-    private function teachSecurityContext($expectedArgValue, $returnValue)
+    private function teachAuthorizationChecker($expectedArgValue, $returnValue)
     {
-        $this->securityContext->expects($this->atLeastOnce())
+        $this->authorizationChecker->expects($this->atLeastOnce())
             ->method('isGranted')
             ->with($this->equalTo($expectedArgValue))
             ->will($this->returnValue($returnValue));
@@ -77,7 +77,7 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
             )
         );
 
-        $this->teachSecurityContext($config['security']['actions'][$actionName], false);
+        $this->teachAuthorizationChecker($config['security']['actions'][$actionName], false);
         $this->teachController($config);
 
         $thrownException = null;
@@ -110,7 +110,7 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
             )
         );
 
-        $this->teachSecurityContext($config['security']['actions'][$actionName], true);
+        $this->teachAuthorizationChecker($config['security']['actions'][$actionName], true);
         $this->teachController($config);
 
         $this->interceptor->{'on' . ucfirst($actionName)}(array(), $this->controller);
@@ -193,8 +193,8 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
         $config = array(
             'security' => array(
                 'actions' => array(
-                    'create' => function(SecurityContextInterface $sc, $params, $actionName) use($holder) {
-                        $holder->sc = $sc;
+                    'create' => function(AuthorizationCheckerInterface $ac, $params, $actionName) use($holder) {
+                        $holder->ac = $ac;
                         $holder->params = $params;
                         $holder->actionName = $actionName;
 
@@ -214,7 +214,7 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
         }
 
         $this->assertNotNull($thrownException);
-        $this->assertInstanceOf('Symfony\Component\Security\Core\SecurityContextInterface', $holder->sc);
+        $this->assertInstanceOf('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface', $holder->ac);
         $this->assertEquals(array('foo'), $holder->params);
         $this->assertEquals('create', $holder->actionName);
     }

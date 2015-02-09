@@ -652,9 +652,9 @@ when implementing `getConfig` method:
         $fn = function(array $params, $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) {
             $defaultMapper->mapData($params, $entity);
 
-            $sc = $container->get('security.context');
+            $ts = $container->get('security.token_storage');
 
-            $user = $sc->getToken()->getUser();
+            $user = $ts->getToken()->getUser();
             if (is_object($user)) {
                 $entity->setManager();
             }
@@ -861,7 +861,7 @@ configuration key when overriding `AbstractCrudController::getConfig` method:
                 'role' => 'ROLE_ACCESS_USERS',
                 'actions' => array(
                     'create' => 'ROLE_CREATE_USER',
-                    'update' => function(SecurityContextInterface $sc, $params, $actionName) {
+                    'update' => function(AuthorizationCheckerInterface $ac, $params, $actionName) {
                         // some non-trivial security check may occur in a callback
                     }
                 )

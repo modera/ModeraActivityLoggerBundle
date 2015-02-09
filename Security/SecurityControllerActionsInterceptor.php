@@ -4,7 +4,7 @@ namespace Modera\ServerCrudBundle\Security;
 
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\Intercepting\ControllerActionsInterceptorInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Interceptor allows to add security enforcement logic to AbstractCrudController.
@@ -14,14 +14,14 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  */
 class SecurityControllerActionsInterceptor implements ControllerActionsInterceptorInterface
 {
-    private $securityContext;
+    private $authorizationChecker;
 
     /**
-     * @param SecurityContextInterface $securityContext
+     * @param AuthorizationCheckerInterface $authorizationChecker
      */
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
     {
-        $this->securityContext = $securityContext;
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     private function throwAccessDeniedException($role)
@@ -53,7 +53,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
             if (isset($security['role'])) {
                 $role = $security['role'];
 
-                if (!$this->securityContext->isGranted($role)) {
+                if (!$this->authorizationChecker->isGranted($role)) {
                     $this->throwAccessDeniedException($role);
                 }
             }
@@ -62,10 +62,10 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
                 $role = $security['actions'][$actionName];
 
                 if (is_callable($role)) {
-                    if (!call_user_func($role, $this->securityContext, $params, $actionName)) {
+                    if (!call_user_func($role, $this->authorizationChecker, $params, $actionName)) {
                         $this->throwAccessDeniedException($role);
                     }
-                } else if (!$this->securityContext->isGranted($role)) {
+                } else if (!$this->authorizationChecker->isGranted($role)) {
                     $this->throwAccessDeniedException($role);
                 }
             }

@@ -5,6 +5,7 @@ namespace Modera\ServerCrudBundle\Contributions;
 use Modera\ServerCrudBundle\Security\SecurityControllerActionsInterceptor;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -12,12 +13,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ControllerActionInterceptorsProvider implements ContributorInterface
 {
-    private $securityContext;
+    /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
     private $items;
 
     public function __construct(ContainerInterface $container)
     {
-        $this->securityContext = $container->get('security.context');
+        $this->authorizationChecker = $container->get('security.authorization_checker');
     }
 
     /**
@@ -27,7 +31,7 @@ class ControllerActionInterceptorsProvider implements ContributorInterface
     {
         if (!$this->items) {
             $this->items = array(
-                new SecurityControllerActionsInterceptor($this->securityContext)
+                new SecurityControllerActionsInterceptor($this->authorizationChecker)
             );
         }
 

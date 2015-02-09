@@ -13,13 +13,13 @@ class ControllerActionInterceptorsProviderTest extends \PHPUnit_Framework_TestCa
 {
     public function testGetItems()
     {
-        $sc = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $ac = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
 
         $container = $this->getMock('Symfony\Component\DependencyInjection\ContainerInterface');
         $container->expects($this->atLeastOnce())
                   ->method('get')
-                  ->with($this->equalTo('security.context'))
-                  ->will($this->returnValue($sc));
+                  ->with($this->equalTo('security.authorization_checker'))
+                  ->will($this->returnValue($ac));
 
         $provider = new ControllerActionInterceptorsProvider($container);
 
