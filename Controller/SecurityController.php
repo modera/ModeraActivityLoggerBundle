@@ -5,12 +5,12 @@ namespace Modera\SecurityBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Security\Core\SecurityContext;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Modera\SecurityBundle\Security\Authenticator;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -35,21 +35,12 @@ class SecurityController extends Controller
      */
     public function loginAction(Request $request)
     {
-        $session = $request->getSession();
-
-        // get the login error if there is one
-        if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
-            $error = $request->attributes->get(
-                SecurityContext::AUTHENTICATION_ERROR
-            );
-        } else {
-            $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
-            $session->remove(SecurityContext::AUTHENTICATION_ERROR);
-        }
+        /* @var AuthenticationUtils $helper */
+        $helper = $this->get('security.authentication_utils');
 
         return array(
-            'last_username' => $session->get(SecurityContext::LAST_USERNAME),
-            'error'         => $error,
+            'last_username' => $helper->getLastUsername(),
+            'error'         => $helper->getLastAuthenticationError(),
         );
     }
 
@@ -60,10 +51,10 @@ class SecurityController extends Controller
     {
         $this->initSession($request);
 
-        /* @var SecurityContextInterface $sc */
-        $sc = $this->get('security.context');
+        /* @var TokenStorageInterface $tokenStorage */
+        $tokenStorage = $this->get('security.token_storage');
 
-        $response = Authenticator::getAuthenticationResponse($sc->getToken());
+        $response = Authenticator::getAuthenticationResponse($tokenStorage->getToken());
 
         return new JsonResponse($response);
     }
