@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManager;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Modera\SecurityBundle\Entity\User;
@@ -39,8 +39,8 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
      */
     public function getItems()
     {
-        /* @var SecurityContextInterface $sc */
-        $sc = $this->container->get('security.context');
+        /* @var TokenStorageInterface $tokenStorage */
+        $tokenStorage = $this->container->get('security.token_storage');
         /* @var RequestStack */
         $requestStack = $this->container->get('request_stack');
         /* @var Request $request */
@@ -55,7 +55,7 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
         $locale = $request->getLocale();
         $runtimeConfig = $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
 
-        $token = $sc->getToken();
+        $token = $tokenStorage->getToken();
         if ($token->isAuthenticated() && $token->getUser() instanceof User) {
             /* @var EntityManager $em */
             $em = $this->container->get('doctrine.orm.entity_manager');

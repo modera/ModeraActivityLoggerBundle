@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "symfony/framework-bundle": "~2.0",
+        "symfony/framework-bundle": "~2.6",
         "modera/mjr-integration-bundle": "~1.0",
         "modera/languages-bundle": "~1.0",
         "sergeil/extjslocalization-bundle": "~1.0"
@@ -21,7 +21,7 @@
     "target-dir": "Modera/BackendLanguagesBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "2.0-dev"
         }
     }
 }
