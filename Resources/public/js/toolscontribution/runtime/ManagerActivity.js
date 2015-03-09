@@ -91,7 +91,7 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.ManagerActivity', 
 
     // internal
     onSectionLoaded: function(section) {
-        section.relayEvents(me.getUi(), ['handleaction']);
+        section.relayEvents(this.getUi(), ['handleaction']);
     },
 
     // override
