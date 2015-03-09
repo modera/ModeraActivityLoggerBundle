@@ -4,7 +4,6 @@ namespace Modera\ModuleBundle\Composer;
 
 use Composer\Composer;
 use Composer\Script\Event;
-use Composer\Script\CommandEvent;
 use Composer\Script\PackageEvent;
 use Composer\DependencyResolver\Operation\UpdateOperation;
 use Symfony\Component\Yaml\Yaml;
@@ -126,9 +125,9 @@ class ScriptHandler extends AbstractScriptHandler
     }
 
     /**
-     * @param CommandEvent $event
+     * @param Event $event
      */
-    public static function registerBundles(CommandEvent $event)
+    public static function registerBundles(Event $event)
     {
         $options = static::getOptions($event);
         $appDir = $options['symfony-app-dir'];
@@ -168,9 +167,9 @@ class ScriptHandler extends AbstractScriptHandler
     /**
      * Clears the Symfony cache.
      *
-     * @param $event CommandEvent A instance
+     * @param $event Event A instance
      */
-    public static function clearCache(CommandEvent $event)
+    public static function clearCache(Event $event)
     {
         $options = static::getOptions($event);
         $appDir = $options['symfony-app-dir'];
@@ -186,9 +185,9 @@ class ScriptHandler extends AbstractScriptHandler
     /**
      * Executes the SQL needed to update the database schema to match the current mapping metadata.
      *
-     * @param $event CommandEvent A instance
+     * @param $event Event A instance
      */
-    public static function doctrineSchemaUpdate(CommandEvent $event)
+    public static function doctrineSchemaUpdate(Event $event)
     {
         $options = static::getOptions($event);
         $appDir = $options['symfony-app-dir'];
@@ -204,9 +203,9 @@ class ScriptHandler extends AbstractScriptHandler
     /**
      * Creates the configured databases and executes the SQL needed to update the database schema, if database not created.
      *
-     * @param CommandEvent $event
+     * @param Event $event
      */
-    public static function initDatabase(CommandEvent $event)
+    public static function initDatabase(Event $event)
     {
         $options = static::getOptions($event);
         $appDir = $options['symfony-app-dir'];
