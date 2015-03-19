@@ -20,9 +20,16 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('modera_file_repository');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->scalarNode('is_enabled')
+                    ->defaultValue(true)
+                ->end()
+                ->scalarNode('route_url_prefix')
+                    ->defaultValue('/u')
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

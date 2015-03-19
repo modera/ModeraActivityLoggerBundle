@@ -38,7 +38,7 @@ class StoredFile
     /**
      * This is a filename that is used to identify this file in "filesystem".
      *
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="string", length=255, unique=true)
      */
     private $storageKey;
 

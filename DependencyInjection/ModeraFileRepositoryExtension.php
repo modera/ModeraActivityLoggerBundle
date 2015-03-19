@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\Loader;
  */
 class ModeraFileRepositoryExtension extends Extension
 {
+    const CONFIG_KEY = 'modera_file_repository.config';
+
     /**
      * {@inheritDoc}
      */
@@ -24,5 +26,10 @@ class ModeraFileRepositoryExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        $container->setParameter(self::CONFIG_KEY, $config);
+        foreach ($config as $key => $value) {
+            $container->setParameter(self::CONFIG_KEY . '.' . $key, $value);
+        }
     }
 }
