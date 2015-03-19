@@ -23,7 +23,7 @@ Update your routing.yml file and add these lines there:
 Update your app/config/config.yml and enable the uploader:
 
     modera_file_uploader:
-        enabled: true
+        is_enabled: true
 
 ## Documentation
 
