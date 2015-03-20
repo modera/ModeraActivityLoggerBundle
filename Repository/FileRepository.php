@@ -5,6 +5,8 @@ namespace Modera\FileRepositoryBundle\Repository;
 use Doctrine\ORM\EntityManager;
 use Gaufrette\Filesystem;
 use Modera\FileRepositoryBundle\Entity\Repository;
+use Modera\FileRepositoryBundle\Entity\StoredFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -87,9 +89,32 @@ class FileRepository
             throw new \RuntimeException("Unable to find repository '$repositoryName'.");
         }
 
+        $config = $repository->getConfig();
+
         $repository->beforePut($file);
 
-        $storedFile = $repository->createFile($file, $context);
+        $storedFile = null;
+        $overwrite = isset($config['overwrite_files']) ? $config['overwrite_files'] : false;
+        if ($overwrite) {
+            $filename = $file->getFilename();
+            if ($file instanceof UploadedFile) {
+                $filename = $file->getClientOriginalName();
+            }
+            /* @var StoredFile $storedFile */
+            $storedFile = $this->em->getRepository(StoredFile::clazz())->findOneBy(array(
+                'repository' => $repository->getId(),
+                'filename'   => $filename,
+            ));
+            if ($storedFile) {
+                $storedFile->setCreatedAt(new \DateTime('now'));
+            } else {
+                $overwrite = false;
+            }
+        }
+
+        if (!$storedFile) {
+            $storedFile = $repository->createFile($file, $context);
+        }
 
         $contents = @file_get_contents($file->getPathname());
         if (false === $contents) {
@@ -106,7 +131,7 @@ class FileRepository
         $fs = $repository->getFilesystem();
 
         // physically stored file
-        $fs->write($storageKey, $contents);
+        $fs->write($storageKey, $contents, $overwrite);
 
         try {
             $this->em->persist($storedFile);

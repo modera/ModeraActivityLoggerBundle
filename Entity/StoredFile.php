@@ -168,6 +168,14 @@ class StoredFile
     }
 
     /**
+     * @param \DateTime $date
+     */
+    public function setCreatedAt(\DateTime $date)
+    {
+        $this->createdAt = $date;
+    }
+
+    /**
      * @return mixed
      */
     public function getCreatedAt()

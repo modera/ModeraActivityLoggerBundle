@@ -42,14 +42,15 @@ class ListRepositoriesCommand extends ContainerAwareCommand
                 $repository->getName(),
                 $repository->getLabel() ? $repository->getLabel() : '-',
                 $config['filesystem'],
-                $config['storage_key_generator']
+                isset($config['overwrite_files']) ? $config['overwrite_files'] : false,
+                $config['storage_key_generator'],
             );
         }
 
         /* @var TableHelper $table */
         $table = $this->getHelperSet()->get('table');
         $table
-            ->setHeaders(array('#', 'Name', 'Label', 'Filesystem', 'Storage key generator'))
+            ->setHeaders(array('#', 'Name', 'Label', 'Filesystem', 'Overwrite files', 'Storage key generator'))
             ->setRows($rows)
         ;
         $table->render($output);

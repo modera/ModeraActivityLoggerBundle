@@ -4,6 +4,7 @@ namespace Modera\FileRepositoryBundle\Command;
 
 use Modera\FileRepositoryBundle\Repository\FileRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -23,6 +24,7 @@ class CreateRepositoryCommand extends ContainerAwareCommand
             ->addArgument('name', InputArgument::REQUIRED)
             ->addArgument('filesystem', InputArgument::REQUIRED)
             ->addArgument('label', InputArgument::OPTIONAL)
+            ->addOption('overwrite-files', 'o', InputOption::VALUE_NONE, 'Overwrite files with same name')
         ;
     }
 
@@ -33,7 +35,8 @@ class CreateRepositoryCommand extends ContainerAwareCommand
         $fr = $this->getContainer()->get('modera_file_repository.repository.file_repository');
 
         $config = array(
-            'filesystem' => $input->getArgument('filesystem')
+            'filesystem'      => $input->getArgument('filesystem'),
+            'overwrite_files' => $input->getOption('overwrite-files'),
         );
 
         $repository = $fr->createRepository($input->getArgument('name'), $config, $input->getArgument('label'));
