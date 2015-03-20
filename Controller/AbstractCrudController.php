@@ -21,7 +21,7 @@ use Modera\ServerCrudBundle\Persistence\PersistenceHandlerInterface;
 use Modera\ServerCrudBundle\Validation\DefaultEntityValidator;
 use Modera\ServerCrudBundle\Validation\ValidationResult;
 use Modera\FoundationBundle\Controller\AbstractBaseController;
-use Neton\DirectBundle\Annotation\Remote;
+use Modera\DirectBundle\Annotation\Remote;
 use Sli\AuxBundle\Util\Toolkit;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
