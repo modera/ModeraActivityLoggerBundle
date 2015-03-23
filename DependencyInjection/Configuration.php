@@ -28,6 +28,15 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('route_url_prefix')
                     ->defaultValue('/u')
                 ->end()
+                ->scalarNode('get_file_route')
+                    ->defaultValue('modera_file_repository.get_file')
+                ->end()
+                ->scalarNode('default_url_generator')
+                    ->defaultValue('modera_file_repository.stored_file.url_generator')
+                ->end()
+                ->arrayNode('url_generators')
+                    ->prototype('variable')->end()
+                ->end()
             ->end()
         ;
 

@@ -5,6 +5,9 @@ namespace Modera\FileRepositoryBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Modera\FileRepositoryBundle\StoredFile\UrlGeneratorInterface;
+use Modera\FileRepositoryBundle\DependencyInjection\ModeraFileRepositoryExtension;
 
 /**
  * When this entity is removed from database associated with it physical file be automatically removed as well.
@@ -93,6 +96,11 @@ class StoredFile
     private $mimeType;
 
     /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
      * @param Repository $repository
      * @param \SplFileInfo $file
      * @param array $context
@@ -118,6 +126,42 @@ class StoredFile
             $this->filename = $file->getClientOriginalName();
             $this->extension = $file->getClientOriginalExtension();
         }
+    }
+
+    /**
+     * @param ContainerInterface $container
+     */
+    public function init(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        $urlGenerator = null;
+        $defaultUrlGenerator = $this->container->getParameter(
+            ModeraFileRepositoryExtension::CONFIG_KEY . '.default_url_generator'
+        );
+
+        $urlGenerators = $this->container->getParameter(
+            ModeraFileRepositoryExtension::CONFIG_KEY . '.url_generators'
+        );
+
+        $config = $this->getRepository()->getConfig();
+        if (isset($urlGenerators[$config['filesystem']])) {
+            /* @var UrlGeneratorInterface $urlGenerator */
+            $urlGenerator = $this->container->get($urlGenerators[$config['filesystem']]);
+        }
+
+        if (!$urlGenerator instanceof UrlGeneratorInterface) {
+            /* @var UrlGeneratorInterface $urlGenerator */
+            $urlGenerator = $this->container->get($defaultUrlGenerator);
+        }
+
+        return $urlGenerator->generateUrl($this);
     }
 
     static public function clazz()

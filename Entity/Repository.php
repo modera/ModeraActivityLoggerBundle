@@ -135,6 +135,7 @@ class Repository
     public function createFile(\SplFileInfo $file, array $context = array())
     {
         $result = new StoredFile($this, $file, $context);
+        $result->init($this->container);
         $this->files->add($result);
 
         return $result;

@@ -3,6 +3,7 @@
 namespace Modera\FileRepositoryBundle\EventListener;
 
 use Modera\FileRepositoryBundle\Entity\Repository;
+use Modera\FileRepositoryBundle\Entity\StoredFile;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 
@@ -28,6 +29,9 @@ class ContainerInjectorListener
     public function postLoad(LifecycleEventArgs $event)
     {
         if ($event->getEntity() instanceof Repository) {
+            $event->getEntity()->init($this->container);
+        }
+        if ($event->getEntity() instanceof StoredFile) {
             $event->getEntity()->init($this->container);
         }
     }

@@ -28,6 +28,13 @@
             <argument type="service" id="service_container" />
         </service>
 
+        <service id="modera_file_repository.stored_file.url_generator"
+                 class="Modera\FileRepositoryBundle\StoredFile\UrlGenerator">
+
+            <argument type="service" id="router" />
+            <argument>%modera_file_repository.config.get_file_route%</argument>
+        </service>
+
         <service id="modera_file_repository.contributions.routing_resources_provider"
                  class="Modera\FileRepositoryBundle\Contributions\RoutingResourcesProvider">
 
