@@ -3,6 +3,7 @@
 namespace Modera\MJRSecurityIntegrationBundle\Controller;
 
 use Modera\SecurityBundle\Security\Authenticator;
+use Modera\MjrIntegrationBundle\Config\MainConfigInterface;
 use Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager;
 use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Modera\MJRSecurityIntegrationBundle\ModeraMJRSecurityIntegrationBundle;
@@ -33,6 +34,12 @@ class IndexController extends Controller
     {
         $runtimeConfig = $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
         $securedRuntimeConfig = $this->container->getParameter(ModeraMJRSecurityIntegrationExtension::CONFIG_KEY);
+
+        /* @var MainConfigInterface $mainConfig */
+        $mainConfig = $this->container->get($runtimeConfig['main_config_provider']);
+        $runtimeConfig['home_section']    = $mainConfig->getHomeSection();
+        $runtimeConfig['deployment_name'] = $mainConfig->getTitle();
+        $runtimeConfig['deployment_url']  = $mainConfig->getUrl();
 
         /* @var ContributorInterface $cssResourcesProvider */
         $cssResourcesProvider = $this->get('modera_mjr_integration.css_resources_provider');
