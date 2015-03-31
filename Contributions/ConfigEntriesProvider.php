@@ -20,7 +20,7 @@ class ConfigEntriesProvider implements ContributorInterface
         return array(
             new CED(Bundle::CONFIG_TITLE, 'Site name', 'Modera Foundation', 'general'),
             new CED(Bundle::CONFIG_URL, 'Default URL', '', 'general'),
-            new CED(Bundle::CONFIG_HOME_SECTION, 'Default section to open when user logs in to backend', 'dashboard', 'general')
+            new CED(Bundle::CONFIG_HOME_SECTION, 'Default section to open when user logs in to backend', '', 'general')
         );
     }
 }
