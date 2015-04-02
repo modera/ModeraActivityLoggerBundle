@@ -5,10 +5,11 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
     extend: 'Ext.panel.Panel',
 
     requires: [
-        'Modera.backend.tools.activitylog.store.Activities',
         'MFC.Date',
+        'MFC.container.Header',
         'MFC.FieldValueChangeMonitor',
-        'MFC.container.Header'
+        'MFC.form.field.plugin.FieldInputFinishedPlugin',
+        'Modera.backend.tools.activitylog.store.Activities'
     ],
 
     // l10n
@@ -118,6 +119,17 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                                                 }
                                             }
                                         })
+                                    },
+                                    {
+                                        flex: 1,
+                                        itemId: 'messageFilter',
+                                        xtype: 'textfield',
+                                        emptyText: 'Type here to filter...',
+                                        plugins: [Ext.create('MFC.form.field.plugin.FieldInputFinishedPlugin', {
+                                            timeout: 800
+                                        })],
+                                        enableKeyEvents: true,
+                                        value: ''
                                     }
                                 ]
                             },
@@ -148,6 +160,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
              * @param {Object} values
              * @param {Ext.form.field.ComboBox} authorField
              * @param {Ext.form.field.ComboBox} typeField
+             * @param {Ext.form.field.Text} messageFilter
              */
             'applyFilters'
         );
@@ -226,10 +239,14 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
 
                                 var values = {
                                     author: Ext.decode(form.findField('author').getValue()).id,
-                                    type: me.down('#typeFilter').getValue()
+                                    type: me.down('#typeFilter').getValue(),
+                                    message: me.down('#messageFilter').getValue()
                                 };
 
-                                me.fireEvent('applyFilters', values, me.down('#authorFilter'), me.down('#typeFilter'))
+                                me.fireEvent(
+                                    'applyFilters', values,
+                                    me.down('#authorFilter'), me.down('#typeFilter'), me.down('#messageFilter')
+                                )
                             }
                         },
                         {
@@ -245,10 +262,14 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
 
                                 var values = {
                                     author: me.down('#authorFilter').getValue(),
-                                    type: form.findField('type').getValue()
+                                    type: form.findField('type').getValue(),
+                                    message: me.down('#messageFilter').getValue()
                                 };
 
-                                me.fireEvent('applyFilters', values, me.down('#authorFilter'), me.down('#typeFilter'))
+                                me.fireEvent(
+                                    'applyFilters', values,
+                                    me.down('#authorFilter'), me.down('#typeFilter'), me.down('#messageFilter')
+                                )
                             }
                         },
                         {
@@ -311,7 +332,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
             me.showActivityEntryDetails(record);
         });
 
-        this.on('applyFilters', function(values, authorField, eventTypeField) {
+        this.on('applyFilters', function(values, authorField, eventTypeField, messageFilter) {
             var filters = [];
 
             if (values['author']) {
@@ -331,6 +352,9 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                 eventTypeField.setValue(values.type);
                 filters.push({ property: 'type', value: 'eq:' + values.type });
             }
+            if (values['message']) {
+                filters.push({ property: 'message', value: 'like:%' + values.message + '%' });
+            }
 
             var grid = me.down('grid');
 
@@ -339,12 +363,14 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
         });
 
         var authorField = this.down('#authorFilter'),
-            typeFilter = this.down('#typeFilter');
+            typeFilter = this.down('#typeFilter'),
+            messageFilter = this.down('#messageFilter');
 
         authorField.on('select', this.onFilterChanged, this);
         this.attachFieldValueMonitor(authorField);
         typeFilter.on('select', this.onFilterChanged, this);
         this.attachFieldValueMonitor(typeFilter);
+        messageFilter.on('inputfinished', this.onFilterChanged, this);
     },
 
     // private
@@ -376,6 +402,9 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
         if (filterValues['type']) {
             filters.push({ property: 'type', value: 'eq:' + filterValues.type });
         }
+        if (filterValues['message']) {
+            filters.push({ property: 'message', value: 'like:%' + filterValues.message + '%' });
+        }
 
         var store = this.down('grid').getStore();
         if (0 == filters.length) {
@@ -390,7 +419,8 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
     getFilterValues: function() {
         return {
             author: this.down('#authorFilter').getValue(),
-            type: this.down('#typeFilter').getValue()
+            type: this.down('#typeFilter').getValue(),
+            message: this.down('#messageFilter').getValue()
         }
     }
 });
