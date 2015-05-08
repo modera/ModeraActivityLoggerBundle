@@ -13,7 +13,7 @@
 <body>
 
 {# this will display a loading mask while extjs and runtime javascript code is being loaded #}
-<table style="width:100%; height:100%; background:#EAEAEA;">
+<table style="width:100%; height:100%; background:#EAEAEA;" id="mjr-preloader">
     <tr>
         <td style="text-align:center;">
             <div class="fa fa-spin fa-gear" style="font-size:54px; color:#4F4F4F;"></div>
@@ -49,6 +49,10 @@
     });
 
     Ext.application('{{ config.app_name }}.Application');
+
+    Ext.onReady(function() {
+        Ext.get('mjr-preloader').remove();
+    });
 </script>
 
 </body>
