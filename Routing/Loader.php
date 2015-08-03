@@ -2,6 +2,9 @@
 
 namespace Modera\RoutingBundle\Routing;
 
+use Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader;
+use Symfony\Component\Config\Loader\LoaderResolver;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -13,6 +16,7 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  * Collects dynamically contributed routing resources.
  *
  * @author    Sergei Vizel <sergei.vizel@modera.org>
+ * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
 class Loader implements LoaderInterface
@@ -28,34 +32,23 @@ class Loader implements LoaderInterface
     private $resourcesProvider;
 
     /**
-     * @var FileLocatorInterface
-     */
-    private $locator;
-
-    /**
      * @var bool
      */
     private $isLoaded = false;
 
     /**
-     * @param ContainerInterface $container
-     * @param ContributorInterface $resourcesProvider
-     * @param FileLocatorInterface $locator
+     * @var LoaderInterface
      */
-    public function __construct(ContainerInterface $container, ContributorInterface $resourcesProvider, FileLocatorInterface $locator)
-    {
-        $this->container = $container;
-        $this->resourcesProvider = $resourcesProvider;
-        $this->locator = $locator;
-    }
+    private $rootLoader;
 
     /**
-     * @return LoaderInterface
+     * @param ContributorInterface $resourcesProvider
+     * @param LoaderInterface $rootLoader
      */
-    private function getRootRoutingLoader()
+    public function __construct(ContributorInterface $resourcesProvider, LoaderInterface $rootLoader)
     {
-        // we cannot use this in a class constructor because it will result in a circular dependency exception
-        return $this->container->get('routing.loader');
+        $this->rootLoader = $rootLoader;
+        $this->resourcesProvider = $resourcesProvider;
     }
 
     /**
@@ -88,8 +81,7 @@ class Loader implements LoaderInterface
 
         $collection = new RouteCollection();
         foreach ($resources as $item) {
-            $resource = $this->locator->locate($item['resource']);
-            $collection->addCollection($this->getRootRoutingLoader()->load($resource));
+            $collection->addCollection($this->rootLoader->load($item['resource']));
         }
 
         $this->isLoaded = true;

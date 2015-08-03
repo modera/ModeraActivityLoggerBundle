@@ -2,6 +2,7 @@
 
 namespace Modera\RoutingBundle;
 
+use Modera\RoutingBundle\DependencyInjection\DelegatingLoaderCloningCompilerPass;
 use Sli\ExpanderBundle\Ext\ExtensionPoint;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -17,6 +18,10 @@ class ModeraRoutingBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
+        $container->addCompilerPass(
+            new DelegatingLoaderCloningCompilerPass()
+        );
+
         $routingResourcesProvider = new ExtensionPoint('modera_routing.routing_resources');
         $docs = <<<TEXT
 This extension points make it possible for bundles to dynamically contribute routing resources so Symfony can detect them,

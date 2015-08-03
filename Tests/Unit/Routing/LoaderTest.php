@@ -16,13 +16,13 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
     /** @var Loader */
     private $loader;
 
-    private $container;
     private $resourcesProvider;
-    private $fileLocator;
+    private $rootRoutingLoader;
 
     /**
      * @param $name
      * @param $path
+     *
      * @return RouteCollection
      */
     private function createRouteCollection($name, $path)
@@ -35,23 +35,18 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
         $this->resourcesProvider = \Phake::mock(ContributorInterface::CLAZZ);
-        $this->fileLocator = \Phake::mock('Symfony\Component\Config\FileLocatorInterface');
+        $this->rootRoutingLoader = \Phake::mock('Symfony\Component\Config\Loader\LoaderInterface');
 
-        $this->loader = new Loader($this->container, $this->resourcesProvider, $this->fileLocator);
+        $this->loader = new Loader($this->resourcesProvider, $this->rootRoutingLoader);
     }
 
     public function testLoad()
     {
         $this->assertFalse($this->loader->isLoaded());
 
-        $rootRoutingLoader = \Phake::mock('Symfony\Component\Config\Loader\LoaderInterface');
-
         \Phake::when($this->resourcesProvider)->getItems()->thenReturn(array('foo-resource'));
-        \Phake::when($this->fileLocator)->locate('foo-resource')->thenReturn('foo-resource-body');
-        \Phake::when($this->container)->get('routing.loader')->thenReturn($rootRoutingLoader);
-        \Phake::when($rootRoutingLoader)->load('foo-resource-body')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('foo-resource')->thenReturn(
             $this->createRouteCollection('foo', '/article/create')
         );
 
@@ -92,24 +87,17 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
                 ),
             )
         );
-        \Phake::when($this->fileLocator)->locate('foo-resource')->thenReturn('foo-resource-body');
-        \Phake::when($this->fileLocator)->locate('bar-resource')->thenReturn('bar-resource-body');
-        \Phake::when($this->fileLocator)->locate('baz-resource')->thenReturn('baz-resource-body');
-        \Phake::when($this->fileLocator)->locate('qux-resource')->thenReturn('qux-resource-body');
 
-        $rootRoutingLoader = \Phake::mock('Symfony\Component\Config\Loader\LoaderInterface');
-        \Phake::when($this->container)->get('routing.loader')->thenReturn($rootRoutingLoader);
-
-        \Phake::when($rootRoutingLoader)->load('foo-resource-body')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('foo-resource')->thenReturn(
             $this->createRouteCollection('foo', '/foo')
         );
-        \Phake::when($rootRoutingLoader)->load('bar-resource-body')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('bar-resource')->thenReturn(
             $this->createRouteCollection('bar', '/bar')
         );
-        \Phake::when($rootRoutingLoader)->load('baz-resource-body')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('baz-resource')->thenReturn(
             $this->createRouteCollection('baz', '/baz')
         );
-        \Phake::when($rootRoutingLoader)->load('qux-resource-body')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('qux-resource')->thenReturn(
             $this->createRouteCollection('qux', '/qux')
         );
 
