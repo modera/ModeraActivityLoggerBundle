@@ -39,4 +39,17 @@ class UserService
         $this->em->remove($user);
         $this->em->flush();
     }
+
+    /**
+     * Find user by some property
+     *
+     * @param $property
+     * @param $value
+     *
+     * @return null|User
+     */
+    public function findUserBy($property, $value)
+    {
+        return $this->em->getRepository(User::clazz())->findOneBy(array($property => $value));
+    }
 } 
