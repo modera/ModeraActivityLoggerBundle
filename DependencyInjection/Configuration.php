@@ -48,9 +48,15 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->scalarNode('extjs_path') // web accessible path to extjs library
+                // web accessible path to extjs library, you shouldn't specify any specific JS file
+                ->scalarNode('extjs_path')
                     ->defaultValue('/extjs')
                     ->cannotBeEmpty()
+                ->end()
+                // if this is set to TRUE then the most developer friendly version of extjs will be included,
+                // most verbose debug will be provided regarding errors
+                ->scalarNode('extjs_console_warnings')
+                    ->defaultValue(false)
                 ->end()
                 ->scalarNode('runtime_path')
                     ->cannotBeEmpty()

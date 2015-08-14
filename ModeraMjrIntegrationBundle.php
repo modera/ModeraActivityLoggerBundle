@@ -26,8 +26,8 @@ class ModeraMjrIntegrationBundle extends Bundle
             'Lets to contribute implementations of ConfigMergerInterface that will be used to prepare runtime-config.'
         );
         $configMergersProviderDescription = <<<TEXT
-You will need to use this extension point when you need to contribute some additional data to so called 'runtime-config' (
-a config which is exposed to MJR when it is loaded ). This is how a typical contribution could look like:
+You will need to use this extension point when you need to contribute some additional data to so called 'runtime-config'
+(a config which is exposed to MJR when it is loaded). This is how a typical contribution could look like:
 
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Modera\MjrIntegrationBundle\Config\CallbackConfigMerger;

@@ -9,6 +9,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
+ * Provides JavaScript files required for MJR to work.
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2013 Modera Foundation
  */
@@ -24,10 +26,13 @@ class JsResourcesProvider implements ContributorInterface
      */
     private $bundleConfig;
 
+    /**
+     * @var bool
+     */
     private $isDevEnv;
 
     /**
-     * @param Router $router
+     * @param ContainerInterface $container
      */
     public function __construct(ContainerInterface $container)
     {
@@ -44,7 +49,15 @@ class JsResourcesProvider implements ContributorInterface
      */
     public function getItems()
     {
-        $extjs = $this->bundleConfig['extjs_path'] . '/ext-all' . ($this->isDevEnv ? '-debug-w-comments' : '') . '.js';
+        // https://www.sencha.com/forum/showthread.php?142565
+        // ext-all: minified, no JSDoc, no console warnings
+        // ext-all-debug: non-minified, with JSDoc, no console warnings
+        // ext-all-dev: non-minified, with JSDoc, with console warnings
+        $extjs = $this->bundleConfig['extjs_path'] . '/ext-all';
+        if ($this->isDevEnv) {
+            $extjs .= $this->bundleConfig['extjs_console_warnings'] ? '-dev' : '-debug-w-comments';
+        }
+        $extjs .= '.js';
 
         return array(
             $extjs,
