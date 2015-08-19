@@ -6,6 +6,7 @@
 
     <services>
         <service id="modera_backend_dashboard.contributions.menu_items_provider" class="Modera\BackendDashboardBundle\Contributions\MenuItemsProvider">
+            <argument>%modera_backend_dashboard.tab_order%</argument>
             <tag name="modera_mjr_integration.menu.menu_items_provider" />
         </service>
 
