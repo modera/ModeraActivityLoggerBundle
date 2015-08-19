@@ -26,8 +26,8 @@ class MenuItemsProvider implements ContributorInterface
     /**
      * Set params and services
      *
-     * @param $securityContext
-     * @param $tabOrder
+     * @param SecurityContextInterface $securityContext
+     * @param int $tabOrder
      */
     public function __construct(SecurityContextInterface $securityContext, $tabOrder)
     {
