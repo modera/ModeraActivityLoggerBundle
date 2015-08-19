@@ -8,7 +8,12 @@
         <service id="modera_backend_tools.contributions.menu_items_provider"
                  class="Modera\BackendToolsBundle\Contributions\MenuItemsProvider">
 
+<<<<<<< HEAD
             <argument type="service" id="security.authorization_checker" />
+=======
+            <argument type="service" id="security.context" />
+            <argument>%modera_backend_tools.tab_order%</argument>
+>>>>>>> master
 
             <tag name="modera_mjr_integration.menu.menu_items_provider" />
         </service>
