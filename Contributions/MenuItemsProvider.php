@@ -18,11 +18,17 @@ class MenuItemsProvider implements OrderedContributorInterface
 {
     private $items;
 
+    private $tabOrder;
+
     /**
      * Registers dashboard item as a section tab in Backend
+     *
+     * @param $tabOrder
      */
-    public function __construct()
+    public function __construct($tabOrder)
     {
+        $this->tabOrder = $tabOrder;
+
         $this->items = array(
             new MenuItem('Dashboard', 'Modera.backend.dashboard.runtime.Section', 'dashboard', [
                 MenuItemInterface::META_NAMESPACE => 'Modera.backend.dashboard',
@@ -42,12 +48,12 @@ class MenuItemsProvider implements OrderedContributorInterface
     }
 
     /**
-     * Makes dashboard a first tab
+     * Return tab order
      *
      * @return int
      */
     public function getOrder()
     {
-        return -999;
+        return $this->tabOrder;
     }
 }
