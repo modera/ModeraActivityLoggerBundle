@@ -23,6 +23,12 @@ class MenuItemsProvider implements ContributorInterface
 
     private $tabOrder;
 
+    /**
+     * Set params and services
+     *
+     * @param $securityContext
+     * @param $tabOrder
+     */
     public function __construct(SecurityContextInterface $securityContext, $tabOrder)
     {
         $this->tabOrder = $tabOrder;
