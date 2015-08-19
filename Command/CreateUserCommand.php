@@ -9,7 +9,7 @@ use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -64,13 +64,13 @@ class CreateUserCommand extends ContainerAwareCommand
             } while ($password != $passwordConfirm);
         }
 
-        /* @var EncoderFactoryInterface $encoderFactory */
-        $encoderFactory = $this->getContainer()->get('security.encoder_factory');
+        /* @var UserPasswordEncoderInterface $encoder */
+        $encoder = $this->getContainer()->get('security.password_encoder');
 
         $user = new User();
         $user->setEmail($email);
         $user->setUsername($username);
-        $user->setPassword($encoderFactory->getEncoder($user)->encodePassword($password, $user->getSalt()));
+        $user->setPassword($encoder->encodePassword($user, $password));
 
         $em->persist($user);
         $em->flush();
