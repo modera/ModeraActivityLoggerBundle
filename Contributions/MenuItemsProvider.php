@@ -21,24 +21,16 @@ class MenuItemsProvider implements ContributorInterface
 
     private $items;
 
-<<<<<<< HEAD
-    public function __construct(AuthorizationCheckerInterface $authorizationChecker)
-    {
-        $this->authorizationChecker = $authorizationChecker;
-=======
     private $tabOrder;
 
     /**
-     * Set params and services
-     *
-     * @param SecurityContextInterface $securityContext
+     * @param AuthorizationCheckerInterface $authorizationChecker
      * @param int $tabOrder
      */
-    public function __construct(SecurityContextInterface $securityContext, $tabOrder)
+    public function __construct(AuthorizationCheckerInterface $authorizationChecker, $tabOrder)
     {
+        $this->authorizationChecker = $authorizationChecker;
         $this->tabOrder = $tabOrder;
-        $this->securityContext = $securityContext;
->>>>>>> master
     }
 
     /**
