@@ -44,7 +44,7 @@ class FunctionalTestCase extends WebTestCase
 
     static private function emExists()
     {
-        return self::$container->has('doctrine.orm.entity_manager');
+        return static::$container->has('doctrine.orm.entity_manager');
     }
 
     /**
@@ -133,7 +133,7 @@ class FunctionalTestCase extends WebTestCase
             self::rollbackTransaction();
         }
 
-        if (self::$container->has('security.context')) {
+        if (static::$container->has('security.context')) {
             $this->logoutUser();
         }
 
