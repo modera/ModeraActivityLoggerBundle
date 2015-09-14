@@ -2,6 +2,7 @@
 
 namespace Modera\MjrIntegrationBundle\Contributions;
 
+use Modera\MjrIntegrationBundle\AssetsHandling\AssetsProvider;
 use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -14,6 +15,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ServiceDefinitionsProvider implements ContributorInterface
 {
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**
@@ -31,7 +35,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
     {
         $bundleConfig = $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
 
-        return array(
+        $services = array(
             'config_provider' => array(
                 'className' => 'MF.runtime.config.AjaxConfigProvider',
                 'args' => [
@@ -39,5 +43,31 @@ class ServiceDefinitionsProvider implements ContributorInterface
                 ]
             )
         );
+
+        /* @var AssetsProvider $assetsProvider */
+        $assetsProvider = $this->container->get('modera_mjr_integration.assets_handling.assets_provider');
+
+        $jsAssets = $assetsProvider->getJavascriptAssets(AssetsProvider::TYPE_NON_BLOCKING);
+        $cssAssets = $assetsProvider->getCssAssets(AssetsProvider::TYPE_NON_BLOCKING);
+
+        if (count(array_merge($jsAssets, $cssAssets)) > 0) {
+            $services = array_merge($services, array(
+                'non_blocking_assets_loader' => array(
+                    'className' => 'MF.misc.NonBlockingAssetsLoader',
+                    'args' => array(
+                        array(
+                            'js' => $jsAssets,
+                            'css' => $cssAssets
+                        )
+                    )
+                ),
+                'non_blocking_assets_workench_loading_blocking_plugin' => array(
+                    'className' => 'Modera.mjrintegration.runtime.plugin.WorkbenchLoadingBlockingPlugin',
+                    'tags' => array('runtime_plugin')
+                )
+            ));
+        }
+
+        return $services;
     }
 }
