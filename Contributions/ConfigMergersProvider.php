@@ -3,7 +3,7 @@
 namespace Modera\MJRSecurityIntegrationBundle\Contributions;
 
 use Sli\ExpanderBundle\Ext\ContributorInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 use Modera\MjrIntegrationBundle\Config\CallbackConfigMerger;
 
 /**
@@ -14,14 +14,14 @@ class ConfigMergersProvider implements ContributorInterface
 {
     private $items;
 
-    public function __construct(TokenStorageInterface $ts, ContributorInterface $clientDiDefinitionsProvider)
+    public function __construct(SecurityContextInterface $sc, ContributorInterface $clientDiDefinitionsProvider)
     {
         $this->items = array(
-            new CallbackConfigMerger(function(array $currentConfig) use ($ts) {
-                if ($ts->getToken()) {
+            new CallbackConfigMerger(function(array $currentConfig) use ($sc) {
+                if ($sc->getToken()) {
                     $roles = array();
 
-                    foreach ($ts->getToken()->getRoles() as $role) {
+                    foreach ($sc->getToken()->getRoles() as $role) {
                         $roles[] = $role->getRole();
                     }
 

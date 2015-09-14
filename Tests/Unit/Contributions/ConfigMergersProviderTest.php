@@ -25,8 +25,8 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
               ->method('getRoles')
               ->will($this->returnValue($roles));
 
-        $ts = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
-        $ts->expects($this->atLeastOnce())
+        $sc = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $sc->expects($this->atLeastOnce())
            ->method('getToken')
            ->will($this->returnValue($token));
 
@@ -39,7 +39,7 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
                                     ->method('getItems')
                                     ->will($this->returnValue($serviceDefinitions));
 
-        $provider = new ConfigMergersProvider($ts, $clientDiDefinitionsProvider);
+        $provider = new ConfigMergersProvider($sc, $clientDiDefinitionsProvider);
         $mergers = $provider->getItems();
 
         $this->assertEquals(2, count($mergers));
