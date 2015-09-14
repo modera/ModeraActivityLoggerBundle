@@ -2,6 +2,7 @@
 
 namespace Modera\MJRSecurityIntegrationBundle\Controller;
 
+use Modera\MjrIntegrationBundle\AssetsHandling\AssetsProvider;
 use Modera\SecurityBundle\Security\Authenticator;
 use Modera\MjrIntegrationBundle\Config\MainConfigInterface;
 use Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitionsManager;
@@ -42,11 +43,11 @@ class IndexController extends Controller
         $runtimeConfig['deployment_name'] = $mainConfig->getTitle();
         $runtimeConfig['deployment_url']  = $mainConfig->getUrl();
 
-        /* @var ContributorInterface $cssResourcesProvider */
-        $cssResourcesProvider = $this->get('modera_mjr_integration.css_resources_provider');
+        // for docs regarding how to use "non-blocking" assets see
+        // \Modera\MjrIntegrationBundle\AssetsHandling\AssetsProvider class
 
-        /* @var ContributorInterface $cssResourcesProvider */
-        $jsResourcesProvider = $this->get('modera_mjr_integration.js_resources_provider');
+        /* @var AssetsProvider $assetsProvider */
+        $assetsProvider = $this->get('modera_mjr_integration.assets_handling.assets_provider');
 
         /* @var RouterInterface $router */
         $router = $this->get('router');
@@ -61,8 +62,8 @@ class IndexController extends Controller
             'ModeraMJRSecurityIntegrationBundle:Index:index.html.twig',
             array(
                 'config' => array_merge($runtimeConfig, $securedRuntimeConfig),
-                'css_resources' => $cssResourcesProvider->getItems(),
-                'js_resources' => $jsResourcesProvider->getItems(),
+                'css_resources' => $assetsProvider->getCssAssets(AssetsProvider::TYPE_BLOCKING),
+                'js_resources' => $assetsProvider->getJavascriptAssets(AssetsProvider::TYPE_BLOCKING),
                 'app_loading_path' => $appLoadingPath,
                 'disable_caching' => $kernel->getEnvironment() != 'prod'
             )
@@ -82,11 +83,20 @@ class IndexController extends Controller
      */
     public function applicationAction()
     {
+        /* @var AssetsProvider $assetsProvider */
+        $assetsProvider = $this->get('modera_mjr_integration.assets_handling.assets_provider');
+
+        $nonBlockingResources = array(
+            'css' => $assetsProvider->getCssAssets(AssetsProvider::TYPE_NON_BLOCKING),
+            'js' => $assetsProvider->getJavascriptAssets(AssetsProvider::TYPE_NON_BLOCKING)
+        );
+
         /* @var ServiceDefinitionsManager $definitionsMgr */
         $definitionsMgr = $this->container->get('modera_mjr_integration.csdi.service_definitions_manager');
         $content = $this->renderView(
             'ModeraMJRSecurityIntegrationBundle:Index:application.html.twig',
             array(
+                'non_blocking_resources' => $nonBlockingResources,
                 'container_services' => $definitionsMgr->getDefinitions(),
                 'config' => $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY)
             )
