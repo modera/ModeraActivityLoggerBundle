@@ -74,7 +74,7 @@
         <service id="modera_mjr_integration.contributions.steroid_class_mappings_provider"
                  class="Modera\MjrIntegrationBundle\Contributions\SteroidClassMappingsProvider">
 
-            <tag name="modera_backend_on_steroids.extjs_classes_provider" />
+            <tag name="modera_backend_on_steroids.extjs_classes_paths_provider" />
         </service>
 
         <service id="modera_mjr_integration.contributions.class_loader_mappings_provider"
