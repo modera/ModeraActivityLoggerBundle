@@ -103,7 +103,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                             security: {
                                 role: 'ROLE_MANAGE_USER_PROFILES',
                                 strategy: 'hide'
-                            }
+                            },
+                            tid: 'newuserbtn'
                         },
                         '->',
                         {
@@ -125,7 +126,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                                         iconCls: 'mfc-icon-delete-24'
                                     }
                                 ]
-                            })
+                            }),
+                            tid: 'edituserbtn'
                         },
                         {
                             disabled: true,
@@ -134,7 +136,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                             itemId: 'editGroupsBtn',
                             iconCls: 'modera-backend-security-icon-group-24',
                             text: me.groupsBtnText,
-                            scale: 'medium'
+                            scale: 'medium',
+                            tid: 'modifygroupsbtn'
                         },
                         {
                             hidden: config.hideViewAwareComponents || false,
@@ -143,7 +146,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                             itemId: 'editPasswordBtn',
                             iconCls: 'modera-backend-security-icon-password-24',
                             text: me.changePasswordBtnText,
-                            scale: 'medium'
+                            scale: 'medium',
+                            tid: 'changepasswordbtn'
                         }
                     ]
                 },

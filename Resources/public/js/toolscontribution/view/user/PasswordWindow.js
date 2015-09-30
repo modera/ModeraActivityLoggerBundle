@@ -43,7 +43,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.PasswordWindow',
                         if (false !== me.fireEvent('beforesaveandclose', me)) {
                             me.fireEvent('saveandclose', me);
                         }
-                    }
+                    },
+                    tid: 'saveandclosebtn'
                 }
             ],
             items: {
@@ -76,13 +77,15 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.PasswordWindow',
                                         name: 'plainPassword',
                                         fieldLabel: me.passwordLabelText,
                                         emptyText: me.placeHolderText,
-                                        inputType: 'password'
+                                        inputType: 'password',
+                                        tid: 'passwordfield',
                                     },
                                     {
                                         name: '_plainPassword',
                                         fieldLabel: me.repeatPasswordLabelText,
                                         emptyText: me.placeHolderText,
-                                        inputType: 'password'
+                                        inputType: 'password',
+                                        tid: 'passwordagainfield'
                                     },
                                     {
                                         xtype: 'checkbox',
