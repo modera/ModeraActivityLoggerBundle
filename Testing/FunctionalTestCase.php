@@ -153,7 +153,7 @@ class FunctionalTestCase extends WebTestCase
     public function logoutUser()
     {
         /* @var SecurityContextInterface $securityContext */
-        $securityContext = self::$container->get('security.context');
+        $securityContext = static::$container->get('security.context');
         $securityContext->setToken(null);
     }
 }
