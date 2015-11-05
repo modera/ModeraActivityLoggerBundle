@@ -1,4 +1,5 @@
 # ModeraSecurityBundle
+[![Build Status](https://travis-ci.org/modera/ModeraSecurityBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraSecurityBundle)
 
 ## Installation
 

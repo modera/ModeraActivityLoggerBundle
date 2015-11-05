@@ -24,17 +24,21 @@ class UserServiceTest extends FunctionalTestCase
     public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
-        self::$st->createSchema(array(self::$em->getClassMetadata(User::clazz())));
-        self::$st->createSchema(array(self::$em->getClassMetadata(Group::clazz())));
-        self::$st->createSchema(array(self::$em->getClassMetadata(Permission::clazz())));
+        self::$st->createSchema(array(
+            self::$em->getClassMetadata(User::clazz()),
+            self::$em->getClassMetadata(Group::clazz()),
+            self::$em->getClassMetadata(Permission::clazz()),
+        ));
     }
 
     // override
     public static function doTearDownAfterClass()
     {
-        self::$st->dropSchema(array(self::$em->getClassMetadata(User::clazz())));
-        self::$st->dropSchema(array(self::$em->getClassMetadata(Group::clazz())));
-        self::$st->dropSchema(array(self::$em->getClassMetadata(Permission::clazz())));
+        self::$st->dropSchema(array(
+            self::$em->getClassMetadata(User::clazz()),
+            self::$em->getClassMetadata(Group::clazz()),
+            self::$em->getClassMetadata(Permission::clazz()),
+        ));
     }
 
     public function testGetByRole()
@@ -90,10 +94,10 @@ class UserServiceTest extends FunctionalTestCase
         $rootUserHandler = \Phake::mock('Modera\SecurityBundle\RootUserHandling\RootUserHandlerInterface');
         $service = new UserService(self::$em, $rootUserHandler);
 
-        $this->assertEquals([$user1, $user3], $service->getUsersByRole('ROLE_USER'));
-        $this->assertEquals([$user2, $user3], $service->getUsersByRole('ROLE_ADMIN'));
+        $this->assertEquals(array($user1, $user3), $service->getUsersByRole('ROLE_USER'));
+        $this->assertEquals(array($user2, $user3), $service->getUsersByRole('ROLE_ADMIN'));
 
-        $this->assertEquals([$user1->getId(), $user3->getId()], $service->getIdsByRole('ROLE_USER'));
-        $this->assertEquals([$user2->getId(), $user3->getId()], $service->getIdsByRole('ROLE_ADMIN'));
+        $this->assertEquals(array($user1->getId(), $user3->getId()), $service->getIdsByRole('ROLE_USER'));
+        $this->assertEquals(array($user2->getId(), $user3->getId()), $service->getIdsByRole('ROLE_ADMIN'));
     }
 }
