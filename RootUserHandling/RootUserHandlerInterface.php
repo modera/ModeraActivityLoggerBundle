@@ -17,7 +17,8 @@ interface RootUserHandlerInterface
      * Method is responsible to determine if a user that is about to be authenticated is root user.
      *
      * @param User $user
-     * @return boolean
+     *
+     * @return bool
      */
     public function isRootUser(User $user);
 
@@ -34,4 +35,4 @@ interface RootUserHandlerInterface
      * @return string[]
      */
     public function getRoles();
-} 
+}

@@ -18,10 +18,10 @@ class UserServiceTest extends FunctionalTestCase
     /**
      * @var SchemaTool
      */
-    static private $st;
+    private static $st;
 
     // override
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
         self::$st->createSchema(array(self::$em->getClassMetadata(User::clazz())));
@@ -30,7 +30,7 @@ class UserServiceTest extends FunctionalTestCase
     }
 
     // override
-    static public function doTearDownAfterClass()
+    public static function doTearDownAfterClass()
     {
         self::$st->dropSchema(array(self::$em->getClassMetadata(User::clazz())));
         self::$st->dropSchema(array(self::$em->getClassMetadata(Group::clazz())));
@@ -90,10 +90,10 @@ class UserServiceTest extends FunctionalTestCase
         $rootUserHandler = \Phake::mock('Modera\SecurityBundle\RootUserHandling\RootUserHandlerInterface');
         $service = new UserService(self::$em, $rootUserHandler);
 
-        $this->assertEquals([ $user1, $user3 ], $service->getUsersByRole('ROLE_USER'));
-        $this->assertEquals([ $user2, $user3 ], $service->getUsersByRole('ROLE_ADMIN'));
+        $this->assertEquals([$user1, $user3], $service->getUsersByRole('ROLE_USER'));
+        $this->assertEquals([$user2, $user3], $service->getUsersByRole('ROLE_ADMIN'));
 
-        $this->assertEquals([ $user1->getId(), $user3->getId() ], $service->getIdsByRole('ROLE_USER'));
-        $this->assertEquals([ $user2->getId(), $user3->getId() ], $service->getIdsByRole('ROLE_ADMIN'));
+        $this->assertEquals([$user1->getId(), $user3->getId()], $service->getIdsByRole('ROLE_USER'));
+        $this->assertEquals([$user2->getId(), $user3->getId()], $service->getIdsByRole('ROLE_ADMIN'));
     }
-} 
+}

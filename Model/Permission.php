@@ -73,4 +73,4 @@ class Permission implements PermissionInterface
     {
         return $this->category;
     }
-} 
+}

@@ -28,8 +28,7 @@ class PermissionAndCategoriesInstaller
      */
     public function __construct(
         EntityManager $em, ContributorInterface $permissionCategoriesProvider, ContributorInterface $permissionsProvider
-    )
-    {
+    ) {
         $this->em = $em;
         $this->permissionCategoriesProvider = $permissionCategoriesProvider;
         $this->permissionsProvider = $permissionsProvider;
@@ -48,7 +47,7 @@ class PermissionAndCategoriesInstaller
             foreach ($permissionCategories as $permissionCategory) {
                 /* @var PermissionCategory $entityPermissionCategory */
                 $entityPermissionCategory = $this->em->getRepository(PermissionCategory::clazz())->findOneBy(array(
-                        'technicalName' => $permissionCategory->getTechnicalName()
+                        'technicalName' => $permissionCategory->getTechnicalName(),
                     ));
                 if (!$entityPermissionCategory) {
                     $entityPermissionCategory = new PermissionCategory();
@@ -56,7 +55,7 @@ class PermissionAndCategoriesInstaller
 
                     $this->em->persist($entityPermissionCategory);
 
-                    $permissionCategoriesInstalled++;
+                    ++$permissionCategoriesInstalled;
                 }
 
                 $entityPermissionCategory->setName($permissionCategory->getName());
@@ -67,7 +66,7 @@ class PermissionAndCategoriesInstaller
 
         return array(
             'installed' => $permissionCategoriesInstalled,
-            'removed' => 0
+            'removed' => 0,
         );
     }
 
@@ -82,7 +81,7 @@ class PermissionAndCategoriesInstaller
         foreach ($permissions as $permission) {
             /* @var \Modera\SecurityBundle\Model\PermissionInterface $permission */
             $entityPermission = $this->em->getRepository(Permission::clazz())->findOneBy(array(
-                    'roleName' => $permission->getRole()
+                    'roleName' => $permission->getRole(),
                 ));
 
             if (!$entityPermission) {
@@ -91,14 +90,14 @@ class PermissionAndCategoriesInstaller
 
                 $this->em->persist($entityPermission);
 
-                $permissionInstalled++;
+                ++$permissionInstalled;
             }
 
             $entityPermission->setDescription($permission->getDescription());
             $entityPermission->setName($permission->getName());
 
             $category = $this->em->getRepository(PermissionCategory::clazz())->findOneBy(array(
-                'technicalName' => $permission->getCategory()
+                'technicalName' => $permission->getCategory(),
             ));
             if ($category) {
                 $entityPermission->setCategory($category);
@@ -109,7 +108,7 @@ class PermissionAndCategoriesInstaller
 
         return array(
             'installed' => $permissionInstalled,
-            'removed' => 0
+            'removed' => 0,
         );
     }
-} 
+}

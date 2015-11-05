@@ -40,7 +40,7 @@ class SecurityController extends Controller
 
         return array(
             'last_username' => $helper->getLastUsername(),
-            'error'         => $helper->getLastAuthenticationError(),
+            'error' => $helper->getLastAuthenticationError(),
         );
     }
 

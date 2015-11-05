@@ -35,7 +35,7 @@ class SemanticConfigRootUserHandler implements RootUserHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isRootUser(User $user)
     {
@@ -43,14 +43,14 @@ class SemanticConfigRootUserHandler implements RootUserHandlerInterface
         $rootUser = $this->getUser();
 
         if (!$rootUser) {
-            throw new RootUserNotFoundException('Unable to find root user using query: ' . json_encode($this->config['query']));
+            throw new RootUserNotFoundException('Unable to find root user using query: '.json_encode($this->config['query']));
         }
 
         return $rootUser->isEqualTo($user);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getUser()
     {
@@ -58,7 +58,7 @@ class SemanticConfigRootUserHandler implements RootUserHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRoles()
     {
@@ -74,10 +74,10 @@ class SemanticConfigRootUserHandler implements RootUserHandlerInterface
             }
 
             return $roleNames;
-        } else if (is_array($roles)) {
+        } elseif (is_array($roles)) {
             return $roles;
         } else {
             throw new \RuntimeException('Neither "*" nor array is used to define root user roles!');
         }
     }
-} 
+}

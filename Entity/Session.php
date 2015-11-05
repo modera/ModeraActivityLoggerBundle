@@ -18,7 +18,7 @@ class Session
      * and this version doesn't have BinaryType available yet. To solve this we updated mapping to use type "string"
      * instead, it should be more that enough to store SID, here's the proof:
      * - http://php.net/manual/en/session.configuration.php#ini.session.hash-function
-     * - http://php.net/manual/en/session.configuration.php#ini.session.hash-bits-per-character
+     * - http://php.net/manual/en/session.configuration.php#ini.session.hash-bits-per-character.
      *
      * @ORM\Id
      * @ORM\Column(type="string", nullable=false)

@@ -17,4 +17,4 @@ class PermissionCategoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo name', $pc->getName());
         $this->assertEquals('foo_name', $pc->getTechnicalName());
     }
-} 
+}

@@ -3,7 +3,6 @@
 namespace Modera\SecurityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -42,7 +41,7 @@ class PermissionCategory
         $this->permissions = new ArrayCollection();
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -110,4 +109,4 @@ class PermissionCategory
     {
         return $this->id;
     }
-} 
+}

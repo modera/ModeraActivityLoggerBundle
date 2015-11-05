@@ -8,5 +8,4 @@ namespace Modera\SecurityBundle\RootUserHandling;
  */
 class RootUserNotFoundException extends \RuntimeException
 {
-    
-} 
+}

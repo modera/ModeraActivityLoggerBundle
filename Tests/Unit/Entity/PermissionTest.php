@@ -19,4 +19,4 @@ class PermissionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo_category', $p->getCategory());
         $this->assertEquals('bar description', $p->getDescription());
     }
-} 
+}

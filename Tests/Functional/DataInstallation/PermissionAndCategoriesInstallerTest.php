@@ -20,7 +20,7 @@ class PermissionAndCategoriesInstallerTest extends FunctionalTestCase
     /**
      * @var SchemaTool
      */
-    static private $st;
+    private static $st;
 
     /**
      * @var PermissionAndCategoriesInstaller
@@ -31,7 +31,7 @@ class PermissionAndCategoriesInstallerTest extends FunctionalTestCase
     private $permissionsProvider;
 
     // override
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
         self::$st->createSchema(array(self::$em->getClassMetadata(PermissionEntity::clazz())));
@@ -39,7 +39,7 @@ class PermissionAndCategoriesInstallerTest extends FunctionalTestCase
     }
 
     // override
-    static public function doTearDownAfterClass()
+    public static function doTearDownAfterClass()
     {
         self::$st->dropSchema(array(self::$em->getClassMetadata(PermissionEntity::clazz())));
         self::$st->dropSchema(array(self::$em->getClassMetadata(PermissionCategoryEntity::clazz())));
@@ -142,6 +142,5 @@ class PermissionAndCategoriesInstallerTest extends FunctionalTestCase
         $this->assertValidResultStructure($result);
         $this->assertEquals(0, $result['installed']);
         $this->assertEquals(0, $result['removed']);
-
     }
-} 
+}

@@ -32,9 +32,9 @@ class AuthenticatedTokenFactory
     }
 
     /**
-     * @param TokenInterface $token
+     * @param TokenInterface        $token
      * @param UserProviderInterface $userProvider
-     * @param string $providerKey
+     * @param string                $providerKey
      */
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
     {
@@ -68,4 +68,4 @@ class AuthenticatedTokenFactory
 
         throw new AuthenticationException('Invalid username or password');
     }
-} 
+}

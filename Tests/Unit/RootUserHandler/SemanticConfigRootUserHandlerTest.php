@@ -19,8 +19,8 @@ class SemanticConfigRootUserHandlerTest extends \PHPUnit_Framework_TestCase
         $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
         $bundleConfig = array(
             'root_user' => array(
-                'query' => array('dat', 'is', 'query')
-            )
+                'query' => array('dat', 'is', 'query'),
+            ),
         );
 
         $em = \Phake::mock('Doctrine\ORM\EntityManager');
@@ -48,13 +48,13 @@ class SemanticConfigRootUserHandlerTest extends \PHPUnit_Framework_TestCase
         $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
         $bundleConfig = array(
             'root_user' => array(
-                'roles' => '*'
-            )
+                'roles' => '*',
+            ),
         );
 
         $databaseRoles = array(
             array('roleName' => 'FOO_ROLE'),
-            array('roleName' => 'BAR_ROLE')
+            array('roleName' => 'BAR_ROLE'),
         );
 
         \Phake::when($container)->get('doctrine.orm.entity_manager')->thenReturn($em);
@@ -73,8 +73,8 @@ class SemanticConfigRootUserHandlerTest extends \PHPUnit_Framework_TestCase
         $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
         $bundleConfig = array(
             'root_user' => array(
-                'roles' => array('FOO_ROLE', 'BAR_ROLE')
-            )
+                'roles' => array('FOO_ROLE', 'BAR_ROLE'),
+            ),
         );
 
         \Phake::when($container)->getParameter(ModeraSecurityExtension::CONFIG_KEY)->thenReturn($bundleConfig);
@@ -92,8 +92,8 @@ class SemanticConfigRootUserHandlerTest extends \PHPUnit_Framework_TestCase
         $container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
         $bundleConfig = array(
             'root_user' => array(
-                'roles' => new \stdClass()
-            )
+                'roles' => new \stdClass(),
+            ),
         );
 
         \Phake::when($container)->getParameter(ModeraSecurityExtension::CONFIG_KEY)->thenReturn($bundleConfig);
@@ -102,4 +102,4 @@ class SemanticConfigRootUserHandlerTest extends \PHPUnit_Framework_TestCase
 
         $handler->getRoles();
     }
-} 
+}

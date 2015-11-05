@@ -32,7 +32,7 @@ class EntityUserProvider implements UserProviderInterface
 
     /**
      * @param \Doctrine\ORM\EntityManager $em
-     * @param string $class
+     * @param string                      $class
      */
     public function __construct(EntityManager $em, $class, $property = 'username')
     {
@@ -42,13 +42,14 @@ class EntityUserProvider implements UserProviderInterface
         }
 
         $this->repository = $em->getRepository($class);
-        $this->property   = $property;
+        $this->property = $property;
     }
-
 
     /**
      * @param string $username
+     *
      * @return UserInterface
+     *
      * @throws UsernameNotFoundException
      */
     public function loadUserByUsername($username)
@@ -64,7 +65,9 @@ class EntityUserProvider implements UserProviderInterface
 
     /**
      * @param UserInterface $user
+     *
      * @return UserInterface
+     *
      * @throws UnsupportedUserException
      */
     public function refreshUser(UserInterface $user)
@@ -84,6 +87,7 @@ class EntityUserProvider implements UserProviderInterface
 
     /**
      * @param string $class
+     *
      * @return bool
      */
     public function supportsClass($class)

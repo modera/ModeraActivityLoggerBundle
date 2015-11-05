@@ -43,4 +43,4 @@ class PermissionCategory implements PermissionCategoryInterface
     {
         return $this->technicalName;
     }
-} 
+}

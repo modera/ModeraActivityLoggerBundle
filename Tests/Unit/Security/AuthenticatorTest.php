@@ -88,7 +88,7 @@ class AuthenticatorTest extends \PHPUnit_Framework_TestCase
 
     public function testUserStateChangeOnAuthenticationSuccess()
     {
-        $user = new User;
+        $user = new User();
         $authenticator = $this->createAuthenticator();
 
         $request = \Phake::mock('Symfony\Component\HttpFoundation\Request');
@@ -110,7 +110,7 @@ class AuthenticatorTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('success', $resp);
         $this->assertFalse($resp['success']);
 
-        $user = new User;
+        $user = new User();
         $user->setFirstName('John');
         $user->setLastName('Doe');
         $user->setEmail('john.doe@test.test');
@@ -129,9 +129,9 @@ class AuthenticatorTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('profile', $resp);
         $this->assertInternalType('array', $resp['profile']);
         $this->assertEquals(array(
-            'id'       => $user->getId(),
-            'name'     => $user->getFullName(),
-            'email'    => $user->getEmail(),
+            'id' => $user->getId(),
+            'name' => $user->getFullName(),
+            'email' => $user->getEmail(),
             'username' => $user->getUsername(),
         ), $resp['profile']);
     }

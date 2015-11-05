@@ -28,7 +28,7 @@ class UserService
     }
 
     /**
-     * @throws \RuntimeException  If given used is root user and cannot be deleted
+     * @throws \RuntimeException If given used is root user and cannot be deleted
      *
      * @param User $user
      */
@@ -43,7 +43,7 @@ class UserService
     }
 
     /**
-     * Find user by some property
+     * Find user by some property.
      *
      * @param $property
      * @param $value
@@ -56,7 +56,7 @@ class UserService
     }
 
     /**
-     * Find users by some property
+     * Find users by some property.
      *
      * @param $property
      * @param $value
@@ -78,6 +78,7 @@ class UserService
 
     /**
      * @param User $user
+     *
      * @return bool
      */
     public function isRootUser(User $user)
@@ -87,6 +88,7 @@ class UserService
 
     /**
      * @param string $roleName
+     *
      * @return User[]
      */
     public function getUsersByRole($roleName)
@@ -101,6 +103,7 @@ class UserService
 
     /**
      * @param $roleName
+     *
      * @return array
      */
     public function getIdsByRole($roleName)
@@ -147,4 +150,4 @@ class UserService
 
         return array_keys(array_flip($ids));
     }
-} 
+}

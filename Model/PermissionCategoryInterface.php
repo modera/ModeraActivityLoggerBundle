@@ -24,4 +24,4 @@ interface PermissionCategoryInterface
      * @return string
      */
     public function getName();
-} 
+}

@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Sli\ExtJsIntegrationBundle\DataMapping\PreferencesAwareUserInterface;
 
-
 /**
  * @ORM\Table(name="modera_security_user")
  * @ORM\Entity
@@ -137,7 +136,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isEqualTo(\Symfony\Component\Security\Core\User\UserInterface $user)
     {
@@ -163,7 +162,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getRoles()
     {
@@ -176,7 +175,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function eraseCredentials()
     {
@@ -208,10 +207,10 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     public function serialize()
     {
         return serialize(array(
-            'id'       => $this->id,
+            'id' => $this->id,
             'username' => $this->username,
             'password' => $this->password,
-            'salt'     => $this->salt,
+            'salt' => $this->salt,
             'isActive' => $this->isActive,
         ));
     }
@@ -229,7 +228,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     /**
      * @return string
      */
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -275,7 +274,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getUsername()
     {
@@ -291,7 +290,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getPassword()
     {
@@ -307,7 +306,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getSalt()
     {
@@ -370,15 +369,15 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     public function getFullName($pattern = 'first last')
     {
         $data = array(
-            'first'  => $this->getFirstName(),
-            'last'   => $this->getLastName(),
+            'first' => $this->getFirstName(),
+            'last' => $this->getLastName(),
             'middle' => $this->getMiddleName(),
         );
 
-        $keys   = array();
+        $keys = array();
         $values = array();
         foreach ($data as $key => $value) {
-            $keys[]   = '/\b' . $key . '\b/';
+            $keys[] = '/\b'.$key.'\b/';
             $values[] = $value;
         }
 
@@ -451,7 +450,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getPreferences()
     {

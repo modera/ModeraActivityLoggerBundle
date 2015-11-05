@@ -3,11 +3,8 @@
 namespace Modera\SecurityBundle\Security;
 
 use Symfony\Component\Security\Http\Logout\DefaultLogoutSuccessHandler;
-use Symfony\Component\Security\Http\Logout\LogoutSuccessHandlerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -16,7 +13,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class LogoutSuccessHandler extends DefaultLogoutSuccessHandler
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onLogoutSuccess(Request $request)
     {

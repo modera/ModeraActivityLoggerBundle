@@ -56,7 +56,7 @@ class Group
         $this->permissions = new ArrayCollection();
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -86,7 +86,7 @@ class Group
     /**
      * @param Permission $role
      *
-     * @return boolean
+     * @return bool
      */
     public function hasPermission(Permission $role)
     {

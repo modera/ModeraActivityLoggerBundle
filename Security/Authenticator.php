@@ -9,8 +9,6 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
@@ -44,6 +42,7 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
      * @param $username
      * @param $password
      * @param $providerKey
+     *
      * @return UsernamePasswordToken
      */
     public function createToken(Request $request, $username, $password, $providerKey)
@@ -52,10 +51,12 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
     }
 
     /**
-     * @param TokenInterface $token
+     * @param TokenInterface        $token
      * @param UserProviderInterface $userProvider
      * @param $providerKey
+     *
      * @return UsernamePasswordToken
+     *
      * @throws \Symfony\Component\Security\Core\Exception\AuthenticationException
      */
     public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
@@ -68,6 +69,7 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
     /**
      * @param TokenInterface $token
      * @param $providerKey
+     *
      * @return bool
      */
     public function supportsToken(TokenInterface $token, $providerKey)
@@ -76,8 +78,9 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
     }
 
     /**
-     * @param Request $request
+     * @param Request                 $request
      * @param AuthenticationException $exception
+     *
      * @return JsonResponse
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
@@ -85,15 +88,17 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
         if ($request->isXmlHttpRequest()) {
             $result = array(
                 'success' => false,
-                'message' => $exception->getMessage()
+                'message' => $exception->getMessage(),
             );
+
             return new JsonResponse($result);
         }
     }
 
     /**
-     * @param Request $request
+     * @param Request        $request
      * @param TokenInterface $token
+     *
      * @return JsonResponse
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
@@ -114,9 +119,10 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
 
     /**
      * @param TokenInterface $token
+     *
      * @return array
      */
-    static public function getAuthenticationResponse(TokenInterface $token)
+    public static function getAuthenticationResponse(TokenInterface $token)
     {
         $response = array('success' => false);
         if ($token->isAuthenticated() && $token->getUser() instanceof User) {
@@ -125,11 +131,11 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
             $response = array(
                 'success' => true,
                 'profile' => array(
-                    'id'       => $user->getId(),
-                    'name'     => $user->getFullName(),
-                    'email'    => $user->getEmail(),
+                    'id' => $user->getId(),
+                    'name' => $user->getFullName(),
+                    'email' => $user->getEmail(),
                     'username' => $user->getUsername(),
-                )
+                ),
             );
         }
 

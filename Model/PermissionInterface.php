@@ -16,13 +16,13 @@ interface PermissionInterface
     public function getRole();
 
     /**
-     * @return string  A human understandable name for this permission, for example - Access "Admin" section
+     * @return string A human understandable name for this permission, for example - Access "Admin" section
      */
     public function getName();
 
     /**
-     * @return string  A human understandable description for this permission, for example -
-     *                 "This permission is used to allow a user see a section in the menu"
+     * @return string A human understandable description for this permission, for example -
+     *                "This permission is used to allow a user see a section in the menu"
      */
     public function getDescription();
 

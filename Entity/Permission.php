@@ -4,7 +4,6 @@ namespace Modera\SecurityBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 
@@ -24,7 +23,7 @@ class Permission implements RoleInterface
     private $id;
 
     /**
-     * Name of symfony security role, something like "ROLE_USER"
+     * Name of symfony security role, something like "ROLE_USER".
      *
      * @Assert\NotBlank
      *
@@ -33,7 +32,7 @@ class Permission implements RoleInterface
     private $roleName;
 
     /**
-     * A name of this role that can be easily understood by administrator, for instance - "Access admin section"
+     * A name of this role that can be easily understood by administrator, for instance - "Access admin section".
      *
      * @ORM\Column(type="string", nullable=true)
      */
@@ -90,7 +89,7 @@ class Permission implements RoleInterface
         $this->groups = new ArrayCollection();
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

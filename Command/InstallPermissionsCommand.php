@@ -27,7 +27,7 @@ class InstallPermissionsCommand extends ContainerAwareCommand
 
         $stats = $dataInstaller->installPermissions();
 
-        $output->writeln(' >> Installed: ' . $stats['installed']);
-        $output->writeln(' >> Removed: ' . $stats['removed']);
+        $output->writeln(' >> Installed: '.$stats['installed']);
+        $output->writeln(' >> Removed: '.$stats['removed']);
     }
 }

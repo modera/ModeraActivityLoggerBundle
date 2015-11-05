@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
@@ -18,7 +18,7 @@ class ModeraSecurityExtension extends Extension implements PrependExtensionInter
     const CONFIG_KEY = 'modera_security.config';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -40,6 +40,6 @@ class ModeraSecurityExtension extends Extension implements PrependExtensionInter
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter(self::CONFIG_KEY . '.access_control', $config['access_control']);
+        $container->setParameter(self::CONFIG_KEY.'.access_control', $config['access_control']);
     }
 }
