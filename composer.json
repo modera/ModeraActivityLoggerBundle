@@ -2,6 +2,7 @@
     "name": "modera/security-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
+    "description": "Provides database aware implementation of Security model + some other perks",
     "authors": [
         {
             "name": "Sergei Vizel",
@@ -14,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4",
         "doctrine/orm": "~2.2,>=2.2.3",
         "symfony/framework-bundle": "~2.6",
         "doctrine/doctrine-bundle": "~1.2",
