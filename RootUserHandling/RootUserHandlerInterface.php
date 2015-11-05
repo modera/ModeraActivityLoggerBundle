@@ -22,6 +22,13 @@ interface RootUserHandlerInterface
     public function isRootUser(User $user);
 
     /**
+     * Must return root user.
+     *
+     * @return User
+     */
+    public function getUser();
+
+    /**
      * Must return roles names that root user will have.
      *
      * @return string[]

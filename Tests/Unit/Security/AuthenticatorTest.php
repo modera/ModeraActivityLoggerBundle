@@ -111,22 +111,15 @@ class AuthenticatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($resp['success']);
 
         $user = new User;
-        \Phake::when($token)->isAuthenticated()->thenReturn(true);
-        \Phake::when($token)->getUser()->thenReturn($user);
-        \Phake::when($token)->getRoles()->thenReturn(array());
-
-        $resp = Authenticator::getAuthenticationResponse($token);
-        $this->assertInternalType('array', $resp);
-        $this->assertArrayHasKey('success', $resp);
-        $this->assertFalse($resp['success']);
-        $this->assertArrayHasKey('message', $resp);
-
         $user->setFirstName('John');
         $user->setLastName('Doe');
         $user->setEmail('john.doe@test.test');
         $user->setUsername('john.doe');
         $role = \Phake::mock('Symfony\Component\Security\Core\Role\RoleInterface');
+
         \Phake::when($role)->getRole()->thenReturn('ROLE_USER');
+        \Phake::when($token)->isAuthenticated()->thenReturn(true);
+        \Phake::when($token)->getUser()->thenReturn($user);
         \Phake::when($token)->getRoles()->thenReturn(array($role));
 
         $resp = Authenticator::getAuthenticationResponse($token);

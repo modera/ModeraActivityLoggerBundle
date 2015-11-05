@@ -40,13 +40,21 @@ class SemanticConfigRootUserHandler implements RootUserHandlerInterface
     public function isRootUser(User $user)
     {
         /* @var User $rootUser */
-        $rootUser = $this->em->getRepository(User::clazz())->findOneBy($this->config['query']);
+        $rootUser = $this->getUser();
 
         if (!$rootUser) {
             throw new RootUserNotFoundException('Unable to find root user using query: ' . json_encode($this->config['query']));
         }
 
         return $rootUser->isEqualTo($user);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUser()
+    {
+        return $this->em->getRepository(User::clazz())->findOneBy($this->config['query']);
     }
 
     /**
