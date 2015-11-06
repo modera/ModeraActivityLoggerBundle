@@ -20,8 +20,8 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->container = \Phake::mock('Symfony\Component\DependencyInjection\ContainerInterface');
-        \Phake::when($this->container)->get('modera_server_crud.persistence.default_handler')->thenReturn(new DummyDoctrinePersistenceHandler);
-        \Phake::when($this->container)->get('doctrine.orm.entity_manager')->thenReturn(new DummyDoctrineEntityManager);
+        \Phake::when($this->container)->get('modera_server_crud.persistence.default_handler')->thenReturn(new DummyDoctrinePersistenceHandler());
+        \Phake::when($this->container)->get('doctrine.orm.entity_manager')->thenReturn(new DummyDoctrineEntityManager());
     }
 
     private function filterCheck($item, $id, $name)
@@ -80,7 +80,7 @@ class DummyDoctrineEntityManager
 {
     public function createQuery()
     {
-        return new DummyDoctrineQuery;
+        return new DummyDoctrineQuery();
     }
 }
 

@@ -6,7 +6,7 @@ use Modera\BackendToolsBundle\Section\Section;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
- * Contributes a section to Backend/Tools
+ * Contributes a section to Backend/Tools.
  *
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
@@ -24,12 +24,12 @@ class ToolsSectionsProvider implements ContributorInterface
                 'A tool set for translating content from different sources.',
                 '', '',
                 'modera-backend-translations-tool-tools-icon'
-            )
+            ),
         );
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {

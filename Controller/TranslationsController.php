@@ -31,7 +31,7 @@ class TranslationsController extends AbstractCrudController
                 ),
                 'profiles' => array(
                     'list',
-                )
+                ),
             ),
         );
     }
@@ -61,12 +61,12 @@ class TranslationsController extends AbstractCrudController
                 if ($filterValue) {
                     $params['filter'] = [
                         [
-                            array('property' => 'tokenName', 'value' => 'like:%' . $filterValue . '%'),
+                            array('property' => 'tokenName', 'value' => 'like:%'.$filterValue.'%'),
                             array(
                                 'property' => 'languageTranslationTokens.translation',
-                                'value' => 'like:%' . $filterValue . '%'
+                                'value' => 'like:%'.$filterValue.'%',
                             ),
-                        ]
+                        ],
                     ];
                 } else {
                     $params['filter'] = null;
@@ -116,6 +116,7 @@ class TranslationsController extends AbstractCrudController
 
     /**
      * @Remote
+     *
      * @param array $params
      */
     public function importAction(array $params)
@@ -131,7 +132,7 @@ class TranslationsController extends AbstractCrudController
         $result = $app->run($input, new NullOutput());
 
         return array(
-            'success'        => (0 === $result),
+            'success' => (0 === $result),
             'updated_models' => array(
                 'modera.translations_bundle.translation_token' => [],
             ),
@@ -140,6 +141,7 @@ class TranslationsController extends AbstractCrudController
 
     /**
      * @Remote
+     *
      * @param array $params
      */
     public function compileAction(array $params)
@@ -157,7 +159,7 @@ class TranslationsController extends AbstractCrudController
         if (0 === $result) {
             $key = 'modera_backend_translations_tool';
             /* @var \Doctrine\Common\Cache\Cache $cache */
-            $cache = $this->get($key . '.cache');
+            $cache = $this->get($key.'.cache');
 
             $data = array('isCompileNeeded' => false);
             if ($string = $cache->fetch($key)) {
@@ -167,7 +169,7 @@ class TranslationsController extends AbstractCrudController
 
             $input = new ArrayInput(array(
                 'command' => 'cache:clear',
-                '--env'   => $this->container->getParameter('kernel.environment'),
+                '--env' => $this->container->getParameter('kernel.environment'),
             ));
             $input->setInteractive(false);
             $app->run($input, new NullOutput());
@@ -180,13 +182,14 @@ class TranslationsController extends AbstractCrudController
 
     /**
      * @Remote
+     *
      * @param array $params
      */
     public function isCompileNeededAction(array $params)
     {
         $key = 'modera_backend_translations_tool';
         /* @var \Doctrine\Common\Cache\Cache $cache */
-        $cache = $this->get($key . '.cache');
+        $cache = $this->get($key.'.cache');
 
         $isCompileNeeded = false;
         if ($string = $cache->fetch($key)) {
@@ -198,7 +201,7 @@ class TranslationsController extends AbstractCrudController
 
         return array(
             'success' => true,
-            'status'  => $isCompileNeeded,
+            'status' => $isCompileNeeded,
         );
     }
 }

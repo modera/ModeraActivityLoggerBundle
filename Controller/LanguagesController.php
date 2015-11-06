@@ -24,7 +24,7 @@ class LanguagesController extends AbstractCrudController
                 ),
                 'profiles' => array(
                     'list',
-                )
+                ),
             ),
         );
     }

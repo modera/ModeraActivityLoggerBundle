@@ -9,7 +9,7 @@ namespace Modera\BackendTranslationsToolBundle\Filtering\Filter;
 class AllTranslationTokensFilter extends AbstractTranslationTokensFilter
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -17,10 +17,10 @@ class AllTranslationTokensFilter extends AbstractTranslationTokensFilter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
         return 'All';
     }
-} 
+}

@@ -9,7 +9,7 @@ namespace Modera\BackendTranslationsToolBundle\Filtering;
 interface FilterInterface
 {
     /**
-     * Technical name of filter. Used as a key in arrays/forms
+     * Technical name of filter. Used as a key in arrays/forms.
      *
      * @return string
      */
@@ -23,7 +23,7 @@ interface FilterInterface
     public function getName();
 
     /**
-     * Returns filtered data
+     * Returns filtered data.
      *
      * Example:
      * array(
@@ -39,7 +39,7 @@ interface FilterInterface
     public function getResult(array $params);
 
     /**
-     * Returns total
+     * Returns total.
      *
      * @param array $params
      *

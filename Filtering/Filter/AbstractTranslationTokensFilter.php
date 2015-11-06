@@ -43,7 +43,7 @@ abstract class AbstractTranslationTokensFilter implements FilterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCount(array $params)
     {
@@ -55,7 +55,7 @@ abstract class AbstractTranslationTokensFilter implements FilterInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getResult(array $params)
     {
@@ -71,16 +71,16 @@ abstract class AbstractTranslationTokensFilter implements FilterInterface
 
         return array(
             'success' => true,
-            'items'   => $entities,
-            'total'   => $total
+            'items' => $entities,
+            'total' => $total,
         );
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function isAllowed()
     {
         return true;
     }
-} 
+}

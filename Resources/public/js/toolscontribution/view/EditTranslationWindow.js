@@ -3,6 +3,7 @@
  */
 Ext.define('Modera.backend.translationstool.toolscontribution.view.EditTranslationWindow', {
     extend: 'MFC.window.NewAndEditRecordWindow',
+    alias: 'widget.modera-backend-translations-tool-editwindow',
 
     // l10n
     editRecordTitleText: 'Edit translation',
@@ -70,7 +71,8 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.EditTranslati
                         fieldLabel: me.transtationLabelText,
                         emptyText: me.placeHolderText,
                         enterIsSpecial: true,
-                        enableKeyEvents: true
+                        enableKeyEvents: true,
+                        tid: 'translationInput'
                     }
                 ]
             }

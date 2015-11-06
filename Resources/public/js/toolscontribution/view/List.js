@@ -3,6 +3,7 @@
  */
 Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
     extend: 'Ext.grid.Panel',
+    alias: 'widget.modera-backend-translations-tool-list',
 
     requires: [
         'MFC.container.Header',
@@ -23,6 +24,7 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
     compileBtnText: 'Compile...',
     deleteBtnText: 'Delete selected',
     translationsWereChangedText: 'Your translations were changed. Click compile button to make language files up-to-date.',
+    filterPlaceholderText: 'type here to filter...',
 
     // override
     constructor: function(config) {
@@ -74,13 +76,14 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
             toolbarItems.push({
                 itemId: 'filter',
                 xtype: 'textfield',
-                emptyText: 'type here to filter...',
+                emptyText: this.filterPlaceholderText,
                 plugins: [Ext.create('MFC.form.field.plugin.FieldInputFinishedPlugin', {
                     timeout: 800
                 })],
                 enableKeyEvents: true,
                 height: 30,
-                value: filterValue
+                value: filterValue,
+                tid: 'filterInput',
             });
         }
 
@@ -182,7 +185,8 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
                                     itemId: 'compile',
                                     text: me.compileBtnText
                                 }
-                            ]
+                            ],
+                            tid: 'translationsChangedNotification'
                         },
                         '->'
                     ]
@@ -196,7 +200,8 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
                             itemId: 'import',
                             iconCls: 'icon-import-24',
                             text: me.importBtnText,
-                            scale: 'medium'
+                            scale: 'medium',
+                            tid: 'importBtn'
                         },
                         {
                             itemId: 'delete',

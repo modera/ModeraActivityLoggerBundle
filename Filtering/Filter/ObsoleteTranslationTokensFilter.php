@@ -9,7 +9,7 @@ namespace Modera\BackendTranslationsToolBundle\Filtering\Filter;
 class ObsoleteTranslationTokensFilter extends AbstractTranslationTokensFilter
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -17,7 +17,7 @@ class ObsoleteTranslationTokensFilter extends AbstractTranslationTokensFilter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -25,7 +25,7 @@ class ObsoleteTranslationTokensFilter extends AbstractTranslationTokensFilter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCount(array $params)
     {
@@ -33,11 +33,12 @@ class ObsoleteTranslationTokensFilter extends AbstractTranslationTokensFilter
             $params['filter'] = array();
         }
         $params['filter'] = array_merge($params['filter'], $this->getFilter());
+
         return parent::getCount($params);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getResult(array $params)
     {
@@ -45,6 +46,7 @@ class ObsoleteTranslationTokensFilter extends AbstractTranslationTokensFilter
             $params['filter'] = array();
         }
         $params['filter'] = array_merge($params['filter'], $this->getFilter());
+
         return parent::getResult($params);
     }
 
@@ -57,4 +59,4 @@ class ObsoleteTranslationTokensFilter extends AbstractTranslationTokensFilter
 
         return $filter;
     }
-} 
+}

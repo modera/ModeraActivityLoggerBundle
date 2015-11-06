@@ -9,7 +9,7 @@ namespace Modera\BackendTranslationsToolBundle\Filtering\Filter;
 class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -17,7 +17,7 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getName()
     {
@@ -25,7 +25,7 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getCount(array $params)
     {
@@ -33,11 +33,12 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
             $params['filter'] = array();
         }
         $params['filter'] = array_merge($params['filter'], $this->getFilter());
+
         return parent::getCount($params);
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getResult(array $params)
     {
@@ -45,6 +46,7 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
             $params['filter'] = array();
         }
         $params['filter'] = array_merge($params['filter'], $this->getFilter());
+
         return parent::getResult($params);
     }
 
@@ -58,9 +60,9 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
         if (null === $filter) {
             try {
                 $q = $this->em()->createQuery(
-                    'SELECT IDENTITY(ltt.translationToken) as translationToken ' .
-                    'FROM ModeraTranslationsBundle:LanguageTranslationToken ltt ' .
-                    'LEFT JOIN ltt.language l ' .
+                    'SELECT IDENTITY(ltt.translationToken) as translationToken '.
+                    'FROM ModeraTranslationsBundle:LanguageTranslationToken ltt '.
+                    'LEFT JOIN ltt.language l '.
                     'WHERE ltt.isNew=true AND l.isEnabled=true GROUP BY ltt.translationToken'
                 );
                 $result = $q->getResult(\Doctrine\ORM\Query::HYDRATE_ARRAY);
@@ -68,14 +70,14 @@ class NewTranslationTokensFilter extends AbstractTranslationTokensFilter
                 $result = array();
             }
 
-            $ids = array_map(function($row) {
+            $ids = array_map(function ($row) {
                 return $row['translationToken'];
             }, $result);
 
             $filter[] = ['property' => 'isObsolete', 'value' => 'eq:false'];
-            $filter[] = ['property' => 'id', 'value' => 'in:' . implode(',', $ids)];
+            $filter[] = ['property' => 'id', 'value' => 'in:'.implode(',', $ids)];
         }
 
         return $filter;
     }
-} 
+}

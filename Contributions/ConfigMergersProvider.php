@@ -5,7 +5,6 @@ namespace Modera\BackendTranslationsToolBundle\Contributions;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
 use Modera\BackendTranslationsToolBundle\Filtering\FilterInterface;
-use Modera\BackendTranslationsToolBundle\Contributions\FiltersProvider;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -35,7 +34,6 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
     {
         $filters = array();
         foreach ($this->filtersProvider->getItems() as $key => $arr) {
-
             $filters[$key] = array();
 
             /* @var FilterInterface $iteratedFilter */
@@ -45,8 +43,8 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
                 }
 
                 $filters[$key][] = array(
-                    'id'    => $iteratedFilter->getId(),
-                    'name'  => $iteratedFilter->getName(),
+                    'id' => $iteratedFilter->getId(),
+                    'name' => $iteratedFilter->getName(),
                 );
             }
         }
@@ -59,7 +57,7 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      *
      * @return array
      */

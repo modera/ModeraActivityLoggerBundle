@@ -14,10 +14,10 @@ class ExtjsTranslationHandler extends TemplateTranslationHandler
     const SOURCE_NAME = 'extjs';
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function resolveResourcesDirectory(BundleInterface $bundle)
     {
-        return $bundle->getPath() . '/Resources/public/js/';
+        return $bundle->getPath().'/Resources/public/js/';
     }
 }

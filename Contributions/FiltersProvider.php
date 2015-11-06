@@ -32,7 +32,7 @@ class FiltersProvider implements ContributorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {

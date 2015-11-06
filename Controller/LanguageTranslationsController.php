@@ -22,26 +22,26 @@ class LanguageTranslationsController extends AbstractCrudController
             'entity' => LanguageTranslationToken::clazz(),
             'hydration' => array(
                 'groups' => array(
-                    'main-form' => function(LanguageTranslationToken $ltt) {
+                    'main-form' => function (LanguageTranslationToken $ltt) {
                             return array(
-                                'id'           => $ltt->getId(),
-                                'translation'  => $ltt->getTranslation(),
+                                'id' => $ltt->getId(),
+                                'translation' => $ltt->getTranslation(),
                                 'languageName' => $ltt->getLanguage()->getName(),
-                                'bundleName'   => $ltt->getTranslationToken()->getBundleName(),
-                                'tokenName'    => $ltt->getTranslationToken()->getTokenName(),
+                                'bundleName' => $ltt->getTranslationToken()->getBundleName(),
+                                'tokenName' => $ltt->getTranslationToken()->getTokenName(),
                             );
                         },
                 ),
                 'profiles' => array(
                     'main-form',
-                )
+                ),
             ),
-            'map_data_on_update' => function(array $params, LanguageTranslationToken $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) {
+            'map_data_on_update' => function (array $params, LanguageTranslationToken $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) {
                 $defaultMapper->mapData($params, $entity);
 
                 $key = 'modera_backend_translations_tool';
                 /* @var \Doctrine\Common\Cache\Cache $cache */
-                $cache = $container->get($key . '.cache');
+                $cache = $container->get($key.'.cache');
 
                 $data = array('isCompileNeeded' => true);
                 if ($string = $cache->fetch($key)) {
