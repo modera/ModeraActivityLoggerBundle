@@ -1,5 +1,7 @@
 # ModeraBackendTranslationsToolBundle
 
+[![StyleCI](https://styleci.io/repos/29132351/shield)](https://styleci.io/repos/29132351)
+
 ## Installation
 
 Add this dependency to your composer.json:
