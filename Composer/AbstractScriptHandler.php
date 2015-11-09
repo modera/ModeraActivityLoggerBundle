@@ -13,10 +13,10 @@ use Symfony\Component\Process\PhpExecutableFinder;
 abstract class AbstractScriptHandler
 {
     /**
-     * @param Event $event
+     * @param Event  $event
      * @param string $appDir
      * @param string $cmd
-     * @param int $timeout
+     * @param int    $timeout
      *
      * @throws \RuntimeException
      */
