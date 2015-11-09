@@ -14,7 +14,9 @@ use Modera\ModuleBundle\Manipulator\KernelManipulator;
  */
 class RegisterCommand extends ContainerAwareCommand
 {
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
