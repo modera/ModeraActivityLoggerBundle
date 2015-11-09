@@ -3,11 +3,9 @@
 namespace Modera\ModuleBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Modera\ModuleBundle\Manipulator\KernelManipulator;
 
 /**
@@ -29,9 +27,7 @@ class RegisterCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
-     * @return void
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -46,9 +42,9 @@ class RegisterCommand extends ContainerAwareCommand
             $output->writeln(implode('', array(
                 '<info>',
                     'Method "registerModuleBundles" has been successfully added to app/AppKernel.php!',
-                '</info>'
+                '</info>',
             )));
             $output->writeln('');
         }
     }
-} 
+}

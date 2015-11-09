@@ -21,18 +21,28 @@ class KernelManipulator extends Manipulator
     /**
      * Auto generated, do not change!
      *
+     * Makes it possible to dynamically inject bundles to kernel.
+     *
      * @param array \$bundles
+     *
      * @return array
      */
 DOC;
 
+    // MPFE-757
+    // it is very important that in a snippet below we use "require" function to load external PHP file
+    // because when cache:clear command is used, it seems that Symfony creates two instances of Kernel
+    // class, and first time when Kernel class is created, "require_once" will load external fine well, but in second
+    // instance of Kernel require_once will do nothing, because file has already been loaded during this PHP
+    // interpreter session and this results in things such that Symfony doesn't see routes registered
+    // by bundles from $moduleBundlesFile file.
     protected $template =
 <<<TEMPLATE
     public function registerModuleBundles(array \$bundles)
     {
         \$moduleBundlesFile = __DIR__ . '/%s';
         if (file_exists(\$moduleBundlesFile)) {
-            \$moduleBundles = require_once \$moduleBundlesFile;
+            \$moduleBundles = require \$moduleBundlesFile;
             if (is_array(\$moduleBundles)) {
                 foreach (\$moduleBundles as \$bundle) {
                     if (!in_array(\$bundle, \$bundles)) {
@@ -57,6 +67,7 @@ TEMPLATE;
 
     /**
      * @param string $file
+     *
      * @return bool
      */
     public function addCode($file)
@@ -76,11 +87,11 @@ TEMPLATE;
                         'return $bundles;',
                         'return $this->registerModuleBundles($bundles);',
                         implode('', array_slice($src, 0, $method->getStartLine() - 1))
-                    )
+                    ),
                 ),
                 array(
                     sprintf($this->template, $file),
-                    "\n"
+                    "\n",
                 ),
                 array_slice($src, $method->getEndLine())
             );
@@ -90,7 +101,7 @@ TEMPLATE;
                 if (trim($src[$line]) == '}') {
                     break;
                 }
-                $line--;
+                --$line;
             }
 
             $lines = array_merge(
@@ -99,14 +110,14 @@ TEMPLATE;
                         'return $bundles;',
                         'return $this->registerModuleBundles($bundles);',
                         implode('', array_slice($src, 0, $line))
-                    )
+                    ),
                 ),
                 array(
                     "\n",
                     $this->doc,
                     "\n",
                     sprintf($this->template, $file),
-                    "\n"
+                    "\n",
                 ),
                 array_slice($src, $line)
             );

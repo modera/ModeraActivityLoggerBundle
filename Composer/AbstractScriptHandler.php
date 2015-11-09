@@ -14,15 +14,16 @@ abstract class AbstractScriptHandler
 {
     /**
      * @param Event $event
-     * @param $appDir
-     * @param $cmd
+     * @param string $appDir
+     * @param string $cmd
      * @param int $timeout
+     *
      * @throws \RuntimeException
      */
     protected static function executeCommand(Event $event, $appDir, $cmd, $timeout = 300)
     {
         $php = escapeshellarg(static::getPhp());
-        $console = escapeshellarg($appDir . '/console');
+        $console = escapeshellarg($appDir.'/console');
         if ($event->getIO()->isDecorated()) {
             $console .= ' --ansi';
         }
@@ -36,6 +37,7 @@ abstract class AbstractScriptHandler
 
     /**
      * @param Event $event
+     *
      * @return array
      */
     protected static function getOptions(Event $event)
@@ -51,11 +53,12 @@ abstract class AbstractScriptHandler
 
     /**
      * @return false|string
+     *
      * @throws \RuntimeException
      */
     protected static function getPhp()
     {
-        $phpFinder = new PhpExecutableFinder;
+        $phpFinder = new PhpExecutableFinder();
         if (!$phpPath = $phpFinder->find()) {
             throw new \RuntimeException('The php executable could not be found, add it to your PATH environment variable and try again');
         }

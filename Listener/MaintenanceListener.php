@@ -43,7 +43,7 @@ class MaintenanceListener
             if ($request->isXmlHttpRequest()) {
                 $result = array(
                     'success' => false,
-                    'message' => 'The server is temporarily down for maintenance.'
+                    'message' => 'The server is temporarily down for maintenance.',
                 );
                 $response = new JsonResponse($result);
             } else {
