@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9b4b6410a8064ffe30fd7b10a442c1c8",
-    "content-hash": "629ff48e5aec65542bc4f3c88a03c8fb",
+    "hash": "c0df60153f855728817f3847e90f6050",
+    "content-hash": "7e00b3eccd53d60e568d357cab941c67",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -459,28 +459,33 @@
         },
         {
             "name": "modera/mjr-integration-bundle",
-            "version": "v1.3.1",
+            "version": "v1.4.0",
             "target-dir": "Modera/MjrIntegrationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraMjrIntegrationBundle.git",
-                "reference": "3941a730410f9c4553e286eaf502f5567926b005"
+                "reference": "2b127da33ce65a70b1c670d7f11aea6b28a946b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraMjrIntegrationBundle/zipball/3941a730410f9c4553e286eaf502f5567926b005",
-                "reference": "3941a730410f9c4553e286eaf502f5567926b005",
+                "url": "https://api.github.com/repos/modera/ModeraMjrIntegrationBundle/zipball/2b127da33ce65a70b1c670d7f11aea6b28a946b9",
+                "reference": "2b127da33ce65a70b1c670d7f11aea6b28a946b9",
                 "shasum": ""
             },
             "require": {
                 "modera/direct-bundle": "~1.0",
                 "php": ">=5.3.0",
+                "sergeil/expander-bundle": "~1.0",
                 "symfony/framework-bundle": "~2.0"
+            },
+            "require-dev": {
+                "phake/phake": "2.*",
+                "phpunit/phpunit": "3.*"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -499,7 +504,12 @@
                     "homepage": "http://sergei.lissovski.org/"
                 }
             ],
-            "time": "2015-09-15 08:48:39"
+            "description": "Provides low level integration for MJR.",
+            "homepage": "http://modera.org",
+            "keywords": [
+                "mjr"
+            ],
+            "time": "2015-11-11 10:52:36"
         },
         {
             "name": "psr/log",
