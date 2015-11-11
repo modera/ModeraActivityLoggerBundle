@@ -36,7 +36,7 @@ class AssetsProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCssAssets()
     {
-        $resources = ['blocking.css', '!yo-blocker.css', 'blocking3.css', '*non-blocking.css', 'non*blockingwannabe.css'];
+        $resources = array('blocking.css', '!yo-blocker.css', 'blocking3.css', '*non-blocking.css', 'non*blockingwannabe.css');
 
         $provider = $this->createIUT($resources);
 
@@ -56,7 +56,7 @@ class AssetsProviderTest extends \PHPUnit_Framework_TestCase
 
     public function testGetJsAssets()
     {
-        $resources = ['blocking.js', '!yo-blocker.js', 'blocking3.js', '*non-blocking.js', 'non*blockingwannabe.js'];
+        $resources = array('blocking.js', '!yo-blocker.js', 'blocking3.js', '*non-blocking.js', 'non*blockingwannabe.js');
 
         $provider = $this->createIUT($resources);
 
