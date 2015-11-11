@@ -39,7 +39,7 @@ class CheckVersionCommand extends ContainerAwareCommand
 
         $path = $mjrPath.DIRECTORY_SEPARATOR.'package.json';
 
-        $packageJson = @file_get_contents($path);
+        $packageJson = file_get_contents($path);
         if (false === $packageJson) {
             throw new \RuntimeException('Unable to find file '.$path);
         }
@@ -53,8 +53,12 @@ class CheckVersionCommand extends ContainerAwareCommand
                 "<comment>You have old '$currentVersion' version of MJR, downloading a required '$requiredVersion' version.</comment>"
             );
 
-            // TODO for now we will always try to download latest version available
-            $archive = @file_get_contents('http://mjr.dev.modera.org/releases/mjr.tar.gz');
+            $url = 'http://mjr.dev.modera.org/releases/mjr.tar.gz';
+
+            $archive = file_get_contents($url);
+            if (false === $archive) {
+                throw new \RuntimeException("Unable to download MJR from $url");
+            }
 
             $downloadedMjrPath = getcwd().DIRECTORY_SEPARATOR.'mjr-'.$requiredVersion.'.tar.gz';
 
