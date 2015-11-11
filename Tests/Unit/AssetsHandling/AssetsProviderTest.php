@@ -79,7 +79,7 @@ class AssetsProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCssAssetsWithInvalidTypeGiven()
     {
-        $provider = $this->createIUT([]);
+        $provider = $this->createIUT(array());
 
         $provider->getCssAssets('foo');
     }
@@ -89,7 +89,7 @@ class AssetsProviderTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetJsAssetsWithInvalidTypeGiven()
     {
-        $provider = $this->createIUT([]);
+        $provider = $this->createIUT(array());
 
         $provider->getJavascriptAssets('foo');
     }
