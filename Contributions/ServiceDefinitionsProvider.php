@@ -38,9 +38,9 @@ class ServiceDefinitionsProvider implements ContributorInterface
         $services = array(
             'config_provider' => array(
                 'className' => 'MF.runtime.config.AjaxConfigProvider',
-                'args' => [
+                'args' => array(
                     array('url' => $bundleConfig['client_runtime_config_provider_url']),
-                ],
+                ),
             ),
         );
 
