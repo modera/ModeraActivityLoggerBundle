@@ -22,4 +22,11 @@ interface MenuItemInterface extends SectionInterface
      * @return string A label that will be shown in UI
      */
     public function getLabel();
+
+    /**
+     * @see \Modera\MjrIntegrationBundle\Model\FontAwesome
+     *
+     * @return string A glyph to display in menu
+     */
+    public function getGlyph();
 }

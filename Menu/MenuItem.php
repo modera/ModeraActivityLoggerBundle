@@ -12,6 +12,7 @@ use Modera\MjrIntegrationBundle\Sections\Section;
  */
 class MenuItem extends Section
 {
+    private $glyph;
     private $label;
 
     /**
@@ -19,6 +20,7 @@ class MenuItem extends Section
      * @param string $controller
      * @param string $id
      * @param array  $metadata
+     * @param string $glyph
      */
     public function __construct($label, $controller, $id, array $metadata = array(), $glyph = null)
     {

@@ -47,23 +47,23 @@ class FontAwesome
      */
     private static function getIcons()
     {
-        if (count(static::$icons)) {
-            return static::$icons;
+        if (count(self::$icons)) {
+            return self::$icons;
         }
 
         $icons = array();
-        $data = static::getIconsData();
+        $data = self::getIconsData();
         foreach ($data['icons'] as $icon) {
-            $_icon = static::prepareIcon($icon['id'], $icon['unicode']);
+            $_icon = self::prepareIcon($icon['id'], $icon['unicode']);
             $icons[$_icon['name']] = $_icon['value'];
             if (isset($icon['aliases'])) {
                 foreach ($icon['aliases'] as $alias) {
-                    $_icon = static::prepareIcon($alias, $icon['unicode']);
+                    $_icon = self::prepareIcon($alias, $icon['unicode']);
                     $icons[$_icon['name']] = $_icon['value'];
                 }
             }
         }
-        static::$icons = $icons;
+        self::$icons = $icons;
 
         return $icons;
     }
@@ -77,7 +77,7 @@ class FontAwesome
      */
     public static function resolve($name)
     {
-        $icons = static::getIcons();
+        $icons = self::getIcons();
         if (false !== strrpos($name, 'fa-')) {
             $name = substr($name, 3);
         }
@@ -96,7 +96,7 @@ class FontAwesome
     public static function jsCode()
     {
         $icons = array();
-        foreach (static::getIcons() as $name => $value) {
+        foreach (self::getIcons() as $name => $value) {
             $icons[] = $name.': \''.$value.'\'';
         }
         $iconsStr = implode(",\n    ", $icons);
