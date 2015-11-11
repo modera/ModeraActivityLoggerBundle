@@ -31,4 +31,4 @@ interface MainConfigInterface
      * @return string
      */
     public function getHomeSection();
-} 
+}

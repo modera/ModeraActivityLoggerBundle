@@ -24,8 +24,9 @@ class CheckVersionCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -33,14 +34,14 @@ class CheckVersionCommand extends ContainerAwareCommand
         $config = $this->getContainer()->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
 
         $mjrPath = implode(DIRECTORY_SEPARATOR, array(
-            getcwd(), 'web', substr($config['runtime_path'], 1)
+            getcwd(), 'web', substr($config['runtime_path'], 1),
         ));
 
-        $path = $mjrPath . DIRECTORY_SEPARATOR . 'package.json';
+        $path = $mjrPath.DIRECTORY_SEPARATOR.'package.json';
 
         $packageJson = @file_get_contents($path);
         if (false === $packageJson) {
-            throw new \RuntimeException('Unable to find file ' . $path);
+            throw new \RuntimeException('Unable to find file '.$path);
         }
 
         $packageJson = json_decode($packageJson, true);
@@ -55,7 +56,7 @@ class CheckVersionCommand extends ContainerAwareCommand
             // TODO for now we will always try to download latest version available
             $archive = @file_get_contents('http://mjr.dev.modera.org/releases/mjr.tar.gz');
 
-            $downloadedMjrPath = getcwd() . DIRECTORY_SEPARATOR . 'mjr-' . $requiredVersion . '.tar.gz';
+            $downloadedMjrPath = getcwd().DIRECTORY_SEPARATOR.'mjr-'.$requiredVersion.'.tar.gz';
 
             file_put_contents($downloadedMjrPath, $archive);
 
@@ -67,4 +68,4 @@ class CheckVersionCommand extends ContainerAwareCommand
             $output->writeln('<info>You have latest version of MJR, no need to update it.<info>');
         }
     }
-} 
+}

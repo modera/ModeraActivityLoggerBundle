@@ -68,7 +68,7 @@ class AssetsProvider
      * are blocking or non-blocking.
      *
      * @param string $type
-     * @param array $rawAssets
+     * @param array  $rawAssets
      *
      * @return string[]
      */
@@ -120,7 +120,7 @@ class AssetsProvider
         return $this->filterRawAssetsByType($type, $this->jsResourcesProvider->getItems());
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

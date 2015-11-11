@@ -28,7 +28,7 @@ class ServiceDefinitionsProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetItemsNoBlockingAssets()
     {
         $container = $this->createMockContainer(array(), array(), array(
-            'client_runtime_config_provider_url' => 'foo_url'
+            'client_runtime_config_provider_url' => 'foo_url',
         ));
 
         $provider = new ServiceDefinitionsProvider($container);
@@ -44,7 +44,7 @@ class ServiceDefinitionsProviderTest extends \PHPUnit_Framework_TestCase
     public function testGetItemsWithAssets()
     {
         $container = $this->createMockContainer(array('script.js'), array('style.css'), array(
-            'client_runtime_config_provider_url' => 'foo_url'
+            'client_runtime_config_provider_url' => 'foo_url',
         ));
 
         $provider = new ServiceDefinitionsProvider($container);

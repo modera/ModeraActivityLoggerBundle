@@ -45,7 +45,7 @@ class JsResourcesProvider implements ContributorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
@@ -53,7 +53,7 @@ class JsResourcesProvider implements ContributorInterface
         // ext-all: minified, no JSDoc, no console warnings
         // ext-all-debug: non-minified, with JSDoc, no console warnings
         // ext-all-dev: non-minified, with JSDoc, with console warnings
-        $extjs = $this->bundleConfig['extjs_path'] . '/ext-all';
+        $extjs = $this->bundleConfig['extjs_path'].'/ext-all';
         if ($this->isDevEnv) {
             $extjs .= $this->bundleConfig['extjs_console_warnings'] ? '-dev' : '-debug-w-comments';
         }
@@ -65,7 +65,7 @@ class JsResourcesProvider implements ContributorInterface
             '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment-with-locales.min.js',
             $this->router->generate('mf_font_awesome'),
             '/bundles/moderamjrintegration/js/orientationchange.js',
-            '/bundles/moderamjrintegration/js/stylesheetsloader.js'
+            '/bundles/moderamjrintegration/js/stylesheetsloader.js',
         );
     }
 }

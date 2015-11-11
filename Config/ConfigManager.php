@@ -23,7 +23,7 @@ class ConfigManager
     }
 
     /**
-     * @return array  Config which will be used by client-side js runtime to configure its state
+     * @return array Config which will be used by client-side js runtime to configure its state
      */
     public function getConfig()
     {

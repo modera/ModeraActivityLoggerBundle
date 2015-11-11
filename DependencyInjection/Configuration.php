@@ -6,14 +6,14 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  */
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
@@ -99,6 +99,12 @@ class Configuration implements ConfigurationInterface
                 // Mega Application
                 ->scalarNode('app_name')
                     ->defaultValue('ModeraFoundation')
+                ->end()
+                // used by MF to prefix all routes which are related to backend,
+                // it makes sense to have this value as a configuration key so later we would be able to refer
+                // to in routing configuration
+                ->scalarNode('route_prefix')
+                    ->defaultValue('/backend')
                 ->end()
             ->end()
         ;

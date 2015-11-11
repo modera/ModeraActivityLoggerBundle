@@ -11,12 +11,12 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 class CssResourcesProvider implements ContributorInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
         return array(
-            '//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
+            '//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',
         );
     }
 }

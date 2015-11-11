@@ -13,28 +13,31 @@ class FontAwesome
     /**
      * @var array
      */
-    static private $icons = array();
+    private static $icons = array();
 
     /**
      * @return array
      */
-    static private function getIconsData()
+    private static function getIconsData()
     {
-        $path = dirname(__DIR__) . '/Resources/config/font-awesome-icons.yml';
+        $path = dirname(__DIR__).'/Resources/config/font-awesome-icons.yml';
+
         return Yaml::parse(file_get_contents($path));
     }
 
     /**
      * @param $id
      * @param $unicode
+     *
      * @return array
      */
-    static private function prepareIcon($id, $unicode)
+    private static function prepareIcon($id, $unicode)
     {
         $name = strtoupper(str_replace('-', '_', $id));
-        $value = 'x' . $unicode . '@FontAwesome';
+        $value = 'x'.$unicode.'@FontAwesome';
+
         return array(
-            'name'  => $name,
+            'name' => $name,
             'value' => $value,
         );
     }
@@ -42,7 +45,7 @@ class FontAwesome
     /**
      * @return array
      */
-    static private function getIcons()
+    private static function getIcons()
     {
         if (count(static::$icons)) {
             return static::$icons;
@@ -54,7 +57,7 @@ class FontAwesome
             $_icon = static::prepareIcon($icon['id'], $icon['unicode']);
             $icons[$_icon['name']] = $_icon['value'];
             if (isset($icon['aliases'])) {
-                foreach($icon['aliases'] as $alias) {
+                foreach ($icon['aliases'] as $alias) {
                     $_icon = static::prepareIcon($alias, $icon['unicode']);
                     $icons[$_icon['name']] = $_icon['value'];
                 }
@@ -66,11 +69,13 @@ class FontAwesome
     }
 
     /**
-     * http://fontawesome.io/icons/
+     * http://fontawesome.io/icons/.
+     *
      * @param $name
+     *
      * @return string|null
      */
-    static public function resolve($name)
+    public static function resolve($name)
     {
         $icons = static::getIcons();
         if (false !== strrpos($name, 'fa-')) {
@@ -82,17 +87,17 @@ class FontAwesome
             return $icons[$name];
         }
 
-        return null;
+        return;
     }
 
     /**
      * @return string
      */
-    static public function jsCode()
+    public static function jsCode()
     {
         $icons = array();
         foreach (static::getIcons() as $name => $value) {
-            $icons[] = $name . ': \'' . $value . '\'';
+            $icons[] = $name.': \''.$value.'\'';
         }
         $iconsStr = implode(",\n    ", $icons);
 
@@ -120,6 +125,7 @@ Ext.onReady(function() {
 });
 
 JS;
+
         return $js;
     }
-} 
+}

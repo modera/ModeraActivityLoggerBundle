@@ -11,12 +11,12 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 class RoutingResourcesProvider implements ContributorInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
         return array(
-            '@ModeraMjrIntegrationBundle/Resources/config/routing.yml'
+            '@ModeraMjrIntegrationBundle/Resources/config/routing.yml',
         );
     }
 }

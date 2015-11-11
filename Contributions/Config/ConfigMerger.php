@@ -27,8 +27,7 @@ class ConfigMerger implements ConfigMergerInterface
      */
     public function __construct(
         MainConfigInterface $mainConfig, MenuManager $menuMgr, ContributorInterface $sectionsProvider, ContributorInterface $classLoaderMappingsProvider
-    )
-    {
+    ) {
         $this->mainConfig = $mainConfig;
         $this->menuMgr = $menuMgr;
         $this->sectionsProvider = $sectionsProvider;
@@ -36,18 +35,18 @@ class ConfigMerger implements ConfigMergerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function merge(array $existingConfig)
     {
         $menuItems = array();
         foreach ($this->menuMgr->getAll() as $menuItem) {
-            $menuItems[] =  array(
+            $menuItems[] = array(
                 'id' => $menuItem->getId(),
                 'glyph' => $menuItem->getGlyph(),
                 'label' => $menuItem->getLabel(),
                 'controller' => $menuItem->getController(),
-                'metadata' => $menuItem->getMetadata()
+                'metadata' => $menuItem->getMetadata(),
             );
         }
 
@@ -57,7 +56,7 @@ class ConfigMerger implements ConfigMergerInterface
             $sections[] = array(
                 'id' => $section->getId(),
                 'controller' => $section->getController(),
-                'metadata' => $section->getMetadata()
+                'metadata' => $section->getMetadata(),
             );
         }
 
@@ -67,7 +66,7 @@ class ConfigMerger implements ConfigMergerInterface
             'homeSection' => $this->mainConfig->getHomeSection(),
             'sections' => $sections, // backend sections
             'menuItems' => $menuItems,
-            'classLoaderMappings' => $this->classLoaderMappingsProvider->getItems()
+            'classLoaderMappings' => $this->classLoaderMappingsProvider->getItems(),
         ));
     }
 }

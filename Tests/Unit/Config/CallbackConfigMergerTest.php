@@ -20,9 +20,9 @@ class CallbackConfigMergerTest extends \PHPUnit_Framework_TestCase
 
     public function testHowWellItWorks()
     {
-        $merger = new CallbackConfigMerger(function(array $input) {
+        $merger = new CallbackConfigMerger(function (array $input) {
             return array_merge($input, array(
-                'another' => 'value'
+                'another' => 'value',
             ));
         });
 

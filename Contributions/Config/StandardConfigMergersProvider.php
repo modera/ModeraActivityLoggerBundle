@@ -37,12 +37,12 @@ class StandardConfigMergersProvider implements ContributorInterface
         );
 
         $this->items = array(
-            new ConfigMerger($mainConfig, $menuMgr, $sectionsProvider, $loaderMappingsProvider)
+            new ConfigMerger($mainConfig, $menuMgr, $sectionsProvider, $loaderMappingsProvider),
         );
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getItems()
     {

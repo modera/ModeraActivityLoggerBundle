@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\Definition;
 class MenuItemContributorCompilerPass implements CompilerPassInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
@@ -24,7 +24,7 @@ class MenuItemContributorCompilerPass implements CompilerPassInterface
         $def->addTag('modera_mjr_integration.menu.menu_items_provider');
 
         $container->addDefinitions(array(
-            'modera_mjr_integration.contributions.menu_items_provider' => $def
+            'modera_mjr_integration.contributions.menu_items_provider' => $def,
         ));
     }
-} 
+}

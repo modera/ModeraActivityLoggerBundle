@@ -26,7 +26,7 @@ class BundleSemanticMainConfig implements MainConfigInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTitle()
     {
@@ -34,7 +34,7 @@ class BundleSemanticMainConfig implements MainConfigInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getUrl()
     {
@@ -42,10 +42,10 @@ class BundleSemanticMainConfig implements MainConfigInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getHomeSection()
     {
         return $this->config['home_section'];
     }
-} 
+}

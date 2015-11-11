@@ -19,7 +19,7 @@ interface MenuItemInterface extends SectionInterface
     const META_ICON = 'icon';
 
     /**
-     * @return string  A label that will be shown in UI
+     * @return string A label that will be shown in UI
      */
     public function getLabel();
 }

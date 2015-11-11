@@ -5,7 +5,6 @@ namespace Modera\MjrIntegrationBundle\Contributions;
 use Modera\MjrIntegrationBundle\Menu\MenuItem;
 use Modera\MjrIntegrationBundle\Menu\MenuItemInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
-use Sli\ExpanderBundle\Ext\OrderedContributorInterface;
 
 /**
  * Contributes js-runtime menu items based on a config defined in "modera_mjr_integration" namespace.
@@ -33,20 +32,20 @@ class ConfigMenuItemsProvider implements ContributorInterface
 
             $this->items[] = new MenuItem($menuItem['name'], $controller, $menuItem['id'], array(
                 MenuItemInterface::META_NAMESPACE => $menuItem['namespace'],
-                MenuItemInterface::META_NAMESPACE_PATH => $menuItem['path']
+                MenuItemInterface::META_NAMESPACE_PATH => $menuItem['path'],
             ));
         }
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
         return $this->items;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

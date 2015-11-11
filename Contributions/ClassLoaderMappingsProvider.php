@@ -7,12 +7,12 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 class ClassLoaderMappingsProvider implements ContributorInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
         return array(
-            'Modera.mjrintegration' => '/bundles/moderamjrintegration/js'
+            'Modera.mjrintegration' => '/bundles/moderamjrintegration/js',
         );
     }
 }

@@ -29,7 +29,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getItems()
     {
@@ -39,9 +39,9 @@ class ServiceDefinitionsProvider implements ContributorInterface
             'config_provider' => array(
                 'className' => 'MF.runtime.config.AjaxConfigProvider',
                 'args' => [
-                    array('url' => $bundleConfig['client_runtime_config_provider_url'])
-                ]
-            )
+                    array('url' => $bundleConfig['client_runtime_config_provider_url']),
+                ],
+            ),
         );
 
         /* @var AssetsProvider $assetsProvider */
@@ -57,14 +57,14 @@ class ServiceDefinitionsProvider implements ContributorInterface
                     'args' => array(
                         array(
                             'js' => $jsAssets,
-                            'css' => $cssAssets
-                        )
-                    )
+                            'css' => $cssAssets,
+                        ),
+                    ),
                 ),
                 'non_blocking_assets_workench_loading_blocking_plugin' => array(
                     'className' => 'Modera.mjrintegration.runtime.plugin.WorkbenchLoadingBlockingPlugin',
-                    'tags' => array('runtime_plugin')
-                )
+                    'tags' => array('runtime_plugin'),
+                ),
             ));
         }
 

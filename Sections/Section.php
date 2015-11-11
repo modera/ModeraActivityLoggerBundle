@@ -27,7 +27,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getController()
     {
@@ -35,7 +35,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getId()
     {
@@ -43,7 +43,7 @@ class Section implements SectionInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getMetadata()
     {

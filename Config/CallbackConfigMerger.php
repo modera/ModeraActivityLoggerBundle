@@ -25,7 +25,7 @@ class CallbackConfigMerger implements ConfigMergerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function merge(array $existingConfig)
     {
