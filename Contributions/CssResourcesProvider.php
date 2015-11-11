@@ -16,7 +16,7 @@ class CssResourcesProvider implements ContributorInterface
     public function getItems()
     {
         return array(
-            '//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css',
+            '//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css',
         );
     }
 }
