@@ -97,7 +97,7 @@ class FontAwesome
     {
         $icons = array();
         foreach (self::getIcons() as $name => $value) {
-            $icons[] = $name.': \''.$value.'\'';
+            $icons[] = '\''.$name.'\': \''.$value.'\'';
         }
         $iconsStr = implode(",\n    ", $icons);
 
