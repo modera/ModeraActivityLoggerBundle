@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 class ModeraMJRSecurityIntegrationBundle extends Bundle
 {
     const ROLE_BACKEND_USER = 'ROLE_BACKEND_USER';
-    
+
     public function build(ContainerBuilder $container)
     {
         $clientDiServiceDefinitionsProvider = new ExtensionPoint('modera_mjr_security_integration.client_di_service_defs');
