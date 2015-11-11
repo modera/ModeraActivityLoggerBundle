@@ -17,7 +17,7 @@ class ConfigMergersProvider implements ContributorInterface
     public function __construct(SecurityContextInterface $sc, ContributorInterface $clientDiDefinitionsProvider)
     {
         $this->items = array(
-            new CallbackConfigMerger(function(array $currentConfig) use ($sc) {
+            new CallbackConfigMerger(function (array $currentConfig) use ($sc) {
                 if ($sc->getToken()) {
                     $roles = array();
 
@@ -26,22 +26,22 @@ class ConfigMergersProvider implements ContributorInterface
                     }
 
                     return array_merge($currentConfig, array(
-                        'roles' => $roles
+                        'roles' => $roles,
                     ));
                 } else {
                     return $currentConfig;
                 }
             }),
-            new CallbackConfigMerger(function(array $currentConfig) use ($clientDiDefinitionsProvider) {
+            new CallbackConfigMerger(function (array $currentConfig) use ($clientDiDefinitionsProvider) {
                 return array_merge($currentConfig, array(
-                    'serviceDefinitions' => $clientDiDefinitionsProvider->getItems()
+                    'serviceDefinitions' => $clientDiDefinitionsProvider->getItems(),
                 ));
-            })
+            }),
         );
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {

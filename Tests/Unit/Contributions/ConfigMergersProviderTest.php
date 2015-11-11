@@ -17,7 +17,7 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
     {
         $roles = array(
             new Role('ROLE_USER'),
-            new Role('ROLE_ADMIN')
+            new Role('ROLE_ADMIN'),
         );
 
         $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
@@ -31,7 +31,7 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
            ->will($this->returnValue($token));
 
         $serviceDefinitions = array(
-            'fooService', 'barService'
+            'fooService', 'barService',
         );
 
         $clientDiDefinitionsProvider = $this->getMock(ContributorInterface::CLAZZ);
@@ -53,18 +53,18 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Modera\MjrIntegrationBundle\Config\ConfigMergerInterface', $clientDiDefinitionsProviderMerger);
 
         $existingConfig = array(
-            'something' => 'blah'
+            'something' => 'blah',
         );
         $mergedConfig = $securityRolesMerger->merge($existingConfig);
 
         $this->assertTrue(is_array($mergedConfig));
         $this->assertArrayHasKey('something', $mergedConfig);
         $this->assertEquals('blah', $mergedConfig['something']);
-        $this->assertArrayHasKey('userRoles', $mergedConfig);
-        $this->assertTrue(is_array($mergedConfig['userRoles']));
-        $this->assertEquals(2, count($mergedConfig['userRoles']));
-        $this->assertTrue(in_array('ROLE_USER', $mergedConfig['userRoles']));
-        $this->assertTrue(in_array('ROLE_ADMIN', $mergedConfig['userRoles']));
+        $this->assertArrayHasKey('roles', $mergedConfig);
+        $this->assertTrue(is_array($mergedConfig['roles']));
+        $this->assertEquals(2, count($mergedConfig['roles']));
+        $this->assertTrue(in_array('ROLE_USER', $mergedConfig['roles']));
+        $this->assertTrue(in_array('ROLE_ADMIN', $mergedConfig['roles']));
 
         $mergedConfig = $clientDiDefinitionsProviderMerger->merge($existingConfig);
 

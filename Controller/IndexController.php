@@ -9,7 +9,6 @@ use Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitions
 use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Modera\MJRSecurityIntegrationBundle\ModeraMJRSecurityIntegrationBundle;
 use Modera\MJRSecurityIntegrationBundle\DependencyInjection\ModeraMJRSecurityIntegrationExtension;
-use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,6 +29,7 @@ class IndexController extends Controller
 {
     /**
      * @Route("/")
+     *
      * @return array
      */
     public function indexAction()
@@ -39,9 +39,9 @@ class IndexController extends Controller
 
         /* @var MainConfigInterface $mainConfig */
         $mainConfig = $this->container->get($runtimeConfig['main_config_provider']);
-        $runtimeConfig['home_section']    = $mainConfig->getHomeSection();
+        $runtimeConfig['home_section'] = $mainConfig->getHomeSection();
         $runtimeConfig['deployment_name'] = $mainConfig->getTitle();
-        $runtimeConfig['deployment_url']  = $mainConfig->getUrl();
+        $runtimeConfig['deployment_url'] = $mainConfig->getUrl();
 
         // for docs regarding how to use "non-blocking" assets see
         // \Modera\MjrIntegrationBundle\AssetsHandling\AssetsProvider class
@@ -65,7 +65,7 @@ class IndexController extends Controller
                 'css_resources' => $assetsProvider->getCssAssets(AssetsProvider::TYPE_BLOCKING),
                 'js_resources' => $assetsProvider->getJavascriptAssets(AssetsProvider::TYPE_BLOCKING),
                 'app_loading_path' => $appLoadingPath,
-                'disable_caching' => $kernel->getEnvironment() != 'prod'
+                'disable_caching' => $kernel->getEnvironment() != 'prod',
             )
         );
 
@@ -88,7 +88,7 @@ class IndexController extends Controller
 
         $nonBlockingResources = array(
             'css' => $assetsProvider->getCssAssets(AssetsProvider::TYPE_NON_BLOCKING),
-            'js' => $assetsProvider->getJavascriptAssets(AssetsProvider::TYPE_NON_BLOCKING)
+            'js' => $assetsProvider->getJavascriptAssets(AssetsProvider::TYPE_NON_BLOCKING),
         );
 
         /* @var ServiceDefinitionsManager $definitionsMgr */
@@ -98,7 +98,7 @@ class IndexController extends Controller
             array(
                 'non_blocking_resources' => $nonBlockingResources,
                 'container_services' => $definitionsMgr->getDefinitions(),
-                'config' => $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY)
+                'config' => $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY),
             )
         );
 
@@ -110,6 +110,7 @@ class IndexController extends Controller
 
     /**
      * @param Request $request
+     * 
      * @return JsonResponse
      */
     public function isAuthenticatedAction(Request $request)
@@ -131,7 +132,7 @@ class IndexController extends Controller
             if (!in_array(ModeraMJRSecurityIntegrationBundle::ROLE_BACKEND_USER, $roleNames)) {
                 $response = array(
                     'success' => false,
-                    'message' => "You don't have required rights to access administration interface."
+                    'message' => "You don't have required rights to access administration interface.",
                 );
             }
         }

@@ -2,7 +2,6 @@
 
 namespace Modera\MJRSecurityIntegrationBundle\Contributions;
 
-use Modera\MJRSecurityIntegrationBundle\DependencyInjection\MJRSecurityIntegrationBundleExtension;
 use Modera\MJRSecurityIntegrationBundle\DependencyInjection\ModeraMJRSecurityIntegrationExtension;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -28,6 +27,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
 
     /**
      * @param string $route
+     *
      * @return string
      */
     private function getUrl($route)
@@ -40,7 +40,7 @@ class ServiceDefinitionsProvider implements ContributorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getItems()
     {
@@ -52,27 +52,27 @@ class ServiceDefinitionsProvider implements ContributorInterface
                 'args' => array(
                     array(
                         'urls' => array(
-                            'login'           => $this->getUrl($bundleConfig['login_url']),
+                            'login' => $this->getUrl($bundleConfig['login_url']),
                             'isAuthenticated' => $this->getUrl($bundleConfig['is_authenticated_url']),
-                            'logout'          => $this->getUrl($bundleConfig['logout_url']),
+                            'logout' => $this->getUrl($bundleConfig['logout_url']),
                         ),
-                        'authorizationMgr' => '@authorization_mgr'
-                    )
-                )
+                        'authorizationMgr' => '@authorization_mgr',
+                    ),
+                ),
             ),
             'profile_context_menu' => array(
                 'className' => 'Modera.mjrsecurityintegration.runtime.ProfileContextMenuPlugin',
-                'tags'      => ['runtime_plugin'],
+                'tags' => ['runtime_plugin'],
             ),
             'modera_backend_security.activation_security_interceptor' => array(
                 'className' => 'MF.activation.security.ActivationSecurityInterceptor',
                 'args' => [
                     array(
-                        'securityMgr' => '@security_manager'
-                    )
+                        'securityMgr' => '@security_manager',
+                    ),
                 ],
-                'tags' => ['activation_interceptor']
-            )
+                'tags' => ['activation_interceptor'],
+            ),
         );
     }
 }

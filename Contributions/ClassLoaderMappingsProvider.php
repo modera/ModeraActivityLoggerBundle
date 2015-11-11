@@ -15,12 +15,12 @@ class ClassLoaderMappingsProvider implements ContributorInterface
     public function __construct()
     {
         $this->items = array(
-            'Modera.mjrsecurityintegration' => '/bundles/moderamjrsecurityintegration/js'
+            'Modera.mjrsecurityintegration' => '/bundles/moderamjrsecurityintegration/js',
         );
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
