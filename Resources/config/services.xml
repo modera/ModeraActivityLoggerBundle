@@ -45,22 +45,5 @@
 
             <tag name="modera_security.permissions_provider" />
         </service>
-
-        <service id="modera_mjr_security_integration.ext_direct.route_formatter"
-                 class="Modera\MJRSecurityIntegrationBundle\ExtDirect\RouteFormatter"
-                 public="false">
-
-            <argument type="string">%modera_mjr_integration.route_prefix%</argument>
-        </service>
-
-        <service id="modera_mjr_security_integration.ext_direct.secured_routing_patch_warmer"
-                 class="Modera\MJRSecurityIntegrationBundle\ExtDirect\SecuredRoutingPatchWarmer"
-                 public="false">
-
-            <argument type="service" id="router" />
-            <argument type="string">%direct.api.route_pattern%</argument>
-
-            <tag name="kernel.cache_warmer" priority="1" />
-        </service>
     </services>
 </container>

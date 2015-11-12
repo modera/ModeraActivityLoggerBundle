@@ -60,18 +60,27 @@ class ServiceDefinitionsProvider implements ContributorInterface
                     ),
                 ),
             ),
+            'extdirect_api_script_injector' => array(
+                'className' => 'Modera.mjrsecurityintegration.runtime.ExtDirectApiScriptInjectorPlugin',
+                'args' => array(
+                    array(
+                        'directApiUrl' => $this->getUrl('api')
+                    )
+                ),
+                'tags' => array('runtime_plugin'),
+            ),
             'profile_context_menu' => array(
                 'className' => 'Modera.mjrsecurityintegration.runtime.ProfileContextMenuPlugin',
-                'tags' => ['runtime_plugin'],
+                'tags' => array('runtime_plugin'),
             ),
             'modera_backend_security.activation_security_interceptor' => array(
                 'className' => 'MF.activation.security.ActivationSecurityInterceptor',
-                'args' => [
+                'args' => array(
                     array(
                         'securityMgr' => '@security_manager',
                     ),
-                ],
-                'tags' => ['activation_interceptor'],
+                ),
+                'tags' => array('activation_interceptor'),
             ),
         );
     }

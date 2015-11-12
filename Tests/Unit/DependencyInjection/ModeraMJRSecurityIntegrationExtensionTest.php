@@ -32,13 +32,5 @@ class ModeraMJRSecurityIntegrationExtensionTest extends \PHPUnit_Framework_TestC
             $this->assertArrayHasKey($key, $injectedSemanticConfig);
             $this->assertEquals($value, $injectedSemanticConfig[$key]);
         }
-
-        /* @var Definition $warmerDef */
-        $warmerDef = $builder->getDefinition('modera_mjr_security_integration.ext_direct.secured_routing_patch_warmer');
-        $this->assertInstanceOf('Symfony\Component\DependencyInjection\Definition', $warmerDef);
-        $this->assertEquals('Modera\MJRSecurityIntegrationBundle\ExtDirect\SecuredRoutingPatchWarmer', $warmerDef->getClass());
-        // it is important that our tag's priority would be 1 because RouterCacheWarmer has priority 0, and we
-        // need to run our warmer before, see http://symfony.com/doc/current/reference/dic_tags.html#core-cache-warmers
-        $this->assertEquals(array(array('priority' => 1)), $warmerDef->getTag('kernel.cache_warmer'));
     }
 }

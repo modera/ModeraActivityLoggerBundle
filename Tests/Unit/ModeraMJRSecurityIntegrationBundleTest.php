@@ -2,7 +2,6 @@
 
 namespace Modera\MJRSecurityIntegrationBundle\Tests\Unit;
 
-use Modera\MJRSecurityIntegrationBundle\ExtDirect\ParamUpdaterCompilerPass;
 use Modera\MJRSecurityIntegrationBundle\ModeraMJRSecurityIntegrationBundle;
 
 /**
@@ -19,12 +18,10 @@ class ModeraMJRSecurityIntegrationBundleTest extends \PHPUnit_Framework_TestCase
 
         $bundle->build($builder);
 
-        \Phake::verify($builder, \Phake::times(2))
+        \Phake::verify($builder, \Phake::times(1))
             ->addCompilerPass(
                 $this->isInstanceOf('Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface')
             )
         ;
-
-        \Phake::verify($builder)->addCompilerPass($this->isInstanceOf(ParamUpdaterCompilerPass::clazz()));
     }
 }

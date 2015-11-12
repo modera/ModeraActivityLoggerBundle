@@ -459,22 +459,22 @@
         },
         {
             "name": "modera/mjr-integration-bundle",
-            "version": "v1.4.0",
+            "version": "v1.4.2",
             "target-dir": "Modera/MjrIntegrationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraMjrIntegrationBundle.git",
-                "reference": "2b127da33ce65a70b1c670d7f11aea6b28a946b9"
+                "reference": "d2a3f6db9428244f4fc90b49f6afa9dcf6f88271"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraMjrIntegrationBundle/zipball/2b127da33ce65a70b1c670d7f11aea6b28a946b9",
-                "reference": "2b127da33ce65a70b1c670d7f11aea6b28a946b9",
+                "url": "https://api.github.com/repos/modera/ModeraMjrIntegrationBundle/zipball/d2a3f6db9428244f4fc90b49f6afa9dcf6f88271",
+                "reference": "d2a3f6db9428244f4fc90b49f6afa9dcf6f88271",
                 "shasum": ""
             },
             "require": {
                 "modera/direct-bundle": "~1.0",
-                "php": ">=5.3.0",
+                "php": ">=5.4.0",
                 "sergeil/expander-bundle": "~1.0",
                 "symfony/framework-bundle": "~2.0"
             },
@@ -509,7 +509,7 @@
             "keywords": [
                 "mjr"
             ],
-            "time": "2015-11-11 10:52:36"
+            "time": "2015-11-12 12:39:28"
         },
         {
             "name": "psr/log",

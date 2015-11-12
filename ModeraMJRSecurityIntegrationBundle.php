@@ -22,8 +22,5 @@ class ModeraMJRSecurityIntegrationBundle extends Bundle
             'Allows to contribute client-side DI container service definitions that will be configured only after user has successfully authenticated.'
         );
         $container->addCompilerPass($clientDiServiceDefinitionsProvider->createCompilerPass());
-
-        // MPFE-712
-        $container->addCompilerPass(new ParamUpdaterCompilerPass());
     }
 }
