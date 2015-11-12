@@ -63,7 +63,7 @@ class Router
      * 
      * @param Modera\DirectBundle\Router\Call $call
      *
-     * @return Mixed
+     * @return mixed
      */
     private function dispatch($call)
     {

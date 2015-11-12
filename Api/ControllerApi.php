@@ -50,7 +50,7 @@ class ControllerApi
     /**
      * Check if the controller has any method exposed.
      *
-     * @return Boolean true if has exposed, otherwise return false
+     * @return bool true if has exposed, otherwise return false
      */
     public function isExposed()
     {

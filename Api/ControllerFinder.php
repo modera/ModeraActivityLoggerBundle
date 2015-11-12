@@ -11,7 +11,7 @@ class ControllerFinder
      * 
      * @param \Symfony\HttpKernel\Bundle\Bundle $bundle
      *
-     * @return Mixed
+     * @return mixed
      */
     public function getControllers($bundle)
     {
