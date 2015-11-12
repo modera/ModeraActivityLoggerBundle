@@ -1,4 +1,5 @@
 <?php
+
 namespace Modera\DirectBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
@@ -11,7 +12,7 @@ class ModeraDirectExtension extends Extension
     /**
      * Loads the Direct configuration.
      *
-     * @param array $config An array of configuration settings
+     * @param array            $config    An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
     public function load(array $configs, ContainerBuilder $container)
@@ -21,7 +22,7 @@ class ModeraDirectExtension extends Extension
 
         $container->setParameter('modera_direct.routes_prefix', $config['routes_prefix']);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('direct.xml');
     }
 
@@ -32,7 +33,7 @@ class ModeraDirectExtension extends Extension
      */
     public function getXsdValidationBasePath()
     {
-        return __DIR__ . '/../Resources/config/schema';
+        return __DIR__.'/../Resources/config/schema';
     }
 
     public function getNamespace()

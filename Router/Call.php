@@ -28,7 +28,7 @@ class Call
     /**
      * The ExtDirect transaction id.
      * 
-     * @var integer
+     * @var int
      */
     protected $tid;
 
@@ -49,7 +49,7 @@ class Call
     /**
      * The ExtDirect upload reference.
      * 
-     * @var boolean
+     * @var bool
      */
     protected $upload;
 
@@ -62,7 +62,7 @@ class Call
     public function __construct($call, $type)
     {
         $this->callType = $type;
-        
+
         if ('single' == $type) {
             $this->initializeFromSingle($call);
         } else {
@@ -100,11 +100,11 @@ class Call
         return $this->data;
     }
 
-
     /**
      * Return a result wrapper to ExtDirect method call.
      * 
-     * @param  array $result
+     * @param array $result
+     *
      * @return array
      */
     public function getResponse($result)
@@ -114,14 +114,15 @@ class Call
           'tid' => $this->tid,
           'action' => $this->action,
           'method' => $this->method,
-          'result' => $result
+          'result' => $result,
         );
     }
-    
+
     /**
-     * Return an exception to ExtDirect call stack
+     * Return an exception to ExtDirect call stack.
      * 
-     * @param  \Exception $exception
+     * @param \Exception $exception
+     *
      * @return array
      */
     public function getException($exception)
@@ -132,10 +133,10 @@ class Call
           'action' => $this->action,
           'method' => $this->method,
           'message' => $exception->getMessage(),
-          'where' => $exception->getTraceAsString()
+          'where' => $exception->getTraceAsString(),
         );
-    }        
-    
+    }
+
     /**
      * Initialize the call properties from a single call.
      * 
@@ -145,9 +146,9 @@ class Call
     {
         $this->action = $call['action'];
         $this->method = $call['method'];
-        $this->type   = $call['type'];
-        $this->tid    = $call['tid'];
-        $this->data   = (array)$call['data'][0];
+        $this->type = $call['type'];
+        $this->tid = $call['tid'];
+        $this->data = (array) $call['data'][0];
     }
 
     /**
@@ -157,12 +158,16 @@ class Call
      */
     private function initializeFromForm($call)
     {
-
-        $this->action   = $call['extAction']; unset($call['extAction']);
-        $this->method   = $call['extMethod']; unset($call['extMethod']);
-        $this->type     = $call['extType']; unset($call['extType']);
-        $this->tid      = $call['extTID']; unset($call['extTID']);
-        $this->upload = $call['extUpload']; unset($call['extUpload']);
+        $this->action = $call['extAction'];
+        unset($call['extAction']);
+        $this->method = $call['extMethod'];
+        unset($call['extMethod']);
+        $this->type = $call['extType'];
+        unset($call['extType']);
+        $this->tid = $call['extTID'];
+        unset($call['extTID']);
+        $this->upload = $call['extUpload'];
+        unset($call['extUpload']);
 
         foreach ($call as $key => $value) {
             $this->data[$key] = $value;

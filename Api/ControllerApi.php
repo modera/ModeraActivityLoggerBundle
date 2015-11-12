@@ -29,7 +29,7 @@ class ControllerApi
      * Initialize the object.
      * 
      * @param \Symfony\Component\Container $container
-     * @param string $controller
+     * @param string                       $controller
      */
     public function __construct($container, $controller)
     {
@@ -38,13 +38,13 @@ class ControllerApi
         } catch (Exception $e) {
             // @todo: throw an exception
         }
-        
+
         $this->container = $container;
         $this->remoteAttribute = $container->getParameter('direct.api.remote_attribute');
         $this->formAttribute = $container->getParameter('direct.api.form_attribute');
         $this->safeAttribute = $container->getParameter('direct.api.safe_attribute');
         $this->unsafeAttribute = $container->getParameter('direct.api.unsafe_attribute');
-        $this->api = $this->createApi();        
+        $this->api = $this->createApi();
     }
 
     /**
@@ -53,7 +53,7 @@ class ControllerApi
      * @return Boolean true if has exposed, otherwise return false
      */
     public function isExposed()
-    {        
+    {
         return (null != $this->api) ? true : false;
     }
 
@@ -63,7 +63,7 @@ class ControllerApi
      * @return array
      */
     public function getApi()
-    {        
+    {
         return $this->api;
     }
 
@@ -73,14 +73,15 @@ class ControllerApi
      * @return string
      */
     public function getActionName()
-    {        
-        return str_replace('Controller','',$this->reflection->getShortName());
+    {
+        return str_replace('Controller', '', $this->reflection->getShortName());
     }
 
     /**
      * Check the method access type.
      *
      * @param string $method
+     *
      * @return string s = safe access u = unsafe access n = none
      */
     public function getMethodAccess($method)
@@ -90,19 +91,18 @@ class ControllerApi
         // default access type is none
         $access = 'n';
 
-        if (strlen($doc) > 0){
-            $safe = !!preg_match('/' . $this->safeAttribute . '/i', $doc);
-            $unsafe = !!preg_match('/' . $this->unsafeAttribute . '/i', $doc);
+        if (strlen($doc) > 0) {
+            $safe = !!preg_match('/'.$this->safeAttribute.'/i', $doc);
+            $unsafe = !!preg_match('/'.$this->unsafeAttribute.'/i', $doc);
 
-            if ($safe){
+            if ($safe) {
                 $access = 'secure';
-            } elseif ($unsafe){
+            } elseif ($unsafe) {
                 $access = 'anonymous';
             }
         }
 
         return $access;
-
     }
 
     /**
@@ -113,7 +113,7 @@ class ControllerApi
     protected function createApi()
     {
         $api = null;
-        
+
         // get public methods from controller
         $methods = $this->reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
 
@@ -125,7 +125,7 @@ class ControllerApi
             }
         }
 
-        return $api;        
+        return $api;
     }
 
     /**
@@ -142,13 +142,13 @@ class ControllerApi
         if (strlen($method->getDocComment()) > 0) {
             $doc = $method->getDocComment();
 
-            $isRemote = !!preg_match('/' . $this->remoteAttribute . '/i', $doc);
+            $isRemote = !!preg_match('/'.$this->remoteAttribute.'/i', $doc);
 
             if ($isRemote) {
-                $api['name'] = str_replace('Action','',$method->getName());
+                $api['name'] = str_replace('Action', '', $method->getName());
                 $api['len'] = $method->getNumberOfParameters();
 
-                if(!!preg_match('/' . $this->formAttribute . '/i', $doc)) {
+                if (!!preg_match('/'.$this->formAttribute.'/i', $doc)) {
                     $api['formHandler'] = true;
                 }
             }
@@ -156,5 +156,4 @@ class ControllerApi
 
         return $api;
     }
-
 }

@@ -13,21 +13,21 @@ class Router
      * @var Modera\DirectBundle\Request
      */
     protected $request;
-    
+
     /**
      * The ExtDirect Response object.
      * 
      * @var Modera\DirectBundle\Response
      */
     protected $response;
-    
+
     /**
      * The application container.
      * 
      * @var Symfony\Component\DependencyInjection\Container
      */
     protected $container;
-    
+
     /**
      * Initialize the router object.
      * 
@@ -50,7 +50,7 @@ class Router
     public function route()
     {
         $batch = array();
-        
+
         foreach ($this->request->getCalls() as $call) {
             $batch[] = $this->dispatch($call);
         }
@@ -61,7 +61,8 @@ class Router
     /**
      * Dispatch a remote method call.
      * 
-     * @param  Modera\DirectBundle\Router\Call $call
+     * @param Modera\DirectBundle\Router\Call $call
+     *
      * @return Mixed
      */
     private function dispatch($call)
@@ -69,34 +70,32 @@ class Router
         $api = new ControllerApi($this->container, $this->getControllerClass($call->getAction()));
 
         $controller = $this->resolveController($call->getAction());
-        $method = $call->getMethod()."Action";
+        $method = $call->getMethod().'Action';
         $accessType = $api->getMethodAccess($method);
 
         if (!is_callable(array($controller, $method))) {
             //todo: throw an execption method not callable
             return false;
-        } else
-
-        if ($this->defaultAccess == 'secure' && $accessType != 'anonymous'){
-            if (!$this->session){
+        } elseif ($this->defaultAccess == 'secure' && $accessType != 'anonymous') {
+            if (!$this->session) {
                 $result = $call->getException(new \Exception('Access denied!'));
             }
-        } else if ($accessType == 'secure'){
-            if (!$this->session){
+        } elseif ($accessType == 'secure') {
+            if (!$this->session) {
                 $result = $call->getException(new \Exception('Access denied!'));
             }
-        } else if ('form' == $this->request->getCallType()) {
-            $result = $call->getResponse($controller->$method($call->getData(), $this->request->getFiles()));            
+        } elseif ('form' == $this->request->getCallType()) {
+            $result = $call->getResponse($controller->$method($call->getData(), $this->request->getFiles()));
         }
 
-        if (!isset($result)){
-            try{
+        if (!isset($result)) {
+            try {
                 //$result = call_user_func_array(array($controller, $method), $call->getData());
                 $result = $controller->$method($call->getData());
                 $result = $call->getResponse($result);
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 $result = $call->getException($e);
-            }                  
+            }
         }
 
         return $result;
@@ -105,7 +104,8 @@ class Router
     /**
      * Resolve the called controller from action.
      * 
-     * @param  string $action
+     * @param string $action
+     *
      * @return <type>
      */
     private function resolveController($action)
@@ -120,7 +120,7 @@ class Router
             }
 
             return $controller;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             // todo: handle exception
         }
     }
@@ -132,13 +132,13 @@ class Router
      */
     private function getControllerClass($action)
     {
-        list($bundleName, $controllerName) = explode('_',$action);
-        $bundleName.= "Bundle";
+        list($bundleName, $controllerName) = explode('_', $action);
+        $bundleName .= 'Bundle';
 
         $bundle = $this->container->get('kernel')->getBundle($bundleName);
-        $namespace = $bundle->getNamespace()."\\Controller";
+        $namespace = $bundle->getNamespace().'\\Controller';
 
-        $class = $namespace."\\".$controllerName."Controller";
+        $class = $namespace.'\\'.$controllerName.'Controller';
 
         return $class;
     }

@@ -27,7 +27,7 @@ class Api
 
         if ($container->get('kernel')->isDebug()) {
             $this->api = json_encode($this->createApi());
-        } else {            
+        } else {
             $this->api = $this->getApiFromCache();
         }
     }
@@ -37,8 +37,8 @@ class Api
      *
      * @return string JSON API description
      */
-    public function  __toString()
-    {        
+    public function __toString()
+    {
         return $this->api;
     }
 
@@ -51,27 +51,27 @@ class Api
     {
         $bundles = $this->getControllers();
 
-        $actions = array();        
+        $actions = array();
 
-        foreach ($bundles as $bundle => $controllers ) {
+        foreach ($bundles as $bundle => $controllers) {
             $bundleShortName = str_replace('Bundle', '', $bundle);
-            
+
             foreach ($controllers as $controller) {
                 $api = new ControllerApi($this->container, $controller);
 
                 if ($api->isExposed()) {
-                    $actions[$bundleShortName."_".$api->getActionName()] = $api->getApi();
+                    $actions[$bundleShortName.'_'.$api->getActionName()] = $api->getApi();
                 }
             }
         }
 
         return array(
-            'url'       => $this->container->get('request')->getBaseUrl().
+            'url' => $this->container->get('request')->getBaseUrl().
                            $this->container->getParameter('direct.api.route_pattern'),
-            'type'      => $this->container->getParameter('direct.api.type'),
+            'type' => $this->container->getParameter('direct.api.type'),
             'namespace' => $this->container->getParameter('direct.api.namespace'),
-            'id'        => $this->container->getParameter('direct.api.id'),
-            'actions'   => $actions
+            'id' => $this->container->getParameter('direct.api.id'),
+            'actions' => $actions,
         );
     }
 
@@ -95,14 +95,14 @@ class Api
     {
         $controllers = array();
         $finder = new ControllerFinder();
-        
+
         foreach ($this->container->get('kernel')->getBundles() as $bundle) {
             $found = $finder->getControllers($bundle);
-            if (!empty ($found)) {
+            if (!empty($found)) {
                 $controllers[$bundle->getName()] = $found;
             }
         }
 
         return $controllers;
-    }    
+    }
 }

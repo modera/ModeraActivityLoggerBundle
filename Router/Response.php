@@ -10,11 +10,11 @@ class Response
      * @var string
      */
     protected $type;
-    
+
     /**
      * Is upload request?
      * 
-     * @var boolean
+     * @var bool
      */
     protected $isUpload = false;
 
@@ -22,7 +22,7 @@ class Response
      * Initialize the object setting it type.
      * 
      * @param string $type
-     * @param boolean $isUpload
+     * @param bool   $isUpload
      */
     public function __construct($type, $isUpload)
     {
@@ -33,14 +33,15 @@ class Response
     /**
      * Encode the response into a valid json ExtDirect result.
      * 
-     * @param  array $result
+     * @param array $result
+     *
      * @return string
      */
     public function encode($result)
     {
         if ($this->type == 'form' && $this->isUpload) {
             //array_walk_recursive($result[0], array($this, 'utf8'));
-            return "<html><body><textarea>".json_encode($result[0])."</textarea></body></html>";
+            return '<html><body><textarea>'.json_encode($result[0]).'</textarea></body></html>';
         } else {
             // @todo: check utf8 config option from bundle
             //array_walk_recursive($result, array($this, 'utf8'));
@@ -63,6 +64,5 @@ class Response
         if (is_array($value)) {
             array_walk_recursive($value, array($this, 'utf8'));
         }
-  }
-
+    }
 }

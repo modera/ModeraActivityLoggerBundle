@@ -14,7 +14,7 @@ class ApiTest extends WebTestCase
     {
         $client = $this->createClient();
         $api = new Api($client->getContainer());
-        
+
         $this->assertRegExp('/Actions/', $api->__toString());
     }
 }

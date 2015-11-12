@@ -10,14 +10,14 @@ class Request
      * @var Symfony\Component\HttpFoundation\Request
      */
     protected $request;
-    
+
     /**
      * The HTTP_RAW_POST_DATA if the Direct call is a batch call.
      * 
      * @var JSON
      */
     protected $rawPost;
-    
+
     /**
      * The $_POST data if the Direct Call is a form call.
      * 
@@ -31,11 +31,11 @@ class Request
      * @var string
      */
     protected $callType;
-    
+
     /**
      * Is upload request?
      * 
-     * @var boolean
+     * @var bool
      */
     protected $isUpload = false;
 
@@ -60,13 +60,13 @@ class Request
      * @param Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct($request)
-    {        
+    {
         // store the symfony request object
         $this->request = $request;
         $this->rawPost = isset($GLOBALS['HTTP_RAW_POST_DATA']) ?  $GLOBALS['HTTP_RAW_POST_DATA'] : array();
         $this->post = $_POST;
         $this->files = $_FILES;
-        $this->callType = !empty ($_POST) ? 'form' : 'batch';
+        $this->callType = !empty($_POST) ? 'form' : 'batch';
         $this->isUpload = isset($_POST['extUpload']) && $_POST['extUpload'] == 'true';
     }
 
@@ -79,11 +79,11 @@ class Request
     {
         return $this->callType;
     }
-    
+
     /**
      * Is upload request?
      * 
-     * @return boolean
+     * @return bool
      */
     public function isUpload()
     {
@@ -99,7 +99,7 @@ class Request
     {
         return $this->files;
     }
-    
+
     /**
      * Get the direct calls object.
      *
@@ -128,23 +128,23 @@ class Request
         } else {
             $decoded = json_decode($this->rawPost);
             $decoded = !is_array($decoded) ? array($decoded) : $decoded;
-            
+
             array_walk_recursive($decoded, array($this, 'parseRawToArray'));
             // @todo: check utf8 config option from bundle
             //array_walk_recursive($decoded, array($this, 'decode'));
 
             foreach ($decoded as $call) {
-                $calls[] = new Call((array)$call, 'single');
+                $calls[] = new Call((array) $call, 'single');
             }
         }
-        
+
         return $calls;
     }
 
     /**
      * Force the utf8 decodification from all string values.
      * 
-     * @param mixed $value
+     * @param mixed  $value
      * @param string $key
      */
     public function decode(&$value, &$key)
@@ -164,27 +164,26 @@ class Request
     {
         // parse a json string to an array
         if (is_string($value)) {
-
-            $pos = substr($value,0,1);
+            $pos = substr($value, 0, 1);
             if ($pos == '[' || $pos == '(' || $pos == '{') {
                 $json = json_decode($value);
             } else {
                 $json = $value;
             }
-            
-            if ($json) {                
+
+            if ($json) {
                 $value = $json;
             }
         }
 
         // if the value is an object, parse it to an array
         if (is_object($value)) {
-            $value = (array)$value;
+            $value = (array) $value;
         }
 
         // call the recursive function to all keys of array
         if (is_array($value)) {
             array_walk_recursive($value, array($this, 'parseRawToArray'));
         }
-  }
+    }
 }
