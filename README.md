@@ -1,5 +1,7 @@
 # ModeraDirectBundle
 
+[![StyleCI](https://styleci.io/repos/29132402/shield)](https://styleci.io/repos/29132402)
+
 ModeraDirectBundle is an implementation of ExtDirect specification to Symfony2 framework.
 
 ## Installation
