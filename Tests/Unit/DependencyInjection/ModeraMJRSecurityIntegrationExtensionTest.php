@@ -4,7 +4,6 @@ namespace Modera\MJRSecurityIntegrationBundle\Tests\Unit\DependencyInjection;
 
 use Modera\MJRSecurityIntegrationBundle\DependencyInjection\ModeraMJRSecurityIntegrationExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>

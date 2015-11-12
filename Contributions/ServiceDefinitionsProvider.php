@@ -64,8 +64,8 @@ class ServiceDefinitionsProvider implements ContributorInterface
                 'className' => 'Modera.mjrsecurityintegration.runtime.ExtDirectApiScriptInjectorPlugin',
                 'args' => array(
                     array(
-                        'directApiUrl' => $this->getUrl('api')
-                    )
+                        'directApiUrl' => $this->getUrl('api'),
+                    ),
                 ),
                 'tags' => array('runtime_plugin'),
             ),
