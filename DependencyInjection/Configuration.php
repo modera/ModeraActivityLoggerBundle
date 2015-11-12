@@ -100,11 +100,17 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('app_name')
                     ->defaultValue('ModeraFoundation')
                 ->end()
-                // used by MF to prefix all routes which are related to backend,
+                // Used by MF to prefix all routes which are related to backend,
                 // it makes sense to have this value as a configuration key so later we would be able to refer
-                // to in routing configuration
-                ->scalarNode('route_prefix')
+                // to in routing configuration.
+                // NB! If you are changing this parameter don't forget to update firewall rules in security.yml
+                // to keep you admin interface secured.
+                ->scalarNode('routes_prefix')
                     ->defaultValue('/backend')
+                ->end()
+                // Deprecated and will be removed as of 2.0. Please use "routes_prefix" instead
+                ->scalarNode('route_prefix')
+                    ->defaultValue('')
                 ->end()
             ->end()
         ;

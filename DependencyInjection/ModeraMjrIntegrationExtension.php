@@ -16,7 +16,7 @@ class ModeraMjrIntegrationExtension extends Extension
 {
     const CONFIG_KEY = 'modera_mjr_integration.config';
     const CONFIG_APP_NAME = 'modera_mjr_integration.config.app_name';
-    const CONFIG_ROUTE_PREFIX = 'modera_mjr_integration.route_prefix';
+    const CONFIG_ROUTES_PREFIX = 'modera_mjr_integration.routes_prefix';
 
     /**
      * {@inheritdoc}
@@ -31,8 +31,19 @@ class ModeraMjrIntegrationExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
+        // making sure that 'route_prefix' still works
+        if ('' != $config['route_prefix']) {
+            $msg = implode(' ', [
+                'modera_mjr_integration/route_prefix is deprecated since version 1.4.1',
+                'and will be removed in 2.0. Use modera_mjr_integration/routes_prefix instead.'
+            ]);
+            trigger_error($msg, E_USER_DEPRECATED);
+
+            $config['routes_prefix'] = $config['route_prefix'];
+        }
+
         $container->setParameter(self::CONFIG_KEY, $config);
         $container->setParameter(self::CONFIG_APP_NAME, $config['app_name']);
-        $container->setParameter(self::CONFIG_ROUTE_PREFIX, $config['route_prefix']);
+        $container->setParameter(self::CONFIG_ROUTES_PREFIX, $config['routes_prefix']);
     }
 }
