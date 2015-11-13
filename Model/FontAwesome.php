@@ -20,9 +20,26 @@ class FontAwesome
      */
     private static function getIconsData()
     {
-        $path = dirname(__DIR__).'/Resources/config/font-awesome-icons.yml';
+        $dir = dirname(__DIR__).'/Resources/';
+        $ymlPathname = $dir.'config/font-awesome-icons.yml';
 
-        return Yaml::parse(file_get_contents($path));
+        $cacheDir = $dir.DIRECTORY_SEPARATOR.'cache';
+        $cachePathname = $cacheDir.DIRECTORY_SEPARATOR.'font-awesome-icons.php';
+
+        // MPFE-813
+        // By eliminating the need to parse .yml file every request this method works 70% faster
+        $contents = null;
+        if (!file_exists($cacheDir)) {
+            mkdir($cacheDir);
+
+            if (!file_exists($cachePathname)) {
+                $contents = Yaml::parse(file_get_contents($ymlPathname));
+
+                file_put_contents($cachePathname, "<?php\nreturn ".var_export($contents, true).";\n");
+            }
+        }
+
+        return require $cachePathname;
     }
 
     /**

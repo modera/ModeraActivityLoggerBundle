@@ -1,4 +1,7 @@
 # https://raw.githubusercontent.com/FortAwesome/Font-Awesome/v4.4.0/src/icons.yml
+# Before commit please don't forget to remove ../cache/font-awesome-icons.php and
+# have a \Modera\MjrIntegrationBundle\Model\FontAwesome::getIconsData method invoked (you can
+# simply reload a /backend page)
 
 icons:
   - name:       Glass

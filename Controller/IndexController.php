@@ -18,6 +18,8 @@ use Modera\MjrIntegrationBundle\Model\FontAwesome;
 class IndexController extends Controller
 {
     /**
+     * TODO must be secured.
+     *
      * @Route("/get-config", name="mf_get_config")
      *
      * @return array
