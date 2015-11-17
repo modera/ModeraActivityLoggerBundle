@@ -128,12 +128,13 @@ class Call
     public function getException($exception)
     {
         return array(
-          'type' => 'exception',
-          'tid' => $this->tid,
-          'action' => $this->action,
-          'method' => $this->method,
-          'message' => $exception->getMessage(),
-          'where' => $exception->getTraceAsString(),
+            'type' => 'exception',
+            'class' => get_class($exception),
+            'tid' => $this->tid,
+            'action' => $this->action,
+            'method' => $this->method,
+            'message' => $exception->getMessage(),
+            'where' => $exception->getTraceAsString(),
         );
     }
 
