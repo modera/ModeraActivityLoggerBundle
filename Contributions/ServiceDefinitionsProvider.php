@@ -82,6 +82,16 @@ class ServiceDefinitionsProvider implements ContributorInterface
                 ),
                 'tags' => array('activation_interceptor'),
             ),
+            'modera_backend_security.auth_required_delegated_error_handler' => array(
+                'className' => 'Modera.mjrsecurityintegration.runtime.AuthRequiredDelegatedErrorHandler',
+                'args' => array(
+                    array(
+                        'exceptionClass' => 'Symfony\Component\Security\Core\Exception\AccessDeniedException',
+                        'securityMgr' => '@security_manager',
+                    ),
+                ),
+                'tags' => array('delegated_server_error_handler'),
+            ),
         );
     }
 }
