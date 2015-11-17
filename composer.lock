@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c0df60153f855728817f3847e90f6050",
-    "content-hash": "7e00b3eccd53d60e568d357cab941c67",
+    "hash": "b768bb4f6117ace8aa1ffe3d35a98bfa",
+    "content-hash": "c9413541c44e037b5183121fcf10534c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -407,17 +407,17 @@
         },
         {
             "name": "modera/direct-bundle",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "target-dir": "Modera/DirectBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraDirectBundle.git",
-                "reference": "384ccab19b08fd4c0f244c1766848f0b3e20c9fb"
+                "reference": "67506d7140da6f9ae7274c5b7f3e11fe2efd7e10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraDirectBundle/zipball/384ccab19b08fd4c0f244c1766848f0b3e20c9fb",
-                "reference": "384ccab19b08fd4c0f244c1766848f0b3e20c9fb",
+                "url": "https://api.github.com/repos/modera/ModeraDirectBundle/zipball/67506d7140da6f9ae7274c5b7f3e11fe2efd7e10",
+                "reference": "67506d7140da6f9ae7274c5b7f3e11fe2efd7e10",
                 "shasum": ""
             },
             "require": {
@@ -431,7 +431,7 @@
                     "register-bundle": "Modera\\DirectBundle\\ModeraDirectBundle"
                 },
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -455,21 +455,67 @@
                 "extdirect",
                 "extjs"
             ],
-            "time": "2015-07-03 07:32:28"
+            "time": "2015-11-12 13:53:47"
+        },
+        {
+            "name": "modera/foundation-bundle",
+            "version": "v1.1.2",
+            "target-dir": "Modera/FoundationBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/modera/ModeraFoundationBundle.git",
+                "reference": "eebf69f856388b055b9aea8cad2ad1c0374876c7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/modera/ModeraFoundationBundle/zipball/eebf69f856388b055b9aea8cad2ad1c0374876c7",
+                "reference": "eebf69f856388b055b9aea8cad2ad1c0374876c7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0",
+                "symfony/symfony": "~2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.1-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Modera\\FoundationBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergei Lissovski",
+                    "email": "sergei.lissovski@modera.org",
+                    "homepage": "http://sergei.lissovski.org/"
+                }
+            ],
+            "time": "2015-10-05 06:51:09"
         },
         {
             "name": "modera/mjr-integration-bundle",
-            "version": "v1.4.2",
+            "version": "v1.4.3",
             "target-dir": "Modera/MjrIntegrationBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraMjrIntegrationBundle.git",
-                "reference": "d2a3f6db9428244f4fc90b49f6afa9dcf6f88271"
+                "reference": "2420833dd327bec001e9137c45796367d8e738c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraMjrIntegrationBundle/zipball/d2a3f6db9428244f4fc90b49f6afa9dcf6f88271",
-                "reference": "d2a3f6db9428244f4fc90b49f6afa9dcf6f88271",
+                "url": "https://api.github.com/repos/modera/ModeraMjrIntegrationBundle/zipball/2420833dd327bec001e9137c45796367d8e738c4",
+                "reference": "2420833dd327bec001e9137c45796367d8e738c4",
                 "shasum": ""
             },
             "require": {
@@ -509,7 +555,7 @@
             "keywords": [
                 "mjr"
             ],
-            "time": "2015-11-12 12:39:28"
+            "time": "2015-11-13 13:35:31"
         },
         {
             "name": "psr/log",
