@@ -63,11 +63,11 @@ class Request
     {
         // store the symfony request object
         $this->request = $request;
-        $this->rawPost = isset($GLOBALS['HTTP_RAW_POST_DATA']) ?  $GLOBALS['HTTP_RAW_POST_DATA'] : array();
-        $this->post = $_POST;
-        $this->files = $_FILES;
-        $this->callType = !empty($_POST) ? 'form' : 'batch';
-        $this->isUpload = isset($_POST['extUpload']) && $_POST['extUpload'] == 'true';
+        $this->rawPost = $request->getContent() ? $request->getContent() : array();
+        $this->post = $request->request->all();
+        $this->files = $request->files->all();
+        $this->callType = !$request->request->count() ? 'form' : 'batch';
+        $this->isUpload = $request->request->get('extUpload') == 'true';
     }
 
     /**
@@ -126,6 +126,7 @@ class Request
         if ('form' == $this->callType) {
             $calls[] = new Call($this->post, 'form');
         } else {
+
             $decoded = json_decode($this->rawPost);
             $decoded = !is_array($decoded) ? array($decoded) : $decoded;
 
