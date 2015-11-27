@@ -126,7 +126,6 @@ class Request
         if ('form' == $this->callType) {
             $calls[] = new Call($this->post, 'form');
         } else {
-
             $decoded = json_decode($this->rawPost);
             $decoded = !is_array($decoded) ? array($decoded) : $decoded;
 
