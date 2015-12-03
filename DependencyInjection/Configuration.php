@@ -22,12 +22,18 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                // must contain service container ID of an \Modera\BackendSecurityBundle\Service\MailServiceInterface
+                // implementation.
+                ->scalarNode('mail_service')
+                    ->cannotBeEmpty()
+                    ->defaultValue('modera_backend_security.service.default_mail_service')
+                ->end()
                 ->scalarNode('mail_sender')
                     ->defaultValue('no-reply@no-reply')
                     ->cannotBeEmpty()
                 ->end()
-            ->end();
-
+            ->end()
+        ;
         return $treeBuilder;
     }
 }
