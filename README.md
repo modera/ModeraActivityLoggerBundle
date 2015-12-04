@@ -60,8 +60,8 @@ Or if you are not using a template engine:
 
 namespace Acme\DemoBundle\Controller;
 
-use Modera\DirectBundle\Annotation\Form as Form;
-use Modera\DirectBundle\Annotation\Remote as Remote;
+use Modera\DirectBundle\Annotation\Form;
+use Modera\DirectBundle\Annotation\Remote;
 
 class ExampleController extends Controller
 {
@@ -84,7 +84,7 @@ class ExampleController extends Controller
      * @Remote   // this annotation expose the method to API
      * @Form     // this annotation expose the method to API with formHandler option
      *
-     * @param array $params Form submited values
+     * @param array $params Form submitted values
      * @param array $files  Uploaded files like $_FILES
      */
     public function testFormAction($params, $files)

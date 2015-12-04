@@ -2,39 +2,41 @@
 
 namespace Modera\DirectBundle\Router;
 
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
+
 class Request
 {
     /**
      * The Symfony request object taked by ModeraDirectBundle controller.
-     * 
+     *
      * @var Symfony\Component\HttpFoundation\Request
      */
     protected $request;
 
     /**
      * The HTTP_RAW_POST_DATA if the Direct call is a batch call.
-     * 
+     *
      * @var JSON
      */
     protected $rawPost;
 
     /**
      * The $_POST data if the Direct Call is a form call.
-     * 
+     *
      * @var array
      */
     protected $post;
 
     /**
      * Store the Direct Call type. Where values in ('form','batch').
-     * 
+     *
      * @var string
      */
     protected $callType;
 
     /**
      * Is upload request?
-     * 
+     *
      * @var bool
      */
     protected $isUpload = false;
@@ -42,32 +44,32 @@ class Request
     /**
      * Store the Direct calls. Only 1 if it a form call or 1.* if it a
      * batch call.
-     * 
+     *
      * @var array
      */
     protected $calls = null;
 
     /**
      * Store the $_FILES if it a form call.
-     * 
+     *
      * @var array
      */
     protected $files;
 
     /**
-     * Initialize the object.
-     * 
-     * @param Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    public function __construct($request)
+    public function __construct(SymfonyRequest $request)
     {
-        // store the symfony request object
+        $hasPostParams = $request->request->count() > 0;
+
         $this->request = $request;
-        $this->rawPost = isset($GLOBALS['HTTP_RAW_POST_DATA']) ?  $GLOBALS['HTTP_RAW_POST_DATA'] : array();
-        $this->post = $_POST;
-        $this->files = $_FILES;
-        $this->callType = !empty($_POST) ? 'form' : 'batch';
-        $this->isUpload = isset($_POST['extUpload']) && $_POST['extUpload'] == 'true';
+        $this->rawPost = $request->getContent() ? $request->getContent() : array();
+        $this->post = $request->request->all();
+        $this->files = $request->files->all();
+        // "form" is going to be used only if there are POST parameters available
+        $this->callType = $hasPostParams ? 'form' : 'batch';
+        $this->isUpload = $request->request->get('extUpload') == 'true';
     }
 
     /**
@@ -82,7 +84,7 @@ class Request
 
     /**
      * Is upload request?
-     * 
+     *
      * @return bool
      */
     public function isUpload()
@@ -92,7 +94,7 @@ class Request
 
     /**
      * Return the files from call.
-     * 
+     *
      * @return array
      */
     public function getFiles()
@@ -143,7 +145,7 @@ class Request
 
     /**
      * Force the utf8 decodification from all string values.
-     * 
+     *
      * @param mixed  $value
      * @param string $key
      */
@@ -156,7 +158,7 @@ class Request
 
     /**
      * Parse a raw http post to a php array.
-     * 
+     *
      * @param mixed  $value
      * @param string $key
      */
