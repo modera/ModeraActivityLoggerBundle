@@ -10,10 +10,10 @@ use Modera\SecurityBundle\Entity\User;
  */
 interface MailServiceInterface
 {
-
     /**
      * @param User $user
      * @param $plainPassword
+     *
      * @return array|bool
      */
     public function sendPassword(User $user, $plainPassword);

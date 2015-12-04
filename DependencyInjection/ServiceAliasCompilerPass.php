@@ -4,7 +4,6 @@ namespace Modera\BackendSecurityBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Modera\BackendSecurityBundle\DependencyInjection\ModeraBackendSecurityExtension;
 
 /**
  * Adds a service with ID "modera_backend_security.service.mail_service" to service container
@@ -16,7 +15,7 @@ use Modera\BackendSecurityBundle\DependencyInjection\ModeraBackendSecurityExtens
 class ServiceAliasCompilerPass implements CompilerPassInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
@@ -27,4 +26,4 @@ class ServiceAliasCompilerPass implements CompilerPassInterface
 
         $container->addAliases($aliasConfig);
     }
-} 
+}
