@@ -24,28 +24,28 @@ class GroupsController extends AbstractCrudController
                 'actions' => array(
                     'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
                     'update' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
-                    'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS
-                )
+                    'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
+                ),
             ),
             'hydration' => array(
                 'groups' => array(
-                    'list' => function(Group $group) {
+                    'list' => function (Group $group) {
                             return array(
                                 'id' => $group->getId(),
                                 'name' => $group->getName(),
-                                'usersCount' => count($group->getUsers())
+                                'usersCount' => count($group->getUsers()),
                             );
                         },
                     'delete-group' => ['name'],
                     'main-form' => ['id', 'name'],
-                    'compact-list' => ['id', 'name']
+                    'compact-list' => ['id', 'name'],
                 ),
                 'profiles' => array(
                     'list', 'compact-list',
                     'delete-group',
-                    'edit-group' => array('main-form')
-                )
-            )
+                    'edit-group' => array('main-form'),
+                ),
+            ),
         );
     }
 }

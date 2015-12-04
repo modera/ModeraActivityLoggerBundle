@@ -19,13 +19,13 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
             'modera_backend_security.user.edit_window_contributor' => array(
                 'className' => 'Modera.backend.security.toolscontribution.runtime.user.EditWindowContributor',
                 'args' => ['@application'],
-                'tags' => ['shared_activities_provider']
+                'tags' => ['shared_activities_provider'],
             ),
             'modera_backend_security.user.password_window_contributor' => array(
                 'className' => 'Modera.backend.security.toolscontribution.runtime.user.PasswordWindowContributor',
                 'args' => ['@application'],
-                'tags' => ['shared_activities_provider']
-            )
+                'tags' => ['shared_activities_provider'],
+            ),
         );
     }
-} 
+}

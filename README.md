@@ -1,10 +1,12 @@
 # ModeraBackendSecurityBundle
 
+Bundle can be used to manage users/groups on top of MF.
+
 ## Installation
 
 Add this dependency to your composer.json:
 
-    "modera/backend-security-bundle": "dev-master"
+    "modera/backend-security-bundle": "~2.0"
 
 Update your AppKernel class and add this:
 

@@ -3,22 +3,26 @@
 namespace Modera\BackendSecurityBundle\Tests\Functional\Controller;
 
 use Modera\BackendSecurityBundle\Controller\UsersController;
-use Modera\FoundationBundle\Testing\FunctionalTestCase;
 
 /**
+ * Refactored to be a Unit test.
+ *
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class UsersControllerTest extends FunctionalTestCase
+class UsersControllerTest extends \PHPUnit_Framework_TestCase
 {
-    /* @var UsersController */
+    /**
+     * @var UsersController
+     */
     private $controller;
 
-    // override
-    public function doSetUp()
+    /**
+     * {@inheritdoc}
+     */
+    public function setUp()
     {
         $this->controller = new UsersController();
-        $this->controller->setContainer(self::$container);
     }
 
     public function testGeneratePasswordAction()

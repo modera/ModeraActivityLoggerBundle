@@ -16,7 +16,7 @@ class PermissionsProvider implements ContributorInterface
     private $items;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
@@ -36,10 +36,10 @@ class PermissionsProvider implements ContributorInterface
                     T::trans('Manage permissions'),
                     ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
                     'user-management'
-                )
+                ),
             ];
         }
 
         return $this->items;
     }
-} 
+}
