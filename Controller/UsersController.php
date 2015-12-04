@@ -2,13 +2,11 @@
 
 namespace Modera\BackendSecurityBundle\Controller;
 
-use Modera\ActivityLoggerBundle\Manager\ActivityManagerInterface;
 use Modera\BackendSecurityBundle\ModeraBackendSecurityBundle;
 use Modera\SecurityBundle\Entity\User;
 use Modera\SecurityBundle\Service\UserService;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
-use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
 use Modera\ServerCrudBundle\Hydration\HydrationProfile;
 use Modera\ServerCrudBundle\Persistence\OperationResult;
 use Modera\FoundationBundle\Translation\T;
@@ -17,6 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Modera\BackendSecurityBundle\Service\MailService;
+use Modera\DirectBundle\Annotation\Remote;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -30,12 +29,13 @@ class UsersController extends AbstractCrudController
     public function getConfig()
     {
         $self = $this;
+
         return array(
             'entity' => User::clazz(),
             'security' => array(
                 'actions' => array(
                     'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
-                    'update' => function(AuthorizationCheckerInterface $ac, array $params) use ($self) {
+                    'update' => function (AuthorizationCheckerInterface $ac, array $params) use ($self) {
                         /* @var TokenStorageInterface $ts */
                         $ts = $self->get('security.token_storage');
                         /* @var User $user */
@@ -51,41 +51,41 @@ class UsersController extends AbstractCrudController
                         }
                     },
                     'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
-                    'list' => ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION
-                )
+                    'list' => ModeraBackendSecurityBundle::ROLE_ACCESS_BACKEND_TOOLS_SECURITY_SECTION,
+                ),
             ),
             'hydration' => array(
                 'groups' => array(
                     'main-form' => ['id', 'username', 'email', 'firstName', 'lastName', 'middleName'],
-                    'list' => function(User $user) {
+                    'list' => function (User $user) {
                         $groups = array();
                         foreach ($user->getGroups() as $group) {
                             $groups[] = $group->getName();
                         }
 
                         return array(
-                            'id'         => $user->getId(),
-                            'username'   => $user->getUsername(),
-                            'email'      => $user->getEmail(),
-                            'firstName'  => $user->getFirstName(),
-                            'lastName'   => $user->getLastName(),
+                            'id' => $user->getId(),
+                            'username' => $user->getUsername(),
+                            'email' => $user->getEmail(),
+                            'firstName' => $user->getFirstName(),
+                            'lastName' => $user->getLastName(),
                             'middleName' => $user->getMiddleName(),
-                            'state'      => $user->getState(),
-                            'groups'     => $groups,
+                            'state' => $user->getState(),
+                            'groups' => $groups,
                         );
                     },
                     'compact-list' => ['id', 'username', 'fullname'],
-                    'delete-user' => ['username']
+                    'delete-user' => ['username'],
                 ),
                 'profiles' => array(
                     'list',
                     'delete-user',
                     'main-form',
                     'compact-list',
-                    'modera-backend-security-group-groupusers' => HydrationProfile::create(false)->useGroups(array('compact-list'))
-                )
+                    'modera-backend-security-group-groupusers' => HydrationProfile::create(false)->useGroups(array('compact-list')),
+                ),
             ),
-            'map_data_on_create' => function(array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
+            'map_data_on_create' => function (array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
                 $defaultMapper->mapData($params, $entity);
 
                 if (isset($params['plainPassword']) && $params['plainPassword']) {
@@ -101,7 +101,7 @@ class UsersController extends AbstractCrudController
                     $mailService->sendPassword($entity, $plainPassword);
                 }
             },
-            'map_data_on_update' => function(array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
+            'map_data_on_update' => function (array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
                 $defaultMapper->mapData($params, $entity);
 
                 /* @var LoggerInterface $activityMgr */
@@ -120,19 +120,19 @@ class UsersController extends AbstractCrudController
                     $activityMsg = T::trans('Password has been changed for user "%user%".', array('%user%' => $entity->getUsername()));
                     $activityContext = array(
                         'type' => 'user.password_changed',
-                        'author' => $ts->getToken()->getUser()->getId()
+                        'author' => $ts->getToken()->getUser()->getId(),
                     );
                     $activityMgr->info($activityMsg, $activityContext);
                 } else {
                     $activityMsg = T::trans('Profile data is changed for user "%user%".', array('%user%' => $entity->getUsername()));
                     $activityContext = array(
                         'type' => 'user.profile_updated',
-                        'author' => $ts->getToken()->getUser()->getId()
+                        'author' => $ts->getToken()->getUser()->getId(),
                     );
                     $activityMgr->info($activityMsg, $activityContext);
                 }
             },
-            'remove_entities_handler' => function($entities, $params, $defaultHandler, ContainerInterface $container) {
+            'remove_entities_handler' => function ($entities, $params, $defaultHandler, ContainerInterface $container) {
                 /* @var UserService $userService */
                 $userService = $container->get('modera_security.service.user_service');
 
@@ -146,7 +146,7 @@ class UsersController extends AbstractCrudController
                 }
 
                 return $operationResult;
-            }
+            },
         );
     }
 
@@ -159,21 +159,22 @@ class UsersController extends AbstractCrudController
 
         return array(
             'success' => true,
-            'result'  => array(
+            'result' => array(
                 'plainPassword' => $plainPassword,
-            )
+            ),
         );
     }
 
     /**
      * @param int $length
+     *
      * @return string
      */
     private function generatePassword($length = 8)
     {
         $plainPassword = '';
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        for ($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; ++$i) {
             $plainPassword .= $characters[rand(0, strlen($characters) - 1)];
         }
 
@@ -186,8 +187,8 @@ class UsersController extends AbstractCrudController
      */
     private function setPassword(User $user, $plainPassword)
     {
-        $factory  = $this->get('security.encoder_factory');
-        $encoder  = $factory->getEncoder($user);
+        $factory = $this->get('security.encoder_factory');
+        $encoder = $factory->getEncoder($user);
         $password = $encoder->encodePassword($plainPassword, $user->getSalt());
         $user->setPassword($password);
         $user->eraseCredentials();

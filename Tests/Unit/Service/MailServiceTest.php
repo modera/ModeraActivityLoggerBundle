@@ -12,19 +12,21 @@ use Modera\BackendLanguagesBundle\Entity\UserSettings;
  */
 class MailServiceTest extends \PHPUnit_Framework_TestCase
 {
+    private $em;
+    private $mailer;
+
     protected function setUp()
     {
-        parent::setUp();
-
         $this->em = \Phake::mock('Doctrine\ORM\EntityManagerInterface');
-        \Phake::when($this->em)->getRepository(UserSettings::clazz())->thenReturn(new DummyRepository);
+        \Phake::when($this->em)->getRepository(UserSettings::clazz())->thenReturn(new DummyRepository());
+
         $this->mailer = new DummySwiftMailer(\Phake::mock('Swift_Transport'));
     }
 
     public function testSuccessfulSendPassword()
     {
         $ms = new MailService($this->em, $this->mailer, 'en', 'no-reply@no-reply');
-        $user = new User;
+        $user = new User();
         $user->setEmail('successful.send.password@test.mail');
         $this->assertTrue($ms->sendPassword($user, 'password'));
     }
@@ -32,7 +34,7 @@ class MailServiceTest extends \PHPUnit_Framework_TestCase
     public function testFailureSendPassword()
     {
         $ms = new MailService($this->em, $this->mailer, 'en', 'no-reply@no-reply');
-        $user = new User;
+        $user = new User();
         $user->setEmail('failure.send.password@test.mail');
         $this->assertTrue(is_array($ms->sendPassword($user, 'password')));
     }
@@ -42,7 +44,7 @@ class DummyRepository
 {
     public function findOneBy()
     {
-        return null;
+        return;
     }
 }
 
@@ -58,6 +60,7 @@ class DummySwiftMailer extends \Swift_Mailer
         if (in_array('failure.send.password@test.mail', array_keys($message->getTo()))) {
             return 0;
         }
+
         return 1;
     }
 }

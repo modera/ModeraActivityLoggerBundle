@@ -5,8 +5,6 @@ namespace Modera\BackendSecurityBundle\Controller;
 use Modera\BackendSecurityBundle\ModeraBackendSecurityBundle;
 use Modera\SecurityBundle\Entity\Permission;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
-use Modera\ServerCrudBundle\Hydration\DoctrineEntityHydrator;
-use Modera\ServerCrudBundle\Hydration\HydrationProfile;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -26,29 +24,29 @@ class PermissionsController extends AbstractCrudController
                 'actions' => array(
                     'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
                     'remove' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
-                    'update' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS
-                )
+                    'update' => ModeraBackendSecurityBundle::ROLE_MANAGE_PERMISSIONS,
+                ),
             ),
             'hydration' => array(
                 'groups' => array(
-                    'list' => function(Permission $permission) {
+                    'list' => function (Permission $permission) {
                         $groups = array();
                         foreach ($permission->getGroups() as $group) {
                             $groups[] = $group->getId();
                         }
 
                         return array(
-                            'id'       => $permission->getId(),
-                            'name'     => $permission->getName(),
+                            'id' => $permission->getId(),
+                            'name' => $permission->getName(),
                             'category' => $permission->getCategory()->getName(),
-                            'groups'   => $groups,
+                            'groups' => $groups,
                         );
-                    }
+                    },
                 ),
                 'profiles' => array(
                     'list',
-                )
-            )
+                ),
+            ),
         );
     }
 }

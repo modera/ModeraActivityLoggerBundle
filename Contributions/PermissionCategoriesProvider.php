@@ -15,7 +15,7 @@ class PermissionCategoriesProvider implements ContributorInterface
     private $items;
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
@@ -24,10 +24,10 @@ class PermissionCategoriesProvider implements ContributorInterface
                 new PermissionCategory(
                     T::trans('User management'),
                     'user-management'
-                )
+                ),
             ];
         }
 
         return $this->items;
     }
-} 
+}

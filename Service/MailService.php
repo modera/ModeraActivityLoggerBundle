@@ -46,6 +46,7 @@ class MailService implements MailServiceInterface
     /**
      * @param User $user
      * @param $plainPassword
+     *
      * @return array|bool
      */
     public function sendPassword(User $user, $plainPassword)
@@ -53,9 +54,9 @@ class MailService implements MailServiceInterface
         /* @var \Swift_Message $message */
         $message = $this->mailer->createMessage();
 
-        $locale  = $this->getLocale($user);
+        $locale = $this->getLocale($user);
         $subject = T::trans('Your password', array(), 'mail', $locale);
-        $body    = T::trans('Your new password is: %plainPassword%', array('%plainPassword%' => $plainPassword), 'mail', $locale);
+        $body = T::trans('Your new password is: %plainPassword%', array('%plainPassword%' => $plainPassword), 'mail', $locale);
 
         $message->setFrom($this->mailSender);
         $message->setTo($user->getEmail());
@@ -72,6 +73,7 @@ class MailService implements MailServiceInterface
 
     /**
      * @param User $user
+     *
      * @return string
      */
     private function getLocale(User $user)
