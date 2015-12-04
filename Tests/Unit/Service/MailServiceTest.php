@@ -12,12 +12,14 @@ use Modera\BackendLanguagesBundle\Entity\UserSettings;
  */
 class MailServiceTest extends \PHPUnit_Framework_TestCase
 {
+    private $em;
+    private $mailer;
+
     protected function setUp()
     {
-        parent::setUp();
-
         $this->em = \Phake::mock('Doctrine\ORM\EntityManagerInterface');
         \Phake::when($this->em)->getRepository(UserSettings::clazz())->thenReturn(new DummyRepository());
+
         $this->mailer = new DummySwiftMailer(\Phake::mock('Swift_Transport'));
     }
 

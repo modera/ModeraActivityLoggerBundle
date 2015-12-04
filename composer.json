@@ -1,6 +1,7 @@
 {
     "name": "modera/backend-security-bundle",
     "type": "symfony-bundle",
+    "description": "Bundle provides UI section for MF that makes it possible to manage users/groups/permissions.",
     "license": "MIT",
     "authors": [
         {
@@ -14,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0",
+        "php": ">=5.4.0",
         "symfony/framework-bundle": "~2.6",
         "symfony/swiftmailer-bundle": "~2.3",
         "modera/security-bundle": "~2.0",
