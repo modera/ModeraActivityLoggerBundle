@@ -44,11 +44,11 @@ DOC;
         if (file_exists(\$moduleBundlesFile)) {
             \$moduleBundles = require \$moduleBundlesFile;
             if (is_array(\$moduleBundles)) {
-                foreach (\$moduleBundles as \$bundle) {
-                    if (!in_array(\$bundle, \$bundles)) {
-                        \$bundles[] = \$bundle;
-                    }
-                }
+                \$resolver = new \Modera\\ModuleBundle\ModuleHandling\BundlesResolver();
+
+                \$bundles = \$resolver->resolve(
+                    array_merge(\$bundles, \$moduleBundles), \$this
+                );
             }
         }
 
