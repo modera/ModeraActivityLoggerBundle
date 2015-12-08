@@ -61,14 +61,18 @@ class Request
      */
     public function __construct(SymfonyRequest $request)
     {
-        $hasPostParams = $request->request->count() > 0;
+        // before we were checking if $request->request->count() > 0 to
+        // check if a given request is a form submission but in some cases
+        // (Symfony?) merges all parameters (event decoded json body) into
+        // $request->request and it was causing problems. Hopefully this solution
+        // will work in all cases
+        $hasJsonInBody = is_array(json_decode($request->getContent(), true));
 
         $this->request = $request;
         $this->rawPost = $request->getContent() ? $request->getContent() : array();
         $this->post = $request->request->all();
         $this->files = $request->files->all();
-        // "form" is going to be used only if there are POST parameters available
-        $this->callType = $hasPostParams ? 'form' : 'batch';
+        $this->callType = $hasJsonInBody ? 'batch' : 'form';
         $this->isUpload = $request->request->get('extUpload') == 'true';
     }
 
