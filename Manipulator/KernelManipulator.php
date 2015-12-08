@@ -66,11 +66,11 @@ TEMPLATE;
     }
 
     /**
-     * @param string $file
+     * @param string $bundlesFilename A name of a file which will hold dynamically instantiated bundles.
      *
      * @return bool
      */
-    public function addCode($file)
+    public function addCode($bundlesFilename)
     {
         if (!$this->reflected->getFilename()) {
             return false;
@@ -90,7 +90,7 @@ TEMPLATE;
                     ),
                 ),
                 array(
-                    sprintf($this->template, $file),
+                    sprintf($this->template, $bundlesFilename),
                     "\n",
                 ),
                 array_slice($src, $method->getEndLine())
@@ -116,7 +116,7 @@ TEMPLATE;
                     "\n",
                     $this->doc,
                     "\n",
-                    sprintf($this->template, $file),
+                    sprintf($this->template, $bundlesFilename),
                     "\n",
                 ),
                 array_slice($src, $line)

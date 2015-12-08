@@ -8,6 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class MockModuleBundle implements BundleInterface, ModuleBundleInterface
 {
@@ -22,7 +23,7 @@ class MockModuleBundle implements BundleInterface, ModuleBundleInterface
 
     // ModuleBundleInterface:
 
-    public function getBundles($kernel)
+    public function getBundles(KernelInterface $kernel)
     {
         return $this->bundles;
     }

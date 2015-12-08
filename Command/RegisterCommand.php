@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Modera\ModuleBundle\Manipulator\KernelManipulator;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -21,9 +22,13 @@ class RegisterCommand extends ContainerAwareCommand
     {
         $this
             ->setName('modera:module:register')
-            ->setDescription('Register bundles.')
+            ->setDescription('Updates AppKernel class so it would be able to dynamically load bundles.')
             ->setDefinition(array(
-                new InputArgument('file', InputArgument::REQUIRED, 'The file of the bundles'),
+                new InputArgument(
+                    'file',
+                    InputArgument::REQUIRED,
+                    'A name of a file which will hold bundles which will be dynamically instantiated.'
+                ),
             ))
         ;
     }
@@ -34,6 +39,7 @@ class RegisterCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $file = $input->getArgument('file');
+        /* @var KernelInterface $kernel */
         $kernel = $this->getContainer()->get('kernel');
 
         $km = new KernelManipulator($kernel);

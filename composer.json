@@ -15,8 +15,9 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "symfony/framework-bundle": "~2.0",
-        "modera/module": "~1.0"
+        "symfony/symfony": "~2.0",
+        "modera/module": "~1.0",
+        "sensio/generator-bundle": "~2.3"
     },
     "require-dev": {
         "phake/phake": "2.*",
