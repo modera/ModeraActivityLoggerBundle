@@ -4,7 +4,6 @@ namespace Modera\FileRepositoryBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Modera\FileRepositoryBundle\Entity\Repository;
-use Modera\FileRepositoryBundle\Repository\FileRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\TableHelper;
 use Symfony\Component\Console\Input\InputInterface;
@@ -55,4 +54,4 @@ class ListRepositoriesCommand extends ContainerAwareCommand
         ;
         $table->render($output);
     }
-} 
+}

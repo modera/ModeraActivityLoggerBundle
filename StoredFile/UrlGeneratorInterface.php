@@ -12,6 +12,7 @@ interface UrlGeneratorInterface
 {
     /**
      * @param StoredFile $storedFile
+     *
      * @return string
      */
     public function generateUrl(StoredFile $storedFile);

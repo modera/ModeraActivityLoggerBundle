@@ -11,7 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Modera\FileRepositoryBundle\Entity\StoredFile;
 use Modera\FileRepositoryBundle\DependencyInjection\ModeraFileRepositoryExtension;
 
-
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2015 Modera Foundation
@@ -23,11 +22,12 @@ class StoredFileController extends Controller
      *
      * @param Request $request
      * @param $storageKey
+     *
      * @return Response
      */
     public function getAction(Request $request, $storageKey)
     {
-        if (!$this->container->getParameter(ModeraFileRepositoryExtension::CONFIG_KEY . '.is_enabled')) {
+        if (!$this->container->getParameter(ModeraFileRepositoryExtension::CONFIG_KEY.'.is_enabled')) {
             throw $this->createAccessDeniedException();
         }
 
@@ -36,11 +36,13 @@ class StoredFileController extends Controller
 
     /**
      * @param string $storageKey
+     *
      * @return null|StoredFile
      */
     protected function getFile($storageKey)
     {
         $repository = $this->getDoctrine()->getManager()->getRepository(StoredFile::clazz());
+
         return $repository->findOneBy(array(
             'storageKey' => $storageKey,
         ));
@@ -49,6 +51,7 @@ class StoredFileController extends Controller
     /**
      * @param Request $request
      * @param $storageKey
+     *
      * @return Response
      */
     protected function createFileResponse(Request $request, $storageKey)
@@ -74,7 +77,7 @@ class StoredFileController extends Controller
                 $extension = filter_var(
                     $guesser->guess($file->getMimeType()) ?: $file->getExtension(), FILTER_SANITIZE_URL
                 );
-                $filenameFallback = $file->getStorageKey() . ($extension ? '.' . $extension : '');
+                $filenameFallback = $file->getStorageKey().($extension ? '.'.$extension : '');
             }
 
             $response->headers->set(
@@ -83,10 +86,9 @@ class StoredFileController extends Controller
                     ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename, $filenameFallback
                 )
             );
-
         } else {
             $response->setCache(array(
-                'etag'          => $file->getStorageKey(),
+                'etag' => $file->getStorageKey(),
                 'last_modified' => $file->getCreatedAt(),
             ));
 
@@ -101,5 +103,4 @@ class StoredFileController extends Controller
 
         return $response;
     }
-
-} 
+}

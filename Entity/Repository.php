@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gaufrette\Filesystem;
 use Modera\FileRepositoryBundle\Exceptions\InvalidRepositoryConfig;
-use Sli\AuxBundle\Util\Toolkit;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -28,7 +27,7 @@ class Repository
     private $id;
 
     /**
-     * Stores configuration for this repository. Some standard configuration properties:
+     * Stores configuration for this repository. Some standard configuration properties:.
      *
      *  * filesystem  -- DI service ID which points to \Gaufrette\Filesystem which will be used to store files for
      *                   this repository.
@@ -74,22 +73,18 @@ class Repository
 
     private function getInterceptors()
     {
-
     }
 
     public function beforePut(\SplFileInfo $file)
     {
-
     }
 
     public function onPut(StoredFile $storedFile, \SplFileInfo $file)
     {
-
     }
 
     public function afterPut(StoredFile $storedFile, \SplFileInfo $file)
     {
-
     }
 
     /**
@@ -100,7 +95,7 @@ class Repository
         $this->container = $container;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -117,7 +112,7 @@ class Repository
 
     /**
      * @param \SplFileInfo $file
-     * @param array $context
+     * @param array        $context
      *
      * @return string
      */
@@ -128,7 +123,7 @@ class Repository
 
     /**
      * @param \SplFileInfo $file
-     * @param array $context
+     * @param array        $context
      *
      * @return StoredFile
      */
@@ -221,4 +216,4 @@ class Repository
     {
         return $this->files;
     }
-} 
+}

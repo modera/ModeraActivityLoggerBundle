@@ -1,3 +1,6 @@
+imports:
+    - { resource: parameters.yml }
+
 parameters:
     locale: en
 
@@ -12,12 +15,12 @@ framework:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_mysql
-        host:     127.0.0.1
-        port:     3306
-        dbname:   modera_filerepository_bundle
-        user:     root
-        password:
+        driver:   %database_driver%
+        host:     %database_host%
+        port:     %database_port%
+        dbname:   %database_name%
+        user:     %database_user%
+        password: %database_password%
         charset:  UTF8
 
     orm:

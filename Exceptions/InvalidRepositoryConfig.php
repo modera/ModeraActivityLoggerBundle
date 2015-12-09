@@ -17,9 +17,9 @@ class InvalidRepositoryConfig extends \RuntimeException
      *
      * @return InvalidRepositoryConfig
      */
-    static public function create($missingConfigurationKey, array $config)
+    public static function create($missingConfigurationKey, array $config)
     {
-        $e = new self('This configuration property must be provided: ' . $missingConfigurationKey);
+        $e = new self('This configuration property must be provided: '.$missingConfigurationKey);
         $e->setMissingConfigurationKey($missingConfigurationKey);
         $e->setConfig($config);
 
@@ -57,4 +57,4 @@ class InvalidRepositoryConfig extends \RuntimeException
     {
         return $this->missingConfigurationKey;
     }
-} 
+}

@@ -47,7 +47,7 @@ class ListFilesCommand extends ContainerAwareCommand
                 $storedFile->getMimeType(),
                 StoredFileUtils::formatFileSize($storedFile->getSize()),
                 $storedFile->getCreatedAt()->format('d.m.Y H:i'),
-                $storedFile->getOwner()
+                $storedFile->getOwner(),
             );
         }
 
@@ -59,4 +59,4 @@ class ListFilesCommand extends ContainerAwareCommand
         ;
         $table->render($output);
     }
-} 
+}

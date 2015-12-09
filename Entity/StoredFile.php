@@ -46,7 +46,7 @@ class StoredFile
     private $storageKey;
 
     /**
-     * Full filename. For example - /dir1/dir2/file.txt
+     * Full filename. For example - /dir1/dir2/file.txt.
      *
      * @var string
      *
@@ -101,9 +101,9 @@ class StoredFile
     private $container;
 
     /**
-     * @param Repository $repository
+     * @param Repository   $repository
      * @param \SplFileInfo $file
-     * @param array $context
+     * @param array        $context
      */
     public function __construct(Repository $repository, \SplFileInfo $file, array $context = array())
     {
@@ -143,11 +143,11 @@ class StoredFile
     {
         $urlGenerator = null;
         $defaultUrlGenerator = $this->container->getParameter(
-            ModeraFileRepositoryExtension::CONFIG_KEY . '.default_url_generator'
+            ModeraFileRepositoryExtension::CONFIG_KEY.'.default_url_generator'
         );
 
         $urlGenerators = $this->container->getParameter(
-            ModeraFileRepositoryExtension::CONFIG_KEY . '.url_generators'
+            ModeraFileRepositoryExtension::CONFIG_KEY.'.url_generators'
         );
 
         $config = $this->getRepository()->getConfig();
@@ -164,7 +164,7 @@ class StoredFile
         return $urlGenerator->generateUrl($this);
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -290,4 +290,4 @@ class StoredFile
     {
         return $this->storageKey;
     }
-} 
+}

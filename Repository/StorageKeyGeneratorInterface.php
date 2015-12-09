@@ -17,4 +17,4 @@ interface StorageKeyGeneratorInterface
      * @return string
      */
     public function generateStorageKey(\SplFileInfo $file, array $context = array());
-} 
+}

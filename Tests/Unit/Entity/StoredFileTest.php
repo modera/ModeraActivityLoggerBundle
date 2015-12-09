@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
- */ 
+ */
 class StoredFileTest extends \PHPUnit_Framework_TestCase
 {
     public function test__construct()
     {
-        $filename = uniqid() . '.txt';
-        $filePath = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $filename;
+        $filename = uniqid().'.txt';
+        $filePath = sys_get_temp_dir().DIRECTORY_SEPARATOR.$filename;
         file_put_contents($filePath, 'blah');
 
         $file = new File($filePath);

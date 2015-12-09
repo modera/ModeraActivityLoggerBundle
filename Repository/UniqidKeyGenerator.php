@@ -11,8 +11,8 @@ class UniqidKeyGenerator implements StorageKeyGeneratorInterface
     private $preserveExtension;
 
     /**
-     * @param bool $preserveExtension  If this parameter is set to TRUE then when a filename is generated original's file
-     *                                 extension will be added to the new filename.
+     * @param bool $preserveExtension If this parameter is set to TRUE then when a filename is generated original's file
+     *                                extension will be added to the new filename.
      */
     public function __construct($preserveExtension = false)
     {
@@ -20,10 +20,10 @@ class UniqidKeyGenerator implements StorageKeyGeneratorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function generateStorageKey(\SplFileInfo $file, array $context = array())
     {
-        return uniqid() . ($this->preserveExtension ? '.' . $file->getExtension() : '');
+        return uniqid().($this->preserveExtension ? '.'.$file->getExtension() : '');
     }
-} 
+}

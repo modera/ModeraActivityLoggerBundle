@@ -34,7 +34,7 @@ class DeleteFileCommand extends ContainerAwareCommand
         /* @var StoredFile $storedFile */
         $storedFile = $em->find(StoredFile::clazz(), $input->getArgument('file_id'));
         if (!$storedFile) {
-            throw new \RuntimeException('Unable to find a file with ID ' . $input->getArgument('file_id'));
+            throw new \RuntimeException('Unable to find a file with ID '.$input->getArgument('file_id'));
         }
 
         $output->writeln(sprintf(
@@ -47,4 +47,4 @@ class DeleteFileCommand extends ContainerAwareCommand
 
         $output->writeln('<info>Done!</info>');
     }
-} 
+}

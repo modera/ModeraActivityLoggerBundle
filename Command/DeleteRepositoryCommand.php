@@ -71,4 +71,4 @@ class DeleteRepositoryCommand extends ContainerAwareCommand
             $output->writeln('Done!');
         }
     }
-} 
+}

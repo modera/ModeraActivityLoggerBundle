@@ -23,7 +23,7 @@ class UrlGenerator implements UrlGeneratorInterface
 
     /**
      * @param RouterInterface $router
-     * @param string $routeName
+     * @param string          $routeName
      */
     public function __construct(RouterInterface $router, $routeName)
     {
@@ -32,16 +32,16 @@ class UrlGenerator implements UrlGeneratorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function generateUrl(StoredFile $storedFile)
     {
-        $storageKey  = $storedFile->getStorageKey();
-        $storageKey .= '/' . $storedFile->getRepository()->getName();
-        $storageKey .= '/' . $storedFile->getFilename();
+        $storageKey = $storedFile->getStorageKey();
+        $storageKey .= '/'.$storedFile->getRepository()->getName();
+        $storageKey .= '/'.$storedFile->getFilename();
 
         return $this->router->generate($this->routeName, array(
             'storageKey' => $storageKey,
         ), RouterInterface::NETWORK_PATH);
     }
-} 
+}

@@ -49,4 +49,4 @@ class PutFileCommand extends ContainerAwareCommand
 
         $output->writeln(sprintf('<info>Done! File id: %d</info>', $storedFile->getId()));
     }
-} 
+}

@@ -35,12 +35,12 @@ class CreateRepositoryCommand extends ContainerAwareCommand
         $fr = $this->getContainer()->get('modera_file_repository.repository.file_repository');
 
         $config = array(
-            'filesystem'      => $input->getArgument('filesystem'),
+            'filesystem' => $input->getArgument('filesystem'),
             'overwrite_files' => $input->getOption('overwrite-files'),
         );
 
         $repository = $fr->createRepository($input->getArgument('name'), $config, $input->getArgument('label'));
 
-        $output->writeln("Repository has been successfully created! Its internal is #" . $repository->getId());
+        $output->writeln('Repository has been successfully created! Its internal is #'.$repository->getId());
     }
-} 
+}

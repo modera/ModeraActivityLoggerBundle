@@ -37,14 +37,14 @@ class FileRepository
     public function getRepository($name)
     {
         return $this->em->getRepository(Repository::clazz())->findOneBy(array(
-            'name' => $name
+            'name' => $name,
         ));
     }
 
     /**
      * @param string $name
      *
-     * @return boolean
+     * @return bool
      */
     public function repositoryExists($name)
     {
@@ -56,7 +56,7 @@ class FileRepository
 
     /**
      * @param string $name
-     * @param array $config  For available options see Repository::$config
+     * @param array  $config For available options see Repository::$config
      * @param string $label
      *
      * @return Repository
@@ -78,7 +78,7 @@ class FileRepository
      *
      * @param $repositoryName
      * @param \SplFileInfo $file
-     * @param array $context
+     * @param array        $context
      *
      * @return \Modera\FileRepositoryBundle\Entity\StoredFile
      */
@@ -103,7 +103,7 @@ class FileRepository
             /* @var StoredFile $storedFile */
             $storedFile = $this->em->getRepository(StoredFile::clazz())->findOneBy(array(
                 'repository' => $repository->getId(),
-                'filename'   => $filename,
+                'filename' => $filename,
             ));
             if ($storedFile) {
                 $storedFile->setCreatedAt(new \DateTime('now'));
@@ -148,4 +148,4 @@ class FileRepository
 
         return $storedFile;
     }
-} 
+}

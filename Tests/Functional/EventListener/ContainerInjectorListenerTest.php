@@ -13,17 +13,17 @@ use Sli\AuxBundle\Util\Toolkit;
 class ContainerInjectorListenerTest extends FunctionalTestCase
 {
     /* @var SchemaTool */
-    static private $st;
+    private static $st;
 
     // override
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
         self::$st->createSchema(array(self::$em->getClassMetadata(Repository::clazz())));
     }
 
     // override
-    static public function doTearDownAfterClass()
+    public static function doTearDownAfterClass()
     {
         self::$st->dropSchema(array(self::$em->getClassMetadata(Repository::clazz())));
     }
@@ -32,7 +32,7 @@ class ContainerInjectorListenerTest extends FunctionalTestCase
     {
         $repository = new Repository('test repo', array(
             'filesystem' => '',
-            'storage_key_generator' => ''
+            'storage_key_generator' => '',
         ));
 
         self::$em->persist($repository);

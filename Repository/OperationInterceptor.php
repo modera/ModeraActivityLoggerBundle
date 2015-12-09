@@ -16,14 +16,14 @@ interface OperationInterceptor
     public function beforePut(\SplFileInfo $file);
 
     /**
-     * @param StoredFile $storedFile
+     * @param StoredFile   $storedFile
      * @param \SplFileInfo $file
      */
     public function onPut(StoredFile $storedFile, \SplFileInfo $file);
 
     /**
-     * @param StoredFile $storedFile
+     * @param StoredFile   $storedFile
      * @param \SplFileInfo $file
      */
     public function afterPut(StoredFile $storedFile, \SplFileInfo $file);
-} 
+}

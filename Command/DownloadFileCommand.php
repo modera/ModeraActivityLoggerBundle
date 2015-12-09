@@ -4,7 +4,6 @@ namespace Modera\FileRepositoryBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Modera\FileRepositoryBundle\Entity\StoredFile;
-use Modera\FileRepositoryBundle\Repository\FileRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -57,4 +56,4 @@ class DownloadFileCommand extends ContainerAwareCommand
             $output->writeln($errorOutput);
         }
     }
-} 
+}

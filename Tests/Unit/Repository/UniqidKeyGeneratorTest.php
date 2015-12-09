@@ -13,11 +13,11 @@ class UniqidKeyGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         $g = new UniqidKeyGenerator(true);
 
-        $filename = sys_get_temp_dir() . '/foo.txt';
+        $filename = sys_get_temp_dir().'/foo.txt';
         file_put_contents($filename, '');
 
         $generatedFilename = $g->generateStorageKey(new \SplFileInfo($filename));
 
         $this->assertEquals('.txt', substr($generatedFilename, -1 * strlen('.txt')));
     }
-} 
+}
