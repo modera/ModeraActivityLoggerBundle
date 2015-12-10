@@ -15,14 +15,18 @@ class ContainerInjectorListenerTest extends FunctionalTestCase
     /* @var SchemaTool */
     private static $st;
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
         self::$st->createSchema(array(self::$em->getClassMetadata(Repository::clazz())));
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     public static function doTearDownAfterClass()
     {
         self::$st->dropSchema(array(self::$em->getClassMetadata(Repository::clazz())));

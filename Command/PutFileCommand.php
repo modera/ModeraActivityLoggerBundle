@@ -14,7 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PutFileCommand extends ContainerAwareCommand
 {
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -25,7 +27,9 @@ class PutFileCommand extends ContainerAwareCommand
         ;
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /* @var FileRepository $fr */

@@ -18,7 +18,9 @@ class FileRepositoryTest extends FunctionalTestCase
 {
     private static $st;
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
@@ -28,7 +30,9 @@ class FileRepositoryTest extends FunctionalTestCase
         ));
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     public static function doTearDownAfterClass()
     {
         self::$st->dropSchema(array(

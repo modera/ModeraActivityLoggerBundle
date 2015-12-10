@@ -15,7 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeleteFileCommand extends ContainerAwareCommand
 {
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -25,7 +27,9 @@ class DeleteFileCommand extends ContainerAwareCommand
         ;
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /* @var EntityManager $em */

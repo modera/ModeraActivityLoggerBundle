@@ -15,7 +15,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListRepositoriesCommand extends ContainerAwareCommand
 {
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -24,7 +26,9 @@ class ListRepositoriesCommand extends ContainerAwareCommand
         ;
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /* @var EntityManager $em */

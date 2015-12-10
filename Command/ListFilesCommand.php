@@ -16,7 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ListFilesCommand extends ContainerAwareCommand
 {
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -26,7 +28,9 @@ class ListFilesCommand extends ContainerAwareCommand
         ;
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         /* @var FileRepository $fr */
