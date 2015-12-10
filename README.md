@@ -1,4 +1,6 @@
-# ModeraFileRepositoryBundle [![Build Status](https://travis-ci.org/modera/ModeraFileRepositoryBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraFileRepositoryBundle)
+# ModeraFileRepositoryBundle
+[![Build Status](https://travis-ci.org/modera/ModeraFileRepositoryBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraFileRepositoryBundle)
+[![StyleCI](https://styleci.io/repos/19245390/shield)](https://styleci.io/repos/19245390)
 
 This bundle provides a high level API for putting your files to virtual file repositories which internally use Gaufrette
 filesystem abstraction layer.
@@ -7,17 +9,22 @@ filesystem abstraction layer.
 
 Add this dependency to your composer.json:
 
-    "modera/file-repository-bundle": "dev-master"
+    "modera/file-repository-bundle": "~1.0"
 
 Update your AppKernel class and add these bundles there:
 
     new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(), // if you still don't have it
     new Modera\FileRepositoryBundle\ModeraFileRepositoryBundle(),
 
+And finally check your `config.yml` and make sure that validation service is enabled:
+
+    framework:
+        validation: ~
+
 ## Documentation
 
 This bundle proves useful when you need to have a consistent way of storing your files with an ability
-to later reference these files in your domain model or query them ( using Doctrine ORM ). Configuration
+to later reference these files in your domain model or query them (using Doctrine ORM). Configuration
 process consists of two steps:
 
  * Configuring Gaufrette filesystem adapter
@@ -68,6 +75,13 @@ When you create a repository you can use these configuration properties to tweak
                             interface. This class is used to generate filenames that will be used by filesystem to store
                             files. If this configuration property is not provided when repository is created then
                             `Modera\FileRepositoryBundle\Repository\UniqidKeyGenerator` class will be used.
+ * images_only  -- if set to TRUE then it only will be possible to upload images to a repository.
+ * max_size -- if specified it won't be possible to upload files whose size exceeds given value. For megabytes use "m" prefix,
+               for kilobytes - "k" and if no prefix is provided then bytes will be used, for example: 100k, 5m, 800.
+ * file_constraint -- Configuration options of [File](http://symfony.com/doc/current/reference/constraints/File.html)
+                     constraint.
+ * image_constraint -- Configuration options of [Image](http://symfony.com/doc/current/reference/constraints/Image.html)
+                       constraint.
 
 ### Command line
 
