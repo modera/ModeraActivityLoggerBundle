@@ -6,10 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gaufrette\Filesystem;
 use Modera\FileRepositoryBundle\Exceptions\InvalidRepositoryConfig;
+use Modera\FileRepositoryBundle\Intercepting\DefaultInterceptorsProvider;
+use Modera\FileRepositoryBundle\Intercepting\OperationInterceptorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Every repository is associated one underlying Gaufrette filesystem.
+ * Every repository is associated with one underlying Gaufrette filesystem.
  *
  * @ORM\Entity
  * @ORM\Table("modera_filerepository_repository")
@@ -60,8 +62,8 @@ class Repository
     private $container;
 
     /**
-     * @param $name
-     * @param array $config
+     * @param string $name
+     * @param array  $config
      */
     public function __construct($name, array $config)
     {
@@ -71,23 +73,50 @@ class Repository
         $this->files = new ArrayCollection();
     }
 
+    /**
+     * @return OperationInterceptorInterface[]
+     */
     private function getInterceptors()
     {
-    }
+        /* @var DefaultInterceptorsProvider $provider */
+        $provider = $this->container->get('modera_file_repository.intercepting.interceptors_provider');
 
-    public function beforePut(\SplFileInfo $file)
-    {
-    }
-
-    public function onPut(StoredFile $storedFile, \SplFileInfo $file)
-    {
-    }
-
-    public function afterPut(StoredFile $storedFile, \SplFileInfo $file)
-    {
+        return $provider->getInterceptors($this);
     }
 
     /**
+     * @private
+     */
+    public function beforePut(\SplFileInfo $file)
+    {
+        foreach ($this->getInterceptors() as $interceptor) {
+            $interceptor->beforePut($file, $this);
+        }
+    }
+
+    /**
+     * @private
+     */
+    public function onPut(StoredFile $storedFile, \SplFileInfo $file)
+    {
+        foreach ($this->getInterceptors() as $interceptor) {
+            $interceptor->onPut($storedFile, $file, $this);
+        }
+    }
+
+    /**
+     * @private
+     */
+    public function afterPut(StoredFile $storedFile, \SplFileInfo $file)
+    {
+        foreach ($this->getInterceptors() as $interceptor) {
+            $interceptor->afterPut($storedFile, $file, $this);
+        }
+    }
+
+    /**
+     * @private
+     *
      * @param ContainerInterface $container
      */
     public function init(ContainerInterface $container)

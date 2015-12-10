@@ -5,6 +5,7 @@ parameters:
     locale: en
 
 framework:
+    validation:      ~
     secret:          Hell yeah!
     csrf_protection: true
     session:         ~

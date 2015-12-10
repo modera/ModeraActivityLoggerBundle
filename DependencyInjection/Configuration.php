@@ -37,6 +37,11 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('url_generators')
                     ->prototype('variable')->end()
                 ->end()
+                // Should point to an implementation of \Modera\FileRepositoryBundle\Intercepting\InterceptorsProviderInterface
+                // interface
+                ->scalarNode('interceptors_provider')
+                    ->defaultValue('modera_file_repository.intercepting.default_interceptors_provider')
+                ->end()
             ->end()
         ;
 

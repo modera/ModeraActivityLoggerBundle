@@ -31,5 +31,10 @@ class ModeraFileRepositoryExtension extends Extension
         foreach ($config as $key => $value) {
             $container->setParameter(self::CONFIG_KEY.'.'.$key, $value);
         }
+
+        $container->setDefinition(
+            'modera_file_repository.intercepting.interceptors_provider',
+            $container->getDefinition($config['interceptors_provider'])
+        );
     }
 }

@@ -19,7 +19,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
-        "sergeil/aux-bundle": "~1.0"
+        "sergeil/aux-bundle": "~1.0",
+        "phake/phake": "~2.0"
     },
     "autoload": {
         "psr-0": { "Modera\\FileRepositoryBundle": "" }
@@ -27,7 +28,7 @@
     "target-dir": "Modera/FileRepositoryBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "dev-master": "1.x-dev"
         }
     }
 }

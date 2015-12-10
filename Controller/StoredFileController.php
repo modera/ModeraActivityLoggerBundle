@@ -2,6 +2,7 @@
 
 namespace Modera\FileRepositoryBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -41,6 +42,7 @@ class StoredFileController extends Controller
      */
     protected function getFile($storageKey)
     {
+        /* @var ObjectRepository $repository */
         $repository = $this->getDoctrine()->getManager()->getRepository(StoredFile::clazz());
 
         return $repository->findOneBy(array(
