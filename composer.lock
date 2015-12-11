@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ea0c16768bf9a3ffdf5d822b1c27edca",
-    "content-hash": "3b2106fef8534360357ad313cc52f2d6",
+    "hash": "69b8830e1a3771dccf56a9cde21ec342",
+    "content-hash": "e068f4ab0471687827f82dd59471bf49",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -944,17 +944,17 @@
         },
         {
             "name": "modera/file-repository-bundle",
-            "version": "v1.2.0",
+            "version": "dev-master",
             "target-dir": "Modera/FileRepositoryBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraFileRepositoryBundle.git",
-                "reference": "23febe9a321e98e4e1888cc8da1c2e2caf8d1877"
+                "reference": "f881940cd57b0d913847826daed6181f76b0ae2c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraFileRepositoryBundle/zipball/23febe9a321e98e4e1888cc8da1c2e2caf8d1877",
-                "reference": "23febe9a321e98e4e1888cc8da1c2e2caf8d1877",
+                "url": "https://api.github.com/repos/modera/ModeraFileRepositoryBundle/zipball/f881940cd57b0d913847826daed6181f76b0ae2c",
+                "reference": "f881940cd57b0d913847826daed6181f76b0ae2c",
                 "shasum": ""
             },
             "require": {
@@ -966,13 +966,14 @@
                 "symfony/symfony": "~2.0"
             },
             "require-dev": {
+                "phake/phake": "~2.0",
                 "phpunit/phpunit": "3.7.*",
                 "sergeil/aux-bundle": "~1.0"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0-dev"
+                    "dev-master": "1.x-dev"
                 }
             },
             "autoload": {
@@ -991,7 +992,7 @@
                     "homepage": "http://sergei.lissovski.org/"
                 }
             ],
-            "time": "2015-03-23 07:41:22"
+            "time": "2015-12-10 13:59:00"
         },
         {
             "name": "modera/foundation-bundle",
@@ -2279,11 +2280,13 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "modera/file-repository-bundle": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.3.0"
+        "php": ">=5.4.0"
     },
     "platform-dev": []
 }

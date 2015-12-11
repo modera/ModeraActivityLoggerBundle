@@ -22,9 +22,11 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                // if set to FALSE the controller that allows to upload files is not accessible
                 ->scalarNode('is_enabled')
                     ->defaultValue(false)
                 ->end()
+                // a URL where uploader controller will be available at
                 ->scalarNode('url')
                     ->defaultValue('uploader-gateway')
                 ->end()

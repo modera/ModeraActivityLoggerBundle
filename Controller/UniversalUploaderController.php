@@ -2,6 +2,7 @@
 
 namespace Modera\FileUploaderBundle\Controller;
 
+use Modera\FileRepositoryBundle\Exceptions\FileValidationException;
 use Modera\FileUploaderBundle\Uploading\WebUploader;
 use Modera\FoundationBundle\Translation\T;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,13 +24,23 @@ class UniversalUploaderController extends Controller
     public function uploadAction(Request $request)
     {
         if (!$this->container->getParameter('modera_file_uploader.is_enabled')) {
-            throw new \RuntimeException('Uploader is not enabled.');
+            throw $this->createNotFoundException(T::trans('Uploader is not enabled.'));
         }
 
         /* @var WebUploader $webUploader */
         $webUploader = $this->get('modera_file_uploader.uploading.web_uploader');
 
-        $result = $webUploader->upload($request);
+        $result = null;
+        try {
+            $result = $webUploader->upload($request);
+        } catch (FileValidationException $e) {
+            return new JsonResponse(array(
+                'success' => false,
+                'error' => implode(', ', $e->getErrors()),
+                'errors' => $e->getErrors(),
+            ));
+        }
+
         if (false === $result) {
             return new JsonResponse(array(
                 'success' => false,

@@ -38,4 +38,12 @@ class WebUploader
 
         return false;
     }
+
+    /**
+     * @return string
+     */
+    public static function clazz()
+    {
+        return get_called_class();
+    }
 }
