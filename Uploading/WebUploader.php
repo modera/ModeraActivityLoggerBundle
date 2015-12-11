@@ -38,4 +38,4 @@ class WebUploader
 
         return false;
     }
-} 
+}

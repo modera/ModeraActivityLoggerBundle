@@ -21,15 +21,15 @@ class ExposedGatewayProvider implements ContributorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
         return $this->items;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
-} 
+}

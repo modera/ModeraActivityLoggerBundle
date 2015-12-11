@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -34,10 +33,10 @@ class UniversalUploaderController extends Controller
         if (false === $result) {
             return new JsonResponse(array(
                 'success' => false,
-                'error' => T::trans('Unable to find an upload gateway that is able to process this file upload.')
+                'error' => T::trans('Unable to find an upload gateway that is able to process this file upload.'),
             ));
         }
 
         return new JsonResponse($result);
     }
-} 
+}

@@ -34,4 +34,4 @@ class WebUploaderTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals('foobar', $result);
     }
-} 
+}

@@ -19,7 +19,7 @@ class RepositoryGateway implements UploadGatewayInterface
 
     /**
      * @param FileRepository $fileRepository
-     * @param string $repositoryName
+     * @param string         $repositoryName
      */
     public function __construct(FileRepository $fileRepository, $repositoryName)
     {
@@ -28,7 +28,7 @@ class RepositoryGateway implements UploadGatewayInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isResponsible(Request $request)
     {
@@ -43,7 +43,7 @@ class RepositoryGateway implements UploadGatewayInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function upload(Request $request)
     {
@@ -57,7 +57,7 @@ class RepositoryGateway implements UploadGatewayInterface
     }
 
     /**
-     * @param Request $request
+     * @param Request      $request
      * @param StoredFile[] $storedFiles
      *
      * @return JsonResponse|Response
@@ -66,7 +66,7 @@ class RepositoryGateway implements UploadGatewayInterface
     {
         if ($request->isXmlHttpRequest()) {
             return new JsonResponse(array(
-                'success' => true
+                'success' => true,
             ));
         } else {
             return new Response(true);
@@ -83,7 +83,6 @@ class RepositoryGateway implements UploadGatewayInterface
      */
     protected function beforeUpload(Request $request)
     {
-
     }
 
     /**
@@ -91,12 +90,11 @@ class RepositoryGateway implements UploadGatewayInterface
      *
      * Feel free to override this method in subclass.
      *
-     * @param Request $request
+     * @param Request      $request
      * @param StoredFile[] $storedFiles
      */
     protected function afterUpload(Request $request, array $storedFiles)
     {
-
     }
 
     /**
@@ -116,4 +114,4 @@ class RepositoryGateway implements UploadGatewayInterface
 
         return $storedFiles;
     }
-} 
+}

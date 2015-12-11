@@ -32,7 +32,7 @@ class AllExposedRepositoriesGateway implements UploadGatewayInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isResponsible(Request $request)
     {
@@ -45,7 +45,7 @@ class AllExposedRepositoriesGateway implements UploadGatewayInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function upload(Request $request)
     {
@@ -61,12 +61,12 @@ class AllExposedRepositoriesGateway implements UploadGatewayInterface
 
         return array(
             'success' => true,
-            'ids'     => $ids,
+            'ids' => $ids,
         );
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
-} 
+}

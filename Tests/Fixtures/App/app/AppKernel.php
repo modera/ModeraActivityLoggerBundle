@@ -13,13 +13,13 @@ class AppKernel extends Kernel
 
             new Modera\FileRepositoryBundle\ModeraFileRepositoryBundle(),
 
-            new Modera\FileUploaderBundle\ModeraFileUploaderBundle()
+            new Modera\FileUploaderBundle\ModeraFileUploaderBundle(),
         );
     }
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__ . '/config/config.yml');
+        $loader->load(__DIR__.'/config/config.yml');
     }
 
     /**
@@ -27,7 +27,7 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-        return sys_get_temp_dir() . '/ModeraFileUploaderBundle/cache';
+        return sys_get_temp_dir().'/ModeraFileUploaderBundle/cache';
     }
 
     /**
@@ -35,6 +35,6 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {
-        return sys_get_temp_dir() . '/ModeraFileUploaderBundle/logs';
+        return sys_get_temp_dir().'/ModeraFileUploaderBundle/logs';
     }
 }

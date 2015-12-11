@@ -18,7 +18,7 @@ class ModeraFileUploaderExtensionTest extends FunctionalTestCase
 
     public function doSetUp()
     {
-        $this->ext = new ModeraFileUploaderExtension();;
+        $this->ext = new ModeraFileUploaderExtension();
         $this->cb = new ContainerBuilder();
     }
 
@@ -44,8 +44,8 @@ class ModeraFileUploaderExtensionTest extends FunctionalTestCase
     {
         $config = array(
             array(
-                'expose_all_repositories' => false
-            )
+                'expose_all_repositories' => false,
+            ),
         );
 
         $this->ext->load($config, $this->cb);
@@ -57,4 +57,4 @@ class ModeraFileUploaderExtensionTest extends FunctionalTestCase
             $this->cb->hasDefinition('modera_file_uploader.uploading.all_exposed_repositories_gateway_provider')
         );
     }
-} 
+}

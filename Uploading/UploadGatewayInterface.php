@@ -19,4 +19,4 @@ interface UploadGatewayInterface
      * @param Request $request
      */
     public function upload(Request $request);
-} 
+}

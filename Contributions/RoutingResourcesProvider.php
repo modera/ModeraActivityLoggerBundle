@@ -11,7 +11,7 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 class RoutingResourcesProvider implements ContributorInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
