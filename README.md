@@ -1,12 +1,15 @@
 # ModeraFileUploaderBundle
 
+[![Build Status](https://travis-ci.org/modera/ModeraFileUploaderBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraFileUploaderBundle)
+[![StyleCI](https://styleci.io/repos/29134461/shield)](https://styleci.io/repos/29134461)
+
 The bundle simplifies and introduces a consistent approach to uploading and storing uploaded files.
 
 ## Installation
 
 Add this dependency to your composer.json:
 
-    "modera/file-uploader-bundle": "dev-master"
+    "modera/file-uploader-bundle": "~1.0"
 
 Update your AppKernel class and add these bundles there:
 

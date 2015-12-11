@@ -2,6 +2,7 @@
     "name": "modera/file-uploader-bundle",
     "type": "symfony-bundle",
     "license": "MIT",
+    "tags": ["upload", "file"],
     "authors": [
         {
             "name": "Sergei Lissovski",
