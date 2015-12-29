@@ -35,6 +35,8 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue(null)
                 ->end()
 
+                // This node add ability to control access to stored files through the proxy controller
+                // See: \Modera\FileRepositoryBundle\Entity\StoredFile::getUrl
                 ->arrayNode('controller')
                     ->addDefaultsIfNotSet()
                     ->children()

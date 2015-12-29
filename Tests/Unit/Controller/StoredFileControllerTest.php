@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\FileRepositoryBundle\Tests\Controller;
+namespace Modera\FileRepositoryBundle\Tests\Unit\Controller;
 
 use Symfony\Component\HttpFoundation\Response;
 use Modera\FileRepositoryBundle\Entity\StoredFile;
