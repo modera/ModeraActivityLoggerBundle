@@ -6,6 +6,8 @@ use Symfony\Component\Routing\RouterInterface;
 use Modera\FileRepositoryBundle\Entity\StoredFile;
 
 /**
+ * This implementation of url generator provide publicly accessible url through the controller action.
+ *
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2015 Modera Foundation
  */

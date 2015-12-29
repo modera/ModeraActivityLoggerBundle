@@ -22,15 +22,35 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                // deprecated
                 ->scalarNode('is_enabled')
-                    ->defaultValue(true)
+                    ->defaultValue(null)
                 ->end()
+                // deprecated
                 ->scalarNode('route_url_prefix')
-                    ->defaultValue('/u')
+                    ->defaultValue(null)
                 ->end()
+                // deprecated
                 ->scalarNode('get_file_route')
-                    ->defaultValue('modera_file_repository.get_file')
+                    ->defaultValue(null)
                 ->end()
+
+                ->arrayNode('controller')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('is_enabled')
+                            ->defaultValue(true)
+                        ->end()
+                        ->scalarNode('route_url_prefix')
+                            ->defaultValue('/u')
+                        ->end()
+                        // See: Modera\FileRepositoryBundle\StoredFile\UrlGenerator
+                        ->scalarNode('get_file_route')
+                            ->defaultValue('modera_file_repository.get_file')
+                        ->end()
+                    ->end()
+                ->end()
+                // Must implement \Modera\FileRepositoryBundle\StoredFile\UrlGeneratorInterface
                 ->scalarNode('default_url_generator')
                     ->defaultValue('modera_file_repository.stored_file.url_generator')
                 ->end()

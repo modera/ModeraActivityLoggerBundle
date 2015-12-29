@@ -32,7 +32,7 @@
                  class="Modera\FileRepositoryBundle\StoredFile\UrlGenerator">
 
             <argument type="service" id="router" />
-            <argument>%modera_file_repository.config.get_file_route%</argument>
+            <argument>%modera_file_repository.config.controller.get_file_route%</argument>
         </service>
 
         <service id="modera_file_repository.contributions.routing_resources_provider"

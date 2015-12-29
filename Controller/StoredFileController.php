@@ -28,7 +28,7 @@ class StoredFileController extends Controller
      */
     public function getAction(Request $request, $storageKey)
     {
-        if (!$this->container->getParameter(ModeraFileRepositoryExtension::CONFIG_KEY.'.is_enabled')) {
+        if (!$this->container->getParameter(ModeraFileRepositoryExtension::CONFIG_KEY.'.controller.is_enabled')) {
             throw $this->createAccessDeniedException();
         }
 
