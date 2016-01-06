@@ -28,8 +28,13 @@
             &.left {
                 font-size: 18px;
                 @include border-radius(3px 0px 0px 3px);
-                text-align: center;
                 color: #DDDDDD;
+
+                div {
+                    text-align: center !important;
+                    padding-left: 0 !important;
+                    padding-right: 0 !important;
+                }
             }
             &.right {
                 font-size: 16px;
