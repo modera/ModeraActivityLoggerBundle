@@ -30,7 +30,9 @@ class PermissionAndCategoriesInstallerTest extends FunctionalTestCase
     private $permissionCategoriesProvider;
     private $permissionsProvider;
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
@@ -38,13 +40,18 @@ class PermissionAndCategoriesInstallerTest extends FunctionalTestCase
         self::$st->createSchema(array(self::$em->getClassMetadata(PermissionCategoryEntity::clazz())));
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     public static function doTearDownAfterClass()
     {
         self::$st->dropSchema(array(self::$em->getClassMetadata(PermissionEntity::clazz())));
         self::$st->dropSchema(array(self::$em->getClassMetadata(PermissionCategoryEntity::clazz())));
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function doSetUp()
     {
         $this->permissionCategoriesProvider = $this->getMock(ContributorInterface::CLAZZ);

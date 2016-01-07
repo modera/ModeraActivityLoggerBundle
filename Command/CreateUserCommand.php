@@ -17,7 +17,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class CreateUserCommand extends ContainerAwareCommand
 {
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
@@ -31,8 +33,7 @@ class CreateUserCommand extends ContainerAwareCommand
     }
 
     /**
-     * @param InputInterface  $input
-     * @param OutputInterface $output
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
