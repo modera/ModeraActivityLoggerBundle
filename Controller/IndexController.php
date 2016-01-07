@@ -28,6 +28,8 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class IndexController extends Controller
 {
     /**
+     * Entry point MF backend.
+     *
      * @Route("/")
      *
      * @return array
@@ -76,7 +78,8 @@ class IndexController extends Controller
     }
 
     /**
-     * Dynamically generates an entry point to backend application.
+     * Dynamically generates an entry point to backend application, action's output is JavaScript class
+     * which is used by ExtJs to bootstrap application.
      *
      * @see Resources/config/routing.yml
      * @see \Modera\MJRSecurityIntegrationBundle\Contributions\RoutingResourcesProvider
@@ -143,7 +146,7 @@ class IndexController extends Controller
     /**
      * @param Request $request
      */
-    protected function initSession(Request $request)
+    private function initSession(Request $request)
     {
         $session = $request->getSession();
         if ($session instanceof Session && !$session->getId()) {
