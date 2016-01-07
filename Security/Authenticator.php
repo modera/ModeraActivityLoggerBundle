@@ -4,11 +4,8 @@ namespace Modera\SecurityBundle\Security;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\Security\Core\Authentication\SimpleFormAuthenticatorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
@@ -17,71 +14,30 @@ use Modera\SecurityBundle\Entity\User;
 use Modera\SecurityBundle\Model\UserInterface;
 
 /**
+ * @private
+ *
+ * TODO since the class is no longer does any kind of authentication it should be renamed to something more meaningful
+ *
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationFailureHandlerInterface, AuthenticationSuccessHandlerInterface
+class Authenticator implements AuthenticationFailureHandlerInterface, AuthenticationSuccessHandlerInterface
 {
     /**
      * @var ObjectManager
      */
     private $om;
-    private $authenticatedTokenFactory;
 
     /**
-     * @param AuthenticatedTokenFactory $authenticatedTokenFactory
+     * @param RegistryInterface $doctrine
      */
-    public function __construct(RegistryInterface $doctrine, AuthenticatedTokenFactory $authenticatedTokenFactory)
+    public function __construct(RegistryInterface $doctrine)
     {
         $this->om = $doctrine->getManager();
-        $this->authenticatedTokenFactory = $authenticatedTokenFactory;
     }
 
     /**
-     * @param Request $request
-     * @param $username
-     * @param $password
-     * @param $providerKey
-     *
-     * @return UsernamePasswordToken
-     */
-    public function createToken(Request $request, $username, $password, $providerKey)
-    {
-        return new UsernamePasswordToken($username, $password, $providerKey);
-    }
-
-    /**
-     * @param TokenInterface        $token
-     * @param UserProviderInterface $userProvider
-     * @param $providerKey
-     *
-     * @return UsernamePasswordToken
-     *
-     * @throws \Symfony\Component\Security\Core\Exception\AuthenticationException
-     */
-    public function authenticateToken(TokenInterface $token, UserProviderInterface $userProvider, $providerKey)
-    {
-        return $this->authenticatedTokenFactory->authenticateToken(
-            $token, $userProvider, $providerKey
-        );
-    }
-
-    /**
-     * @param TokenInterface $token
-     * @param $providerKey
-     *
-     * @return bool
-     */
-    public function supportsToken(TokenInterface $token, $providerKey)
-    {
-        return $token instanceof UsernamePasswordToken && $token->getProviderKey() === $providerKey;
-    }
-
-    /**
-     * @param Request                 $request
-     * @param AuthenticationException $exception
-     *
-     * @return JsonResponse
+     * {@inheritdoc}
      */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
@@ -96,10 +52,7 @@ class Authenticator implements SimpleFormAuthenticatorInterface, AuthenticationF
     }
 
     /**
-     * @param Request        $request
-     * @param TokenInterface $token
-     *
-     * @return JsonResponse
+     * {@inheritdoc}
      */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {

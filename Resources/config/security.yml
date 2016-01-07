@@ -47,11 +47,12 @@ security:
             context: modera_auth
             provider: authenticator
             access_denied_handler: modera_security.security.access_denied_handler
-            simple_form:
+            form_login:
                 provider:      modera_provider
-                authenticator: modera_security.security.authenticator
                 check_path:    _security_check
                 login_path:    _security_login
+                failure_handler: modera_security.security.authenticator
+                success_handler: modera_security.security.authenticator
             logout:
                 path:   _security_logout
                 success_handler: modera_security.security.logout_success_handler

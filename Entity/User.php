@@ -4,6 +4,7 @@ namespace Modera\SecurityBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Modera\SecurityBundle\RootUserHandling\RootUserHandlerInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Modera\SecurityBundle\Model\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -94,6 +95,11 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     private $groups;
 
     /**
+     * @var RootUserHandlerInterface
+     */
+    private $rootUserHandler;
+
+    /**
      * @var Permission[]
      *
      * @ORM\ManyToMany(targetEntity="Permission", mappedBy="users", cascade={"persist"})
@@ -104,8 +110,23 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     {
         $this->isActive = true;
         $this->salt = md5(uniqid(null, true));
+
         $this->groups = new ArrayCollection();
         $this->permissions = new ArrayCollection();
+    }
+
+    /**
+     * Necessary for providing support for so called "root-users".
+     *
+     * @see #getRoles() method
+     *
+     * @private
+     *
+     * @param RootUserHandlerInterface $rootUserHandler
+     */
+    public function init(RootUserHandlerInterface $rootUserHandler)
+    {
+        $this->rootUserHandler = $rootUserHandler;
     }
 
     /**
@@ -162,10 +183,21 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
+     * This method also takes into account possibility that a user might be "root".
+     *
+     * @see #init() method.
+     * @see \Modera\SecurityBundle\RootUserHandling\RootUserHandlerInterface
+     *
      * {@inheritdoc}
      */
     public function getRoles()
     {
+        if ($this->rootUserHandler) {
+            if ($this->rootUserHandler->isRootUser($this)) {
+                return $this->rootUserHandler->getRoles();
+            }
+        }
+
         $roles = array('ROLE_USER');
         foreach ($this->getRawRoles() as $role) {
             $roles[] = $role->getRoleName();
@@ -216,7 +248,7 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
-     * @see \Serializable::unserialize()
+     * {@inheritdoc}
      */
     public function unserialize($serialized)
     {

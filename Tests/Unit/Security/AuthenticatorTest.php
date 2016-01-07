@@ -16,42 +16,12 @@ class AuthenticatorTest extends \PHPUnit_Framework_TestCase
         $om = \Phake::mock('Doctrine\Common\Persistence\ObjectManager');
         $user = \Phake::mock(User::clazz());
         $doctrine = \Phake::mock('Symfony\Bridge\Doctrine\RegistryInterface');
-        $authenticatedTokenFactory = \Phake::mock('Modera\SecurityBundle\Security\AuthenticatedTokenFactory');
 
         \Phake::when($om)->persist($user)->thenReturn(null);
         \Phake::when($om)->flush()->thenReturn(null);
         \Phake::when($doctrine)->getManager()->thenReturn($om);
 
-        return new Authenticator($doctrine, $authenticatedTokenFactory);
-    }
-
-    public function testCreateToken()
-    {
-        $authenticator = $this->createAuthenticator();
-
-        $request = \Phake::mock('Symfony\Component\HttpFoundation\Request');
-
-        $resp = $authenticator->createToken($request, 'username', 'password', 'test-key');
-        $this->assertInstanceOf('Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken', $resp);
-    }
-
-    public function testSupportsToken()
-    {
-        $authenticator = $this->createAuthenticator();
-
-        $token = \Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-
-        $resp = $authenticator->supportsToken($token, null);
-        $this->assertFalse($resp);
-
-        $token = \Phake::mock('Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken');
-        \Phake::when($token)->getProviderKey()->thenReturn('successful-test-key');
-
-        $resp = $authenticator->supportsToken($token, 'failure-test-key');
-        $this->assertFalse($resp);
-
-        $resp = $authenticator->supportsToken($token, 'successful-test-key');
-        $this->assertTrue($resp);
+        return new Authenticator($doctrine);
     }
 
     public function testResponseOnAuthenticationFailure()

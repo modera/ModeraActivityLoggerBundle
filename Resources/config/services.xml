@@ -5,19 +5,10 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="modera_security.security.authenticated_token_factory"
-                 class="Modera\SecurityBundle\Security\AuthenticatedTokenFactory">
-
-            <argument type="service" id="security.encoder_factory" />
-            <!-- defined in \Modera\SecurityBundle\DependencyInjection\ModeraSecurityExtension  -->
-            <argument type="service" id="modera_security.root_user_handling.handler" />
-        </service>
-
         <service id="modera_security.security.authenticator"
                  class="Modera\SecurityBundle\Security\Authenticator">
 
             <argument type="service" id="doctrine" />
-            <argument type="service" id="modera_security.security.authenticated_token_factory" />
         </service>
 
         <service id="modera_security.contributions.routing_resources_provider"
@@ -46,6 +37,15 @@
             <argument type="service" id="doctrine.orm.entity_manager" />
             <!-- defined in \Modera\SecurityBundle\DependencyInjection\ModeraSecurityExtension  -->
             <argument type="service" id="modera_security.root_user_handling.handler" />
+        </service>
+
+        <service id="modera_security.event_listener.root_user_handler_injection_listener"
+                 class="Modera\SecurityBundle\EventListener\RootUserHandlerInjectionListener">
+
+            <!-- defined in \Modera\SecurityBundle\DependencyInjection\ModeraSecurityExtension  -->
+            <argument type="service" id="service_container" />
+
+            <tag name="doctrine.event_listener" event="postLoad" />
         </service>
     </services>
 </container>
