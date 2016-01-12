@@ -7,7 +7,7 @@ use Modera\ConfigBundle\Entity\ConfigurationEntry;
 /**
  * Exposes two configuration properties:
  * - true_text
- * - false_text
+ * - false_text.
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
@@ -15,7 +15,7 @@ use Modera\ConfigBundle\Entity\ConfigurationEntry;
 class BooleanHandler implements HandlerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getReadableValue(ConfigurationEntry $entry)
     {
@@ -28,7 +28,7 @@ class BooleanHandler implements HandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getValue(ConfigurationEntry $entry)
     {
@@ -36,7 +36,7 @@ class BooleanHandler implements HandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function convertToStorageValue($input, ConfigurationEntry $entry)
     {

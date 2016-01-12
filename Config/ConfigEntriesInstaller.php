@@ -25,7 +25,7 @@ class ConfigEntriesInstaller
 
     /**
      * @param ContributorInterface $provider
-     * @param EntityManager $em
+     * @param EntityManager        $em
      */
     public function __construct(ContributorInterface $provider, EntityManager $em)
     {
@@ -55,8 +55,6 @@ class ConfigEntriesInstaller
 
                 $installedEntries[] = $entryDef;
             }
-
-
         }
         $this->em->flush();
 

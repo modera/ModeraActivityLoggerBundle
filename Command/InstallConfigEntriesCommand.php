@@ -5,8 +5,6 @@ namespace Modera\ConfigBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputOption;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -14,16 +12,20 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class InstallConfigEntriesCommand extends ContainerAwareCommand
 {
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
             ->setName('modera:config:install-config-entries')
-            ->setDescription('Installs configuration-entries defined through extension-points mechanism');
+            ->setDescription('Installs configuration-entries defined through extension-points mechanism')
         ;
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln(' >> Installing configuration-entries ...');

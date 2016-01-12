@@ -2,8 +2,6 @@
 
 namespace Modera\ConfigBundle\Config;
 
-use Modera\ConfigBundle\Entity\ConfigurationEntry;
-
 /**
  * Implementations of this interface will have a chance to do some additional processing when configuration entry
  * is updated.
@@ -20,4 +18,4 @@ interface ValueUpdatedHandlerInterface
      * @param ConfigurationEntryInterface $entry
      */
     public function onUpdate(ConfigurationEntryInterface $entry);
-} 
+}

@@ -11,7 +11,7 @@ use Modera\ConfigBundle\Entity\ConfigurationEntry;
 class DictionaryHandler implements HandlerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getReadableValue(ConfigurationEntry $entry)
     {
@@ -25,7 +25,7 @@ class DictionaryHandler implements HandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getValue(ConfigurationEntry $entry)
     {
@@ -33,7 +33,7 @@ class DictionaryHandler implements HandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function convertToStorageValue($input, ConfigurationEntry $entry)
     {

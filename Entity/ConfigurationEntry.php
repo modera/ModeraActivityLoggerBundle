@@ -5,7 +5,6 @@ namespace Modera\ConfigBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Modera\ConfigBundle\Config\ConfigurationEntryDefinition;
 use Modera\ConfigBundle\Config\ValueUpdatedHandlerInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Modera\ConfigBundle\Config\HandlerInterface;
 use Modera\ConfigBundle\Config\ConfigurationEntryInterface;
@@ -30,13 +29,13 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     const TYPE_ARRAY = 4;
     const TYPE_BOOL = 5;
 
-    static private $fieldsMapping = array(
+    private static $fieldsMapping = array(
         self::TYPE_INT => 'int',
         self::TYPE_STRING => 'string',
         self::TYPE_TEXT => 'text',
         self::TYPE_ARRAY => 'array',
         self::TYPE_FLOAT => 'float',
-        self::TYPE_BOOL => 'bool'
+        self::TYPE_BOOL => 'bool',
     );
 
     /**
@@ -159,9 +158,10 @@ class ConfigurationEntry implements ConfigurationEntryInterface
 
     /**
      * @param ConfigurationEntryDefinition $def
+     *
      * @return ConfigurationEntry
      */
-    static public function createFromDefinition(ConfigurationEntryDefinition $def)
+    public static function createFromDefinition(ConfigurationEntryDefinition $def)
     {
         $me = new self($def->getName());
         $me->setReadableName($def->getReadableName());
@@ -182,7 +182,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
         return $this->container;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -193,7 +193,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isExposed()
     {
@@ -240,7 +240,6 @@ class ConfigurationEntry implements ConfigurationEntryInterface
             $updateHandler = $this->getContainer()->get($this->serverHandlerConfig['update_handler']);
             $updateHandler->onUpdate($this);
         }
-
     }
 
     /**
@@ -274,7 +273,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
                 'Configuration-entry "%s" is not configured to use handlers, serverHandlerServiceId has not been specified!',
                 $this->getName()
             ));
-        } else if (null === $this->getContainer()) {
+        } elseif (null === $this->getContainer()) {
             throw new \RuntimeException(sprintf(
                 'Configuration property "%s" is not initialized yet, use init() method.', $this->getName()
             ));
@@ -300,7 +299,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setDenormalizedValue($value)
     {
@@ -310,7 +309,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getDenormalizedValue()
     {
@@ -321,7 +320,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
             ));
         }
 
-        $fieldName = self::$fieldsMapping[$this->getSavedAs()] . 'Value';
+        $fieldName = self::$fieldsMapping[$this->getSavedAs()].'Value';
 
         // doctrine hydrates decimal from database as strings
         // to avoid returning non identical value that was initially
@@ -335,7 +334,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setValue($value)
     {
@@ -349,7 +348,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getValue()
     {
@@ -361,7 +360,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getReadableValue()
     {
@@ -377,8 +376,8 @@ class ConfigurationEntry implements ConfigurationEntryInterface
      */
     public function reset()
     {
-        foreach (self::$fieldsMapping as $type=>$name) {
-            $this->{$name . 'Value'} = null;
+        foreach (self::$fieldsMapping as $type => $name) {
+            $this->{$name.'Value'} = null;
         }
         $this->arrayValue = array();
     }
@@ -398,13 +397,13 @@ class ConfigurationEntry implements ConfigurationEntryInterface
             } else {
                 return self::TYPE_TEXT;
             }
-        } else if (is_float($value) || is_double($value)) {
+        } elseif (is_float($value) || is_double($value)) {
             return self::TYPE_FLOAT;
-        } else if (is_int($value)) {
+        } elseif (is_int($value)) {
             return self::TYPE_INT;
-        } else if (is_array($value)) {
+        } elseif (is_array($value)) {
             return self::TYPE_ARRAY;
-        } else if (is_bool($value)) {
+        } elseif (is_bool($value)) {
             return self::TYPE_BOOL;
         }
 
@@ -420,7 +419,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
      */
     private function getStorageFieldNameFromValue($value)
     {
-        return self::$fieldsMapping[$this->getFieldType($value)] . 'Value';
+        return self::$fieldsMapping[$this->getFieldType($value)].'Value';
     }
 
     // boilerplate:

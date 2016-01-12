@@ -21,7 +21,7 @@ class DummyEntity
         return $this->id;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -49,7 +49,7 @@ class EntityRepositoryHandlerTest extends \PHPUnit_Framework_TestCase
         $cfg = array_merge(array(
             'entityFqcn' => DummyEntity::clazz(),
             'toStringMethodName' => 'getValue',
-            'clientValueMethodName' => 'getId'
+            'clientValueMethodName' => 'getId',
         ), $overrideConfig);
         $this->ce->expects($this->atLeastOnce())
              ->method('getServerHandlerConfig')
@@ -108,7 +108,7 @@ class EntityRepositoryHandlerTest extends \PHPUnit_Framework_TestCase
     public function testConvertToStorageValueWithNewClientValueMethodName()
     {
         $this->teachConfigEntryToReturnServerHandlerConfig(array(
-            'clientValueMethodName' => 'getValue'
+            'clientValueMethodName' => 'getValue',
         ));
 
         $entity = new DummyEntity();

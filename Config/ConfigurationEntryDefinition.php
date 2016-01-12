@@ -22,19 +22,18 @@ class ConfigurationEntryDefinition
     /**
      * @param string $name
      * @param string $readableName
-     * @param mixed $value
+     * @param mixed  $value
      * @param string $category
-     * @param array $serverHandlerConfig
-     * @param array $clientHandlerConfig
-     * @param bool $isReadOnly
-     * @param bool $isExposed
+     * @param array  $serverHandlerConfig
+     * @param array  $clientHandlerConfig
+     * @param bool   $isReadOnly
+     * @param bool   $isExposed
      */
     public function __construct(
         $name, $readableName, $value, $category,
         $serverHandlerConfig = null, $clientHandlerConfig = null,
         $isReadOnly = false, $isExposed = true
-    )
-    {
+    ) {
         $this->name = $name;
         $this->readableName = $readableName;
         $this->value = $value;
@@ -46,7 +45,7 @@ class ConfigurationEntryDefinition
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isExposed()
     {
@@ -54,7 +53,7 @@ class ConfigurationEntryDefinition
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isReadOnly()
     {
@@ -116,4 +115,4 @@ class ConfigurationEntryDefinition
     {
         return $this->category;
     }
-} 
+}

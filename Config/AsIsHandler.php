@@ -11,7 +11,7 @@ use Modera\ConfigBundle\Entity\ConfigurationEntry;
 class AsIsHandler implements HandlerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getReadableValue(ConfigurationEntry $entry)
     {
@@ -19,7 +19,7 @@ class AsIsHandler implements HandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getValue(ConfigurationEntry $entry)
     {
@@ -27,7 +27,7 @@ class AsIsHandler implements HandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function convertToStorageValue($object, ConfigurationEntry $entry)
     {

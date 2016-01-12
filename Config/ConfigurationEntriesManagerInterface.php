@@ -10,13 +10,16 @@ interface ConfigurationEntriesManagerInterface
 {
     /**
      * @param string $name
+     *
      * @return ConfigurationEntryInterface
      */
     public function findOneByName($name);
 
     /**
      * @throws \RuntimeException
+     *
      * @param string $name
+     *
      * @return ConfigurationEntryInterface
      */
     public function findOneByNameOrDie($name);

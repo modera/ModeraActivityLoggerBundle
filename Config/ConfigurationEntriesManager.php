@@ -24,18 +24,21 @@ class ConfigurationEntriesManager implements ConfigurationEntriesManagerInterfac
 
     /**
      * @param string $name
+     *
      * @return ConfigurationEntryInterface
      */
     public function findOneByName($name)
     {
         return $this->em->getRepository(ConfigurationEntry::clazz())->findOneBy(array(
-            'name' => $name
+            'name' => $name,
         ));
     }
 
     /**
-     * @throws \RuntimeException  When requested configuration property with name $name is not found
+     * @throws \RuntimeException When requested configuration property with name $name is not found
+     *
      * @param string $name
+     *
      * @return ConfigurationEntryInterface
      */
     public function findOneByNameOrDie($name)
@@ -46,6 +49,7 @@ class ConfigurationEntriesManager implements ConfigurationEntriesManagerInterfac
                 'Unable to find required configuration property %s', $name
             ));
         }
+
         return $result;
     }
 
@@ -56,7 +60,7 @@ class ConfigurationEntriesManager implements ConfigurationEntriesManagerInterfac
     {
         if (!($entry instanceof ConfigurationEntry)) {
             throw new InvalidArgumentException(
-                '$entry must be an instance of ' . ConfigurationEntry::clazz()
+                '$entry must be an instance of '.ConfigurationEntry::clazz()
             );
         }
 
@@ -70,7 +74,7 @@ class ConfigurationEntriesManager implements ConfigurationEntriesManagerInterfac
     public function findAllExposed()
     {
         return $this->em->getRepository(ConfigurationEntry::clazz())->findBy(array(
-            'isExposed' => true
+            'isExposed' => true,
         ));
     }
 }

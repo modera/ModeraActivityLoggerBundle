@@ -27,16 +27,18 @@ class MissingConfigurationParameterException extends \RuntimeException
 
     /**
      * @param \Modera\ConfigBundle\Entity\ConfigurationEntry $entry
-     * @param string $parameter
+     * @param string                                         $parameter
+     *
      * @return MissingConfigurationParameterException
      */
-    static public function create(ConfigurationEntry $entry, $parameter)
+    public static function create(ConfigurationEntry $entry, $parameter)
     {
         $me = new self(sprintf(
             '%s::getServerHandlerConfig(): configuration property "%s" for ConfigurationEntry with id "%s" is not provided!',
             get_class($entry), $parameter, $entry->getId()
         ));
         $me->setParameter($parameter);
+
         return $me;
     }
 }

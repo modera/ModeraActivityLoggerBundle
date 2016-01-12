@@ -1,15 +1,20 @@
 # ModeraConfigBundle
 
+[![Build Status](https://travis-ci.org/modera/ModeraConfigBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraConfigBundle)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/modera/ModeraConfigBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/modera/ModeraConfigBundle/?branch=master)
+[![StyleCI](https://styleci.io/repos/29132382/shield)](https://styleci.io/repos/29132382)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/e9094ed5-4aeb-4380-b7ba-74a1bbcc2826/mini.png)](https://insight.sensiolabs.com/projects/e9094ed5-4aeb-4380-b7ba-74a1bbcc2826)
+
 Bundles provides tools that allow to you to dynamically store and fetch your configuration properties in a flexible way.
-You can store any type of configuration property - your configuration property can store both simple values ( like string,
-integers, arrays ) or complex ones - like objects or references to entities, this is achieved by using so called
-"Handlers" ( implementations of `\Modera\ConfigBundle\Config\HandlerInterface` ).
+You can store any type of configuration property - your configuration property can store both simple values (like string,
+integers, arrays) or complex ones - like objects or references to entities, this is achieved by using so called
+"Handlers" (implementations of `\Modera\ConfigBundle\Config\HandlerInterface`).
 
 ## Installation
 
 Add this dependency to your composer.json:
 
-    "modera/config-bundle": "dev-master"
+    "modera/config-bundle": "~1.0"
 
 Update your AppKernel class and add this:
 
@@ -20,8 +25,8 @@ Update your AppKernel class and add this:
 Before you can use your configuration properties you need to publish them. Publishing process consists of several steps:
 
 1. Create a provider class.
-2. Register your provides class in service container with "modera_config.config_entries_provider" tag
-3. Use `modera:config:install-config-entries` command to publish exposed configuration entries
+2. Register your provides class in service container with "modera_config.config_entries_provider" tag.
+3. Use `modera:config:install-config-entries` command to publish exposed configuration entries.
 
 This is how a simple provider class could look like:
 
@@ -40,7 +45,7 @@ This is how a simple provider class could look like:
         }
 
         /**
-         * @inheritDoc
+         * {@inheritdoc}
          */
         public function getItems()
         {
@@ -92,7 +97,7 @@ By default the bundle is capable of storing these types of values:
 * references to entities
 
 If you need to store some more complex values then you need to implement `\Modera\ConfigBundle\Config\HandlerInterface`
-interface. Please see already shipped implementations ( `\Modera\ConfigBundle\Config\EntityRepositoryHandler`,
+interface. Please see already shipped implementations (`\Modera\ConfigBundle\Config\EntityRepositoryHandler`,
 for example) to see how you can create your own handlers.
 
 ## Hints

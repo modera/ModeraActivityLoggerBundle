@@ -32,11 +32,12 @@ class EntityRepositoryHandler implements HandlerInterface
         if (!isset($cfg['entityFqcn'])) {
             throw MissingConfigurationParameterException::create($entry, 'entityFqcn');
         }
+
         return $cfg['entityFqcn'];
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getReadableValue(ConfigurationEntry $entry)
     {
@@ -51,11 +52,12 @@ class EntityRepositoryHandler implements HandlerInterface
                 $this->getEntityFqcn($entry), $entry->getDenormalizedValue()
             ));
         }
+
         return $entity->{$cfg['toStringMethodName']}();
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getValue(ConfigurationEntry $entry)
     {
@@ -63,7 +65,7 @@ class EntityRepositoryHandler implements HandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function convertToStorageValue($object, ConfigurationEntry $entry)
     {

@@ -2,8 +2,9 @@
 
 namespace Modera\ConfigBundle\Tests\Functional\Entity;
 
-use Modera\CoreBundle\Util\IntegrationTestCase;
+use Doctrine\ORM\Tools\SchemaTool;
 use Modera\ConfigBundle\Entity\ConfigurationEntry as CE;
+use Modera\ConfigBundle\Entity\ConfigurationEntry;
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
 
 /**
@@ -11,6 +12,32 @@ use Modera\FoundationBundle\Testing\FunctionalTestCase;
  */
 class ConfigurationEntryTest extends FunctionalTestCase
 {
+    /**
+     * @var SchemaTool
+     */
+    private static $st;
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function doSetUpBeforeClass()
+    {
+        self::$st = new SchemaTool(self::$em);
+        self::$st->createSchema([
+            self::$em->getClassMetadata(ConfigurationEntry::clazz()),
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function doTearDownAfterClass()
+    {
+        self::$st->dropSchema([
+            self::$em->getClassMetadata(ConfigurationEntry::clazz()),
+        ]);
+    }
+
     public function testSetClientValueAndGetClientValue()
     {
         $em = self::$em;
@@ -70,7 +97,7 @@ class ConfigurationEntryTest extends FunctionalTestCase
         $em->getUnitOfWork()->clear();
 
         $ce = $em->getRepository(CE::clazz())->findOneBy(array(
-            'name' => 'greeting_msg'
+            'name' => 'greeting_msg',
         ));
         $this->assertInstanceOf(CE::clazz(), $ce);
         $this->assertInstanceOf('Symfony\Component\DependencyInjection\ContainerInterface', $ce->getContainer());
@@ -102,7 +129,7 @@ class ConfigurationEntryTest extends FunctionalTestCase
 
         $ce = new CE('bar_prop');
         $ce->setServerHandlerConfig(array(
-            'handler' => $handlerServiceId
+            'handler' => $handlerServiceId,
         ));
         $ce->init($container);
         $ce->setDenormalizedValue('foo_val');
@@ -127,7 +154,7 @@ class ConfigurationEntryTest extends FunctionalTestCase
 
         $ce = new CE('bar_prop');
         $ce->setServerHandlerConfig(array(
-            'handler' => $handlerServiceId
+            'handler' => $handlerServiceId,
         ));
         $ce->init($container);
 
@@ -144,7 +171,7 @@ class ConfigurationEntryTest extends FunctionalTestCase
 
         $ce = new CE('foo_prop');
         $ce->setServerHandlerConfig(array(
-            'update_handler' => $id
+            'update_handler' => $id,
         ));
         $ce->init($container);
         $ce->setValue('foo');

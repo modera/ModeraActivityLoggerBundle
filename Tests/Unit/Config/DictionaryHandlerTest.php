@@ -21,8 +21,8 @@ class DictionaryHandlerTest extends \PHPUnit_Framework_TestCase
 
         $config = array(
             'dictionary' => array(
-                'foo' => 'foo-val'
-            )
+                'foo' => 'foo-val',
+            ),
         );
         $this->entry = $this->getMock(
             ConfigurationEntry::clazz(), array(), array(), '', null, false
@@ -57,4 +57,4 @@ class DictionaryHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals('blah', $this->handler->convertToStorageValue('blah', $this->entry));
     }
-} 
+}
