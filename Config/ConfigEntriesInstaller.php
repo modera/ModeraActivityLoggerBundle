@@ -35,7 +35,7 @@ class ConfigEntriesInstaller
 
     private function entryExists(ConfigurationEntryDefinition $entry)
     {
-        return !!$this->em->getRepository(ConfigurationEntry::clazz())->findOneBy(array('name' => $entry->getName()));
+        return (bool) $this->em->getRepository(ConfigurationEntry::clazz())->findOneBy(array('name' => $entry->getName()));
     }
 
     /**

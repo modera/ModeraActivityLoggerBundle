@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/modera/ModeraConfigBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraConfigBundle)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/modera/ModeraConfigBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/modera/ModeraConfigBundle/?branch=master)
 [![StyleCI](https://styleci.io/repos/29132382/shield)](https://styleci.io/repos/29132382)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/e9094ed5-4aeb-4380-b7ba-74a1bbcc2826/mini.png)](https://insight.sensiolabs.com/projects/e9094ed5-4aeb-4380-b7ba-74a1bbcc2826)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/df758e1e-7e57-42c6-bb28-5c05ac002ad8/mini.png)](https://insight.sensiolabs.com/projects/df758e1e-7e57-42c6-bb28-5c05ac002ad8)
 
 Bundles provides tools that allow to you to dynamically store and fetch your configuration properties in a flexible way.
 You can store any type of configuration property - your configuration property can store both simple values (like string,

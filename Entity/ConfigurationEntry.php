@@ -397,7 +397,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
             } else {
                 return self::TYPE_TEXT;
             }
-        } elseif (is_float($value) || is_double($value)) {
+        } elseif (is_float($value)) {
             return self::TYPE_FLOAT;
         } elseif (is_int($value)) {
             return self::TYPE_INT;
