@@ -55,5 +55,13 @@
 
             <tag name="ts.core.cs.runtime_plugin_class_names_provider" />
         </service>
+
+        <service id="modera_config.twig.twig_extension"
+                 class="Modera\ConfigBundle\Twig\TwigExtension">
+
+            <argument type="service" id="modera_config.configuration_entries_manager" />
+
+            <tag name="twig.extension" />
+        </service>
     </services>
 </container>

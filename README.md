@@ -85,6 +85,17 @@ In order to fetch a configuration property in your application code you need to 
     // will yield "MyCompany\SecurityBundle\Entity\User"
     echo get_class($property->getValue());
 
+## Twig integration
+
+The bundle also provides integration with Twig that allow you to fetch configuration properties' values from your
+template. For this you will want to use `modera_config_value` function:
+
+    {{ modera_config_value("my_property_name") }}
+
+This will print value for "my_property_name" configuration property. By default if no given configuration property
+is found then exception is thrown but you can change this behaviour by passing FALSE as second argument to the function
+and in this case NULL be returned instead of throwing an exception.
+
 ## Handlers
 
 By default the bundle is capable of storing these types of values:
