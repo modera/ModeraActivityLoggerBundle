@@ -5,6 +5,8 @@
 [![StyleCI](https://styleci.io/repos/29133176/shield)](https://styleci.io/repos/29133176)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/e0f6dba2-92a4-4be3-a311-c5e2c1226caf/mini.png)](https://insight.sensiolabs.com/projects/e0f6dba2-92a4-4be3-a311-c5e2c1226caf)
 
+Bundle simplifies upgrading procedure of Composer packages.
+
 ## Installation
 
 Add the bundle to your project by running:
