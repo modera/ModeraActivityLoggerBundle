@@ -16,7 +16,7 @@ class AppKernel extends Kernel
 
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
-        $loader->load(__DIR__ . '/config/config.yml');
+        $loader->load(__DIR__.'/config/config.yml');
     }
 
     /**
@@ -24,7 +24,7 @@ class AppKernel extends Kernel
      */
     public function getCacheDir()
     {
-        return sys_get_temp_dir() . '/ModeraUpgradeBundle/cache';
+        return sys_get_temp_dir().'/ModeraUpgradeBundle/cache';
     }
 
     /**
@@ -32,6 +32,6 @@ class AppKernel extends Kernel
      */
     public function getLogDir()
     {
-        return sys_get_temp_dir() . '/ModeraUpgradeBundle/logs';
+        return sys_get_temp_dir().'/ModeraUpgradeBundle/logs';
     }
 }

@@ -25,6 +25,7 @@ class JsonFile
      * Reads json file.
      *
      * @throws \RuntimeException
+     *
      * @return mixed
      */
     public function read()
@@ -33,7 +34,7 @@ class JsonFile
 
         if (false === $json) {
             throw new \RuntimeException(
-                'Could not read ' . $this->path
+                'Could not read '.$this->path
             );
         }
 
@@ -65,7 +66,7 @@ class JsonFile
 
         if ($error) {
             throw new \RuntimeException(
-                $error . ' Path: ' . $this->path
+                $error.' Path: '.$this->path
             );
         }
 
@@ -75,19 +76,20 @@ class JsonFile
     /**
      * Writes json file.
      *
-     * @param array $hash writes hash into json file
-     * @param int $options json_encode options (defaults to JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+     * @param array $hash    writes hash into json file
+     * @param int   $options json_encode options (defaults to JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+     *
      * @throws \RuntimeException
      */
     public function write(array $hash, $options = 448)
     {
         if (!file_exists(dirname($this->path))) {
             throw new \RuntimeException(
-                'Could not write ' . $this->path
+                'Could not write '.$this->path
             );
         }
 
         $encode = json_encode($hash, $options);
-        file_put_contents($this->path, $encode . ($options & JSON_PRETTY_PRINT ? "\n" : ''));
+        file_put_contents($this->path, $encode.($options & JSON_PRETTY_PRINT ? "\n" : ''));
     }
 }

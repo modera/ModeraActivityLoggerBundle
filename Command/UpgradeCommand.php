@@ -18,7 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 class UpgradeCommand extends ContainerAwareCommand
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function configure()
     {
@@ -28,13 +28,13 @@ class UpgradeCommand extends ContainerAwareCommand
             ->setDefinition([
                 new InputOption('dependencies', null, InputOption::VALUE_NONE, 'Update dependencies in "composer.json"'),
                 new InputOption('run-commands', null, InputOption::VALUE_NONE, 'Run commands'),
-                new InputArgument('versions-path', InputArgument::OPTIONAL, 'versions.json path', getcwd() . '/versions.json')
+                new InputArgument('versions-path', InputArgument::OPTIONAL, 'versions.json path', getcwd().'/versions.json'),
             ])
         ;
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -45,14 +45,14 @@ class UpgradeCommand extends ContainerAwareCommand
         $runCommandsOption = $input->getOption('run-commands');
 
         $versionsPathArg = $input->getArgument('versions-path');
-        $versionJsonPath = getcwd() . '/modera-version.txt';
+        $versionJsonPath = getcwd().'/modera-version.txt';
 
         $output->writeln('');
 
         if (!$dependenciesOption && !$runCommandsOption) {
             $msg = [
                 'If you want to update dependencies then please use <info>--dependencies</info> option for the command, ',
-                'if you need to have commands executed when a version is upgraded then use <info>--run-commands</info> option instead.'
+                'if you need to have commands executed when a version is upgraded then use <info>--run-commands</info> option instead.',
             ];
             $output->writeln(implode('', $msg));
             $output->writeln('');
@@ -63,7 +63,7 @@ class UpgradeCommand extends ContainerAwareCommand
         $output->writeln("Reading upgrade instructions from '<info>$versionsPathArg</info>'.");
 
         $basePath = dirname($this->getContainer()->get('kernel')->getRootdir());
-        $composerFile = new JsonFile($basePath . '/composer.json');
+        $composerFile = new JsonFile($basePath.'/composer.json');
         $versionsFile = new JsonFile($versionsPathArg);
 
         $composerFileContents = $composerFile->read();
@@ -72,7 +72,6 @@ class UpgradeCommand extends ContainerAwareCommand
         $currentVersion = @file_get_contents($versionJsonPath);
 
         if ($dependenciesOption) {
-
             $newVersion = null;
             $versions = array_keys($versionsFileContents);
 
@@ -85,8 +84,8 @@ class UpgradeCommand extends ContainerAwareCommand
 
             // backup composer.json
             file_put_contents(
-                $basePath . '/composer' . ($currentVersion ? '.v' . $currentVersion : '') . '.backup.json',
-                file_get_contents($basePath . '/composer.json')
+                $basePath.'/composer'.($currentVersion ? '.v'.$currentVersion : '').'.backup.json',
+                file_get_contents($basePath.'/composer.json')
             );
 
             // manage dependencies
@@ -97,7 +96,7 @@ class UpgradeCommand extends ContainerAwareCommand
                     $versionsFileContents[$newVersion], 'dependencies', array()
                 );
             } else {
-                foreach(array_keys($versions) as $k) {
+                foreach (array_keys($versions) as $k) {
                     if ($versions[$k] == $currentVersion) {
                         $key = $k;
                         while ($key >= 0) {
@@ -178,7 +177,7 @@ class UpgradeCommand extends ContainerAwareCommand
             foreach ($dependenciesDiff['same'] as $name => $ver) {
                 if (!isset($dependenciesOption[$name])) {
                     $dependenciesOption[$name] = $ver;
-                } else if ($ver !== $dependenciesOption[$name]) {
+                } elseif ($ver !== $dependenciesOption[$name]) {
                     $msg = sprintf(implode('', [
                         '<question>',
                             'Dependency "%s:%s" has been manually changed. ',
@@ -230,15 +229,15 @@ class UpgradeCommand extends ContainerAwareCommand
             $output->writeln("<info>composer.json 'requires' section has been updated to version $newVersion</info>");
 
             if (count($this->getArrayValue($versionsFileContents[$newVersion], 'add-bundles'))) {
-                $output->writeln("<comment>Add bundle(s) to app/AppKernel.php</comment>");
+                $output->writeln('<comment>Add bundle(s) to app/AppKernel.php</comment>');
                 foreach ($versionsFileContents[$newVersion]['add-bundles'] as $bundle) {
-                    $output->writeln('    ' . $bundle);
+                    $output->writeln('    '.$bundle);
                 }
             }
             if (count($this->getArrayValue($versionsFileContents[$newVersion], 'rm-bundles'))) {
-                $output->writeln("<comment>Remove bundle(s) from app/AppKernel.php</comment>");
+                $output->writeln('<comment>Remove bundle(s) from app/AppKernel.php</comment>');
                 foreach ($versionsFileContents[$newVersion]['rm-bundles'] as $bundle) {
-                    $output->writeln('    ' . $bundle);
+                    $output->writeln('    '.$bundle);
                 }
             }
 
@@ -250,11 +249,9 @@ class UpgradeCommand extends ContainerAwareCommand
 
             if (count($this->getArrayValue($versionsFileContents[$newVersion], 'commands'))) {
                 $output->writeln('After composer update run:');
-                $output->writeln('<info>php app/console ' . $this->getName() . ' --run-commands</info>');
+                $output->writeln('<info>php app/console '.$this->getName().' --run-commands</info>');
             }
-
-        } else if ($runCommandsOption) {
-
+        } elseif ($runCommandsOption) {
             if ($currentVersion) {
                 $versionData = $this->getArrayValue(
                     $versionsFileContents, $currentVersion, array()
@@ -274,7 +271,6 @@ class UpgradeCommand extends ContainerAwareCommand
                     $output->writeln('<comment>No commands need to be run! Aborting ...</comment>');
                 }
             }
-
         }
 
         $output->writeln('');
@@ -284,6 +280,7 @@ class UpgradeCommand extends ContainerAwareCommand
      * @param array $arr
      * @param $key
      * @param null $default
+     *
      * @return mixed
      */
     private function getArrayValue(array $arr, $key, $default = null)
@@ -298,22 +295,23 @@ class UpgradeCommand extends ContainerAwareCommand
     /**
      * @param array $arr1
      * @param array $arr2
+     *
      * @return array
      */
     private function diffDependencies(array $arr1, array $arr2)
     {
-        $diff1   = array_diff_assoc($arr1, $arr2);
-        $diff2   = array_diff_assoc($arr2, $arr1);
-        $added   = array_diff_key($diff2, $diff1);
+        $diff1 = array_diff_assoc($arr1, $arr2);
+        $diff2 = array_diff_assoc($arr2, $arr1);
+        $added = array_diff_key($diff2, $diff1);
         $changed = array_diff_key($diff2, $added);
         $removed = array_diff_key($diff1, $diff2);
-        $same    = array_diff_key($arr1, $diff1);
+        $same = array_diff_key($arr1, $diff1);
 
         return array(
-            'added'   => $added,
+            'added' => $added,
             'changed' => $changed,
             'removed' => $removed,
-            'same'    => $same,
+            'same' => $same,
         );
     }
 }

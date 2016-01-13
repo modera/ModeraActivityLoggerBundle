@@ -15,7 +15,7 @@ class JsonFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailureRead()
     {
-        $jsonFile = new JsonFile(__DIR__ . '/undefined.json');
+        $jsonFile = new JsonFile(__DIR__.'/undefined.json');
         $jsonFile->read();
     }
 
@@ -24,15 +24,15 @@ class JsonFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testJsonError()
     {
-        $jsonFile = new JsonFile(__DIR__ . '/test_error.json');
+        $jsonFile = new JsonFile(__DIR__.'/test_error.json');
         $jsonFile->read();
     }
 
     public function testSuccessfulRead()
     {
-        $jsonFile = new JsonFile(__DIR__ . '/test_read.json');
+        $jsonFile = new JsonFile(__DIR__.'/test_read.json');
         $data = $jsonFile->read();
-        $this->assertEquals(array("test" => "test"), $data);
+        $this->assertEquals(array('test' => 'test'), $data);
     }
 
     /**
@@ -40,16 +40,16 @@ class JsonFileTest extends \PHPUnit_Framework_TestCase
      */
     public function testFailureWrite()
     {
-        $jsonFile = new JsonFile(__DIR__ . '/undefined/test2.json');
-        $jsonFile->write(array("failure" => "failure"));
+        $jsonFile = new JsonFile(__DIR__.'/undefined/test2.json');
+        $jsonFile->write(array('failure' => 'failure'));
     }
 
     public function testSuccessfulWrite()
     {
-        $jsonFile = new JsonFile(__DIR__ . '/test_write.json');
-        $data = array("test" => "test");
+        $jsonFile = new JsonFile(__DIR__.'/test_write.json');
+        $data = array('test' => 'test');
         $jsonFile->write($data);
         $this->assertEquals($data, $jsonFile->read());
-        unlink(__DIR__ . '/test_write.json');
+        unlink(__DIR__.'/test_write.json');
     }
 }
