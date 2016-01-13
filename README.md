@@ -7,27 +7,19 @@
 
 ## Installation
 
-### Step 1: update your vendors by running
+Add the bundle to your project by running:
 
-    $ php composer.phar require modera/upgrade-bundle:dev-master
+    composer require modera/upgrade-bundle
 
-### Step2: Enable the bundle
+Update your AppKernel class and add this:
 
-    <?php
-    // app/AppKernel.php
+    new Modera\UpgradeBundle\ModeraUpgradeBundle(),
 
-    public function registerBundles()
-    {
-        $bundles = array(
-            // ...
+## Documentation
 
-            new Modera\UpgradeBundle\ModeraUpgradeBundle(),
-        );
-    }
+Run this command to get help how to use package upgrade command:
 
-### Step3: Update dependencies in "composer.json"
-
-    $ php app/console modera:upgrade --dependencies
+    app/console modera:upgrade --help
 
 ## Licensing
 
