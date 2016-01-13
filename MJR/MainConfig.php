@@ -15,6 +15,9 @@ use Modera\DynamicallyConfigurableMJRBundle\ModeraDynamicallyConfigurableMJRBund
  */
 class MainConfig implements MainConfigInterface
 {
+    /**
+     * @var ConfigurationEntriesManagerInterface
+     */
     private $mgr;
 
     /**
@@ -26,7 +29,7 @@ class MainConfig implements MainConfigInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getTitle()
     {
@@ -34,7 +37,7 @@ class MainConfig implements MainConfigInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getUrl()
     {
@@ -42,10 +45,18 @@ class MainConfig implements MainConfigInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getHomeSection()
     {
         return $this->mgr->findOneByNameOrDie(Bundle::CONFIG_HOME_SECTION)->getValue();
     }
-} 
+
+    /**
+     * @return string
+     */
+    public static function clazz()
+    {
+        return get_called_class();
+    }
+}

@@ -12,14 +12,30 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
 class SettingsSectionsProvider implements ContributorInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
-        return array(
+        return [
             new StandardSection(
-                'general', 'General', 'Modera.backend.dcmjr.runtime.GeneralSiteSettingsActivity', 'gear', array('category' => 'general')
-            )
-        );
+                'general',
+                'General',
+                'Modera.backend.dcmjr.runtime.GeneralSiteSettingsActivity',
+                'gear',
+                array(
+                    'activationParams' => array(
+                        'category' => 'general',
+                    ),
+                )
+            ),
+        ];
     }
-} 
+
+    /**
+     * @return string
+     */
+    public static function clazz()
+    {
+        return get_called_class();
+    }
+}

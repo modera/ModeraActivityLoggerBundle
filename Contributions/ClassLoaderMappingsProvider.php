@@ -10,20 +10,31 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class ClassLoaderMappingsProvider implements ContributorInterface
 {
+    /**
+     * @var string[]
+     */
     private $items;
 
     public function __construct()
     {
         $this->items = array(
-            'Modera.backend.dcmjr' => '/bundles/moderadynamicallyconfigurablemjr/js'
+            'Modera.backend.dcmjr' => '/bundles/moderadynamicallyconfigurablemjr/js',
         );
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * @return string
+     */
+    public static function clazz()
+    {
+        return get_called_class();
     }
 }

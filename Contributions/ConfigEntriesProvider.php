@@ -13,14 +13,22 @@ use Modera\DynamicallyConfigurableMJRBundle\ModeraDynamicallyConfigurableMJRBund
 class ConfigEntriesProvider implements ContributorInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
-        return array(
+        return [
             new CED(Bundle::CONFIG_TITLE, 'Site name', 'Modera Foundation', 'general'),
             new CED(Bundle::CONFIG_URL, 'Default URL', '', 'general'),
-            new CED(Bundle::CONFIG_HOME_SECTION, 'Default section to open when user logs in to backend', '', 'general')
-        );
+            new CED(Bundle::CONFIG_HOME_SECTION, 'Default section to open when user logs in to backend', '', 'general'),
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public static function clazz()
+    {
+        return get_called_class();
     }
 }
