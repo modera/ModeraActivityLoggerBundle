@@ -36,7 +36,9 @@ class UpgradeCommandTest extends FunctionalTestCase
      */
     private static $versionFilePath;
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     public static function doSetUpBeforeClass()
     {
         self::$basePath = dirname(self::$kernel->getRootdir());
@@ -49,7 +51,9 @@ class UpgradeCommandTest extends FunctionalTestCase
         }
     }
 
-    // override
+    /**
+     * {@inheritdoc}
+     */
     public static function doTearDownAfterClass()
     {
         self::$composerFile->write(self::$composerBackup);
