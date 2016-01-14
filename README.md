@@ -23,7 +23,7 @@ For a example how to contribute a settings page using tools provided by this bun
 [SettingsSectionsProvider](https://github.com/modera/ModeraBackendGoogleAnalyticsConfigBundle/blob/master/Contributions/SettingsSectionsProvider.php)
 from ModeraBackendGoogleAnalyticsConfigBundle, this is how it is going to look in UI:
 
-![Settings page from ModeraBackendGoogleAnalyticsConfigBundle](Resources/screenshots/ModeraBackendGoogleAnalyticsBundle.png)
+![Settings page from ModeraBackendGoogleAnalyticsConfigBundle](Resources/screenshots/ModeraBackendConfigUtilsBundle.png)
 
 For more details regarding available configuration properties for in-place editor fields available for configuration
 grid take a look at [PropertiesGrid.js](Resources/public/js/view/PropertiesGrid.js).
