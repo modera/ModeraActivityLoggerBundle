@@ -167,6 +167,7 @@ Ext.define('Modera.backend.configutils.view.PropertiesGrid', {
      * @protected
      * @param {Object} editorConfig
      * @param {Ext.data.Model} record
+     *
      * @return {null|false|Object}
      */
     createValueEditor: function(editorConfig, record) {

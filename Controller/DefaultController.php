@@ -20,7 +20,7 @@ class DefaultController extends AbstractCrudController
             'entity' => ConfigurationEntry::clazz(),
             'hydration' => array(
                 'groups' => array(
-                    'list' => function(ConfigurationEntry $entry) {
+                    'list' => function (ConfigurationEntry $entry) {
                         return array(
                             'id' => $entry->getId(),
                             'name' => $entry->getName(),
@@ -28,13 +28,13 @@ class DefaultController extends AbstractCrudController
                             'readableValue' => $entry->getReadableValue(),
                             'value' => $entry->getValue(),
                             'isReadOnly' => $entry->isReadOnly(),
-                            'editorConfig' => $entry->getClientHandlerConfig()
+                            'editorConfig' => $entry->getClientHandlerConfig(),
                         );
-                    }
+                    },
                 ),
-                'profiles' => ['list']
+                'profiles' => ['list'],
             ),
-            'map_data_on_update' => function(array $params, ConfigurationEntry $entry) {
+            'map_data_on_update' => function (array $params, ConfigurationEntry $entry) {
                 if ($entry->isReadOnly() || !$entry->isExposed()) {
                     return;
                 }
@@ -42,7 +42,7 @@ class DefaultController extends AbstractCrudController
                 if (isset($params['value'])) {
                     $entry->setValue($params['value']);
                 }
-            }
+            },
         );
     }
 }
