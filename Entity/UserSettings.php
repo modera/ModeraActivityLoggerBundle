@@ -34,7 +34,7 @@ class UserSettings
      */
     private $language;
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

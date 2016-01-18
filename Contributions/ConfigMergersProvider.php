@@ -37,10 +37,9 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
         $dbLanguages = $this->em->getRepository(Language::clazz())->findBy(array('isEnabled' => true));
         foreach ($dbLanguages as $dbLanguage) {
             $languages[] = array(
-                'id'   => $dbLanguage->getId(),
+                'id' => $dbLanguage->getId(),
                 'name' => $dbLanguage->getName(),
             );
-
         }
 
         return array_merge($currentConfig, array(
@@ -51,12 +50,10 @@ class ConfigMergersProvider implements ContributorInterface, ConfigMergerInterfa
     }
 
     /**
-     * @inheritDoc
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getItems()
     {
         return array($this);
     }
-} 
+}

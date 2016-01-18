@@ -20,9 +20,9 @@ class UserSettingsController extends AbstractCrudController
             'entity' => UserSettings::clazz(),
             'hydration' => array(
                 'groups' => array(
-                    'main-form' => function(UserSettings $settings) {
+                    'main-form' => function (UserSettings $settings) {
                         return array(
-                            'id'       => $settings->getId(),
+                            'id' => $settings->getId(),
                             'username' => $settings->getUser()->getUsername(),
                             'language' => $settings->getLanguage() ? $settings->getLanguage()->getId() : null,
                         );
@@ -30,7 +30,7 @@ class UserSettingsController extends AbstractCrudController
                 ),
                 'profiles' => array(
                     'main-form',
-                )
+                ),
             ),
         );
     }

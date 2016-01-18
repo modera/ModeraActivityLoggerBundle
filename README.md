@@ -1,10 +1,12 @@
 # ModeraBackendLanguagesBundle
 
+[![StyleCI](https://styleci.io/repos/29132064/shield)](https://styleci.io/repos/29132064)
+
 ## Installation
 
 Add this dependency to your composer.json:
 
-    "modera/backend-languages-bundle": "dev-master"
+    "modera/backend-languages-bundle": "~1.0"
 
 Update your AppKernel class and add this:
 

@@ -10,6 +10,9 @@ use Sli\ExtJsLocalizationBundle\Controller\IndexController as Controller;
  */
 class IndexController extends Controller
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function getTemplate()
     {
         return 'ModeraBackendLanguagesBundle:Index:compile.html.twig';

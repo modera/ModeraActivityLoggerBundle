@@ -10,17 +10,20 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class ClassLoaderMappingsProvider implements ContributorInterface
 {
+    /**
+     * @var string[]
+     */
     private $items;
 
     public function __construct()
     {
         $this->items = array(
-            'Modera.backend.languages' => '/bundles/moderabackendlanguages/js'
+            'Modera.backend.languages' => '/bundles/moderabackendlanguages/js',
         );
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {

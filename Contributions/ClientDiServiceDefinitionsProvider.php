@@ -35,7 +35,7 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getItems()
     {
@@ -71,20 +71,20 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
         return array(
             'extjs_localization_runtime_plugin' => array(
                 'className' => 'Modera.backend.languages.runtime.ExtJsLocalizationPlugin',
-                'tags'      => ['runtime_plugin'],
-                'args'      => array(
+                'tags' => ['runtime_plugin'],
+                'args' => array(
                     array(
                         'urls' => array(
-                            $runtimeConfig['extjs_path'] . '/locale/ext-lang-' . $locale . '.js',
+                            $runtimeConfig['extjs_path'].'/locale/ext-lang-'.$locale.'.js',
                             $router->generate('modera_backend_languages_extjs_l10n', array('locale' => $locale)),
                         ),
-                    )
+                    ),
                 ),
             ),
             'modera_backend_languages.user_settings_window_contributor' => array(
                 'className' => 'Modera.backend.languages.runtime.UserSettingsWindowContributor',
                 'args' => ['@application'],
-                'tags' => ['shared_activities_provider']
+                'tags' => ['shared_activities_provider'],
             ),
         );
     }
