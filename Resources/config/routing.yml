@@ -1,4 +1,0 @@
-modera_security.security:
-    resource: "@ModeraSecurityBundle/Controller/SecurityController.php"
-    type:     annotation
-    prefix:   /
