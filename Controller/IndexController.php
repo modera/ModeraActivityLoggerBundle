@@ -9,6 +9,7 @@ use Modera\MjrIntegrationBundle\ClientSideDependencyInjection\ServiceDefinitions
 use Modera\MjrIntegrationBundle\DependencyInjection\ModeraMjrIntegrationExtension;
 use Modera\MJRSecurityIntegrationBundle\ModeraMJRSecurityIntegrationBundle;
 use Modera\MJRSecurityIntegrationBundle\DependencyInjection\ModeraMJRSecurityIntegrationExtension;
+use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,11 +40,15 @@ class IndexController extends Controller
         $runtimeConfig = $this->container->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY);
         $securedRuntimeConfig = $this->container->getParameter(ModeraMJRSecurityIntegrationExtension::CONFIG_KEY);
 
+        /* @var ContributorInterface $classLoaderMappingsProvider */
+        $classLoaderMappingsProvider = $this->get('modera_mjr_integration.bootstrapping_class_loader_mappings_provider');
+
         /* @var MainConfigInterface $mainConfig */
         $mainConfig = $this->container->get($runtimeConfig['main_config_provider']);
         $runtimeConfig['home_section'] = $mainConfig->getHomeSection();
         $runtimeConfig['deployment_name'] = $mainConfig->getTitle();
         $runtimeConfig['deployment_url'] = $mainConfig->getUrl();
+        $runtimeConfig['class_loader_mappings'] = $classLoaderMappingsProvider->getItems();
 
         // for docs regarding how to use "non-blocking" assets see
         // \Modera\MjrIntegrationBundle\AssetsHandling\AssetsProvider class

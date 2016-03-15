@@ -42,6 +42,9 @@
         paths: {
             MFC: '{{ asset(config.runtime_path) }}/src/MFC',
             MF: '{{ asset(config.runtime_path) }}/src/MF',
+{% for ns, path in config.class_loader_mappings %}
+            '{{ ns }}': '{{ path }}',
+{% endfor %}
             {{ config.app_name }}: '{{ app_loading_path }}'
         }
     });

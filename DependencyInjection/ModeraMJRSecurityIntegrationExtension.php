@@ -4,6 +4,7 @@ namespace Modera\MJRSecurityIntegrationBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -12,7 +13,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class ModeraMJRSecurityIntegrationExtension extends Extension
+class ModeraMJRSecurityIntegrationExtension extends Extension implements PrependExtensionInterface
 {
     const CONFIG_KEY = 'modera_mjr_security_integration.config';
 
@@ -32,5 +33,16 @@ class ModeraMJRSecurityIntegrationExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function prepend(ContainerBuilder $container)
+    {
+        // Secured MJR application relies on AuthenticationRequiredApplication to bootstrap itself
+        $container->prependExtensionConfig('modera_mjr_integration', array(
+            'app_base_class' => 'MF.runtime.applications.authenticationaware.AuthenticationRequiredApplication',
+        ));
     }
 }
