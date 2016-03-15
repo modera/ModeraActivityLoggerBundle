@@ -222,5 +222,13 @@ TEXT;
 
         // allows to contribute menu items by defining them in config file
         $container->addCompilerPass(new MenuItemContributorCompilerPass());
+
+        $bootstrappingClassLoaderMappingsProvider = new ExtensionPoint(
+            'modera_mjr_integration.bootstrapping_class_loader_mappings'
+        );
+        $bootstrappingClassLoaderMappingsProvider->setDescription(
+            'Allows to contribute ExtJs classname:path mappings that will be configured before runtime is initialized.'
+        );
+        $container->addCompilerPass($bootstrappingClassLoaderMappingsProvider->createCompilerPass());
     }
 }

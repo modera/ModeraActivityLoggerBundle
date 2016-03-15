@@ -112,6 +112,14 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('route_prefix')
                     ->defaultValue('')
                 ->end()
+                // Specifies what class ExtJs application should extend, this might be useful
+                // if you need to tweak some bootstrapping logic. For more details how this
+                // configuration parameter can be used you can take a look at
+                // \Modera\MJRSecurityIntegrationBundle\Controller\IndexController::indexAction
+                // and @MJRSecurityIntegrationBundle/Resources/views/Index/application.html.twig
+                ->scalarNode('app_base_class')
+                    ->defaultValue('')
+                ->end()
             ->end()
         ;
 
