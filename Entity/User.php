@@ -106,6 +106,16 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
      */
     private $permissions;
 
+    /**
+     * You can use this field to keep meta-information associated with given user. To minimize chance of occurring
+     * overlapped keys please store your values under bundle name which owns contributed configuration values. For
+     * example, if you have a bundle AcmeFooBundle which wants to save some values to this field then store all values
+     * under "acme_foo" key.
+     *
+     * @ORM\Column(type="json_array")
+     */
+    private $meta = array();
+
     public function __construct()
     {
         $this->isActive = true;
@@ -479,6 +489,22 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     public function getPermissions()
     {
         return $this->permissions;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
+
+    /**
+     * @param array $meta
+     */
+    public function setMeta(array $meta)
+    {
+        $this->meta = $meta;
     }
 
     /**
