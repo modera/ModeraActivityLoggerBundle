@@ -9,7 +9,6 @@ use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
 /**
@@ -21,11 +20,6 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class Loader implements LoaderInterface
 {
-    /**
-     * @var ContainerInterface
-     */
-    private $container;
-
     /**
      * @var ContributorInterface
      */
@@ -65,23 +59,25 @@ class Loader implements LoaderInterface
         foreach ($items as $index => $resource) {
             if (!is_array($resource)) {
                 $resource = array(
-                    'order'    => 0,
                     'resource' => $resource,
                 );
             }
+            $resource = array_merge(array('order' => 0, 'type' => null), $resource);
             $resource['index'] = $index;
             $resources[] = $resource;
         }
+
         usort($resources, function($a, $b) {
             if ($a['order'] == $b['order']) {
                 return ($a['index'] < $b['index']) ? -1 : 1;
             }
+
             return ($a['order'] < $b['order']) ? -1 : 1;
         });
 
         $collection = new RouteCollection();
         foreach ($resources as $item) {
-            $collection->addCollection($this->rootLoader->load($item['resource']));
+            $collection->addCollection($this->rootLoader->load($item['resource'], $item['type']));
         }
 
         $this->isLoaded = true;

@@ -46,7 +46,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->loader->isLoaded());
 
         \Phake::when($this->resourcesProvider)->getItems()->thenReturn(array('foo-resource'));
-        \Phake::when($this->rootRoutingLoader)->load('foo-resource')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('foo-resource', null)->thenReturn(
             $this->createRouteCollection('foo', '/article/create')
         );
 
@@ -55,20 +55,15 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Symfony\Component\Routing\RouteCollection', $result);
         $routes = $result->all();
-        $this->assertEquals(1, count($routes));
+        $this->assertCount(1, $routes);
         $this->assertArrayHasKey('foo', $routes);
         $this->assertSame('/article/create', $routes['foo']->getPath());
 
         $this->assertTrue($this->loader->isLoaded());
 
-        $thrownException = null;
-        try {
-            $this->loader->load('blah');
-        } catch (\RuntimeException $e) {
-            $thrownException = $e;
-        }
+        $this->setExpectedException('RuntimeException');
 
-        $this->assertNotNull($thrownException);
+        $this->loader->load('blah');
     }
 
     public function testOrder()
@@ -82,22 +77,29 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
                 'bar-resource',
                 'baz-resource',
                 array(
+                    'resource' => 'ololo-resource',
+                    'type' => 'annotation'
+                ),
+                array(
                     'order' => -999,
                     'resource' => 'foo-resource',
                 ),
             )
         );
 
-        \Phake::when($this->rootRoutingLoader)->load('foo-resource')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('foo-resource', null)->thenReturn(
             $this->createRouteCollection('foo', '/foo')
         );
-        \Phake::when($this->rootRoutingLoader)->load('bar-resource')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('bar-resource', null)->thenReturn(
             $this->createRouteCollection('bar', '/bar')
         );
-        \Phake::when($this->rootRoutingLoader)->load('baz-resource')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('baz-resource', null)->thenReturn(
             $this->createRouteCollection('baz', '/baz')
         );
-        \Phake::when($this->rootRoutingLoader)->load('qux-resource')->thenReturn(
+        \Phake::when($this->rootRoutingLoader)->load('ololo-resource', 'annotation')->thenReturn(
+            $this->createRouteCollection('ololo', '/ololo')
+        );
+        \Phake::when($this->rootRoutingLoader)->load('qux-resource', null)->thenReturn(
             $this->createRouteCollection('qux', '/qux')
         );
 
@@ -107,14 +109,15 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
         $result = $this->loader->load('blah');
 
         $routes = $result->all();
-        $this->assertEquals(4, count($routes));
+        $this->assertCount(5, $routes);
 
         $keys = array_keys($routes);
         $this->assertEquals('foo', $keys[0]);
         $this->assertEquals('bar', $keys[1]);
         $this->assertEquals('baz', $keys[2]);
-        $this->assertEquals('qux', $keys[3]);
+        $this->assertEquals('ololo', $keys[3]);
+        $this->assertEquals('qux', $keys[4]);
 
         $this->assertTrue($this->loader->isLoaded());
     }
-} 
+}
