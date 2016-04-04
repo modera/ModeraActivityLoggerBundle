@@ -1,6 +1,7 @@
 {
     "name": "modera/routing-bundle",
     "type": "symfony-bundle",
+    "description": "This bundle makes it possible for bundles to dynamically include routing files from within your bundles.",
     "license": "MIT",
     "authors": [
         {
