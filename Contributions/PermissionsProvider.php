@@ -13,6 +13,9 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class PermissionsProvider implements ContributorInterface
 {
+    /**
+     * @var Permission[]
+     */
     private $items;
 
     /**

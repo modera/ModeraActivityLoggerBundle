@@ -15,6 +15,9 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
  */
 class ServiceDefinitionsProvider implements ContributorInterface
 {
+    /**
+     * @var ContainerInterface
+     */
     private $container;
 
     /**

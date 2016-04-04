@@ -12,6 +12,9 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class PermissionCategoriesProvider implements ContributorInterface
 {
+    /**
+     * @var PermissionCategory[]
+     */
     private $items;
 
     /**

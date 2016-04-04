@@ -4,6 +4,7 @@ namespace Modera\MJRSecurityIntegrationBundle\Tests\Unit\Contributions;
 
 use Modera\MjrIntegrationBundle\Config\ConfigMergerInterface;
 use Modera\MJRSecurityIntegrationBundle\Contributions\ConfigMergersProvider;
+use Modera\SecurityBundle\Entity\User;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 use Symfony\Component\Security\Core\Role\Role;
 
@@ -20,15 +21,21 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
             new Role('ROLE_ADMIN'),
         );
 
-        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        $token->expects($this->atLeastOnce())
-              ->method('getRoles')
-              ->will($this->returnValue($roles));
+        $user = \Phake::mock(User::clazz());
+        \Phake::when($user)->getId()->thenReturn(777);
+        \Phake::when($user)->getFullName()->thenReturn('John Doe');
+        \Phake::when($user)->getEmail()->thenReturn('john.doe@example.org');
+        \Phake::when($user)->getUsername()->thenReturn('john.doe');
 
-        $sc = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
-        $sc->expects($this->atLeastOnce())
-           ->method('getToken')
-           ->will($this->returnValue($token));
+        $token = \Phake::mock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        \Phake::when($token)
+            ->getUser()
+            ->thenReturn($user)
+        ;
+        \Phake::when($token)
+            ->getRoles()
+            ->thenReturn($roles)
+        ;
 
         $serviceDefinitions = array(
             'fooService', 'barService',
@@ -36,10 +43,16 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
 
         $clientDiDefinitionsProvider = $this->getMock(ContributorInterface::CLAZZ);
         $clientDiDefinitionsProvider->expects($this->atLeastOnce())
-                                    ->method('getItems')
-                                    ->will($this->returnValue($serviceDefinitions));
+            ->method('getItems')
+            ->will($this->returnValue($serviceDefinitions));
 
-        $provider = new ConfigMergersProvider($sc, $clientDiDefinitionsProvider);
+        $tokenStorage = \Phake::mock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
+        \Phake::when($tokenStorage)
+            ->getToken()
+            ->thenReturn($token)
+        ;
+
+        $provider = new ConfigMergersProvider($tokenStorage, $clientDiDefinitionsProvider);
         $mergers = $provider->getItems();
 
         $this->assertEquals(2, count($mergers));
@@ -65,6 +78,16 @@ class ConfigMergersProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, count($mergedConfig['roles']));
         $this->assertTrue(in_array('ROLE_USER', $mergedConfig['roles']));
         $this->assertTrue(in_array('ROLE_ADMIN', $mergedConfig['roles']));
+        $this->assertArrayHasKey('userProfile', $mergedConfig);
+        $this->assertTrue(is_array($mergedConfig['userProfile']));
+        $this->assertArrayHasKey('id', $mergedConfig['userProfile']);
+        $this->assertArrayHasKey('name', $mergedConfig['userProfile']);
+        $this->assertArrayHasKey('email', $mergedConfig['userProfile']);
+        $this->assertArrayHasKey('username', $mergedConfig['userProfile']);
+        $this->assertEquals(777, $mergedConfig['userProfile']['id']);
+        $this->assertEquals('John Doe', $mergedConfig['userProfile']['name']);
+        $this->assertEquals('john.doe@example.org', $mergedConfig['userProfile']['email']);
+        $this->assertEquals('john.doe', $mergedConfig['userProfile']['username']);
 
         $mergedConfig = $clientDiDefinitionsProviderMerger->merge($existingConfig);
 

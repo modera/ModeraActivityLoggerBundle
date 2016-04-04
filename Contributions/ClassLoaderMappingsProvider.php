@@ -10,6 +10,9 @@ use Sli\ExpanderBundle\Ext\ContributorInterface;
  */
 class ClassLoaderMappingsProvider implements ContributorInterface
 {
+    /**
+     * @var array
+     */
     private $items;
 
     public function __construct()
