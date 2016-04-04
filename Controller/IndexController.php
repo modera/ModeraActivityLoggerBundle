@@ -117,8 +117,11 @@ class IndexController extends Controller
     }
 
     /**
+     * Endpoint can be used by MJR to figure out if user is already authenticated and therefore
+     * runtime UI can be loaded.
+     *
      * @param Request $request
-     * 
+     *
      * @return JsonResponse
      */
     public function isAuthenticatedAction(Request $request)
