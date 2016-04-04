@@ -105,4 +105,25 @@ class AuthenticatorTest extends \PHPUnit_Framework_TestCase
             'username' => $user->getUsername(),
         ), $resp['profile']);
     }
+
+    public function testUserToArray()
+    {
+        $user = \Phake::mock(User::clazz());
+        \Phake::when($user)->getId()->thenReturn(777);
+        \Phake::when($user)->getFullName()->thenReturn('John Doe');
+        \Phake::when($user)->getEmail()->thenReturn('john.doe@example.org');
+        \Phake::when($user)->getUsername()->thenReturn('john.doe');
+
+        $result = Authenticator::userToArray($user);
+
+        $this->assertTrue(is_array($result));
+        $this->assertArrayHasKey('id', $result);
+        $this->assertArrayHasKey('name', $result);
+        $this->assertArrayHasKey('email', $result);
+        $this->assertArrayHasKey('username', $result);
+        $this->assertEquals(777, $result['id']);
+        $this->assertEquals('John Doe', $result['name']);
+        $this->assertEquals('john.doe@example.org', $result['email']);
+        $this->assertEquals('john.doe', $result['username']);
+    }
 }

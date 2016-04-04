@@ -83,15 +83,25 @@ class Authenticator implements AuthenticationFailureHandlerInterface, Authentica
             $user = $token->getUser();
             $response = array(
                 'success' => true,
-                'profile' => array(
-                    'id' => $user->getId(),
-                    'name' => $user->getFullName(),
-                    'email' => $user->getEmail(),
-                    'username' => $user->getUsername(),
-                ),
+                'profile' => self::userToArray($user),
             );
         }
 
         return $response;
+    }
+
+    /**
+     * @param User $user
+     *
+     * @return array
+     */
+    public static function userToArray(User $user)
+    {
+        return array(
+            'id' => $user->getId(),
+            'name' => $user->getFullName(),
+            'email' => $user->getEmail(),
+            'username' => $user->getUsername(),
+        );
     }
 }
