@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class ModeraRoutingBundle extends Bundle
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function build(ContainerBuilder $container)
     {

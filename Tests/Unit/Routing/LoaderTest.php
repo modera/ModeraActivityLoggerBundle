@@ -78,7 +78,7 @@ class LoaderTest extends \PHPUnit_Framework_TestCase
                 'baz-resource',
                 array(
                     'resource' => 'ololo-resource',
-                    'type' => 'annotation'
+                    'type' => 'annotation',
                 ),
                 array(
                     'order' => -999,

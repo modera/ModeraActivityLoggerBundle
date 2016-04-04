@@ -2,11 +2,7 @@
 
 namespace Modera\RoutingBundle\Routing;
 
-use Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader;
-use Symfony\Component\Config\Loader\LoaderResolver;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
@@ -37,7 +33,7 @@ class Loader implements LoaderInterface
 
     /**
      * @param ContributorInterface $resourcesProvider
-     * @param LoaderInterface $rootLoader
+     * @param LoaderInterface      $rootLoader
      */
     public function __construct(ContributorInterface $resourcesProvider, LoaderInterface $rootLoader)
     {
@@ -46,7 +42,7 @@ class Loader implements LoaderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function load($resource, $type = null)
     {
@@ -67,7 +63,7 @@ class Loader implements LoaderInterface
             $resources[] = $resource;
         }
 
-        usort($resources, function($a, $b) {
+        usort($resources, function ($a, $b) {
             if ($a['order'] == $b['order']) {
                 return ($a['index'] < $b['index']) ? -1 : 1;
             }
@@ -86,8 +82,9 @@ class Loader implements LoaderInterface
     }
 
     /**
-     * @param mixed $resource
+     * @param mixed  $resource
      * @param string $type
+     *
      * @return bool
      */
     public function supports($resource, $type = null)
@@ -96,14 +93,14 @@ class Loader implements LoaderInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getResolver()
     {
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function setResolver(LoaderResolverInterface $resolver)
     {
