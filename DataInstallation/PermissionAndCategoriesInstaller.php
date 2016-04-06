@@ -27,7 +27,9 @@ class PermissionAndCategoriesInstaller
      * @param ContributorInterface $permissionsProvider
      */
     public function __construct(
-        EntityManager $em, ContributorInterface $permissionCategoriesProvider, ContributorInterface $permissionsProvider
+        EntityManager $em,
+        ContributorInterface $permissionCategoriesProvider,
+        ContributorInterface $permissionsProvider
     ) {
         $this->em = $em;
         $this->permissionCategoriesProvider = $permissionCategoriesProvider;

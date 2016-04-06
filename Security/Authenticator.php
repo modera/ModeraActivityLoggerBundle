@@ -14,7 +14,7 @@ use Modera\SecurityBundle\Entity\User;
 use Modera\SecurityBundle\Model\UserInterface;
 
 /**
- * @private
+ * @internal
  *
  * TODO since the class is no longer does any kind of authentication it should be renamed to something more meaningful
  *
@@ -58,6 +58,7 @@ class Authenticator implements AuthenticationFailureHandlerInterface, Authentica
     {
         $user = $token->getUser();
         if ($user instanceof UserInterface && UserInterface::STATE_NEW == $user->getState()) {
+            /* @var User $user */
             $user->setState(UserInterface::STATE_ACTIVE);
             $this->om->persist($user);
             $this->om->flush();

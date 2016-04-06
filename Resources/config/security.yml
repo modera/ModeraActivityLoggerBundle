@@ -8,15 +8,6 @@ services:
             - @security.http_utils
             - /
 
-    modera_security.security.entity_user_provider:
-        class: Modera\SecurityBundle\Security\EntityUserProvider
-        arguments:
-            - @doctrine.orm.entity_manager
-            - Modera\SecurityBundle\Entity\User
-
-    security.user_provider:
-        alias: modera_security.security.entity_user_provider
-
 security:
     encoders:
         Modera\SecurityBundle\Entity\User:
@@ -29,8 +20,12 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        # From MF version 0.3 (or this bundle's version v2.2.1) we no longer rely on our
+        # own implementation of UserProviderInterface
         modera_provider:
-            id: security.user_provider
+            entity:
+                class: ModeraSecurityBundle:User
+                property: username
 
     firewalls:
         dev:

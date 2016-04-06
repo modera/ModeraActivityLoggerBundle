@@ -10,6 +10,8 @@ use Modera\SecurityBundle\RootUserHandling\RootUserHandlerInterface;
 use Modera\FoundationBundle\Translation\T;
 
 /**
+ * TODO move logic Doctrine's repository ?
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */
