@@ -8,6 +8,12 @@ services:
             - @security.http_utils
             - /
 
+    # TODO Left for BC reasons, use "modera.user_provider" instead. Will be removed in MF 3.0 (modera/foundation)
+    security.user_provider:
+        alias: security.user.provider.concrete.modera_provider
+    modera.user_provider:
+        alias: security.user.provider.concrete.modera_provider
+
 security:
     encoders:
         Modera\SecurityBundle\Entity\User:
