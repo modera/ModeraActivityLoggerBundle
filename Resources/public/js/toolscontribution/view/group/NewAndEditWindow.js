@@ -11,6 +11,9 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.NewAndEditWindo
     // l10n
     placeHolderText: 'Type here',
     nameFieldText: 'Name',
+    refNameFieldText: 'Reference name',
+    refNameLabelText: 'Reference name',
+    firstNameLabelText: 'Group Name',
 
     // override
     constructor: function(config) {
@@ -45,6 +48,11 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.NewAndEditWindo
                         name: 'name',
                         fieldLabel: me.firstNameLabelText,
                         emptyText: me.nameFieldText
+                    },
+                    {
+                        name: 'refName',
+                        fieldLabel: me.refNameLabelText,
+                        emptyText:  me.refNameFieldText
                     }
                 ]
             }

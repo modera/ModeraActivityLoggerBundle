@@ -7,7 +7,7 @@ Ext.define('Modera.backend.security.toolscontribution.store.Groups', {
     constructor: function() {
         this.config = {
             fields: [
-                'id', 'name', 'usersCount'
+                'id', 'name', 'refName', 'usersCount'
             ],
             proxy: {
                 type: 'direct',
