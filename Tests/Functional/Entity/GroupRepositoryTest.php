@@ -14,14 +14,25 @@ use Modera\SecurityBundle\Entity\Group;
 class GroupRepositoryTest extends FunctionalTestCase
 {
     /**
+     * @var SchemaTool
+     */
+    static private $st;
+
+    /**
      * {@inheritdoc}
      */
     public static function doSetUpBeforeClass()
     {
-        $st = new SchemaTool(static::$em);
-        $st->dropSchema(static::getTableClassesMetadata());
-        $st->createSchema(static::getTableClassesMetadata());
+        static::$st = new SchemaTool(static::$em);
+        static::$st->dropSchema(static::getTableClassesMetadata());
+        static::$st->createSchema(static::getTableClassesMetadata());
     }
+
+    public static function doTearDownAfterClass()
+    {
+        static::$st->dropSchema(static::getTableClassesMetadata());
+    }
+
 
     public function testFindByRefName()
     {
