@@ -1,4 +1,5 @@
 <?php
+
 namespace Modera\SecurityBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;

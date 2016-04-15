@@ -14,9 +14,9 @@ use Modera\SecurityBundle\Entity\Group;
 class GroupRepositoryTest extends FunctionalTestCase
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
         $st = new SchemaTool(static::$em);
         $st->dropSchema(static::getTableClassesMetadata());
@@ -47,9 +47,10 @@ class GroupRepositoryTest extends FunctionalTestCase
 
     /**
      * There is unique constrain present on refName field. And this constrain is NOT case sensitive.
-     * So findByRefName search is NOT case sensitive
+     * So findByRefName search is NOT case sensitive.
      *
      * @depends testFindByRefName
+     *
      * @param Group $group
      */
     public function testFindByRefName_RefNameCases(Group $group)
@@ -68,9 +69,9 @@ class GroupRepositoryTest extends FunctionalTestCase
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    static protected function getIsolationLevel()
+    protected static function getIsolationLevel()
     {
         return static::IM_CLASS;
     }
@@ -84,10 +85,11 @@ class GroupRepositoryTest extends FunctionalTestCase
     }
 
     /**
-     * Db Tables used in test
+     * Db Tables used in test.
+     *
      * @return array
      */
-    static private function getTableClasses()
+    private static function getTableClasses()
     {
         return array(Group::clazz());
     }
@@ -95,14 +97,13 @@ class GroupRepositoryTest extends FunctionalTestCase
     /**
      * @return ClassMetadata[]
      */
-    static private function getTableClassesMetadata()
+    private static function getTableClassesMetadata()
     {
         $metaData = array();
-        foreach(static::getTableClasses() as $class) {
+        foreach (static::getTableClasses() as $class) {
             $metaData[] = static::$em->getClassMetadata($class);
         }
 
         return $metaData;
     }
 }
-
