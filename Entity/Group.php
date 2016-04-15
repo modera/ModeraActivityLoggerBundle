@@ -9,8 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Groups are used to group users.
  *
- * @ORM\Entity
- * @ORM\Table(name="modera_security_usersgroup")
+ * @ORM\Entity(repositoryClass="Modera\SecurityBundle\Entity\GroupRepository")
+ * @ORM\Table(name="modera_security_usersgroup", uniqueConstraints={@ORM\UniqueConstraint(name="refName_idx", columns={"refName"})})
  *
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
  */
