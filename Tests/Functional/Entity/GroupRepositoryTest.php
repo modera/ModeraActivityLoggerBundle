@@ -33,7 +33,6 @@ class GroupRepositoryTest extends FunctionalTestCase
         static::$st->dropSchema(static::getTableClassesMetadata());
     }
 
-
     public function testFindByRefName()
     {
         $emptyGroupList = static::$em->getRepository(Group::clazz())->findByRefName('test');
@@ -118,3 +117,4 @@ class GroupRepositoryTest extends FunctionalTestCase
         return $metaData;
     }
 }
+
