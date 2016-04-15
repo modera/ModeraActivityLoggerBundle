@@ -117,4 +117,3 @@ class GroupRepositoryTest extends FunctionalTestCase
         return $metaData;
     }
 }
-
