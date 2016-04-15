@@ -16,7 +16,7 @@ class GroupRepositoryTest extends FunctionalTestCase
     /**
      * @var SchemaTool
      */
-    static private $st;
+    private static $st;
 
     /**
      * {@inheritdoc}
