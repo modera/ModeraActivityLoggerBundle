@@ -20,7 +20,7 @@
     "target-dir": "Modera/BackendToolsBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "3.x-dev"
         }
     }
 }
