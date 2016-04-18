@@ -22,7 +22,7 @@
     "target-dir": "Modera/BackendTranslationsToolBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "2.0-dev"
+            "dev-master": "3.x-dev"
         }
     }
 }
