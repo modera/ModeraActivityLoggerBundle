@@ -29,7 +29,7 @@
     "target-dir": "Modera/ModuleBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.x-dev"
+            "dev-master": "3.x-dev"
         }
     }
 }
