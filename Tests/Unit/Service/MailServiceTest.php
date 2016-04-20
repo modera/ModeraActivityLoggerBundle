@@ -50,7 +50,7 @@ class DummyRepository
 
 class DummySwiftMailer extends \Swift_Mailer
 {
-    public function createMessage()
+    public function createMessage($service = 'message')
     {
         return \Swift_Message::newInstance();
     }
