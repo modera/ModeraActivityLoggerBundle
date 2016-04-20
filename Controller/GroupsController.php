@@ -6,7 +6,10 @@ use Modera\BackendSecurityBundle\ModeraBackendSecurityBundle;
 use Modera\SecurityBundle\Entity\Group;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\FoundationBundle\Translation\T;
+use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
+use Modera\ServerCrudBundle\NewValuesFactory\NewValuesFactoryInterface;
 use Modera\ServerCrudBundle\Validation\ValidationResult;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -20,6 +23,7 @@ class GroupsController extends AbstractCrudController
     public function getConfig()
     {
         $em = $this->getDoctrine();
+
         $groupEntityValidator = function (array $params, Group $group) use ($em) {
             $validationResult = new ValidationResult();
 
@@ -39,16 +43,34 @@ class GroupsController extends AbstractCrudController
 
             if (count($groupWithSuchRefNameList) > 0) {
                 $groupWithSuchRefName = $groupWithSuchRefNameList[0];
-                $validationResult->addFieldError(
-                    'refName',
-                    T::trans(
-                        'This refName is taken. Consider use \'%groupName%\' group or change current reference name.',
-                        array('%groupName%' => $groupWithSuchRefName->getName())
-                    )
-                );
+
+                if ($groupWithSuchRefName->getId() != $group->getId()) {
+                    $validationResult->addFieldError(
+                        'refName',
+                        T::trans(
+                            'This refName is taken. Consider use \'%groupName%\' group or change current reference name.',
+                            array('%groupName%' => $groupWithSuchRefName->getName())
+                        )
+                    );
+                }
             }
 
             return $validationResult;
+
+        };
+
+        $mapEntity = function (array $params, $group, DataMapperInterface $defaultMapper, ContainerInterface $container) {
+            $defaultMapper->mapData($params, $group);
+
+            /*
+             * Because of unique constrain we cannot save '' value as refName.
+             * Only one time can, actually. :) So, to allow user use groups without
+             * refName we have to set null by force because of ExtJs empty form value
+             * is ''.
+             */
+            if ($group->getRefName() === '') {
+                $group->setRefName(null);
+            }
 
         };
 
@@ -81,8 +103,15 @@ class GroupsController extends AbstractCrudController
                     'edit-group' => array('main-form'),
                 ),
             ),
+            'format_new_entity_values' => function (array $params, array $config, NewValuesFactoryInterface $defaultImpl, ContainerInterface $container) {
+                return array(
+                    'refName' => null,
+                );
+            },
             'new_entity_validator' => $groupEntityValidator,
             'updated_entity_validator' => $groupEntityValidator,
+            'map_data_on_create' => $mapEntity,
+            'map_data_on_update' => $mapEntity,
         );
     }
 }

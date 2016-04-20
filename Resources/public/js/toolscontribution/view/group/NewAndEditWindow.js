@@ -46,11 +46,13 @@ Ext.define('Modera.backend.security.toolscontribution.view.group.NewAndEditWindo
                     },
                     {
                         name: 'name',
+                        labelWidth: 120,
                         fieldLabel: me.firstNameLabelText,
                         emptyText: me.nameFieldText
                     },
                     {
                         name: 'refName',
+                        labelWidth: 120,
                         fieldLabel: me.refNameLabelText,
                         emptyText:  me.refNameFieldText
                     }

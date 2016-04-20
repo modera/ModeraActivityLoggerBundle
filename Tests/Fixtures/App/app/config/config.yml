@@ -1,15 +1,20 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: @ModeraSecurityBundle/Resources/config/security.yml}
 
 framework:
     secret:          Hell yeah!
     csrf_protection: true
-    session:         ~
-#    router:
-#        resource: "%kernel.root_dir%/config/routing.yml"
-#        strict_requirements: ~
-
-security: ~
+    session:        ~
+    validation: {enable_annotations: true}
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    templating:
+        engines: ['twig']
+    fragments:  ~
 
 # Doctrine Configuration
 doctrine:
@@ -25,3 +30,7 @@ doctrine:
     orm:
         auto_generate_proxy_classes: true
         auto_mapping: true
+
+modera_server_crud:
+    exception_handler:  modera_server_crud.exception_handling.bypass_handler
+
