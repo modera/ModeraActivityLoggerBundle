@@ -81,10 +81,11 @@ class GroupsControllerTest extends FunctionalTestCase
         static::$em->flush();
 
         $group = new Group();
-        $group->setRefName('backend-user');
+        $group->setRefName('BACKEND-USER');
         $group->setName('backend-user');
         $group->addPermission($entityPermission);
         $group->addPermission($entityPermission2);
+        $group->addPermission($entityPermission3);
 
         static::$user->addToGroup($group);
 
@@ -143,7 +144,7 @@ class GroupsControllerTest extends FunctionalTestCase
         $createdGroup = static::$em->getRepository(Group::clazz())->find($result['created_models']['modera.security_bundle.group'][0]);
 
         $this->assertEquals('testName', $createdGroup->getName());
-        $this->assertEquals('testRefName', $createdGroup->getRefName());
+        $this->assertEquals('TESTREFNAME', $createdGroup->getRefName());
 
         return $createdGroup;
     }
@@ -218,7 +219,7 @@ class GroupsControllerTest extends FunctionalTestCase
         $groupFromDb = static::$em->find(Group::clazz(), $group->getId());
 
         $this->assertEquals('testNameUpdated', $groupFromDb->getName());
-        $this->assertEquals('testRefNameUpdated', $groupFromDb->getRefName());
+        $this->assertEquals('TESTREFNAMEUPDATED', $groupFromDb->getRefName());
     }
 
     /**
@@ -231,7 +232,7 @@ class GroupsControllerTest extends FunctionalTestCase
      */
     public function testUpdateAction_SameRefName(Group $group)
     {
-        $this->assertEquals('testRefNameUpdated', $group->getRefName());
+        $this->assertEquals('TESTREFNAMEUPDATED', $group->getRefName());
 
         $params = array(
             'record' => array(
@@ -254,7 +255,7 @@ class GroupsControllerTest extends FunctionalTestCase
         $groupFromDb = static::$em->find(Group::clazz(), $group->getId());
 
         $this->assertEquals('newTestName', $groupFromDb->getName());
-        $this->assertEquals('testRefNameUpdated', $groupFromDb->getRefName());
+        $this->assertEquals('TESTREFNAMEUPDATED', $groupFromDb->getRefName());
 
         return $groupFromDb;
     }
@@ -273,7 +274,7 @@ class GroupsControllerTest extends FunctionalTestCase
         static::$em->persist($newGroup);
         static::$em->flush();
 
-        $this->assertEquals('testRefNameUpdated', $group->getRefName());
+        $this->assertEquals('TESTREFNAMEUPDATED', $group->getRefName());
 
         $params = array(
             'record' => array(

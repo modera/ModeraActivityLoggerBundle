@@ -8,7 +8,7 @@ use Modera\ServerCrudBundle\Controller\AbstractCrudController;
 use Modera\FoundationBundle\Translation\T;
 use Modera\ServerCrudBundle\DataMapping\DataMapperInterface;
 use Modera\ServerCrudBundle\NewValuesFactory\NewValuesFactoryInterface;
-use Modera\ServerCrudBundle\Validation\ValidationResult;
+use Modera\ServerCrudBundle\Validation\DefaultEntityValidator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -24,15 +24,9 @@ class GroupsController extends AbstractCrudController
     {
         $em = $this->getDoctrine();
 
-        $groupEntityValidator = function (array $params, Group $group) use ($em) {
-            $validationResult = new ValidationResult();
+        $groupEntityValidator = function (array $params, Group $group, DefaultEntityValidator $defaultValidator, array $config, ContainerInterface $container) use ($em) {
 
-            if (!$group->getName()) {
-                $validationResult->addFieldError(
-                    'name',
-                    T::trans('Group name cannot be empty')
-                );
-            }
+            $validationResult = $defaultValidator->validate($group, $config);
 
             if (!$group->getRefName()) {
                 return $validationResult;
@@ -59,7 +53,7 @@ class GroupsController extends AbstractCrudController
 
         };
 
-        $mapEntity = function (array $params, $group, DataMapperInterface $defaultMapper, ContainerInterface $container) {
+        $mapEntity = function (array $params, Group $group, DataMapperInterface $defaultMapper, ContainerInterface $container) {
             $defaultMapper->mapData($params, $group);
 
             /*
@@ -68,8 +62,14 @@ class GroupsController extends AbstractCrudController
              * refName we have to set null by force because of ExtJs empty form value
              * is ''.
              */
-            if ($group->getRefName() === '') {
+            $refName = $group->getRefName();
+            if ($refName === '') {
                 $group->setRefName(null);
+            } else {
+                /*
+                 * To help users avoid duplicates group we use normalizing for refName
+                 */
+                $group->setRefName(Group::normalizeRefNameString($refName));
             }
 
         };
