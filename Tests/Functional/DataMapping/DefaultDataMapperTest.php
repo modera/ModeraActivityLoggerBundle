@@ -77,4 +77,5 @@ class DefaultDataMapperTest extends FunctionalTestCase
         $this->assertEquals($params['firstname'], $user->firstname);
         $this->assertEquals($params['lastname'], $user->lastname);
     }
+
 }

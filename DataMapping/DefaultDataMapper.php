@@ -29,7 +29,7 @@ class DefaultDataMapper implements DataMapperInterface
      *
      * @return string[]
      */
-    private function getAllowedFields($entityClass)
+    protected function getAllowedFields($entityClass)
     {
         $metadata = $this->em->getClassMetadata($entityClass);
 
