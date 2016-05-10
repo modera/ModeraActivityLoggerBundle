@@ -17,7 +17,8 @@ interface NewValuesFactoryInterface
      *
      * @param array $params
      * @param array $config
+     *
      * @return array
      */
     public function getValues(array $params, array $config);
-} 
+}

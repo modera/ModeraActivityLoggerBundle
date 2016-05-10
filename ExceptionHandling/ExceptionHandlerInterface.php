@@ -19,7 +19,7 @@ interface ExceptionHandlerInterface
 
     /**
      * @param \Exception $e
-     * @param string $operation
+     * @param string     $operation
      *
      * @return array
      */

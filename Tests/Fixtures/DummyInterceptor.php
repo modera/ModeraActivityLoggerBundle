@@ -13,7 +13,7 @@ class DummyInterceptor implements ControllerActionsInterceptorInterface
         'get' => array(),
         'list' => array(),
         'remove' => array(),
-        'getNewRecordValues' => array()
+        'getNewRecordValues' => array(),
     );
 
     public function onCreate(array $params, AbstractCrudController $controller)
@@ -22,7 +22,7 @@ class DummyInterceptor implements ControllerActionsInterceptorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onUpdate(array $params, AbstractCrudController $controller)
     {
@@ -30,7 +30,7 @@ class DummyInterceptor implements ControllerActionsInterceptorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onBatchUpdate(array $params, AbstractCrudController $controller)
     {

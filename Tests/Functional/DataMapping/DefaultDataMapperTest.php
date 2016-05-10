@@ -2,7 +2,6 @@
 
 namespace Modera\ServerCrudBundle\Tests\Functional\DataMapping;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\ServerCrudBundle\DataMapping\DefaultDataMapper;
@@ -48,7 +47,7 @@ class DummyUser
  */
 class DefaultDataMapperTest extends FunctionalTestCase
 {
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
         $driver = new AnnotationDriver(
             self::$kernel->getContainer()->get('annotation_reader'),
@@ -67,7 +66,7 @@ class DefaultDataMapperTest extends FunctionalTestCase
 
         $params = array(
             'firstname' => 'Vassily',
-            'lastname' => 'Pupkin'
+            'lastname' => 'Pupkin',
         );
 
         $user = new DummyUser();
@@ -77,5 +76,4 @@ class DefaultDataMapperTest extends FunctionalTestCase
         $this->assertEquals($params['firstname'], $user->firstname);
         $this->assertEquals($params['lastname'], $user->lastname);
     }
-
 }

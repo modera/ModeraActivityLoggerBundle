@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as Orm;
 /**
  * @Orm\Entity
  */
-class DummyUser
+class entities
 {
     /**
      * @Orm\Column(type="integer")
@@ -49,7 +49,7 @@ class DummyUser
         $this->lastname = $lastname;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

@@ -19,7 +19,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     private $queryBuilder;
 
     /**
-     * @param EntityManager $em
+     * @param EntityManager     $em
      * @param ExtjsQueryBuilder $queryBuilder
      */
     public function __construct(EntityManager $em, ExtjsQueryBuilder $queryBuilder)
@@ -35,7 +35,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function resolveEntityPrimaryKeyFields($entityClass)
     {
@@ -56,7 +56,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function save($entity)
     {
@@ -72,7 +72,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function update($entity)
     {
@@ -110,7 +110,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function query($entityClass, array $query)
     {
@@ -118,7 +118,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getCount($entityClass, array $query)
     {
@@ -128,7 +128,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function remove(array $entities)
     {
@@ -147,7 +147,7 @@ class DoctrinePersistenceHandler implements PersistenceHandlerInterface
         return $result;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

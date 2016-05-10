@@ -26,4 +26,4 @@ class BypassExceptionHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Exception', get_class($thrownException));
         $this->assertEquals('Foo', $thrownException->getMessage());
     }
-} 
+}

@@ -21,7 +21,7 @@ class ControllerActionInterceptorsProvider implements ContributorInterface
     public function getItems()
     {
         return array(
-            $this->interceptor
+            $this->interceptor,
         );
     }
-} 
+}

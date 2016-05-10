@@ -54,7 +54,7 @@ class AbstractCrudControllerTest extends \PHPUnit_Framework_TestCase
         $controller->setContainer($container);
 
         \Phake::when($controller)->getConfig()->thenReturn(
-            array('create_default_data_mapper' => function(ContainerInterface $container) {
+            array('create_default_data_mapper' => function (ContainerInterface $container) {
                 return $container->get('nonExistingService');
             }, 'entity' => 'testValue', 'hydration' => 'testValue')
         );
@@ -81,10 +81,10 @@ class AbstractCrudControllerTest extends \PHPUnit_Framework_TestCase
 
         \Phake::when($controller)->getConfig()->thenReturn(
             array(
-                'create_default_data_mapper' => function(ContainerInterface $container) {
+                'create_default_data_mapper' => function (ContainerInterface $container) {
                     return $container->get('existingService');
                 },
-                'entity' => 'testValue', 'hydration' => 'testValue')
+                'entity' => 'testValue', 'hydration' => 'testValue', )
         );
 
         $this->assertTrue(\Phake::makeVisible($controller)->getDataMapper());

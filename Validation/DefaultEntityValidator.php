@@ -26,7 +26,7 @@ class DefaultEntityValidator implements EntityValidatorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function validate($entity, array $config)
     {
@@ -49,7 +49,7 @@ class DefaultEntityValidator implements EntityValidatorInterface
         return $validationResult;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

@@ -39,8 +39,8 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     }
 
     /**
-     * @param string $actionName
-     * @param array $params
+     * @param string                 $actionName
+     * @param array                  $params
      * @param AbstractCrudController $controller
      */
     public function checkAccess($actionName, array $params, AbstractCrudController $controller)
@@ -65,7 +65,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
                     if (!call_user_func($role, $this->authorizationChecker, $params, $actionName)) {
                         $this->throwAccessDeniedException($role);
                     }
-                } else if (!$this->authorizationChecker->isGranted($role)) {
+                } elseif (!$this->authorizationChecker->isGranted($role)) {
                     $this->throwAccessDeniedException($role);
                 }
             }
@@ -73,7 +73,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onCreate(array $params, AbstractCrudController $controller)
     {
@@ -81,7 +81,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onUpdate(array $params, AbstractCrudController $controller)
     {
@@ -89,7 +89,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onBatchUpdate(array $params, AbstractCrudController $controller)
     {
@@ -97,7 +97,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onGet(array $params, AbstractCrudController $controller)
     {
@@ -105,7 +105,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onList(array $params, AbstractCrudController $controller)
     {
@@ -113,7 +113,7 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onRemove(array $params, AbstractCrudController $controller)
     {
@@ -121,15 +121,15 @@ class SecurityControllerActionsInterceptor implements ControllerActionsIntercept
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onGetNewRecordValues(array $params, AbstractCrudController $controller)
     {
         $this->checkAccess('getNewRecordValues', $params, $controller);
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
-} 
+}

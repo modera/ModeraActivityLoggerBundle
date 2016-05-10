@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Modera\ServerCrudBundle\Intercepting;
 
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
@@ -17,56 +16,42 @@ interface ControllerActionsInterceptorInterface
     /**
      * @param array                  $params
      * @param AbstractCrudController $controller
-     *
-     * @return void
      */
     public function onCreate(array $params, AbstractCrudController $controller);
 
     /**
      * @param array                  $params
      * @param AbstractCrudController $controller
-     *
-     * @return void
      */
     public function onUpdate(array $params, AbstractCrudController $controller);
 
     /**
-     * @param array $params
+     * @param array                  $params
      * @param AbstractCrudController $controller
-     *
-     * @return void
      */
     public function onBatchUpdate(array $params, AbstractCrudController $controller);
 
     /**
      * @param array                  $params
      * @param AbstractCrudController $controller
-     *
-     * @return void
      */
     public function onGet(array $params, AbstractCrudController $controller);
 
     /**
      * @param array                  $params
      * @param AbstractCrudController $controller
-     *
-     * @return void
      */
     public function onList(array $params, AbstractCrudController $controller);
 
     /**
      * @param array                  $params
      * @param AbstractCrudController $controller
-     *
-     * @return void
      */
     public function onRemove(array $params, AbstractCrudController $controller);
 
     /**
      * @param array                  $params
      * @param AbstractCrudController $controller
-     *
-     * @return void
      */
     public function onGetNewRecordValues(array $params, AbstractCrudController $controller);
 }

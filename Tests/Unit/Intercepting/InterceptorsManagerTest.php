@@ -8,7 +8,7 @@ use Modera\ServerCrudBundle\Intercepting\InvalidInterceptorException;
 use Modera\ServerCrudBundle\Tests\Fixtures\DummyInterceptor;
 use Sli\ExpanderBundle\Ext\ContributorInterface;
 
-require_once __DIR__ . '/../../Fixtures/DummyInterceptor.php';
+require_once __DIR__.'/../../Fixtures/DummyInterceptor.php';
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -84,4 +84,4 @@ class InterceptorsManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertInvocation($interceptor1, 'remove');
         $this->assertInvocation($interceptor1, 'getNewRecordValues');
     }
-} 
+}

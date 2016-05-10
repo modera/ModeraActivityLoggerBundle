@@ -29,9 +29,7 @@ class InterceptorsManager
      * @param AbstractCrudController $controller
      *
      * @throws InvalidInterceptorException
-     * @throws \InvalidArgumentException  When bad $actionName is given
-     *
-     * @return void
+     * @throws \InvalidArgumentException   When bad $actionName is given
      */
     public function intercept($actionName, array $params, AbstractCrudController $controller)
     {
@@ -49,7 +47,7 @@ class InterceptorsManager
 
             /* @var ControllerActionsInterceptorInterface $interceptor */
 
-            $interceptor->{'on' . ucfirst($actionName)}($params, $controller);
+            $interceptor->{'on'.ucfirst($actionName)}($params, $controller);
         }
     }
-} 
+}

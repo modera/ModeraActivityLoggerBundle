@@ -2,7 +2,7 @@
 
 namespace Modera\ServerCrudBundle\Tests\Functional\Persistence;
 
-require_once __DIR__ . '/../entities.php';
+require_once __DIR__.'/../entities.php';
 
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
@@ -17,7 +17,7 @@ use Modera\ServerCrudBundle\Tests\Functional\DummyUser;
  */
 class DoctrinePersistenceHandlerTest extends FunctionalTestCase
 {
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
         $driver = new AnnotationDriver(
             self::$kernel->getContainer()->get('annotation_reader'),
@@ -28,7 +28,7 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
         Toolkit::createTableFoEntity(self::$em, DummyUser::clazz());
     }
 
-    static public function doTearDownAfterClass()
+    public static function doTearDownAfterClass()
     {
         Toolkit::dropTableForEntity(self::$em, DummyUser::clazz());
     }
@@ -101,10 +101,10 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
     {
         $users = array();
 
-        for ($i=0; $i<10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $user = new DummyUser();
-            $user->firstname = 'Vassily ' . $i;
-            $user->lastname = 'Pupkin ' . $i;
+            $user->firstname = 'Vassily '.$i;
+            $user->lastname = 'Pupkin '.$i;
 
             self::$em->persist($user);
 
@@ -123,7 +123,7 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
         $result = $this->getHandler()->query(DummyUser::clazz(), array(
             'limit' => 5,
             'page' => 2,
-            'start' => 0
+            'start' => 0,
         ));
 
         $this->assertTrue(is_array($result));
@@ -136,7 +136,7 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
         $query = array(
             'limit' => 5,
             'page' => 2,
-            'start' => 0
+            'start' => 0,
         );
 
         $this->assertEquals(0, $this->getHandler()->getCount(DummyUser::clazz(), $query));
@@ -173,8 +173,8 @@ class DoctrinePersistenceHandlerTest extends FunctionalTestCase
     {
         $users = $this->loadSomeData();
 
-        foreach ($users as $i=>$user) {
-            $user->firstname .= '' . $i;
+        foreach ($users as $i => $user) {
+            $user->firstname .= ''.$i;
         }
 
         $result = $this->getHandler()->updateBatch($users);

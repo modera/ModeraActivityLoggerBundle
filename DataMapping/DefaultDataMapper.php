@@ -42,7 +42,7 @@ class DefaultDataMapper implements DataMapperInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function mapData(array $params, $entity)
     {
@@ -51,7 +51,7 @@ class DefaultDataMapper implements DataMapperInterface
         $this->mapper->mapEntity($entity, $params, $allowedFields);
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

@@ -33,4 +33,4 @@ class ControllerActionInterceptorsProviderTest extends \PHPUnit_Framework_TestCa
         // interceptors must be created only once
         $this->assertSame($items, $items2);
     }
-} 
+}

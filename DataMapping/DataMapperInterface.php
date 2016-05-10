@@ -12,12 +12,10 @@ namespace Modera\ServerCrudBundle\DataMapping;
 interface DataMapperInterface
 {
     /**
-     * Should bind $params onto given $entity
+     * Should bind $params onto given $entity.
      *
      * @param array  $params
      * @param object $entity
-     *
-     * @return void
      */
     public function mapData(array $params, $entity);
 }

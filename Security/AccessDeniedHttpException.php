@@ -28,4 +28,4 @@ class AccessDeniedHttpException extends \Symfony\Component\HttpKernel\Exception\
     {
         return $this->role;
     }
-} 
+}

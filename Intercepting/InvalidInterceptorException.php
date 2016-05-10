@@ -18,7 +18,7 @@ class InvalidInterceptorException extends \RuntimeException
      *
      * @return InvalidInterceptorException
      */
-    static public function create($interceptor)
+    public static function create($interceptor)
     {
         $message = sprintf(
             "It is expected that all interceptors would implements %s interface but %s doesn't!",
@@ -47,4 +47,4 @@ class InvalidInterceptorException extends \RuntimeException
     {
         return $this->interceptor;
     }
-} 
+}

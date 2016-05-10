@@ -16,7 +16,7 @@ class EnvAwareExceptionHandler implements ExceptionHandlerInterface
 
     /**
      * @param ContributorInterface $handlersProvider
-     * @param Kernel $kernel
+     * @param Kernel               $kernel
      */
     public function __construct(ContributorInterface $handlersProvider, Kernel $kernel)
     {
@@ -25,7 +25,7 @@ class EnvAwareExceptionHandler implements ExceptionHandlerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function createResponse(\Exception $e, $operation)
     {
@@ -41,7 +41,7 @@ class EnvAwareExceptionHandler implements ExceptionHandlerInterface
         if ($this->kernel->getEnvironment() == 'prod') {
             return array(
                 'success' => false,
-                'exception' => true
+                'exception' => true,
             );
         } else {
             return array(
@@ -51,7 +51,7 @@ class EnvAwareExceptionHandler implements ExceptionHandlerInterface
                 'stack_trace' => $e->getTrace(),
                 'file' => $e->getFile(),
                 'line' => $e->getLine(),
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             );
         }
     }

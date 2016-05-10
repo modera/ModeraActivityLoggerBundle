@@ -26,7 +26,7 @@ class DefaultNewValuesFactory implements NewValuesFactoryInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getValues(array $params, array $config)
     {
@@ -44,4 +44,4 @@ class DefaultNewValuesFactory implements NewValuesFactoryInterface
 
         return array();
     }
-} 
+}

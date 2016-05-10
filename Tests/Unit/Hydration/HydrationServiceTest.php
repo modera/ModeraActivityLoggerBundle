@@ -65,39 +65,39 @@ class HydrationServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->config = array(
             'groups' => array(
-                'tags' => function() {
+                'tags' => function () {
 
                 },
-                'comments' => function(Article $e) {
+                'comments' => function (Article $e) {
                     $result = array();
 
                     foreach ($e->comments as $comment) {
                         $result[] = array(
-                            'body' => $comment->body
+                            'body' => $comment->body,
                         );
                     }
 
                     return $result;
                 },
                 'form' => array(
-                    'title', 'body'
+                    'title', 'body',
                 ),
                 'author' => array(
                     'firstname' => 'author.firstname',
-                    'lastname' => 'author.lastname'
+                    'lastname' => 'author.lastname',
                 ),
-                'list' => function(Article $e) {
+                'list' => function (Article $e) {
                     return array(
                         'title' => substr($e->title, 0, 10),
-                        'body' => substr($e->body, 0, 10)
+                        'body' => substr($e->body, 0, 10),
                     );
-                }
+                },
             ),
             'profiles' => array(
-                'list' => HydrationProfile::create(false)->useGroups(array( 'list')),
+                'list' => HydrationProfile::create(false)->useGroups(array('list')),
                 'form' => HydrationProfile::create()->useGroups(array('form', 'comments', 'author')),
-                'author'
-            )
+                'author',
+            ),
         );
 
         $author = new Author();
@@ -109,7 +109,7 @@ class HydrationServiceTest extends \PHPUnit_Framework_TestCase
         $article->title = 'Foo title';
         $article->body = 'Bar body';
         $article->comments = array(
-            new ArticleComment($author, 'Comment1')
+            new ArticleComment($author, 'Comment1'),
         );
 
         $this->article = $article;

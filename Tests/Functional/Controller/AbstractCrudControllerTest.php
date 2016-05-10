@@ -37,7 +37,7 @@ class DummyArticle
      */
     public $body;
 
-    static $suicideEngaged = false;
+    public static $suicideEngaged = false;
 
     /**
      * @Orm\PrePersist
@@ -70,17 +70,17 @@ class DummyArticle
         $this->title = $title;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
 
-    static public function formatNewValues(array $params, array $config, $container)
+    public static function formatNewValues(array $params, array $config, $container)
     {
         return array(
             'params' => $params,
             'config' => $config,
-            'container' => $container
+            'container' => $container,
         );
     }
 }
@@ -94,9 +94,9 @@ class DataController extends AbstractCrudController
             'hydration' => array(
                 'groups' => array(
                     'form' => array(
-                        'id', 'title', 'body'
+                        'id', 'title', 'body',
                     ),
-                    'list' => function(DummyArticle $e) {
+                    'list' => function (DummyArticle $e) {
                         if (DummyArticle::$suicideEngaged) {
                             $e->suicide();
                         }
@@ -104,20 +104,20 @@ class DataController extends AbstractCrudController
                         return array(
                             'id' => $e->getId(),
                             'title' => substr($e->title, 0, 10),
-                            'body' => substr($e->body, 0, 10)
+                            'body' => substr($e->body, 0, 10),
                         );
                     },
-                    'suicide' => function() {
+                    'suicide' => function () {
                         throw new \Exception();
-                    }
+                    },
                 ),
                 'profiles' => array(
                     'new_record' => HydrationProfile::create()->useGroups(array('form')),
                     'get_record' => HydrationProfile::create()->useGroups(array('form')),
                     'list' => HydrationProfile::create(false)->useGroups(array('list')),
-                    'rotten_profile' => HydrationProfile::create()->useGroups(array('suicide'))
-                )
-            )
+                    'rotten_profile' => HydrationProfile::create()->useGroups(array('suicide')),
+                ),
+            ),
         );
     }
 }
@@ -141,7 +141,7 @@ class AbstractCrudControllerTest extends FunctionalTestCase
     }
 
     // override
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
         $driver = new AnnotationDriver(
             self::$kernel->getContainer()->get('annotation_reader'),
@@ -152,7 +152,7 @@ class AbstractCrudControllerTest extends FunctionalTestCase
         Toolkit::createTableFoEntity(self::$em, DummyArticle::clazz());
     }
 
-    static public function doTearDownAfterClass()
+    public static function doTearDownAfterClass()
     {
         Toolkit::dropTableForEntity(self::$em, DummyArticle::clazz());
     }
@@ -182,8 +182,8 @@ class AbstractCrudControllerTest extends FunctionalTestCase
     {
         $requestParams = array(
             'record' => array(
-                'body' => 'Some text goes here'
-            )
+                'body' => 'Some text goes here',
+            ),
         );
 
         // validation for "title" field should fail
@@ -205,12 +205,12 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $result = $this->controller->createAction(array(
             'hydration' => array(
-                'profile' => 'new_record'
+                'profile' => 'new_record',
             ),
             'record' => array(
                 'title' => 'Some title',
-                'body' => 'Some text goes here'
-            )
+                'body' => 'Some text goes here',
+            ),
         ));
 
         $this->assertTrue(is_array($result));
@@ -257,8 +257,8 @@ class AbstractCrudControllerTest extends FunctionalTestCase
         $result = $this->controller->createAction(array(
             'record' => array(
                 'title' => 'opa',
-                'body' => 'hola'
-            )
+                'body' => 'hola',
+            ),
         ));
 
         $this->assertValidExceptionResult($result);
@@ -271,7 +271,7 @@ class AbstractCrudControllerTest extends FunctionalTestCase
     {
         $result = array();
 
-        for ($i=0; $i<5; $i++) {
+        for ($i = 0; $i < 5; ++$i) {
             $article = new DummyArticle();
             $article->title = str_repeat('t', 15);
             $article->body = str_repeat('b', 15);
@@ -294,17 +294,17 @@ class AbstractCrudControllerTest extends FunctionalTestCase
         $requestParams = array(
             'limit' => 3,
             'sort' => array(
-                array('property' => 'id', 'direction' => 'DESC')
+                array('property' => 'id', 'direction' => 'DESC'),
             ),
             'filter' => array(
                 array(
                     'property' => 'id',
-                    'value' => 'notIn:6'
-                )
+                    'value' => 'notIn:6',
+                ),
             ),
             'hydration' => array(
-                'profile' => 'list'
-            )
+                'profile' => 'list',
+            ),
         );
 
         $result = $this->controller->listAction($requestParams);
@@ -313,7 +313,7 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $me = $this;
 
-        $assertValidItem = function($items, $index) use ($me) {
+        $assertValidItem = function ($items, $index) use ($me) {
             $me->assertArrayHasKey($index, $items);
 
             $item = $items[$index];
@@ -342,8 +342,8 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $result = $this->controller->listAction(array(
             'hydration' => array(
-                'profile' => 'list'
-            )
+                'profile' => 'list',
+            ),
         ));
 
         $this->assertValidExceptionResult($result);
@@ -355,16 +355,16 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $ids = array(
             $articles[0]->getId(),
-            $articles[1]->getId()
+            $articles[1]->getId(),
         );
 
         $requestParams = array(
             'filter' => array(
                 array(
                     'property' => 'id',
-                    'value' => 'in:' . implode(', ', $ids)
-                )
-            )
+                    'value' => 'in:'.implode(', ', $ids),
+                ),
+            ),
         );
 
         $result = $this->controller->removeAction($requestParams);
@@ -395,7 +395,7 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $ids = array(
             $articles[0]->getId(),
-            $articles[1]->getId()
+            $articles[1]->getId(),
         );
 
         DummyArticle::$suicideEngaged = true;
@@ -404,9 +404,9 @@ class AbstractCrudControllerTest extends FunctionalTestCase
             'filter' => array(
                 array(
                     'property' => 'id',
-                    'value' => 'in:' . implode(', ', $ids)
-                )
-            )
+                    'value' => 'in:'.implode(', ', $ids),
+                ),
+            ),
         ));
 
         $this->assertValidExceptionResult($result);
@@ -418,14 +418,14 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $requestParams = array(
             'hydration' => array(
-                'profile' => 'get_record'
+                'profile' => 'get_record',
             ),
             'filter' => array(
                 array(
                     'property' => 'id',
-                    'value' => 'eq:' . $articles[0]->getId()
-                )
-            )
+                    'value' => 'eq:'.$articles[0]->getId(),
+                ),
+            ),
         );
 
         $result = $this->controller->getAction($requestParams);
@@ -453,14 +453,14 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $requestParams = array(
             'hydration' => array(
-                'profile' => 'rotten_profile'
+                'profile' => 'rotten_profile',
             ),
             'filter' => array(
                 array(
                     'property' => 'id',
-                    'value' => 'eq:' . $articles[0]->getId()
-                )
-            )
+                    'value' => 'eq:'.$articles[0]->getId(),
+                ),
+            ),
         );
         $result = $this->controller->getAction($requestParams);
 
@@ -479,8 +479,8 @@ class AbstractCrudControllerTest extends FunctionalTestCase
         $requestParams = array(
             'record' => array(
                 'id' => $article->id,
-                'title' => ''
-            )
+                'title' => '',
+            ),
         );
         $result = $this->controller->updateAction($requestParams);
 
@@ -509,13 +509,13 @@ class AbstractCrudControllerTest extends FunctionalTestCase
 
         $result = $this->controller->updateAction(array(
             'hydration' => array(
-                'profile' => 'get_record'
+                'profile' => 'get_record',
             ),
             'record' => array(
                 'id' => $fetchedArticle->id,
                 'title' => 'new title',
-                'body' => 'new body'
-            )
+                'body' => 'new body',
+            ),
         ));
 
         $this->assertTrue(is_array($result));
@@ -543,10 +543,10 @@ class AbstractCrudControllerTest extends FunctionalTestCase
     {
         /* @var DummyArticle[] $entities */
         $entities = array();
-        for ($i=0; $i<$total; $i++) {
+        for ($i = 0; $i < $total; ++$i) {
             $article = new DummyArticle();
-            $article->body = 'body' . $i;
-            $article->title = 'title' . $i;
+            $article->body = 'body'.$i;
+            $article->title = 'title'.$i;
 
             $entities[] = $article;
 
@@ -569,14 +569,14 @@ class AbstractCrudControllerTest extends FunctionalTestCase
                 array(
                     'id' => $entities[0]->id,
                     'body' => 'body0_foo',
-                    'title' => 'title0_foo'
+                    'title' => 'title0_foo',
                 ),
                 array(
                     'id' => $entities[1]->id,
                     'body' => 'body1_foo',
-                    'title' => 'title1_foo'
-                )
-            )
+                    'title' => 'title1_foo',
+                ),
+            ),
         );
         $result = $this->controller->batchUpdateAction($requestParams);
 
@@ -615,14 +615,14 @@ class AbstractCrudControllerTest extends FunctionalTestCase
                 array(
                     'id' => $entities[0]->id,
                     'body' => 'body0_foo',
-                    'title' => ''
+                    'title' => '',
                 ),
                 array(
                     'id' => $entities[1]->id,
                     'body' => 'body1_foo',
-                    'title' => 'title1_foo'
-                )
-            )
+                    'title' => 'title1_foo',
+                ),
+            ),
         ));
 
         $this->assertTrue(is_array($result));
@@ -665,22 +665,22 @@ class AbstractCrudControllerTest extends FunctionalTestCase
                     'filter' => array(
                         array(
                             'property' => 'id',
-                            'value' => 'eq:' . $entities[0]->id
-                        )
-                    )
+                            'value' => 'eq:'.$entities[0]->id,
+                        ),
+                    ),
                 ),
                 array(
                     'filter' => array(
                         array(
                             'property' => 'title',
-                            'value' => 'eq:' . $entities[2]->title
-                        )
-                    )
-                )
+                            'value' => 'eq:'.$entities[2]->title,
+                        ),
+                    ),
+                ),
             ),
             'record' => array(
-                'title' => 'hello'
-            )
+                'title' => 'hello',
+            ),
         );
         $result = $this->controller->batchUpdateAction($requestParams);
 
@@ -723,22 +723,22 @@ class AbstractCrudControllerTest extends FunctionalTestCase
                     'filter' => array(
                         array(
                             'property' => 'id',
-                            'value' => 'eq:' . $entities[0]->id
-                        )
-                    )
+                            'value' => 'eq:'.$entities[0]->id,
+                        ),
+                    ),
                 ),
                 array(
                     'filter' => array(
                         array(
                             'property' => 'title',
-                            'value' => 'eq:' . $entities[2]->title
-                        )
-                    )
-                )
+                            'value' => 'eq:'.$entities[2]->title,
+                        ),
+                    ),
+                ),
             ),
             'record' => array(
-                'title' => ''
-            )
+                'title' => '',
+            ),
         ));
 
         $this->assertTrue(is_array($result));
@@ -772,8 +772,8 @@ class AbstractCrudControllerTest extends FunctionalTestCase
             'record' => array(
                 'id' => $articles[0]->id,
                 'title' => 'yo',
-                'body' => 'ogo'
-            )
+                'body' => 'ogo',
+            ),
         ));
 
         $this->assertValidExceptionResult($result);

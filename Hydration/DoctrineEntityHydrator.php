@@ -3,7 +3,6 @@
 namespace Modera\ServerCrudBundle\Hydration;
 
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 
@@ -25,7 +24,7 @@ class DoctrineEntityHydrator
     /**
      * @return DoctrineEntityHydrator
      */
-    static public function create(array $excludedFields = array())
+    public static function create(array $excludedFields = array())
     {
         $me = new self();
         $me->excludeFields($excludedFields);
@@ -89,7 +88,7 @@ class DoctrineEntityHydrator
                 $expression = $this->associativeFieldMappings[$fieldName];
 
                 $result[$fieldName] = $this->accessor->getValue($entity, $expression);
-            } else if ($hasToStringMethod) {
+            } elseif ($hasToStringMethod) {
                 $result[$fieldName] = $entity->__toString();
             }
         }

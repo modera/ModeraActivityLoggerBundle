@@ -24,7 +24,7 @@ class OperationResult
         $this->entries[] = array(
             'entity_class' => $entityClass,
             'operation' => $operation,
-            'id' => $id
+            'id' => $id,
         );
     }
 
@@ -36,7 +36,7 @@ class OperationResult
             if ($entry['operation'] == $operationName) {
                 $result[] = array(
                     'entity_class' => $entry['entity_class'],
-                    'id' => $entry['id']
+                    'id' => $entry['id'],
                 );
             }
         }
@@ -80,7 +80,7 @@ class OperationResult
         $mapping = array(
             'entity_created' => 'created_models',
             'entity_updated' => 'updated_models',
-            'entity_removed' => 'removed_models'
+            'entity_removed' => 'removed_models',
         );
 
         foreach ($this->entries as $entry) {
@@ -105,7 +105,7 @@ class OperationResult
     /**
      * @param OperationResult $result
      *
-     * @return OperationResult  A new instance of OperationResult is returned
+     * @return OperationResult A new instance of OperationResult is returned
      */
     public function merge(OperationResult $result)
     {
@@ -123,7 +123,7 @@ class OperationResult
         return $new;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

@@ -35,7 +35,7 @@ class HydrationService
     {
         if (is_callable($hydrator)) {
             return $hydrator($object, $this->container);
-        } else if (is_array($hydrator)) {
+        } elseif (is_array($hydrator)) {
             $result = array();
 
             foreach ($hydrator as $key => $propertyPath) {
@@ -45,7 +45,7 @@ class HydrationService
                     $result[$key] = $this->accessor->getValue($object, $propertyPath);
                 } catch (\Exception $e) {
                     throw new \RuntimeException(
-                        "Unable to resolve expression '$propertyPath' on " . get_class($object), null, $e
+                        "Unable to resolve expression '$propertyPath' on ".get_class($object), null, $e
                     );
                 }
             }
@@ -63,7 +63,7 @@ class HydrationService
         } else {
             if (is_callable($hydratorResult)) {
                 $currentResult = $hydratorResult($currentResult);
-            } else if (is_array($hydratorResult)) {
+            } elseif (is_array($hydratorResult)) {
                 $currentResult = array_merge($currentResult, $hydratorResult);
             } else {
                 throw new \RuntimeException();

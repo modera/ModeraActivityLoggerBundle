@@ -25,16 +25,16 @@ class ControllerActionInterceptorsProvider implements ContributorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
         if (!$this->items) {
             $this->items = array(
-                new SecurityControllerActionsInterceptor($this->authorizationChecker)
+                new SecurityControllerActionsInterceptor($this->authorizationChecker),
             );
         }
 
         return $this->items;
     }
-} 
+}

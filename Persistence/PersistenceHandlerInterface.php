@@ -59,7 +59,7 @@ interface PersistenceHandlerInterface
      * @param string $entityClass
      * @param array  $params
      *
-     * @return integer
+     * @return int
      */
     public function getCount($entityClass, array $params);
 }

@@ -9,7 +9,7 @@ use Modera\ServerCrudBundle\Hydration\UnknownHydrationProfileException;
 
 /**
  * @author Sergei Lissovski <sergei.lissovski@gmail.com>
- */ 
+ */
 class ConfigAnalyzerTest extends \PHPUnit_Framework_TestCase
 {
     /* @var ConfigAnalyzer */
@@ -21,24 +21,24 @@ class ConfigAnalyzerTest extends \PHPUnit_Framework_TestCase
         $this->rawConfig = array(
             'groups' => array(
                 'form' => array(
-                    'title', 'body'
+                    'title', 'body',
                 ),
                 'author' => array(
                     'firstname' => 'author.firstname',
-                    'lastname' => 'author.lastname'
+                    'lastname' => 'author.lastname',
                 ),
-                'list' => function(Article $e) {
+                'list' => function (Article $e) {
                     return array(
                         'title' => substr($e->title, 0, 10),
-                        'body' => substr($e->body, 0, 10)
+                        'body' => substr($e->body, 0, 10),
                     );
-                }
+                },
             ),
             'profiles' => array(
                 'form' => HydrationProfile::create()->useGroups(array('form', 'author')),
                 'mixed' => array('form', 'author', 'list'),
-                'list'
-            )
+                'list',
+            ),
         );
 
         $this->config = new ConfigAnalyzer($this->rawConfig);

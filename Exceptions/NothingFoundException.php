@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Modera\ServerCrudBundle\Exceptions;
 
 /**

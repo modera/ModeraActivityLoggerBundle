@@ -11,7 +11,7 @@ use Sli\AuxBundle\Util\Toolkit;
 class DefaultEntityFactory implements EntityFactoryInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function create(array $params, array $config)
     {
@@ -21,7 +21,7 @@ class DefaultEntityFactory implements EntityFactoryInterface
         $useConstructor = false;
         foreach (Toolkit::getReflectionMethods($entityClass) as $reflMethod) {
             /* @var \ReflectionMethod $reflMethod */
-            if (   $reflMethod->getName() == '__construct'
+            if ($reflMethod->getName() == '__construct'
                 && $reflMethod->isPublic()) {
                 if (count($reflMethod->getParameters()) == 0) {
                     $useConstructor = true;

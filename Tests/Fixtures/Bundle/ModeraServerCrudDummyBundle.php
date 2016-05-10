@@ -18,5 +18,4 @@ class ModeraServerCrudDummyBundle extends Bundle
 
         $container->registerExtension(new ModeraServerCrudDummyExtension());
     }
-
-} 
+}

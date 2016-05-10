@@ -11,7 +11,7 @@ class DefaultModelManager implements ModelManagerInterface
     private function underscorizeWord($word)
     {
         $result = strtolower($word{0});
-        for ($i=1; $i<strlen($word); $i++) {
+        for ($i = 1; $i < strlen($word); ++$i) {
             $char = $word{$i};
 
             if (strtoupper($char) === $char) {
@@ -25,7 +25,7 @@ class DefaultModelManager implements ModelManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function generateModelIdFromEntityClass($entityClass)
     {
@@ -43,20 +43,20 @@ class DefaultModelManager implements ModelManagerInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function generateEntityClassFromModelId($modelId)
     {
         $result = array();
 
         // modera.admin_generator.foo => Modera\AdminGenerator\Entity\Foo
-        foreach (explode('.', $modelId) as $i=>$segment) {
+        foreach (explode('.', $modelId) as $i => $segment) {
             if (2 == $i) {
                 $result[] = 'Entity';
             }
 
             $explodedSegment = explode('_', $segment);
-            $explodedSegment = array_map(function($v) { return ucfirst($v); }, $explodedSegment);
+            $explodedSegment = array_map(function ($v) { return ucfirst($v); }, $explodedSegment);
 
             $segment = implode('', $explodedSegment);
             if (1 == $i) {

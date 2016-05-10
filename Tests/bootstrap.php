@@ -9,6 +9,6 @@ if (!is_file($loaderFile = __DIR__.'/../vendor/autoload.php')) {
 /* @var \Composer\Autoload\ClassLoader $loader */
 $loader = require $loaderFile;
 
-$loader->addPsr4('Modera\ServerCrudBundle\Tests\Fixtures\Bundle\\', __DIR__ . '/Fixtures/Bundle');
+$loader->addPsr4('Modera\ServerCrudBundle\Tests\Fixtures\Bundle\\', __DIR__.'/Fixtures/Bundle');
 
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));

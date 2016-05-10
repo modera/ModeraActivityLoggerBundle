@@ -61,7 +61,7 @@ class DefaultEntityValidatorTest extends FunctionalTestCase
 
         $config = array(
             'entity_validation_method' => 'validateIt',
-            'ignore_standard_validator' => false
+            'ignore_standard_validator' => false,
         );
 
         $result = $this->validator->validate($entity, $config);
@@ -82,7 +82,7 @@ class DefaultEntityValidatorTest extends FunctionalTestCase
 
         $config = array(
             'entity_validation_method' => 'validateIt',
-            'ignore_standard_validator' => true
+            'ignore_standard_validator' => true,
         );
 
         $result = $this->validator->validate($entity, $config);
@@ -100,7 +100,7 @@ class DefaultEntityValidatorTest extends FunctionalTestCase
 
         $config = array(
             'entity_validation_method' => 'validateIt',
-            'ignore_standard_validator' => false
+            'ignore_standard_validator' => false,
         );
 
         $result = $this->validator->validate($entity, $config);

@@ -12,7 +12,7 @@ class HydrationProfile implements HydrationProfileInterface
     private $groups = array();
     private $extensionPoint;
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -27,7 +27,7 @@ class HydrationProfile implements HydrationProfileInterface
 
     // fluent interface:
 
-    static public function create($isGroupingNeeded = true)
+    public static function create($isGroupingNeeded = true)
     {
         $me = new self();
         $me->useGrouping($isGroupingNeeded);
@@ -36,7 +36,7 @@ class HydrationProfile implements HydrationProfileInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function isGroupingNeeded()
     {

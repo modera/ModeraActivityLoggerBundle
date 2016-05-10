@@ -29,8 +29,8 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
     {
         $config = array(
             'security' => array(
-                'role' => 'ROLE_FOO'
-            )
+                'role' => 'ROLE_FOO',
+            ),
         );
 
         $this->teachController($config);
@@ -72,9 +72,9 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
                     'list' => 'ROLE_LIST',
                     'remove' => 'ROLE_REMOVE',
                     'getNewRecordValues' => 'ROLE_GRV',
-                    'batchUpdate' => 'ROLE_BATCH_UPDATE'
-                )
-            )
+                    'batchUpdate' => 'ROLE_BATCH_UPDATE',
+                ),
+            ),
         );
 
         $this->teachAuthorizationChecker($config['security']['actions'][$actionName], false);
@@ -82,7 +82,7 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
 
         $thrownException = null;
         try {
-            $this->interceptor->{'on' . ucfirst($actionName)}(array(), $this->controller);
+            $this->interceptor->{'on'.ucfirst($actionName)}(array(), $this->controller);
         } catch (AccessDeniedHttpException $e) {
             $thrownException = $e;
         }
@@ -105,15 +105,15 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
                     'list' => 'ROLE_LIST',
                     'remove' => 'ROLE_REMOVE',
                     'getNewRecordValues' => 'ROLE_GRV',
-                    'batchUpdate' => 'ROLE_BATCH_UPDATE'
-                )
-            )
+                    'batchUpdate' => 'ROLE_BATCH_UPDATE',
+                ),
+            ),
         );
 
         $this->teachAuthorizationChecker($config['security']['actions'][$actionName], true);
         $this->teachController($config);
 
-        $this->interceptor->{'on' . ucfirst($actionName)}(array(), $this->controller);
+        $this->interceptor->{'on'.ucfirst($actionName)}(array(), $this->controller);
     }
 
     public function testOnCreateDenied()
@@ -193,15 +193,15 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
         $config = array(
             'security' => array(
                 'actions' => array(
-                    'create' => function(AuthorizationCheckerInterface $ac, $params, $actionName) use($holder) {
+                    'create' => function (AuthorizationCheckerInterface $ac, $params, $actionName) use ($holder) {
                         $holder->ac = $ac;
                         $holder->params = $params;
                         $holder->actionName = $actionName;
 
                         return false;
                     },
-                )
-            )
+                ),
+            ),
         );
 
         $this->teachController($config);
@@ -218,4 +218,4 @@ class SecurityControllerActionsInterceptorTest extends \PHPUnit_Framework_TestCa
         $this->assertEquals(array('foo'), $holder->params);
         $this->assertEquals('create', $holder->actionName);
     }
-} 
+}

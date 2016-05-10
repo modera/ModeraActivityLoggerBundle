@@ -13,7 +13,7 @@ class DummyClassWithNoMandatoryArgumentsConstructor
         $this->arg1 = $arg1;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -28,7 +28,7 @@ class DummyClassWithMandatoryConstructorArgs
         $this->arg1 = $arg1;
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }

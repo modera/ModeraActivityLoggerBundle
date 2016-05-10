@@ -6,7 +6,7 @@ use Modera\ServerCrudBundle\NewValuesFactory\DefaultNewValuesFactory;
 
 class DummyEntity
 {
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -14,16 +14,16 @@ class DummyEntity
 
 class AnotherDummyEntity
 {
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
 
-    static public function formatNewValues(array $params, array $config)
+    public static function formatNewValues(array $params, array $config)
     {
         return array(
             'params' => $params,
-            'config' => $config
+            'config' => $config,
         );
     }
 }
@@ -51,9 +51,9 @@ class DefaultNewValuesFactoryTest extends \PHPUnit_Framework_TestCase
 
         $expectedResult = array(
             'params' => $inputParams,
-            'config' => $inputConfig
+            'config' => $inputConfig,
         );
 
         $this->assertSame($expectedResult, $nvf->getValues($inputParams, $inputConfig));
     }
-} 
+}
