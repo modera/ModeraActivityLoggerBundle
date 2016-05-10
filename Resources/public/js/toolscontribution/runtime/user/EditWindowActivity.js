@@ -72,6 +72,7 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.user.EditWindowAct
                     window.showErrors(response);
                 }
             });
-        })
+        });
+
     }
 });

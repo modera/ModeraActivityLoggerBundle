@@ -9,7 +9,7 @@ Ext.define('Modera.backend.security.toolscontribution.store.Users', {
             remoteSort: true,
             remoteFilter: true,
             fields: [
-                'id', 'username' , 'email',
+                'id', 'username' , 'email', 'meta',
                 'firstName', 'lastName', 'middleName', 'state', 'groups'
             ],
             proxy: {

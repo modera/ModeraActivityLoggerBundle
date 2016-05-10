@@ -58,5 +58,38 @@ Ext.define('Modera.backend.security.toolscontribution.runtime.Section', {
                 }
             });
         });
+    },
+
+    // override
+    canHandleIntent: function(dispatchedIntent) {
+        if (dispatchedIntent.config.intent.name == 'edit-user') {
+            dispatchedIntent.assertExactName('edit-user')
+                .assertHasExactParam('id')
+                .done();
+        }
+        if (dispatchedIntent.config.intent.name == 'edit-password') {
+            dispatchedIntent.assertExactName('edit-password')
+                .assertHasExactParam('id')
+                .done();
+        }
+    },
+
+    // override
+    handleIntent: function(intent, cb) {
+        var me = this;
+        if (intent.name == 'edit-user') {
+            me.application.getContainer().get('workbench').getActivitiesManager().launchActivity(
+                'edit-user', {id: intent.params.id}
+            );
+        }
+        if (intent.name == 'edit-password') {
+            me.application.getContainer().get('workbench').getActivitiesManager().launchActivity(
+                'edit-password', {id: intent.params.id}
+            );
+        }
+
+        if (Ext.isFunction(cb)) {
+            cb();
+        }
     }
 });

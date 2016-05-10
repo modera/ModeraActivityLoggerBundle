@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "24ba63728cd8cb80b366d42cf97a2708",
-    "content-hash": "fb93aefb893c621c796d287139471ce7",
+    "hash": "df329680e91533eb7732239bc02dd94e",
+    "content-hash": "af1166c68163c48721f0d29d1da289a8",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -866,6 +866,57 @@
             "time": "2014-01-12 16:20:24"
         },
         {
+            "name": "modera/activity-logger-bundle",
+            "version": "v1.0.0",
+            "target-dir": "Modera/ActivityLoggerBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/modera/ModeraActivityLoggerBundle.git",
+                "reference": "dac3c68756df87577a5701e11f640516c02d5a4d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/modera/ModeraActivityLoggerBundle/zipball/dac3c68756df87577a5701e11f640516c02d5a4d",
+                "reference": "dac3c68756df87577a5701e11f640516c02d5a4d",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/doctrine-bundle": "~1.2",
+                "doctrine/orm": "~2.2,>=2.2.3",
+                "php": ">=5.4.0",
+                "sergeil/extjsintegration-bundle": "~1.0",
+                "symfony/framework-bundle": "~2.0",
+                "symfony/symfony": "~2.0"
+            },
+            "require-dev": {
+                "modera/foundation-bundle": "~1.0",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Modera\\ActivityLoggerBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sergei Lissovski",
+                    "email": "sergei.lissovski@modera.org",
+                    "homepage": "http://sergei.lissovski.org/"
+                }
+            ],
+            "time": "2015-01-08 12:43:31"
+        },
+        {
             "name": "modera/backend-languages-bundle",
             "version": "v2.0.0",
             "target-dir": "Modera/BackendLanguagesBundle",
@@ -1156,17 +1207,17 @@
         },
         {
             "name": "modera/security-bundle",
-            "version": "v2.4",
+            "version": "v2.5",
             "target-dir": "Modera/SecurityBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraSecurityBundle.git",
-                "reference": "2ff3b71b065983c2797d7b1e50177b6fb7931ba8"
+                "reference": "b4899d7729923faa1f9c4a2b55a8f80e5d35e071"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraSecurityBundle/zipball/2ff3b71b065983c2797d7b1e50177b6fb7931ba8",
-                "reference": "2ff3b71b065983c2797d7b1e50177b6fb7931ba8",
+                "url": "https://api.github.com/repos/modera/ModeraSecurityBundle/zipball/b4899d7729923faa1f9c4a2b55a8f80e5d35e071",
+                "reference": "b4899d7729923faa1f9c4a2b55a8f80e5d35e071",
                 "shasum": ""
             },
             "require": {
@@ -1210,28 +1261,28 @@
                 }
             ],
             "description": "Provides database aware implementation of Security model + some other perks",
-            "time": "2016-04-26 07:06:09"
+            "time": "2016-05-10 12:41:46"
         },
         {
             "name": "modera/server-crud-bundle",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "target-dir": "Modera/ServerCrudBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/modera/ModeraServerCrudBundle.git",
-                "reference": "0c1010b7742d55b1f1f14096df5f26b06dbc0218"
+                "reference": "0c68374d0a58767f64bc881ee343583887832cfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/modera/ModeraServerCrudBundle/zipball/0c1010b7742d55b1f1f14096df5f26b06dbc0218",
-                "reference": "0c1010b7742d55b1f1f14096df5f26b06dbc0218",
+                "url": "https://api.github.com/repos/modera/ModeraServerCrudBundle/zipball/0c68374d0a58767f64bc881ee343583887832cfd",
+                "reference": "0c68374d0a58767f64bc881ee343583887832cfd",
                 "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "~1.2",
                 "doctrine/orm": "~2.2,>=2.2.3",
                 "modera/foundation-bundle": "~1.0",
-                "php": ">=5.3.3",
+                "php": ">=5.4.0",
                 "sergeil/aux-bundle": "~1.0",
                 "sergeil/expander-bundle": "~1.0",
                 "sergeil/extjsintegration-bundle": "~1.0",
@@ -1240,12 +1291,13 @@
                 "symfony/symfony": "~2.6"
             },
             "require-dev": {
+                "phake/phake": "2.*",
                 "phpunit/phpunit": "3.7.*"
             },
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "3.x-dev"
                 }
             },
             "autoload": {
@@ -1264,7 +1316,7 @@
                     "homepage": "http://sergei.lissovski.org/"
                 }
             ],
-            "time": "2015-08-19 10:21:05"
+            "time": "2016-05-10 12:37:10"
         },
         {
             "name": "modera/translations-bundle",
@@ -1589,16 +1641,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.1",
+            "version": "v5.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421"
+                "reference": "d8db871a54619458a805229a057ea2af33c753e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/0697e6aa65c83edf97bb0f23d8763f94e3f11421",
-                "reference": "0697e6aa65c83edf97bb0f23d8763f94e3f11421",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d8db871a54619458a805229a057ea2af33c753e8",
+                "reference": "d8db871a54619458a805229a057ea2af33c753e8",
                 "shasum": ""
             },
             "require": {
@@ -1638,7 +1690,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2015-06-06 14:19:39"
+            "time": "2016-05-01 08:45:47"
         },
         {
             "name": "symfony/polyfill-apcu",
@@ -2093,27 +2145,27 @@
         },
         {
             "name": "symfony/security-acl",
-            "version": "v2.8.0",
+            "version": "v3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-acl.git",
-                "reference": "4a3f7327ad215242c78f6564ad4ea6d2db1b8347"
+                "reference": "053b49bf4aa333a392c83296855989bcf88ddad1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-acl/zipball/4a3f7327ad215242c78f6564ad4ea6d2db1b8347",
-                "reference": "4a3f7327ad215242c78f6564ad4ea6d2db1b8347",
+                "url": "https://api.github.com/repos/symfony/security-acl/zipball/053b49bf4aa333a392c83296855989bcf88ddad1",
+                "reference": "053b49bf4aa333a392c83296855989bcf88ddad1",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9",
-                "symfony/security-core": "~2.4|~3.0.0"
+                "php": ">=5.5.9",
+                "symfony/security-core": "~2.8|~3.0"
             },
             "require-dev": {
                 "doctrine/common": "~2.2",
                 "doctrine/dbal": "~2.2",
                 "psr/log": "~1.0",
-                "symfony/phpunit-bridge": "~2.7|~3.0.0"
+                "symfony/phpunit-bridge": "~2.8|~3.0"
             },
             "suggest": {
                 "doctrine/dbal": "For using the built-in ACL implementation",
@@ -2123,7 +2175,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -2150,7 +2202,7 @@
             ],
             "description": "Symfony Security Component - ACL (Access Control List)",
             "homepage": "https://symfony.com",
-            "time": "2015-12-28 09:39:09"
+            "time": "2015-12-28 09:39:46"
         },
         {
             "name": "symfony/swiftmailer-bundle",
@@ -2211,16 +2263,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.8.4",
+            "version": "v2.8.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "9e14f9f4869c19188a376eab61d9a1c1f1fee347"
+                "reference": "8408816780215fae055599d100b5385d9a247151"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/9e14f9f4869c19188a376eab61d9a1c1f1fee347",
-                "reference": "9e14f9f4869c19188a376eab61d9a1c1f1fee347",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/8408816780215fae055599d100b5385d9a247151",
+                "reference": "8408816780215fae055599d100b5385d9a247151",
                 "shasum": ""
             },
             "require": {
@@ -2235,7 +2287,7 @@
                 "symfony/polyfill-php56": "~1.0",
                 "symfony/polyfill-php70": "~1.0",
                 "symfony/polyfill-util": "~1.0",
-                "symfony/security-acl": "~2.7",
+                "symfony/security-acl": "~2.7|~3.0.0",
                 "twig/twig": "~1.23|~2.0"
             },
             "conflict": {
@@ -2307,7 +2359,11 @@
             },
             "autoload": {
                 "psr-4": {
-                    "Symfony\\Bridge\\": "src/Symfony/Bridge/",
+                    "Symfony\\Bridge\\Doctrine\\": "src/Symfony/Bridge/Doctrine/",
+                    "Symfony\\Bridge\\Monolog\\": "src/Symfony/Bridge/Monolog/",
+                    "Symfony\\Bridge\\ProxyManager\\": "src/Symfony/Bridge/ProxyManager/",
+                    "Symfony\\Bridge\\Swiftmailer\\": "src/Symfony/Bridge/Swiftmailer/",
+                    "Symfony\\Bridge\\Twig\\": "src/Symfony/Bridge/Twig/",
                     "Symfony\\Bundle\\": "src/Symfony/Bundle/",
                     "Symfony\\Component\\": "src/Symfony/Component/"
                 },
@@ -2337,7 +2393,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-03-27 12:57:53"
+            "time": "2016-05-09 21:45:54"
         },
         {
             "name": "twig/twig",

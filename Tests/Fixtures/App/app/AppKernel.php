@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Modera\DirectBundle\ModeraDirectBundle(),
             new Modera\SecurityBundle\ModeraSecurityBundle(),
             new Modera\BackendToolsBundle\ModeraBackendToolsBundle(),
+            new Modera\ActivityLoggerBundle\ModeraActivityLoggerBundle(),
 
             new Modera\ServerCrudBundle\ModeraServerCrudBundle(),
 

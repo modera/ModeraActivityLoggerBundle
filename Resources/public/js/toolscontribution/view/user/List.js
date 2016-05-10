@@ -93,6 +93,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
                     },
                     xtype: 'toolbar',
                     dock: 'top',
+                    extensionPoint: 'userTopToolBar',
                     items: [
                         {
                             hidden: config.hideViewAwareComponents || false,
@@ -247,7 +248,9 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
             if (records.length > 1) {
                 btn.maybeShowMenu();
             } else {
-                me.fireEvent('editrecord', me, { id: records[0].get('id') });
+                var record = records[0];
+                console.log('record meta', record.get('meta') );
+                me.fireEvent('editrecord', me, { id: record.get('id'), meta: record.get('meta') });
             }
 
         });
@@ -258,7 +261,8 @@ Ext.define('Modera.backend.security.toolscontribution.view.user.List', {
         });
 
         me.down('#editPasswordBtn').on('click', function() {
-            me.fireEvent('editpassword', me, { id: me.getSelectedRecord().get('id') });
+            var record = me.getSelectedRecord();
+            me.fireEvent('editpassword', me, { id: record.get('id'), meta: record.get('meta') });
         });
 
         me.down('#editGroupsBtn').on('click', function() {

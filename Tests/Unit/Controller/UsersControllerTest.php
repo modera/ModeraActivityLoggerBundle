@@ -1,6 +1,6 @@
 <?php
 
-namespace Modera\BackendSecurityBundle\Tests\Functional\Controller;
+namespace Modera\BackendSecurityBundle\Tests\Unit\Controller;
 
 use Modera\BackendSecurityBundle\Controller\UsersController;
 

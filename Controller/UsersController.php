@@ -32,6 +32,9 @@ class UsersController extends AbstractCrudController
 
         return array(
             'entity' => User::clazz(),
+            'create_default_data_mapper' => function (ContainerInterface $container) {
+                return $this->container->get('modera_backend_security.data_mapper.user_data_mapper');
+            },
             'security' => array(
                 'actions' => array(
                     'create' => ModeraBackendSecurityBundle::ROLE_MANAGE_USER_PROFILES,
@@ -56,7 +59,7 @@ class UsersController extends AbstractCrudController
             ),
             'hydration' => array(
                 'groups' => array(
-                    'main-form' => ['id', 'username', 'email', 'firstName', 'lastName', 'middleName'],
+                    'main-form' => ['id', 'username', 'email', 'firstName', 'lastName', 'middleName', 'meta'],
                     'list' => function (User $user) {
                         $groups = array();
                         foreach ($user->getGroups() as $group) {
@@ -72,6 +75,7 @@ class UsersController extends AbstractCrudController
                             'middleName' => $user->getMiddleName(),
                             'state' => $user->getState(),
                             'groups' => $groups,
+                            'meta' => $user->getMeta(),
                         );
                     },
                     'compact-list' => ['id', 'username', 'fullname'],
@@ -86,6 +90,7 @@ class UsersController extends AbstractCrudController
                 ),
             ),
             'map_data_on_create' => function (array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
+
                 $defaultMapper->mapData($params, $entity);
 
                 if (isset($params['plainPassword']) && $params['plainPassword']) {
@@ -102,6 +107,7 @@ class UsersController extends AbstractCrudController
                 }
             },
             'map_data_on_update' => function (array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
+
                 $defaultMapper->mapData($params, $entity);
 
                 /* @var LoggerInterface $activityMgr */
