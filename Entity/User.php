@@ -356,6 +356,14 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    }
+
+    /**
      * @return string
      */
     public function getFirstName()
@@ -505,6 +513,11 @@ class User implements UserInterface, AdvancedUserInterface, \Serializable, Equat
     public function setMeta(array $meta)
     {
         $this->meta = $meta;
+    }
+
+    public function clearMeta()
+    {
+        $this->meta = array();
     }
 
     /**
