@@ -19,4 +19,4 @@ class RoutingResourcesProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         $this->assertTrue(in_array('@ModeraMJRCacheAwareClassLoaderBundle/Resources/config/routing.yml', $result));
     }
-} 
+}

@@ -22,11 +22,11 @@ class DefaultController extends Controller
         $versionProvider = $this->get('modera_mjr_cache_aware_class_loader.version_resolver');
 
         $content = $this->renderView('ModeraMJRCacheAwareClassLoaderBundle:Default:class-loader.html.twig', array(
-            'version' => trim($versionProvider->resolve())
+            'version' => trim($versionProvider->resolve()),
         ));
 
         return new Response($content, 200, array(
-            'Content-Type' => 'application/javascript'
+            'Content-Type' => 'application/javascript',
         ));
     }
 }

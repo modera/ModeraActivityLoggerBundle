@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
 /**
- * Standard version resolver will try to do the following things in order to resolve currently installed MF version:
+ * Standard version resolver will try to do the following things in order to resolve currently installed MF version:.
  *
  *  * at first it will try use bundle semantic config's configuration property "version"
  *   ( see \Modera\MJRCacheAwareClassLoaderBundle\DependencyInjection\Configuration )
@@ -34,19 +34,19 @@ class StandardVersionResolver implements VersionResolverInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function resolve()
     {
         $configuredVersion = isset($this->semanticConfig['version']) ? $this->semanticConfig['version'] : '';
-        $fileVersion = @file_get_contents($this->kernel->getRootDir() . '/../modera-version.txt');
+        $fileVersion = @file_get_contents($this->kernel->getRootDir().'/../modera-version.txt');
 
         if ('' != $configuredVersion) {
             return $configuredVersion;
-        } else if (false !== $fileVersion) {
+        } elseif (false !== $fileVersion) {
             return $fileVersion;
         } else {
             return '1.0.0';
         }
     }
-} 
+}

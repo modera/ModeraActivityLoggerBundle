@@ -22,13 +22,13 @@ class StandardVersionResolverTest extends \PHPUnit_Framework_TestCase
     // override
     public function tearDown()
     {
-        @unlink(__DIR__ . '/../modera-version.txt');
+        @unlink(__DIR__.'/../modera-version.txt');
     }
 
     public function testResolveWithSemanticConfig()
     {
         $config = array(
-            'version' => 'foo-bar'
+            'version' => 'foo-bar',
         );
 
         $kernel = \Phake::mock('Symfony\Component\HttpKernel\KernelInterface');
@@ -42,7 +42,7 @@ class StandardVersionResolverTest extends \PHPUnit_Framework_TestCase
 
     public function testResolveWithFile()
     {
-        file_put_contents(__DIR__ . '/../modera-version.txt', 'ololo');
+        file_put_contents(__DIR__.'/../modera-version.txt', 'ololo');
 
         $kernel = \Phake::mock('Symfony\Component\HttpKernel\KernelInterface');
         \Phake::when($kernel)->getRootDir()->thenReturn(__DIR__);

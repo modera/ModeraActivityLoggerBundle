@@ -22,4 +22,4 @@ class JsResourcesProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_array($result));
         $this->assertTrue(in_array('foo-url', $result));
     }
-} 
+}

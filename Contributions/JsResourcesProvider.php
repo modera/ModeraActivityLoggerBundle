@@ -25,12 +25,12 @@ class JsResourcesProvider implements ContributorInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
         return array(
-            $this->urlGenerator->generate('modera_mjr_cache_aware_class_loader')
+            $this->urlGenerator->generate('modera_mjr_cache_aware_class_loader'),
         );
     }
-} 
+}
