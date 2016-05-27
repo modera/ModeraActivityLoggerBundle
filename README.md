@@ -1,5 +1,8 @@
 # ModeraMJRCacheAwareClassLoaderBundle
 
+[![Build Status](https://travis-ci.org/modera/ModeraMJRCacheAwareClassLoaderBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraMJRCacheAwareClassLoaderBundle)
+[![StyleCI](https://styleci.io/repos/29132526/shield)](https://styleci.io/repos/29132526)
+
 This bundles enables browser caching mechanism for MJR application, so once page is loaded then all scripts will be
 permanently cached in client's browser and further page loads will not require any pre-cached scripts to be loaded
 again. Shortly speaking, this is how this bundle works - it adjusts Ext.Loader class that is used to dynamically load your

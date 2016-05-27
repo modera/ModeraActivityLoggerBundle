@@ -64,8 +64,8 @@ class VersionInjectorEventListenerTest extends \PHPUnit_Framework_TestCase
 
         $listener = new VersionInjectorEventListener($this->versionResolver, array(
             'listener_response_paths' => array(
-                'backend.*'
-            )
+                'backend.*',
+            ),
         ));
 
         $listener->onKernelResponse($this->mockEvent);
@@ -91,8 +91,8 @@ class VersionInjectorEventListenerTest extends \PHPUnit_Framework_TestCase
 
         $listener = new VersionInjectorEventListener($this->versionResolver, array(
             'listener_response_paths' => array(
-                'backend.*'
-            )
+                'backend.*',
+            ),
         ));
 
         $listener->onKernelResponse($this->mockEvent);
