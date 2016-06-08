@@ -35,15 +35,16 @@ class ToolsSectionsProvider implements ContributorInterface
         if (!$this->items) {
             $this->items = [];
 
-            if ($this->authorizationChecker->isGranted(ModeraBackendModuleBundle::ROLE_ACCESS_BACKEND_TOOLS_MODULES_SECTION)) {
-                $this->items[] = new Section(
-                    'Modules',
-                    'tools.modules',
-                    'Modules management.',
-                    '', '',
-                    'modera-backend-module-tools-icon'
-                );
-            }
+            // MPFE-894
+//            if ($this->authorizationChecker->isGranted(ModeraBackendModuleBundle::ROLE_ACCESS_BACKEND_TOOLS_MODULES_SECTION)) {
+//                $this->items[] = new Section(
+//                    'Modules',
+//                    'tools.modules',
+//                    'Modules management.',
+//                    '', '',
+//                    'modera-backend-module-tools-icon'
+//                );
+//            }
         }
 
         return $this->items;

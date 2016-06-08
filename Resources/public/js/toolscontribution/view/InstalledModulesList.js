@@ -26,7 +26,6 @@ Ext.define('Modera.backend.module.toolscontribution.view.InstalledModulesList', 
                 xtype: 'mfc-header',
                 title: me.headerTitleText,
                 margin: '0 0 9 0',
-                closeBtn: true,
                 items: [
                     '->',
                     {
