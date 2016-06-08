@@ -29,7 +29,6 @@ Ext.define('Modera.backend.tools.settings.view.HostPanel', {
                 margin: '0 0 9 0',
                 cls: 'tools-settings-toolbar',
                 iconCls: 'modera-backend-tools-settings-icon',
-                closeBtn: true,
                 items: [
                     {
                         xtype: 'image',
