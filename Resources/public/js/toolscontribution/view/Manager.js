@@ -26,8 +26,7 @@ Ext.define('Modera.backend.security.toolscontribution.view.Manager', {
                 xtype: 'mfc-header',
                 title: me.headerTitleText,
                 margin: '0 0 9 0',
-                iconCls: 'modera-backend-security-tools-icon',
-                closeBtn: true
+                iconCls: 'modera-backend-security-tools-icon'
             },
             layout: 'border',
             items: [
