@@ -145,7 +145,6 @@ Ext.define('Modera.backend.translationstool.toolscontribution.view.List', {
                     iconCls: 'modera-backend-translations-tool-tools-icon',
                     title: me.titleText,
                     margin: '0 0 9 0',
-                    closeBtn: true,
                     items: [
                         '->'
                         /*{
