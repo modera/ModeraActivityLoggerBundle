@@ -87,12 +87,12 @@ class GroupsController extends AbstractCrudController
             'hydration' => array(
                 'groups' => array(
                     'list' => function (Group $group) {
-                            return array(
-                                'id' => $group->getId(),
-                                'name' => $group->getName(),
-                                'usersCount' => count($group->getUsers()),
-                            );
-                        },
+                        return array(
+                            'id' => $group->getId(),
+                            'name' => $group->getName(),
+                            'usersCount' => count($group->getUsers()),
+                        );
+                    },
                     'delete-group' => ['name'],
                     'main-form' => ['id', 'name', 'refName'],
                     'compact-list' => ['id', 'name'],

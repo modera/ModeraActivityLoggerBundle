@@ -90,7 +90,6 @@ class UsersController extends AbstractCrudController
                 ),
             ),
             'map_data_on_create' => function (array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
-
                 $defaultMapper->mapData($params, $entity);
 
                 if (isset($params['plainPassword']) && $params['plainPassword']) {
@@ -107,7 +106,6 @@ class UsersController extends AbstractCrudController
                 }
             },
             'map_data_on_update' => function (array $params, User $entity, DataMapperInterface $defaultMapper, ContainerInterface $container) use ($self) {
-
                 $defaultMapper->mapData($params, $entity);
 
                 /* @var LoggerInterface $activityMgr */
