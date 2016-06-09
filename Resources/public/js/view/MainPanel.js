@@ -34,8 +34,7 @@ Ext.define('Modera.backend.tools.activitylog.view.MainPanel', {
                 xtype: 'mfc-header',
                 title: this.headerTitleText,
                 margin: '0 0 9 0',
-                iconCls: 'modera-backend-tools-activity-log-icon',
-                closeBtn: true
+                iconCls: 'modera-backend-tools-activity-log-icon'
             },
             cls: 'modera-backend-tools-activity-grid',
             layout: 'fit',
