@@ -20,14 +20,14 @@
         "symfony/swiftmailer-bundle": "~2.3",
         "modera/security-bundle": "~2.0",
         "modera/backend-tools-bundle": "~2.0",
-        "modera/mjr-integration-bundle": "~1.1",
+        "modera/mjr-integration-bundle": "~1.1|~2.0",
         "modera/backend-languages-bundle": "~2.0",
-        "modera/translations-bundle": "~1.0",
-        "modera/activity-logger-bundle": "~1.0",
+        "modera/translations-bundle": "~1.0|~2.0",
+        "modera/activity-logger-bundle": "~1.0|~2.0",
         "modera/server-crud-bundle": "~2.0"
     },
     "require-dev": {
-        "modera/foundation-bundle": "~1.0",
+        "modera/foundation-bundle": "~1.0|~2.0",
         "phake/phake": "2.*",
         "phpunit/phpunit": "3.*"
     },
