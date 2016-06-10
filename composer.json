@@ -15,7 +15,7 @@
         "symfony/framework-bundle": "~2.0",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2",
-        "modera/foundation-bundle": "~1.0",
+        "modera/foundation-bundle": "~1.0|~2.0",
         "sergeil/expander-bundle": "~1.0",
         "twig/twig": "~1.0"
     },
