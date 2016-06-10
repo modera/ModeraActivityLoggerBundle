@@ -11,8 +11,8 @@
     "require": {
         "php": ">=5.4.0",
         "symfony/framework-bundle": "~2.6",
-        "modera/mjr-integration-bundle": "~1.0",
-        "modera/languages-bundle": "~1.0",
+        "modera/mjr-integration-bundle": "~1.0|~2.0",
+        "modera/languages-bundle": "~1.0|~2.0",
         "sergeil/extjslocalization-bundle": "~1.0"
     },
     "require-dev": {
