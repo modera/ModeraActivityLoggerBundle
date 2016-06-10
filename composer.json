@@ -13,7 +13,7 @@
         "symfony/framework-bundle": "~2.3"
     },
     "require-dev": {
-        "modera/foundation-bundle": "~1.0",
+        "modera/foundation-bundle": "~1.0|~2.0",
         "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
