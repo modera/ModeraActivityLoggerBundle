@@ -16,7 +16,7 @@
         "symfony/symfony": "~2.6",
         "symfony/framework-bundle": "~2.6",
         "symfony/property-access": "~2.0",
-        "modera/foundation-bundle": "~1.0",
+        "modera/foundation-bundle": "~1.0|~2.0",
         "sergeil/extjsintegration-bundle": "~1.0",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2"
