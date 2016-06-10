@@ -11,7 +11,7 @@
     "require": {
         "php": ">=5.3.0",
         "symfony/framework-bundle": "~2.2",
-        "modera/mjr-integration-bundle": "~1.0",
+        "modera/mjr-integration-bundle": "~1.0|~2.0",
         "sergeil/expander-bundle": "~1.0"
     },
     "require-dev": {
