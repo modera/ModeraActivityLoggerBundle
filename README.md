@@ -1,12 +1,14 @@
 # ModeraDynamicallyConfigurableAppBundle
 
-Bundle configuration properties that allow to dynamically configure how AppKernel is bootstrapped ( env, is-debug ).
+[![StyleCI](https://styleci.io/repos/29132424/shield)](https://styleci.io/repos/29132424)
+
+Bundle configuration properties that allow to dynamically configure how AppKernel is bootstrapped (env, is-debug).
 
 ## Installation
 
 Add this dependency to your composer.json:
 
-    "modera/dynamically-configurable-app-bundle": "dev-master"
+    "modera/dynamically-configurable-app-bundle": "~2.0"
 
 Update your AppKernel class and add this:
 
