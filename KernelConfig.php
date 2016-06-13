@@ -11,15 +11,16 @@ class KernelConfig
     /**
      * @return array
      */
-    static public function read() {
+    public static function read()
+    {
         $defaultMode = array(
-            'env'   => 'prod',
-            'debug' => false
+            'env' => 'prod',
+            'debug' => false,
         );
 
         $reflKernel = new \ReflectionClass('AppKernel');
 
-        $mode = file_get_contents(dirname($reflKernel->getFileName()) . '/kernel.json');
+        $mode = file_get_contents(dirname($reflKernel->getFileName()).'/kernel.json');
 
         if (false == $mode) {
             return $defaultMode;

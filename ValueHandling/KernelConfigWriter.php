@@ -16,7 +16,7 @@ use Modera\DynamicallyConfigurableAppBundle\ModeraDynamicallyConfigurableAppBund
 class KernelConfigWriter implements ValueUpdatedHandlerInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function onUpdate(ConfigurationEntryInterface $entry)
     {
@@ -26,21 +26,21 @@ class KernelConfigWriter implements ValueUpdatedHandlerInterface
 
         $reflKernel = new \ReflectionClass('AppKernel');
 
-        $path = dirname($reflKernel->getFileName()) . DIRECTORY_SEPARATOR . 'kernel.json';
+        $path = dirname($reflKernel->getFileName()).DIRECTORY_SEPARATOR.'kernel.json';
 
         $kernelJson = @file_get_contents($path);
         if (false === $kernelJson) {
-            throw new \RuntimeException('Unable to find kernel.json, looked in ' . $path);
+            throw new \RuntimeException('Unable to find kernel.json, looked in '.$path);
         }
         $kernelJson = json_decode($kernelJson, true);
 
         $kernelJson['_comment'] = 'this file is used by web/app.php to control with what configuration AppKernel should be created with';
         if ($entry->getName() == Bundle::CONFIG_KERNEL_DEBUG) {
             $kernelJson['debug'] = $entry->getValue() == 'true';
-        } else if ($entry->getName() == Bundle::CONFIG_KERNEL_ENV) {
+        } elseif ($entry->getName() == Bundle::CONFIG_KERNEL_ENV) {
             $kernelJson['env'] = $entry->getValue();
         }
 
         file_put_contents($path, json_encode($kernelJson, \JSON_PRETTY_PRINT));
     }
-} 
+}

@@ -14,40 +14,44 @@ use Modera\DynamicallyConfigurableAppBundle\ModeraDynamicallyConfigurableAppBund
 class ConfigEntriesProvider implements ContributorInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function getItems()
     {
+        // "client" configuration configs are not that much important when standard foundation is used because
+        // "general" category relies on "Modera.backend.dcmjr.view.GeneralSettingsPanel" to display
+        // and edit configuration properties which defines all required configuration right in JS file
+
         $yes = T::trans('yes');
         $no = T::trans('no');
 
         $kernelDebugServer = array(
-            'id' => 'modera_config.boolean_handler',
+            'handler' => 'modera_config.boolean_handler',
             'update_handler' => 'modera_dynamically_configurable_app.value_handling.kernel_config_writer',
             'true_text' => $yes,
-            'false_text' => $no
+            'false_text' => $no,
         );
         $kernelDebugClient = array(
             'xtype' => 'combo',
-            'store' => [['prod', 'yes'], ['dev', 'no']]
+            'store' => [['prod', 'yes'], ['dev', 'no']],
         );
 
         $kernelEnvServer = array(
-            'id' => 'modera_config.dictionary_handler',
+            'handler' => 'modera_config.dictionary_handler',
             'update_handler' => 'modera_dynamically_configurable_app.value_handling.kernel_config_writer',
             'dictionary' => array(
                 'prod' => $yes,
-                'dev' => $no
-            )
+                'dev' => $no,
+            ),
         );
         $kernelEnvClient = array(
             'xtype' => 'combo',
-            'store' => [[true, 'yes'], [false, 'no']]
+            'store' => [[true, 'yes'], [false, 'no']],
         );
 
         return array(
-            new CED(Bundle::CONFIG_KERNEL_ENV, T::trans('Production mode'), 'prod', 'general', $kernelEnvServer, $kernelDebugClient),
-            new CED(Bundle::CONFIG_KERNEL_DEBUG, T::trans('Maintenance mode'), false, 'general', $kernelDebugServer, $kernelEnvClient)
+            new CED(Bundle::CONFIG_KERNEL_ENV, T::trans('Production mode'), 'prod', 'general', $kernelEnvServer, $kernelEnvClient),
+            new CED(Bundle::CONFIG_KERNEL_DEBUG, T::trans('Maintenance mode'), false, 'general', $kernelDebugServer, $kernelDebugClient),
         );
     }
 }
