@@ -36,7 +36,7 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
                 'className' => 'Modera.mjrintegration.runtime.titlehandling.MonitoringPlugin',
                 'args' => [
                     array(
-                        'pageTitleMgr' => '@page_title_mgr'
+                        'pageTitleMgr' => '@page_title_mgr',
                     ),
                 ],
                 'tags' => ['runtime_plugin'],

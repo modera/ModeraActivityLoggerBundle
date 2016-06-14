@@ -17,7 +17,7 @@ class ConfigProviderAliasingCompilerPassTest extends \PHPUnit_Framework_TestCase
         \Phake::when($container)
             ->getParameter(ModeraMjrIntegrationExtension::CONFIG_KEY)
             ->thenReturn(array(
-                'main_config_provider' => 'foo_service'
+                'main_config_provider' => 'foo_service',
             ))
         ;
 
