@@ -49,7 +49,7 @@ class ClientDiServiceDefinitionsProvider implements ContributorInterface
                         'titlePattern' => $this->config->getTitle(),
                     ),
                 ],
-            )
+            ),
         );
     }
 }
