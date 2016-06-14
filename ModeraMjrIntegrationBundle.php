@@ -2,6 +2,7 @@
 
 namespace Modera\MjrIntegrationBundle;
 
+use Modera\MjrIntegrationBundle\DependencyInjection\ConfigProviderAliasingCompilerPass;
 use Modera\MjrIntegrationBundle\DependencyInjection\MenuItemContributorCompilerPass;
 use Sli\ExpanderBundle\Ext\ExtensionPoint;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -20,6 +21,8 @@ class ModeraMjrIntegrationBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
+        $container->addCompilerPass(new ConfigProviderAliasingCompilerPass());
+
         $configMergersProvider = new ExtensionPoint('modera_mjr_integration.config.config_mergers');
         $configMergersProvider->setDescription(
             'Lets to contribute implementations of ConfigMergerInterface that will be used to prepare runtime-config.'

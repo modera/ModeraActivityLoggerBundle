@@ -72,20 +72,22 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                     ->defaultValue('get-config')
                 ->end()
-                // this property will be used ony if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
+                // this property will be used only if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
                 ->scalarNode('home_section')
                     ->defaultValue('home')
                     ->cannotBeEmpty()
                 ->end()
-                // this property will be used ony if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
+                // this property will be used only if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
                 ->scalarNode('deployment_name')
                     ->defaultValue(null)
                 ->end()
-                // this property will be used ony if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
+                // this property will be used only if 'main_config_provider' contains 'modera_mjr_integration.config.bundle_semantic_config'
                 ->scalarNode('deployment_url')
                     ->defaultValue(null)
                 ->end()
                 // DI service ID that implements \Modera\MjrIntegrationBundle\Config\MainConfigInterface
+                // In your application code you can use "modera_mjr_integration.config.main_config" service which will
+                // get automatically resolved to a value configured by this property
                 ->scalarNode('main_config_provider')
                     ->defaultValue('modera_mjr_integration.config.bundle_semantic_config')
                 ->end()

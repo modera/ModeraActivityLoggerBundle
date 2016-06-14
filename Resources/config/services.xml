@@ -59,6 +59,7 @@
             <tag name="modera_routing.routing_resources_provider" />
         </service>
 
+        <!-- better use "modera_mjr_integration.config.main_config" -->
         <service id="modera_mjr_integration.config.bundle_semantic_config"
                  class="Modera\MjrIntegrationBundle\Config\BundleSemanticMainConfig">
 
@@ -81,6 +82,14 @@
                  class="Modera\MjrIntegrationBundle\Contributions\ClassLoaderMappingsProvider">
 
             <tag name="modera_mjr_integration.class_loader_mappings_provider" />
+        </service>
+
+        <service id="modera_mjr_integration.contributions.client_di_service_definitions_provider"
+                 class="Modera\MjrIntegrationBundle\Contributions\ClientDiServiceDefinitionsProvider">
+
+            <argument type="service" id="modera_mjr_integration.config.main_config" />
+
+            <tag name="modera_mjr_integration.csdi.service_definitions_provider" />
         </service>
     </services>
 </container>
