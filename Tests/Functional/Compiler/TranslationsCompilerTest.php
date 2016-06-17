@@ -2,7 +2,6 @@
 
 namespace Modera\TranslationsBundle\Tests\Functional\Compiler;
 
-use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\TranslationsBundle\Compiler\TranslationsCompiler;
 use Modera\TranslationsBundle\Tests\Functional\AbstractFunctionalTestCase;
 use Symfony\Component\Finder\Finder;

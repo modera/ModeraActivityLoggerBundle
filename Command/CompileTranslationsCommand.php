@@ -55,7 +55,6 @@ class CompileTranslationsCommand extends ContainerAwareCommand
         $bundles = array();
         /* @var TranslationToken $token */
         foreach ($tokens as $token) {
-
             $bundleName = $token->getBundleName();
 
             if (!isset($bundles[$bundleName])) {
@@ -66,7 +65,6 @@ class CompileTranslationsCommand extends ContainerAwareCommand
 
             /* @var LanguageTranslationToken $ltt */
             foreach ($ltts as $ltt) {
-
                 if (!$ltt->getLanguage()->getEnabled()) {
                     continue;
                 }
@@ -83,21 +81,19 @@ class CompileTranslationsCommand extends ContainerAwareCommand
         }
 
         if (count($bundles)) {
-
             $fs = new Filesystem();
             $resourcesDir = 'app/Resources';
             $basePath = dirname($this->getContainer()->get('kernel')->getRootdir());
 
             foreach ($bundles as $bundleName => $catalogues) {
-
                 if (!count($catalogues)) {
                     continue;
                 }
 
-                $bundleTransDir = $resourcesDir . '/translations' . '/' . $bundleName;
-                $bundleTransPath = $basePath . '/' . $bundleTransDir;
+                $bundleTransDir = $resourcesDir.'/translations'.'/'.$bundleName;
+                $bundleTransPath = $basePath.'/'.$bundleTransDir;
 
-                $output->writeln('>>> ' . $bundleName . ': ' . $bundleTransDir);
+                $output->writeln('>>> '.$bundleName.': '.$bundleTransDir);
 
                 if ($fs->exists($bundleTransPath)) {
                     $output->writeln('    <fg=red>Removing old files</>');
@@ -112,7 +108,7 @@ class CompileTranslationsCommand extends ContainerAwareCommand
 
                     $fs->mkdir($bundleTransPath);
                 } catch (IOExceptionInterface $e) {
-                    echo "An error occurred while creating your directory at " . $e->getPath();
+                    echo 'An error occurred while creating your directory at '.$e->getPath();
                 }
 
                 $output->writeln('    <fg=green>Creating new files</>');

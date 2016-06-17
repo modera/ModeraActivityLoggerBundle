@@ -4,7 +4,6 @@ namespace Modera\TranslationsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -48,13 +47,13 @@ class TranslationToken
     private $tokenName;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $isObsolete = false;
 
     /**
-     * See {@class \Modera\TranslationsBundle\Listener\LanguageTranslationTokenListener} for details
+     * See {@class \Modera\TranslationsBundle\Listener\LanguageTranslationTokenListener} for details.
      *
      * @var array
      * @ORM\Column(type="json_array", nullable=false)
@@ -72,7 +71,7 @@ class TranslationToken
         $this->languageTranslationTokens = new ArrayCollection();
     }
 
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -150,8 +149,9 @@ class TranslationToken
     }
 
     /**
-     * For ModeraServerCrudBundle
-     * @return boolean
+     * For ModeraServerCrudBundle.
+     *
+     * @return bool
      */
     public function getIsObsolete()
     {
@@ -159,7 +159,7 @@ class TranslationToken
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isObsolete()
     {
@@ -167,7 +167,7 @@ class TranslationToken
     }
 
     /**
-     * @param boolean $isObsolete
+     * @param bool $isObsolete
      */
     public function setObsolete($isObsolete)
     {

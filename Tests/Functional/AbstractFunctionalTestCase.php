@@ -23,7 +23,7 @@ class AbstractFunctionalTestCase extends FunctionalTestCase
     private static $st;
 
     // override
-    static public function setUpDatabase()
+    public static function setUpDatabase()
     {
         self::$st = new SchemaTool(self::$em);
         self::$st->createSchema([self::$em->getClassMetadata(Language::clazz())]);
@@ -32,7 +32,7 @@ class AbstractFunctionalTestCase extends FunctionalTestCase
     }
 
     // override
-    static public function dropDatabase()
+    public static function dropDatabase()
     {
         self::$st->dropSchema([self::$em->getClassMetadata(Language::clazz())]);
         self::$st->dropSchema([self::$em->getClassMetadata(TranslationToken::clazz())]);

@@ -39,9 +39,9 @@ class TranslationHandlerTest extends \PHPUnit_Framework_TestCase
 
         $this->bundle = 'ModeraTranslationsBundle';
         $this->kernel = \Phake::mock('Symfony\Component\HttpKernel\KernelInterface');
-        \Phake::when($this->kernel)->getBundle($this->bundle)->thenReturn(new DummyBundle);
+        \Phake::when($this->kernel)->getBundle($this->bundle)->thenReturn(new DummyBundle());
         $this->extractor = \Phake::mock('Symfony\Component\Translation\Extractor\ExtractorInterface');
-        $this->loader = new TranslationLoader;
+        $this->loader = new TranslationLoader();
     }
 
     public function testTemplateTranslationHandler()

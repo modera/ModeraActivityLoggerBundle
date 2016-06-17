@@ -8,7 +8,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 
 /**
  * Attempts to extract translation tokens from PHP classes. This is what you should do to let this extractor
- * detect and extract tokens from your PHP classes:
+ * detect and extract tokens from your PHP classes:.
  *
  * 1) Import T class from Helper package, for example:
  *    use Modera\FoundationBundle\Translation\T;
@@ -51,7 +51,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
     private $prefix = '';
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function extract($directory, MessageCatalogue $catalog)
     {
@@ -64,7 +64,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function setPrefix($prefix)
     {
@@ -75,6 +75,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
      * Normalizes a token.
      *
      * @param mixed $token
+     *
      * @return string
      */
     protected function normalizeToken($token)
@@ -88,25 +89,26 @@ class PhpClassTokenExtractor implements ExtractorInterface
 
     /**
      * @param array $tokens
+     *
      * @return array[]
      */
     private function extractInvocations(array $tokens)
     {
         $sequences = [
             ['T', '::', 'trans'],
-            ['T', '::', 'transChoice']
+            ['T', '::', 'transChoice'],
         ];
 
         $invocations = array();
 
         foreach ($sequences as $seq) {
-            foreach ($tokens as $tokenIndex=>$token) {
+            foreach ($tokens as $tokenIndex => $token) {
                 $matchCount = 0;
-                foreach ($seq as $seqIndex=>$item) {
+                foreach ($seq as $seqIndex => $item) {
                     $indexToValidate = $tokenIndex + $seqIndex; // next token in a token stream
 
                     if (isset($tokens[$indexToValidate]) && $this->normalizeToken($tokens[$indexToValidate]) == $item) {
-                        $matchCount++;
+                        ++$matchCount;
                     }
                 }
 
@@ -121,18 +123,18 @@ class PhpClassTokenExtractor implements ExtractorInterface
                     continue;
                 }
 
-                $startIndex++;
+                ++$startIndex;
                 $depth = 1; // because there was already one "("
                 $bodyLength = null;
 
                 $bodyStartTokens = array_slice($tokens, $startIndex);
-                foreach ($bodyStartTokens as $braceWannaBeIndex=>$braceWannaBeToken) {
+                foreach ($bodyStartTokens as $braceWannaBeIndex => $braceWannaBeToken) {
                     $value = $this->normalizeToken($braceWannaBeToken);
 
                     if ('(' == $value) {
-                        $depth++;
-                    } else if (')' == $value) {
-                        $depth--;
+                        ++$depth;
+                    } elseif (')' == $value) {
+                        --$depth;
                     }
 
                     if (0 == $depth) {
@@ -144,11 +146,11 @@ class PhpClassTokenExtractor implements ExtractorInterface
                 $bodyTokens = array_slice($tokens, $startIndex, $bodyLength);
 
                 $invocations[] = array(
-                    'method_name' => $seq[count($seq)-1],
+                    'method_name' => $seq[count($seq) - 1],
                     'start_index' => $startIndex,
                     'body' => $bodyTokens,
                     'length' => $bodyLength,
-                    'tokens' => $tokens
+                    'tokens' => $tokens,
                 );
             }
         }
@@ -157,9 +159,10 @@ class PhpClassTokenExtractor implements ExtractorInterface
     }
 
     /**
-     * Will filter out whitespace tokens because we don't use them in during tokens stream analysis
+     * Will filter out whitespace tokens because we don't use them in during tokens stream analysis.
      *
      * @param array $tokens
+     *
      * @return array[]
      */
     private function siftOutWhitespaceTokens(array $tokens)
@@ -179,6 +182,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
 
     /**
      * @param array $invocation
+     *
      * @return array[]
      */
     private function extractArgumentTokens(array $invocation)
@@ -193,7 +197,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
         $args = array(
             'token' => $tokens[0],
             'params' => array(),
-            'domain' => array()
+            'domain' => array(),
         );
 
         // both trans, transChoice first argument is "message":
@@ -203,27 +207,27 @@ class PhpClassTokenExtractor implements ExtractorInterface
         // by "," -- this gives us index shift of 2
         $indexShift = 'transChoice' == $invocation['method_name'] ? 2 : 0;
 
-        $isParamsArgSpecified = isset($tokens[$indexShift+1]) && ',' == $tokens[$indexShift+1]
-                             && isset($tokens[$indexShift+2]);
+        $isParamsArgSpecified = isset($tokens[$indexShift + 1]) && ',' == $tokens[$indexShift + 1]
+                             && isset($tokens[$indexShift + 2]);
 
         if ($isParamsArgSpecified) {
-            $isArrayParameter = strtolower($this->normalizeToken($tokens[$indexShift+2])) == 'array'
-                              && isset($tokens[$indexShift+3]) && $this->normalizeToken($tokens[$indexShift+3]) == '(';
+            $isArrayParameter = strtolower($this->normalizeToken($tokens[$indexShift + 2])) == 'array'
+                              && isset($tokens[$indexShift + 3]) && $this->normalizeToken($tokens[$indexShift + 3]) == '(';
 
-            $isNullParameter = strtolower($this->normalizeToken($tokens[$indexShift+2])) == 'null';
+            $isNullParameter = strtolower($this->normalizeToken($tokens[$indexShift + 2])) == 'null';
 
             if ($isArrayParameter) {
                 $depth = 1;
                 $secondArgEndIndex = null;
 
-                for ($i=$indexShift+4; $i<count($tokens); $i++) {
+                for ($i = $indexShift + 4; $i < count($tokens); ++$i) {
                     $value = $this->normalizeToken($tokens[$i]);
 
                     // parameters may be nested
                     if ('(' == $value) {
-                        $depth++;
-                    } else if (')' == $value) {
-                        $depth--;
+                        ++$depth;
+                    } elseif (')' == $value) {
+                        --$depth;
                     }
 
                     if (0 == $depth) {
@@ -233,27 +237,27 @@ class PhpClassTokenExtractor implements ExtractorInterface
                 }
 
                 // token parameters
-                $secondArgumentTokens = array_slice($tokens, $indexShift+4, $secondArgEndIndex);
+                $secondArgumentTokens = array_slice($tokens, $indexShift + 4, $secondArgEndIndex);
                 $args['params'] = $secondArgumentTokens;
 
                 // if $params argument is followed by "," we assume that domain is specified
-                $isDomainArgumentSpecified = isset($tokens[$indexShift+$secondArgEndIndex+1])
-                                           && ',' == $tokens[$indexShift+$secondArgEndIndex+1]
-                                           && isset($tokens[$indexShift+$secondArgEndIndex+2]);
+                $isDomainArgumentSpecified = isset($tokens[$indexShift + $secondArgEndIndex + 1])
+                                           && ',' == $tokens[$indexShift + $secondArgEndIndex + 1]
+                                           && isset($tokens[$indexShift + $secondArgEndIndex + 2]);
 
                 if ($isDomainArgumentSpecified) {
-                    $args['domain'] = $tokens[$indexShift+$secondArgEndIndex+2];
+                    $args['domain'] = $tokens[$indexShift + $secondArgEndIndex + 2];
                 }
-            } else if ($isNullParameter) { // second parameter is
-                $args['params'] = $tokens[$indexShift+2];
+            } elseif ($isNullParameter) { // second parameter is
+                $args['params'] = $tokens[$indexShift + 2];
 
                 // if params are followed by "null," we assume that domain parameter is also provided
-                $isDomainArgumentSpecified = isset($tokens[$indexShift+3])
-                                          && $this->normalizeToken($tokens[$indexShift+3]) == ','
-                                          && isset($tokens[$indexShift+4]);
-                
+                $isDomainArgumentSpecified = isset($tokens[$indexShift + 3])
+                                          && $this->normalizeToken($tokens[$indexShift + 3]) == ','
+                                          && isset($tokens[$indexShift + 4]);
+
                 if ($isDomainArgumentSpecified) {
-                    $args['domain'] = $tokens[$indexShift+4];
+                    $args['domain'] = $tokens[$indexShift + 4];
                 }
             }
         }
@@ -273,7 +277,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
             // just a string literal
 
             return trim($valueToken[1], $valueToken[1]{0});
-        } else if (\T_VARIABLE == $valueToken[0]) {
+        } elseif (\T_VARIABLE == $valueToken[0]) {
             // variable is used, we are going to try to resolve its value even if it is composite
             // ( made up of several assign statements )
 
@@ -284,7 +288,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
             $parentTokens = array_reverse($parentTokens);
 
             $length = null;
-            foreach ($parentTokens as $i=>$parentToken) {
+            foreach ($parentTokens as $i => $parentToken) {
                 if (is_array($parentToken) && \T_FUNCTION == $parentToken[0]) {
                     $length = $i;
                     break;
@@ -297,18 +301,18 @@ class PhpClassTokenExtractor implements ExtractorInterface
             // now that we have all tokens from FUNCTION to the Helper::*() we can compile variable's value
 
             $variableValue = '';
-            foreach ($parentTokens as $i=>$parentToken) {
+            foreach ($parentTokens as $i => $parentToken) {
                 // ha, this is our variable!
                 if (is_array($parentToken) && \T_VARIABLE == $parentToken[0] && $parentToken[1] == $variableName) {
                     // both assign operator and a value exist
-                    if (isset($parentTokens[$i+1]) && isset($parentTokens[$i+2])) {
-                        $assignValueTokenValue = $parentTokens[$i+1];
-                        $variableValueTokenValue = $parentTokens[$i+2];
+                    if (isset($parentTokens[$i + 1]) && isset($parentTokens[$i + 2])) {
+                        $assignValueTokenValue = $parentTokens[$i + 1];
+                        $variableValueTokenValue = $parentTokens[$i + 2];
 
                         $isValidAssignToken = false;
                         if (is_string($assignValueTokenValue) && '=' == $assignValueTokenValue) {
                             $isValidAssignToken = true;
-                        } else if (is_array($assignValueTokenValue) && \T_CONCAT_EQUAL == $assignValueTokenValue[0]) {
+                        } elseif (is_array($assignValueTokenValue) && \T_CONCAT_EQUAL == $assignValueTokenValue[0]) {
                             $isValidAssignToken = true;
                         }
 
@@ -321,7 +325,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
 
                             if ('=' == $assignStmt) {
                                 $variableValue = trim($value, $value{0});
-                            } else if ('.=' == $assignStmt) {
+                            } elseif ('.=' == $assignStmt) {
                                 $variableValue .= trim($value, $value{0});
                             }
                         }
@@ -336,14 +340,15 @@ class PhpClassTokenExtractor implements ExtractorInterface
     }
 
     /**
-     * Will make sure if a token stream which represents a file has required USE statement
+     * Will make sure if a token stream which represents a file has required USE statement.
      *
      * @param array $tokens
+     *
      * @return bool
      */
     private function containsRequiredUseStatements(array $tokens)
     {
-        foreach ($tokens as $currentIndex=>$token) {
+        foreach ($tokens as $currentIndex => $token) {
             if (!is_array($token)) {
                 continue;
             }
@@ -394,7 +399,7 @@ class PhpClassTokenExtractor implements ExtractorInterface
                     ? $this->resolveTokenValue($argumentsTokens['domain'], $invocation)
                     : 'messages';
 
-            $catalog->set($this->prefix . $tokenValue, $tokenValue, $domain);
+            $catalog->set($this->prefix.$tokenValue, $tokenValue, $domain);
         }
     }
 }

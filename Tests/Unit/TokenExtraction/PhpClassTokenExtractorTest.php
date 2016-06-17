@@ -2,7 +2,6 @@
 
 namespace Modera\TranslationsBundle\Tests\Unit\TokenExtraction;
 
-use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\TranslationsBundle\TokenExtraction\PhpClassTokenExtractor;
 use Symfony\Component\Translation\MessageCatalogue;
 
@@ -17,12 +16,12 @@ class PhpClassTokenExtractorTest extends \PHPUnit_Framework_TestCase
         $extractor = new PhpClassTokenExtractor();
 
         $catalogue = new MessageCatalogue('en');
-        $extractor->extract(__DIR__ . '/dummy-classes', $catalogue);
+        $extractor->extract(__DIR__.'/dummy-classes', $catalogue);
 
         $expectedDomains = array(
             'messages', 'foodomain',
             'bardomain', 'tcdomain',
-            'Error! Token value can be either a literal string or variable reference.'
+            'Error! Token value can be either a literal string or variable reference.',
         );
         sort($expectedDomains);
         $actualDomains = $catalogue->getDomains();
@@ -39,7 +38,7 @@ class PhpClassTokenExtractorTest extends \PHPUnit_Framework_TestCase
         // ---
 
         $extractor->setPrefix('foo: ');
-        $extractor->extract(__DIR__ . '/dummy-classes', $catalogue);
+        $extractor->extract(__DIR__.'/dummy-classes', $catalogue);
 
         $this->assertTrue($catalogue->has('foo: hello world', 'messages'));
         $this->assertTrue($catalogue->has('foo: Some simple token', 'messages'));
@@ -52,7 +51,7 @@ class PhpClassTokenExtractorTest extends \PHPUnit_Framework_TestCase
         $extractor = new PhpClassTokenExtractor();
 
         $catalogue = new MessageCatalogue('en');
-        $extractor->extract(__DIR__ . '/dummy-files', $catalogue);
+        $extractor->extract(__DIR__.'/dummy-files', $catalogue);
 
         $this->assertEquals(0, count($catalogue->all()));
     }

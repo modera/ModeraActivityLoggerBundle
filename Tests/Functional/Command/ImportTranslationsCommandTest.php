@@ -2,15 +2,10 @@
 
 namespace Modera\TranslationsBundle\Tests\Functional\Command;
 
-use Doctrine\ORM\Tools\SchemaTool;
 use Modera\LanguagesBundle\Entity\Language;
 use Modera\TranslationsBundle\Entity\TranslationToken;
 use Modera\TranslationsBundle\Entity\LanguageTranslationToken;
-use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Modera\TranslationsBundle\Tests\Functional\AbstractFunctionalTestCase;
-use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -48,11 +43,11 @@ class ImportTranslationsCommandTest extends AbstractFunctionalTestCase
             $this->assertEquals('en', $ltt->getLanguage()->getLocale());
             $this->assertEquals('Test token', $ltt->getTranslation());
             $this->assertEquals(array(
-                'id'          => $ltt->getId(),
-                'isNew'       => $ltt->isNew(),
+                'id' => $ltt->getId(),
+                'isNew' => $ltt->isNew(),
                 'translation' => $ltt->getTranslation(),
-                'locale'      => $ltt->getLanguage()->getLocale(),
-                'language'    => $ltt->getLanguage()->getName(),
+                'locale' => $ltt->getLanguage()->getLocale(),
+                'language' => $ltt->getLanguage()->getName(),
             ), $translations[$ltt->getLanguage()->getId()]);
         }
     }
@@ -68,17 +63,17 @@ class ImportTranslationsCommandTest extends AbstractFunctionalTestCase
         $this->assertEquals(2, count($tokens));
 
         $token = self::$em->getRepository(TranslationToken::clazz())->findOneBy(array(
-            'source' => 'template'
+            'source' => 'template',
         ));
         $this->assertToken($token);
 
         $token = self::$em->getRepository(TranslationToken::clazz())->findOneBy(array(
-            'source' => 'php-classes'
+            'source' => 'php-classes',
         ));
         $this->assertToken($token);
 
         $token = self::$em->getRepository(TranslationToken::clazz())->findOneBy(array(
-            'source' => 'undefined'
+            'source' => 'undefined',
         ));
         $this->assertFalse($token instanceof TranslationToken);
     }

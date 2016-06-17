@@ -14,7 +14,7 @@ class ModeraTranslationsBundleTest extends \PHPUnit_Framework_TestCase
     {
         $containerBuilder = \Phake::mock('Symfony\Component\DependencyInjection\ContainerBuilder');
 
-        $bundle = new ModeraTranslationsBundle;
+        $bundle = new ModeraTranslationsBundle();
         $bundle->build($containerBuilder);
 
         \Phake::verify($containerBuilder)->addCompilerPass(\Phake::capture($pass));

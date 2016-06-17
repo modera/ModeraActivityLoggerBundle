@@ -26,6 +26,7 @@ interface TranslationHandlerInterface
      *
      * @param string $source
      * @param string $locale
+     *
      * @return MessageCatalogueInterface | null
      */
     public function extract($source, $locale);

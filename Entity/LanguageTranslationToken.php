@@ -3,7 +3,6 @@
 namespace Modera\TranslationsBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Modera\LanguagesBundle\Entity\Language;
 
 /**
@@ -38,7 +37,7 @@ class LanguageTranslationToken
     private $translationToken;
 
     /**
-     * @var boolean
+     * @var bool
      * @ORM\Column(type="boolean", nullable=false)
      */
     private $isNew = true;
@@ -49,8 +48,7 @@ class LanguageTranslationToken
      */
     private $translation;
 
-
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -96,7 +94,7 @@ class LanguageTranslationToken
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isNew()
     {
@@ -104,7 +102,7 @@ class LanguageTranslationToken
     }
 
     /**
-     * @param boolean $isNew
+     * @param bool $isNew
      */
     public function setNew($isNew)
     {

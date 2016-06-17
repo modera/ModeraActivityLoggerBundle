@@ -15,7 +15,7 @@ use Modera\TranslationsBundle\Service\TranslationHandlersChain;
 use Modera\TranslationsBundle\Handling\TranslationHandlerInterface;
 
 /**
- * From files to database
+ * From files to database.
  *
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
@@ -39,12 +39,12 @@ class ImportTranslationsCommand extends ContainerAwareCommand
         $thc = $this->getContainer()->get('modera_translations.service.translation_handlers_chain');
 
         $languages = $em->getRepository(Language::clazz())->findBy(array(
-            'isEnabled' => true
+            'isEnabled' => true,
         ));
         if (!count($languages)) {
             $defaultLocale = $this->getContainer()->getParameter('locale');
 
-            $language = new Language;
+            $language = new Language();
             $language->setLocale($defaultLocale);
             $language->setEnabled(true);
             $em->persist($language);
@@ -55,18 +55,15 @@ class ImportTranslationsCommand extends ContainerAwareCommand
 
         $handlers = $thc->getHandlers();
         if (count($handlers) > 0) {
-
             $imported = false;
 
             /* @var TranslationHandlerInterface $handler */
             foreach ($handlers as $handler) {
-
                 $bundleName = $handler->getBundleName();
 
                 foreach ($handler->getSources() as $source) {
-
                     $tokens = $em->getRepository(TranslationToken::clazz())->findBy(array(
-                        'source'     => $source,
+                        'source' => $source,
                         'bundleName' => $bundleName,
                     ));
 
@@ -100,7 +97,6 @@ class ImportTranslationsCommand extends ContainerAwareCommand
                         $operation = new DiffOperation($currentCatalogue, $extractedCatalogue);
 
                         foreach ($operation->getDomains() as $domain) {
-
                             $newMessages = $operation->getNewMessages($domain);
                             $obsoleteMessages = $operation->getObsoleteMessages($domain);
 
@@ -108,7 +104,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
                                 $imported = true;
 
                                 $output->writeln(
-                                    '>>> ' . $bundleName . ' : ' . $source . ' : ' . $locale . ' : ' . $domain
+                                    '>>> '.$bundleName.' : '.$source.' : '.$locale.' : '.$domain
                                 );
                             }
 
@@ -121,12 +117,12 @@ class ImportTranslationsCommand extends ContainerAwareCommand
                                     $token->setObsolete(false);
 
                                     $ltt = $em->getRepository(LanguageTranslationToken::clazz())->findOneBy(array(
-                                        'language'         => $language,
+                                        'language' => $language,
                                         'translationToken' => $token,
-                                        'translation'      => $translation,
+                                        'translation' => $translation,
                                     ));
                                     if (!$ltt) {
-                                        $ltt = new LanguageTranslationToken;
+                                        $ltt = new LanguageTranslationToken();
                                         $ltt->setLanguage($language);
                                         $token->addLanguageTranslationToken($ltt);
                                     }
@@ -169,6 +165,7 @@ class ImportTranslationsCommand extends ContainerAwareCommand
      * @param $bundleName
      * @param $domain
      * @param $tokenName
+     *
      * @return TranslationToken
      */
     private function findOrCreateTranslationToken($source, $bundleName, $domain, $tokenName)
@@ -177,14 +174,14 @@ class ImportTranslationsCommand extends ContainerAwareCommand
         $em = $this->getContainer()->get('doctrine.orm.entity_manager');
 
         $token = $em->getRepository(TranslationToken::clazz())->findOneBy(array(
-            'source'     => $source,
+            'source' => $source,
             'bundleName' => $bundleName,
-            'domain'     => $domain,
-            'tokenName'  => $tokenName,
+            'domain' => $domain,
+            'tokenName' => $tokenName,
         ));
 
         if (!$token) {
-            $token = new TranslationToken;
+            $token = new TranslationToken();
             $token->setSource($source);
             $token->setBundleName($bundleName);
             $token->setDomain($domain);
@@ -195,4 +192,4 @@ class ImportTranslationsCommand extends ContainerAwareCommand
 
         return $token;
     }
-} 
+}

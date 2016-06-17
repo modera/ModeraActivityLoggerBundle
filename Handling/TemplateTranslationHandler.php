@@ -41,10 +41,10 @@ class TemplateTranslationHandler implements TranslationHandlerInterface
 
     public function __construct(KernelInterface $kernel, TranslationLoader $loader, ExtractorInterface $extractor, $bundle)
     {
-        $this->kernel    = $kernel;
-        $this->loader    = $loader;
+        $this->kernel = $kernel;
+        $this->loader = $loader;
         $this->extractor = $extractor;
-        $this->bundle    = $bundle;
+        $this->bundle = $bundle;
     }
 
     /**
@@ -66,12 +66,13 @@ class TemplateTranslationHandler implements TranslationHandlerInterface
     /**
      * @param string $source
      * @param string $locale
+     *
      * @return MessageCatalogueInterface | null
      */
     public function extract($source, $locale)
     {
         if (!$this->isSourceAvailable($source)) {
-            return null;
+            return;
         }
 
         $fs = new Filesystem();
@@ -87,7 +88,7 @@ class TemplateTranslationHandler implements TranslationHandlerInterface
         }
 
         // load any existing messages from the translation files
-        $translationsDir = $foundBundle->getPath() . '/Resources/translations';
+        $translationsDir = $foundBundle->getPath().'/Resources/translations';
         if ($fs->exists($translationsDir)) {
             $currentCatalogue = new MessageCatalogue($locale);
             $this->loader->loadMessages($translationsDir, $currentCatalogue);
@@ -105,6 +106,7 @@ class TemplateTranslationHandler implements TranslationHandlerInterface
 
     /**
      * @param $source
+     *
      * @return bool
      */
     protected function isSourceAvailable($source)
@@ -114,10 +116,11 @@ class TemplateTranslationHandler implements TranslationHandlerInterface
 
     /**
      * @param Bundle $bundle
+     *
      * @return string
      */
     protected function resolveResourcesDirectory(BundleInterface $bundle)
     {
-        return $bundle->getPath() . '/Resources/views/';
+        return $bundle->getPath().'/Resources/views/';
     }
 }

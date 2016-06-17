@@ -79,16 +79,16 @@ class CompilationResult
             $line = trim($line);
 
             if (null == $startIndex && preg_match('/\.*\[.+\].*/', $line)) {
-                $startIndex = $i+1;
+                $startIndex = $i + 1;
             }
 
             if (null !== $startIndex && 'Exception trace:' == $line) {
-                $endIndex = $i-1;
+                $endIndex = $i - 1;
             }
         }
 
         if (null !== $startIndex && null !== $endIndex) {
-            $extractedChunk = array_slice($splitOutput, $startIndex, $endIndex-$startIndex);
+            $extractedChunk = array_slice($splitOutput, $startIndex, $endIndex - $startIndex);
 
             foreach ($extractedChunk as $i => $value) {
                 $extractedChunk[$i] = trim($value);

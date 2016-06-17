@@ -38,15 +38,15 @@ class LanguageTranslationTokenListener
             $translationToken = $entity->getTranslationToken();
             $translations = $translationToken->getTranslations();
             $translations[$entity->getLanguage()->getId()] = array(
-                'id'          => $entity->getId(),
-                'isNew'       => $entity->isNew(),
+                'id' => $entity->getId(),
+                'isNew' => $entity->isNew(),
                 'translation' => $entity->getTranslation(),
-                'locale'      => $entity->getLanguage()->getLocale(),
-                'language'    => $entity->getLanguage()->getName(),
+                'locale' => $entity->getLanguage()->getLocale(),
+                'language' => $entity->getLanguage()->getName(),
             );
             $translationToken->setTranslations($translations);
             $em->persist($translationToken);
             $em->flush();
         }
     }
-} 
+}

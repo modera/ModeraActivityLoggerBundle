@@ -13,7 +13,7 @@ class TranslationHandlersChainTest extends \PHPUnit_Framework_TestCase
 {
     public function testHandlers()
     {
-        $handlersChain = new TranslationHandlersChain;
+        $handlersChain = new TranslationHandlersChain();
         $this->assertEquals(0, count($handlersChain->getHandlers()));
 
         $handlersChain->addHandler(new DummyHandler('test1'));
@@ -48,6 +48,6 @@ class DummyHandler implements TranslationHandlerInterface
 
     public function extract($source, $locale)
     {
-        return null;
+        return;
     }
 }

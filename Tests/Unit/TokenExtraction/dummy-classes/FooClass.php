@@ -2,14 +2,13 @@
 
 namespace Modera\TranslationsBundle\Tests\Unit\TokenExtraction;
 
-use Foo\Bar;
 use Modera\FoundationBundle\Translation\T;
 
 /**
  * @author Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class FooClass 
+class FooClass
 {
     public function method1()
     {
@@ -18,9 +17,9 @@ class FooClass
         T::trans('Some simple token');
 
         $message = 'hello ';
-        $message.= 'world';
+        $message .= 'world';
 
-        T::trans('We got something for ya, %s!' , array('name' => 'Vassily', 'xxx' => $fn()), 'foodomain');
+        T::trans('We got something for ya, %s!', array('name' => 'Vassily', 'xxx' => $fn()), 'foodomain');
 
         T::trans('Another token', null, $barDomain);
 
