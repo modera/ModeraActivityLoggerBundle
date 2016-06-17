@@ -23,14 +23,14 @@ class LanguageTranslationsController extends AbstractCrudController
             'hydration' => array(
                 'groups' => array(
                     'main-form' => function (LanguageTranslationToken $ltt) {
-                            return array(
-                                'id' => $ltt->getId(),
-                                'translation' => $ltt->getTranslation(),
-                                'languageName' => $ltt->getLanguage()->getName(),
-                                'bundleName' => $ltt->getTranslationToken()->getBundleName(),
-                                'tokenName' => $ltt->getTranslationToken()->getTokenName(),
-                            );
-                        },
+                        return array(
+                            'id' => $ltt->getId(),
+                            'translation' => $ltt->getTranslation(),
+                            'languageName' => $ltt->getLanguage()->getName(),
+                            'bundleName' => $ltt->getTranslationToken()->getBundleName(),
+                            'tokenName' => $ltt->getTranslationToken()->getTokenName(),
+                        );
+                    },
                 ),
                 'profiles' => array(
                     'main-form',
