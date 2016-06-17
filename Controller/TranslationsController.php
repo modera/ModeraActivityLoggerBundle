@@ -5,12 +5,16 @@ namespace Modera\BackendTranslationsToolBundle\Controller;
 use Modera\BackendTranslationsToolBundle\Filtering\FilterInterface;
 use Modera\ServerCrudBundle\Exceptions\BadRequestException;
 use Modera\DirectBundle\Annotation\Remote;
+use Modera\TranslationsBundle\Compiler\TranslationsCompiler;
 use Modera\TranslationsBundle\Entity\TranslationToken;
 use Modera\ServerCrudBundle\Controller\AbstractCrudController;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Modera\BackendTranslationsToolBundle\Contributions\FiltersProvider;
+use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @author    Sergei Vizel <sergei.vizel@modera.org>
@@ -141,22 +145,15 @@ class TranslationsController extends AbstractCrudController
 
     /**
      * @Remote
-     *
-     * @param array $params
      */
     public function compileAction(array $params)
     {
-        $app = new Application($this->get('kernel'));
-        $app->setAutoExit(false);
+        /* @var TranslationsCompiler $compiler */
+        $compiler = $this->get('modera_translations.compiler.translations_compiler');
 
-        $input = new ArrayInput(array(
-            'command' => 'modera:translations:compile',
-        ));
-        $input->setInteractive(false);
+        $result = $compiler->compile();
 
-        $result = $app->run($input, new NullOutput());
-
-        if (0 === $result) {
+        if ($result->isSuccessful()) {
             $key = 'modera_backend_translations_tool';
             /* @var \Doctrine\Common\Cache\Cache $cache */
             $cache = $this->get($key.'.cache');
@@ -166,18 +163,40 @@ class TranslationsController extends AbstractCrudController
                 $data = array_merge(unserialize($string), $data);
             }
             $cache->save($key, serialize($data));
+        } else {
+            /* @var KernelInterface $kernel */
+            $kernel = $this->get('kernel');
 
-            $input = new ArrayInput(array(
-                'command' => 'cache:clear',
-                '--env' => $this->container->getParameter('kernel.environment'),
-            ));
-            $input->setInteractive(false);
-            $app->run($input, new NullOutput());
+            // if activity logger bundle is available then logging the error there as well
+            $bundles = $kernel->getBundles();
+            if (isset($bundles['ModeraActivityLoggerBundle'])) {
+                /* @var UserInterface $user*/
+                $user = $this->getUser();
+
+                /* @var LoggerInterface $logger */
+                $logger = $this->get('modera_activity_logger.manager.doctrine_orm_activity_manager');
+
+                $logger->error(
+                    // 'message' field for Activity entity is mapped as "string", so we can't put there a whole message
+                    "Failed to compile translations, details: \n\n".substr($result->getErrorMessage(), 0, 150).'...',
+                    array(
+                        'type' => 'translations',
+                        'author' => $user->getUsername(),
+                    )
+                );
+            }
         }
 
-        return array(
-            'success' => (0 === $result),
+        // will be handled by MF.runtime.servererrorhandling.Plugin
+        if (!$result->isSuccessful()) {
+            throw new \Exception($result->getErrorMessage());
+        }
+
+        $response = array(
+            'success' => $result->isSuccessful(),
         );
+
+        return $response;
     }
 
     /**

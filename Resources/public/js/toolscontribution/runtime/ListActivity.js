@@ -78,19 +78,8 @@ Ext.define('Modera.backend.translationstool.toolscontribution.runtime.ListActivi
     },
 
     // override
-    attachStateListeners: function(ui) {
+    attachListeners: function(ui) {
         var me = this;
-
-        ui.down('#header').on('close', function() {
-            me.fireEvent('handleaction', 'close');
-        });
-
-        ui.on('filterchanged', function(sourceComponent, params) {
-            me.executionContext.updateParams(me, {
-                show: params.id
-            });
-            ui.getStore().filterByFilterId(params.id);
-        });
 
         ui.on('import', function() {
             ui.setLoading('Importing...');
@@ -127,10 +116,6 @@ Ext.define('Modera.backend.translationstool.toolscontribution.runtime.ListActivi
             }
         });
 
-        ui.on('edittranslation', function(sourceComponent, params) {
-            me.fireEvent('handleaction', 'edittranslation', sourceComponent, params);
-        });
-
         ui.on('afterlayout', function() {
             var state = me.getState();
             if (state == MF.activation.activities.AbstractActivity.STATE_ACTIVE) {
@@ -152,6 +137,31 @@ Ext.define('Modera.backend.translationstool.toolscontribution.runtime.ListActivi
                     me.checkingCompileNeeded = false;
                 });
             }
+        });
+    },
+
+    // override
+    attachContractListeners: function(ui) {
+        var me = this;
+
+        ui.down('#header').on('close', function() {
+            me.fireEvent('handleaction', 'close');
+        });
+
+        ui.on('edittranslation', function(sourceComponent, params) {
+            me.fireEvent('handleaction', 'edittranslation', sourceComponent, params);
+        });
+    },
+
+    // override
+    attachStateListeners: function(ui) {
+        var me = this;
+
+        ui.on('filterchanged', function(sourceComponent, params) {
+            me.executionContext.updateParams(me, {
+                show: params.id
+            });
+            ui.getStore().filterByFilterId(params.id);
         });
     },
 
