@@ -15,19 +15,6 @@ use Symfony\Component\Translation\MessageCatalogue;
  */
 class CompileTranslationsCommandTest extends ImportTranslationsCommandTest
 {
-    private function launchCompileCommand()
-    {
-        $app = new Application(self::$kernel->getContainer()->get('kernel'));
-        $app->setAutoExit(false);
-        $input = new ArrayInput(array(
-            'command' => 'modera:translations:compile',
-        ));
-        $input->setInteractive(false);
-
-        $result = $app->run($input, new NullOutput());
-        $this->assertEquals(0, $result);
-    }
-
     public function testCompile()
     {
         $fs = new Filesystem();

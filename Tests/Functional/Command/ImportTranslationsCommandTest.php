@@ -7,6 +7,7 @@ use Modera\LanguagesBundle\Entity\Language;
 use Modera\TranslationsBundle\Entity\TranslationToken;
 use Modera\TranslationsBundle\Entity\LanguageTranslationToken;
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
+use Modera\TranslationsBundle\Tests\Functional\AbstractFunctionalTestCase;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
@@ -15,41 +16,18 @@ use Symfony\Component\Console\Output\NullOutput;
  * @author    Sergei Vizel <sergei.vizel@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class ImportTranslationsCommandTest extends FunctionalTestCase
+class ImportTranslationsCommandTest extends AbstractFunctionalTestCase
 {
-    /**
-     * @var SchemaTool
-     */
-    static private $st;
-
     // override
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
-        self::$st = new SchemaTool(self::$em);
-        self::$st->createSchema([self::$em->getClassMetadata(Language::clazz())]);
-        self::$st->createSchema([self::$em->getClassMetadata(TranslationToken::clazz())]);
-        self::$st->createSchema([self::$em->getClassMetadata(LanguageTranslationToken::clazz())]);
+        self::setUpDatabase();
     }
 
     // override
-    static public function doTearDownAfterClass()
+    public static function doTearDownAfterClass()
     {
-        self::$st->dropSchema([self::$em->getClassMetadata(Language::clazz())]);
-        self::$st->dropSchema([self::$em->getClassMetadata(TranslationToken::clazz())]);
-        self::$st->dropSchema([self::$em->getClassMetadata(LanguageTranslationToken::clazz())]);
-    }
-
-    protected function launchImportCommand()
-    {
-        $app = new Application(self::$container->get('kernel'));
-        $app->setAutoExit(false);
-        $input = new ArrayInput(array(
-            'command' => 'modera:translations:import',
-        ));
-        $input->setInteractive(false);
-
-        $result = $app->run($input, new NullOutput());
-        $this->assertEquals(0, $result);
+        self::dropDatabase();
     }
 
     private function assertToken($token)

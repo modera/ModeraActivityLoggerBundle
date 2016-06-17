@@ -41,6 +41,12 @@
             <argument type="service" id="translation.extractor" />
         </service>
 
+        <service id="modera_translations.compiler.translations_compiler"
+                 class="Modera\TranslationsBundle\Compiler\TranslationsCompiler">
+
+            <argument type="service" id="kernel" />
+        </service>
+
         <!--
         <service parent="modera_translations.handling.template_translation_handler">
 
