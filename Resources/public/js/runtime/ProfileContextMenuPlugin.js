@@ -33,29 +33,14 @@ Ext.define('Modera.mjrsecurityintegration.runtime.ProfileContextMenuPlugin', {
 
     // private
     onShowProfile: function(header) {
-
         var btn = header.down('#showProfileBtn');
-        if (!btn.menu) {
-            btn.showEmptyMenu = true;
-            btn.menu = Ext.widget({
+        if (!btn._profileContextMenuActions) {
+            btn._profileContextMenuActions = Ext.widget({
                 xtype: 'menu',
                 extensionPoint: 'profileContextMenuActions',
                 items: []
             });
-            btn.menu.ownerButton = btn;
-            btn.mon(btn.menu, {
-                scope: btn,
-                show: btn.onMenuShow,
-                hide: btn.onMenuHide
-            });
-            btn.keyMap = new Ext.util.KeyMap({
-                target: btn.el,
-                key: Ext.EventObject.DOWN,
-                handler: btn.onDownKey,
-                scope: btn
-            });
-            btn.showMenu();
         }
-
+        btn._profileContextMenuActions.showBy(btn);
     }
 });
