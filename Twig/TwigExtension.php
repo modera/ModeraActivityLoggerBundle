@@ -51,7 +51,7 @@ class TwigExtension extends \Twig_Extension
      *
      * @private
      *
-     * @param string $propertyName "name" of ConfigurationEntry.
+     * @param string $propertyName "name" of ConfigurationEntry
      * @param bool   $strict       If FALSE is given and property is not found then no exception will be thrown
      *
      * @return mixed|null
