@@ -18,14 +18,14 @@ interface ConfigurationEntryInterface
 
     /**
      * @return mixed A value {@class HandlerInterface} returned when converted denormalized value. Usually this will
-     *               be something that you use in your business logic, like an entity.
+     *               be something that you use in your business logic, like an entity
      */
     public function getValue();
 
     /**
      * @param mixed $value Value passed to this method may be some complex structure, for example - an entity. If
      *                     an entity is passed, then implementation of {@class HandlerInterface} is responsible
-     *                     to cast it down to something that can be stored in database.
+     *                     to cast it down to something that can be stored in database
      *
      * @return mixed
      */
@@ -33,7 +33,7 @@ interface ConfigurationEntryInterface
 
     /**
      * @return mixed A value that can be understood by a javascript configuration class that will be used
-     *               to update values for this configuration property.
+     *               to update values for this configuration property
      */
     public function getDenormalizedValue();
 
@@ -46,7 +46,7 @@ interface ConfigurationEntryInterface
 
     /**
      * @return string A human-readable value of currently stored value. For example, this value will
-     *                be used LIST view where all available configuration properties are displayed.
+     *                be used LIST view where all available configuration properties are displayed
      */
     public function getReadableValue();
 

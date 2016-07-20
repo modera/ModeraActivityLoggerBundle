@@ -11,13 +11,13 @@ use Modera\ConfigBundle\Entity\ConfigurationEntry;
 interface HandlerInterface
 {
     /**
-     * @return string Value that will be displayed in the frontend (list view).
+     * @return string Value that will be displayed in the frontend (list view)
      */
     public function getReadableValue(ConfigurationEntry $entry);
 
     /**
      * @return mixed Oftentimes value stored in {@class ConfigurationEntry} will be some entity
-     *               primary key and your handler will use it to return an entity.
+     *               primary key and your handler will use it to return an entity
      */
     public function getValue(ConfigurationEntry $entry);
 
