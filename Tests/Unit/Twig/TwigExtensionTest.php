@@ -33,16 +33,22 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
         /* @var \Twig_SimpleFunction[] $functions*/
         $functions = $this->ext->getFunctions();
 
-        $this->assertEquals(1, count($functions));
+        $this->assertEquals(2, count($functions));
         $this->assertInstanceOf('Twig_SimpleFunction', $functions[0]);
 
-        $fn = $functions[0];
+        $configValue = $functions[0];
 
-        $this->assertEquals('modera_config_value', $fn->getName());
+        $this->assertEquals('modera_config_value', $configValue->getName());
 
-        $callable = $fn->getCallable();
+        $callable = $configValue->getCallable();
         $this->assertSame($this->ext, $callable[0]);
         $this->assertEquals('twigModeraConfigValue', $callable[1]);
+
+        $configOwnerValue = $functions[1];
+
+        $callable = $configOwnerValue->getCallable();
+        $this->assertSame($this->ext, $callable[0]);
+        $this->assertEquals('getModeraConfigOwnerValue', $callable[1]);
     }
 
     public function testTwigModeraConfigValueNotStrict()
@@ -51,7 +57,9 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($value);
 
-        \Phake::verify($this->configEntriesManager)->findOneByName('fooproperty');
+        \Phake::verify($this->configEntriesManager)
+            ->findOneByName('fooproperty', null)
+        ;
 
         // ---
 
@@ -62,7 +70,7 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
         ;
 
         \Phake::when($this->configEntriesManager)
-            ->findOneByName('barproperty')
+            ->findOneByName('barproperty', null)
             ->thenReturn($property)
         ;
 
@@ -75,7 +83,7 @@ class TwigExtensionTest extends \PHPUnit_Framework_TestCase
     public function testTwigModeraConfigValueStrict()
     {
         \Phake::when($this->configEntriesManager)
-            ->findOneByNameOrDie('foo')
+            ->findOneByNameOrDie('foo', null)
             ->thenThrow(new \RuntimeException('ololo'))
         ;
 

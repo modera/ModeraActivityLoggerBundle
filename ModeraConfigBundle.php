@@ -12,6 +12,8 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class ModeraConfigBundle extends Bundle
 {
+    const CONFIG_KEY = 'modera_config.config';
+
     /**
      * {@inheritdoc}
      */

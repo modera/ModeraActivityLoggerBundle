@@ -38,10 +38,20 @@
                  class="Modera\ConfigBundle\Config\DictionaryHandler"
         />
 
+        <service id="modera_config.manager.uniquity_validator"
+                 class="Modera\ConfigBundle\Manager\UniquityValidator"
+                 public="false">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%modera_config.config%</argument>
+        </service>
+
         <service id="modera_config.configuration_entries_manager"
                  class="Modera\ConfigBundle\Config\ConfigurationEntriesManager">
 
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%modera_config.config%</argument>
+            <argument type="service" id="modera_config.manager.uniquity_validator" />
         </service>
 
         <service id="modera_config.namespace_mappings_provider"
@@ -62,6 +72,14 @@
             <argument type="service" id="modera_config.configuration_entries_manager" />
 
             <tag name="twig.extension" />
+        </service>
+
+        <service id="modera_config.listener.owner_relation_mapping_listener"
+                 class="Modera\ConfigBundle\Listener\OwnerRelationMappingListener">
+
+            <argument>%modera_config.config%</argument>
+            
+            <!-- see ModeraConfigExtension -->
         </service>
     </services>
 </container>

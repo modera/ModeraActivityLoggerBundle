@@ -15,7 +15,7 @@ use Modera\ConfigBundle\Config\ConfigurationEntriesManagerInterface;
 class TwigExtension extends \Twig_Extension
 {
     /**
-     * @var ConfigurationEntriesManagerInterface
+     * @var \Modera\ConfigBundle\Manager\ConfigurationEntriesManagerInterface
      */
     private $configEntriesManager;
 
@@ -42,6 +42,7 @@ class TwigExtension extends \Twig_Extension
     {
         return [
             new \Twig_SimpleFunction('modera_config_value', array($this, 'twigModeraConfigValue')),
+            new \Twig_SimpleFunction('modera_config_owner_value', array($this, 'getModeraConfigOwnerValue')),
         ];
     }
 
@@ -57,12 +58,26 @@ class TwigExtension extends \Twig_Extension
      */
     public function twigModeraConfigValue($propertyName, $strict = true)
     {
+        return $this->getModeraConfigOwnerValue($propertyName, null, $strict);
+    }
+
+    /**
+     * @private
+     *
+     * @param string $propertyName
+     * @param object $owner
+     * @param bool   $strict
+     *
+     * @return mixed|null
+     */
+    public function getModeraConfigOwnerValue($propertyName, $owner = null, $strict = true)
+    {
         $mgr = $this->configEntriesManager;
 
         if ($strict) {
-            return $mgr->findOneByNameOrDie($propertyName)->getValue();
+            return $mgr->findOneByNameOrDie($propertyName, $owner)->getValue();
         } else {
-            $property = $mgr->findOneByName($propertyName);
+            $property = $mgr->findOneByName($propertyName, $owner);
 
             return $property ? $property->getValue() : null;
         }

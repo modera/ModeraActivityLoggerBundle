@@ -20,6 +20,14 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('modera_config');
 
+        $rootNode
+            ->children()
+                ->scalarNode('owner_entity')
+                ->info('A class name of entity that can own configuration properties (a User entity, for instance).')
+                ->defaultNull()
+            ->end()
+        ;
+
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
         // more information on that topic.

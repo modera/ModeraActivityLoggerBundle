@@ -14,7 +14,7 @@ integers, arrays) or complex ones - like objects or references to entities, this
 
 Add this dependency to your composer.json:
 
-    "modera/config-bundle": "~1.0"
+    "modera/config-bundle": "~2.0"
 
 Update your AppKernel class and add this:
 
@@ -96,6 +96,11 @@ This will print value for "my_property_name" configuration property. By default 
 is found then exception is thrown but you can change this behaviour by passing FALSE as second argument to the function
 and in this case NULL be returned instead of throwing an exception.
 
+As you will read later in this document the bundle also has support for associating configuration entries with users. To
+fetch a user specific configuration property from a template use `modera_config_owner_value`, for example:
+
+    {{ modera_config_value("my_property_name", app.user) }}
+
 ## Handlers
 
 By default the bundle is capable of storing these types of values:
@@ -111,12 +116,34 @@ If you need to store some more complex values then you need to implement `\Moder
 interface. Please see already shipped implementations (`\Modera\ConfigBundle\Config\EntityRepositoryHandler`,
 for example) to see how you can create your own handlers.
 
+## Creating user related configuration entries
+
+Sometimes you may want to store configuration entries which are not related to the system as a whole but instead
+to one single user, for example - user's preferred admin panel language. To achieve this you need to use
+`modera_config/owner_entity` semantic configuration key to specify a fully qualified name of user entity. For example:
+
+    modera_config:
+        owner_entity: "Modera\SecurityBundle\Entity\User"
+
+Once `owner_entity` is configured don't forget to update your database schema by running `doctrine:schema:update --force`.
+
+Now that we have proper configuration in place and database schema has been updated when creating new configuration
+entries you can specify "owner", for example:
+
+    $bob = new \Modera\SecurityBundle\Entity\User();
+    // ... configure and persist $bob
+
+    $ce = new ConfigurationEntry();
+    $ce->setOwner($myUser);
+
+    $manager->save($ce);
+
 ## Hints
 
 In your application code when working with components from ModeraConfigBundle you should rely on interfaces instead of
 implementations, that is, when you use `modera_config.configuration_entries_manager` rely on
-\Modera\ConfigBundle\Config\ConfigurationEntriesManagerInterface and when working with configuration entries rely on
-\Modera\ConfigBundle\Config\ConfigurationEntryInterface this way you will make your code portable. By default the bundle
+\Modera\ConfigBundle\Manager\ConfigurationEntriesManagerInterface and when working with configuration entries rely on
+\Modera\ConfigBundle\Manager\ConfigurationEntryInterface this way you will make your code portable. By default the bundle
 uses Doctrine ORM to store values for configuration entries but later some more storage mechanism may be added and if you
 rely on interfaces then you won't need to update your code to leverage new possible storage engines.
 

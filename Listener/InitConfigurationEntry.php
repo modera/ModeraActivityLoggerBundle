@@ -9,6 +9,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Injects a reference to ConfigurationEntry entities when they are hydrated by Doctrine.
  *
+ * @internal
+ *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */

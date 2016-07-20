@@ -1,6 +1,9 @@
 imports:
     - { resource: parameters.yml }
 
+modera_config:
+    owner_entity: "Modera\ConfigBundle\Tests\Fixtures\Entities\\User"
+
 parameters:
     locale: en
 
@@ -27,3 +30,10 @@ doctrine:
     orm:
         auto_generate_proxy_classes: true
         auto_mapping: true
+        mappings:
+            MyProjectCoreBundle:
+              mapping: true
+              type: annotation
+              dir: '%kernel.root_dir%/../../Entities'
+              is_bundle: false
+              prefix: "Modera\ConfigBundle\Tests\Fixtures\Entities"

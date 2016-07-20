@@ -5,7 +5,7 @@ namespace Modera\ConfigBundle\Config;
 use Modera\ConfigBundle\Entity\ConfigurationEntry;
 
 /**
- * This exception will thrown when some required configuration parameters for
+ * This exception will be thrown when some required configuration parameters for
  * {@class EntityRepositoryHandler} are not provided.
  *
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -13,13 +13,22 @@ use Modera\ConfigBundle\Entity\ConfigurationEntry;
  */
 class MissingConfigurationParameterException extends \RuntimeException
 {
+    /**
+     * @var string
+     */
     private $parameter;
 
+    /**
+     * @param string $parameter
+     */
     public function setParameter($parameter)
     {
         $this->parameter = $parameter;
     }
 
+    /**
+     * @return string
+     */
     public function getParameter()
     {
         return $this->parameter;

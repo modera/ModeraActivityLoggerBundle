@@ -189,27 +189,6 @@ class ConfigurationEntryTest extends FunctionalTestCase
     }
 
     /**
-     * It has to be the last test because after this exception EntityManager is closed.
-     *
-     * @expectedException \Doctrine\DBAL\DBALException
-     */
-    public function testNoDuplicateConfigurationProperties()
-    {
-        $em = self::$em;
-
-        $ce1 = new CE('prop1');
-        $ce1->setDenormalizedValue('blah');
-
-        $ce2 = new CE('prop1');
-        $ce2->setDenormalizedValue('blah2');
-
-        foreach (array($ce1, $ce2) as $entity) {
-            $em->persist($entity);
-        }
-        $em->flush();
-    }
-
-    /**
      * @expectedException RuntimeException
      */
     public function testSetClientValueWithBadValue()

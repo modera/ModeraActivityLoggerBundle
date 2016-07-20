@@ -48,7 +48,7 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     /**
      * Technical name that you will use in your code to reference this configuration entry.
      *
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      */
     private $name;
 
@@ -146,6 +146,13 @@ class ConfigurationEntry implements ConfigurationEntryInterface
      * @ORM\Column(type="boolean")
      */
     private $isReadOnly = false;
+
+    /**
+     * Field is mapped dynamically if modera_config/owner_entity is defined.
+     *
+     * @see OwnerRelationMappingListener
+     */
+    private $owner;
 
     /**
      * @param string $name
@@ -485,5 +492,21 @@ class ConfigurationEntry implements ConfigurationEntryInterface
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner)
+    {
+        $this->owner = $owner;
     }
 }
