@@ -45,17 +45,26 @@ class UniquityValidator
     {
         $query = null;
         if ($this->semanticConfig['owner_entity'] && $entry->getOwner()) {
-            $query = sprintf('SELECT COUNT(e.id) FROM %s e WHERE e.name = ?0 AND e.owner = ?1', get_class($entry));
+            $query = sprintf('SELECT e.id FROM %s e WHERE e.name = ?0 AND e.owner = ?1', get_class($entry));
             $query = $this->em->createQuery($query);
 
             $query->setParameters([$entry->getName(), $entry->getOwner()]);
         } else {
-            $query = sprintf('SELECT COUNT(e.id) FROM %s e WHERE e.name = ?0', get_class($entry));
+            $query = sprintf('SELECT e.id FROM %s e WHERE e.name = ?0', get_class($entry));
             $query = $this->em->createQuery($query);
 
             $query->setParameter(0, $entry->getName());
         }
 
-        return $query->getSingleScalarResult() == 0;
+        $result = $query->getArrayResult();
+        $isNameInUse = count($result) > 0;
+
+        if ($isNameInUse) {
+            // if name is already in use then we will allow to save configuration property if it represents
+            // the same records as in database
+            return $entry->getId() == $result[0]['id'];
+        }
+
+        return true;
     }
 }

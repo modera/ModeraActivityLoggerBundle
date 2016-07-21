@@ -24,7 +24,7 @@ class UniquityValidatorTest extends AbstractFunctionalTestCase
         self::$em->persist($ce1);
         self::$em->flush();
 
-        $this->assertFalse($uv->isValidForSaving($ce1));
+        $this->assertTrue($uv->isValidForSaving($ce1));
     }
 
     public function testIsValidForSaving_withOwner()
@@ -44,6 +44,45 @@ class UniquityValidatorTest extends AbstractFunctionalTestCase
         self::$em->persist($ce1);
         self::$em->flush();
 
-        $this->assertFalse($uv->isValidForSaving($ce1));
+        $this->assertTrue($uv->isValidForSaving($ce1));
+    }
+
+    public function testIsValidForSaving_changeName()
+    {
+        $ce1 = new ConfigurationEntry('cf_1');
+        $ce1->setValue('foo');
+
+        $ce2 = new ConfigurationEntry('cf_2');
+        $ce2->setValue('foo');
+
+        self::$em->persist($ce1);
+        self::$em->persist($ce2);
+        self::$em->flush();
+
+        $ce2->setName('cf_1');
+
+        $uv = new UniquityValidator(self::$em, array('owner_entity' => null));
+        $this->assertFalse($uv->isValidForSaving($ce2));
+    }
+
+    public function testIsValidForSaving_changeNameWithOwner()
+    {
+        $vasya = new User('vasya');
+
+        $ce1 = new ConfigurationEntry('cf_1');
+        $ce1->setValue('foo');
+
+        $ce2 = new ConfigurationEntry('cf_2');
+        $ce2->setValue('foo');
+
+        self::$em->persist($vasya);
+        self::$em->persist($ce1);
+        self::$em->persist($ce2);
+        self::$em->flush();
+
+        $ce2->setName('cf_1');
+
+        $uv = new UniquityValidator(self::$em, array('owner_entity' => get_class($vasya)));
+        $this->assertFalse($uv->isValidForSaving($ce2));
     }
 }

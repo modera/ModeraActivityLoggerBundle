@@ -431,14 +431,17 @@ class ConfigurationEntry implements ConfigurationEntryInterface
 
     // boilerplate:
 
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
     }
 
     /**

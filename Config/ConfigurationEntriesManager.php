@@ -118,16 +118,26 @@ class ConfigurationEntriesManager implements ConfigurationEntriesManagerInterfac
             );
         }
 
-        if ($this->uniquityValidator) {
-            if (!$this->uniquityValidator->isValidForSaving($entry)) {
-                throw new ConfigurationEntryAlreadyExistsException(
-                    sprintf('Configuration property with name "%s" already exists.', $entry->getName())
-                );
+        $this->em->beginTransaction();
+
+        try {
+            if ($this->uniquityValidator) {
+                if (!$this->uniquityValidator->isValidForSaving($entry)) {
+                    throw new ConfigurationEntryAlreadyExistsException(
+                        sprintf('Configuration property with name "%s" already exists.', $entry->getName())
+                    );
+                }
             }
+
+            $this->em->persist($entry);
+            $this->em->flush($entry);
+        } catch (\Exception $e) {
+            $this->em->rollback();
+
+            throw $e;
         }
 
-        $this->em->persist($entry);
-        $this->em->flush($entry);
+        $this->em->commit();
     }
 
     /**
