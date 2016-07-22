@@ -1,0 +1,57 @@
+{
+    "name": "modera/foundation",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/symfony": "~2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "": "src/"
+        }
+    },
+    "replace": {
+        "modera/foundation-bundle": "self.version",
+        "modera/upgrade-bundle": "self.version",
+        "modera/module-bundle": "self.version",
+        "modera/routing-bundle": "self.version",
+        "modera/security-bundle": "self.version",
+        "modera/languages-bundle": "self.version",
+        "modera/translations-bundle": "self.version",
+        "modera/activity-logger-bundle": "self.version",
+        "modera/config-bundle": "self.version",
+        "modera/dynamically-configurable-app-bundle": "self.version",
+        "modera/file-repository-bundle": "self.version",
+        "modera/file-uploader-bundle": "self.version",
+        "modera/mjr-integration-bundle": "self.version",
+        "modera/mjr-theme-integration-bundle": "self.version",
+        "modera/mjr-security-integration-bundle": "self.version",
+        "modera/dynamically-configurable-mjr-bundle": "self.version",
+        "modera/server-crud-bundle": "self.version",
+        "modera/backend-tools-bundle": "self.version",
+        "modera/backend-module-bundle": "self.version",
+        "modera/backend-security-bundle": "self.version",
+        "modera/backend-languages-bundle": "self.version",
+        "modera/backend-translations-tool-bundle": "self.version",
+        "modera/backend-tools-activity-log-bundle": "self.version",
+        "modera/backend-tools-settings-bundle": "self.version",
+        "modera/backend-config-utils-bundle": "self.version",
+        "modera/backend-dashboard-bundle": "self.version",
+        "modera/direct-bundle": "self.version",
+        "modera/mjr-cache-aware-class-loader": "self.version"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        },
+        "modera-monorepo": {
+            "include": [
+                "src/Modera/*/composer.json"
+            ]
+        }
+    }
+}
