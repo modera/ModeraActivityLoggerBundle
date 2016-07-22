@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service parent="modera_translations.handling.template_translation_handler">
+
+            <argument>ModeraTranslationsDummyBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+
+        <service parent="modera_translations.handling.php_classes_translation_handler">
+
+            <argument>ModeraTranslationsDummyBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+
+    </services>
+</container>
