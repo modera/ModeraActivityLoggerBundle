@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_mjr_theme_integration.contributions.css_resources_provider"
+                 class="Modera\MJRThemeIntegrationBundle\Contributions\CssResourcesProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="modera_mjr_integration.css_resources_provider" />
+        </service>
+
+        <service id="modera_mjr_theme_integration.contributions.js_resources_provider"
+                 class="Modera\MJRThemeIntegrationBundle\Contributions\JsResourcesProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="modera_mjr_integration.js_resources_provider" />
+        </service>
+    </services>
+</container>
