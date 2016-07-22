@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_dynamically_configurable_mjr.contributions.settings_sections_provider"
+                 class="Modera\DynamicallyConfigurableMJRBundle\Contributions\SettingsSectionsProvider">
+
+            <tag name="modera_backend_tools_settings.contributions.sections_provider" />
+        </service>
+
+        <service id="modera_dynamically_configurable_mjr.contributions.config_entries_provider"
+                 class="Modera\DynamicallyConfigurableMJRBundle\Contributions\ConfigEntriesProvider">
+
+            <tag name="modera_config.config_entries_provider" />
+        </service>
+
+        <service id="modera_dynamically_configurable_mjr.mjr.main_config"
+                 class="Modera\DynamicallyConfigurableMJRBundle\MJR\MainConfig">
+
+            <argument type="service" id="modera_config.configuration_entries_manager" />
+        </service>
+
+        <service id="modera_dynamically_configurable_mjr.contributions.class_loader_mappings_provider"
+                 class="Modera\DynamicallyConfigurableMJRBundle\Contributions\ClassLoaderMappingsProvider">
+
+            <tag name="modera_mjr_integration.class_loader_mappings_provider" />
+        </service>
+    </services>
+</container>

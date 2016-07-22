@@ -1,0 +1,34 @@
+{
+    "name": "modera/dynamically-configurable-mjr-bundle",
+    "description": "Allows to configure some aspects of MJR integration using UIs.",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org",
+            "homepage": "http://sergei.lissovski.org/"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/framework-bundle": "~2.0",
+        "modera/config-bundle": "~1.0|~2.0",
+        "modera/mjr-integration-bundle": "~1.0|~2.0",
+        "sergeil/expander-bundle": "~1.0",
+        "modera/backend-tools-settings-bundle": "~1.0|~2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "phake/phake": "~2.0"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\DynamicallyConfigurableMJRBundle": "" }
+    },
+    "target-dir": "Modera/DynamicallyConfigurableMJRBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}
