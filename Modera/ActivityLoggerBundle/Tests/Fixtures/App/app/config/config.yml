@@ -1,0 +1,32 @@
+framework:
+    secret:          Hell yeah!
+    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    csrf_protection: true
+    session:         ~
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     127.0.0.1
+        port:     3306
+        dbname:   modera_activity_logger_bundle
+        user:     root
+        password:
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true
+
+security:
+  providers:
+    in_memory:
+        memory:
+            users:
+                ryan:  { password: ryanpass, roles: 'ROLE_USER' }
+
+  firewalls:
+    secured_area:
+        pattern:   ^/
+        anonymous: ~
