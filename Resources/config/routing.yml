@@ -1,0 +1,4 @@
+modera_file_repository:
+    resource: "@ModeraFileRepositoryBundle/Controller/"
+    type:     annotation
+    prefix:   %modera_file_repository.config.controller.route_url_prefix%
