@@ -1,0 +1,49 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_backend_languages.contributions.class_loader_mappings_provider"
+                 class="Modera\BackendLanguagesBundle\Contributions\ClassLoaderMappingsProvider">
+
+            <tag name="modera_mjr_integration.class_loader_mappings_provider" />
+        </service>
+
+        <service id="modera_backend_languages.contributions.client_di_service_definitions_provider"
+                 class="Modera\BackendLanguagesBundle\Contributions\ClientDiServiceDefinitionsProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="modera_mjr_integration.csdi.service_definitions_provider" />
+        </service>
+
+        <service id="modera_backend_languages.contributions.routing_resources_provider"
+                 class="Modera\BackendLanguagesBundle\Contributions\RoutingResourcesProvider">
+
+            <tag name="modera_routing.routing_resources_provider" />
+        </service>
+
+        <service id="modera_backend_languages.event_listener.language_listener"
+                 class="Modera\BackendLanguagesBundle\EventListener\LanguageListener">
+
+            <tag name="kernel.event_listener" event="kernel.request" method="setLocale" />
+        </service>
+
+        <service id="modera_backend_languages.event_listener.settings_entity_managing_listener"
+                 class="Modera\BackendLanguagesBundle\EventListener\SettingsEntityManagingListener">
+
+            <tag name="doctrine.event_listener" event="onFlush"  />
+        </service>
+
+        <service id="modera_backend_languages.contributions.config_mergers_provider"
+                 class="Modera\BackendLanguagesBundle\Contributions\ConfigMergersProvider">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+
+            <tag name="modera_mjr_integration.config.config_mergers_provider" />
+        </service>
+    </services>
+
+</container>

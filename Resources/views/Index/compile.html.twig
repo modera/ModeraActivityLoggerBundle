@@ -1,0 +1,24 @@
+if (window['Ext']) {
+{% if skipped_bundles|length > 0 %}
+   /**
+    * These bundles were skipped: {{ skipped_bundles|join(', ') }}
+    *
+    * Total tokens: {{ tokens_total }}
+    */
+{% endif %}
+
+{% for parent_class, tokens in token_groups %}
+    Ext.define('l10n.{{ locale }}.{{ parent_class }}', {
+        override: '{{ parent_class }}',
+
+{% for token, translation in tokens %}
+        {{ token }}Text: '{{ translation }}'{% if not loop.last %},{% endif %}
+
+{% endfor %}
+    });
+{% endfor %}
+
+    Ext.require('MFC.Date', function() {
+        MFC.Date.moment.lang('{{ locale|replace({ '_': '-' }) }}');
+    });
+}

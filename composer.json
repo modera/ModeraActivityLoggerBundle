@@ -1,0 +1,31 @@
+{
+    "name": "modera/backend-languages-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/framework-bundle": "~2.6",
+        "modera/mjr-integration-bundle": "~1.0|~2.0",
+        "modera/languages-bundle": "~1.0|~2.0",
+        "sergeil/extjslocalization-bundle": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "phake/phake": "~2.0"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\BackendLanguagesBundle": "" }
+    },
+    "target-dir": "Modera/BackendLanguagesBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}
