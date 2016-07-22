@@ -1,0 +1,30 @@
+{
+    "name": "modera/languages-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "doctrine/doctrine-bundle": "~1.2",
+        "symfony/framework-bundle": "~2.0"
+    },
+    "require-dev": {
+        "modera/foundation-bundle": "~1.0|~2.0",
+        "phpunit/phpunit": "3.*"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\LanguagesBundle": "" }
+    },
+    "target-dir": "Modera/LanguagesBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}
