@@ -1,0 +1,32 @@
+{
+    "origin": "git@github.com:modera/foundation.git",
+    "splits": {
+        "src/Modera/ActivityLoggerBundle": "git@github.com:modera/ModeraActivityLoggerBundle.git",
+        "src/Modera/BackendConfigUtilsBundle": "git@github.com:modera/BackendConfigUtilsBundle.git",
+        "src/Modera/BackendDashboardBundle": "git@github.com:modera/BackendDashboardBundle.git",
+        "src/Modera/BackendLanguagesBundle": "git@github.com:modera/BackendLanguagesBundle.git",
+        "src/Modera/BackendModuleBundle": "git@github.com:modera/BackendModuleBundle.git",
+        "src/Modera/BackendSecurityBundle": "git@github.com:modera/BackendSecurityBundle.git",
+        "src/Modera/BackendToolsActivityLogBundle": "git@github.com:modera/BackendToolsActivityLogBundle.git",
+        "src/Modera/BackendToolsBundle": "git@github.com:modera/BackendToolsBundle.git",
+        "src/Modera/BackendToolsSettingsBundle": "git@github.com:modera/BackendToolsSettingsBundle.git",
+        "src/Modera/BackendTranslationsToolBundle": "git@github.com:modera/BackendTranslationsToolBundle.git",
+        "src/Modera/ConfigBundle": "git@github.com:modera/ConfigBundle.git",
+        "src/Modera/DirectBundle": "git@github.com:modera/DirectBundle.git",
+        "src/Modera/DynamicallyConfigurableAppBundle": "git@github.com:modera/DynamicallyConfigurableAppBundle.git",
+        "src/Modera/FileRepositoryBundle": "git@github.com:modera/FileRepositoryBundle.git",
+        "src/Modera/FileUploaderBundle": "git@github.com:modera/FileUploaderBundle.git",
+        "src/Modera/FoundationBundle": "git@github.com:modera/FoundationBundle.git",
+        "src/Modera/LanguagesBundle": "git@github.com:modera/LanguagesBundle.git",
+        "src/Modera/MJRCacheAwareClassLoaderBundle": "git@github.com:modera/MJRCacheAwareClassLoaderBundle.git",
+        "src/Modera/MjrIntegrationBundle": "git@github.com:modera/MjrIntegrationBundle.git",
+        "src/Modera/MJRSecurityIntegrationBundle": "git@github.com:modera/MJRSecurityIntegrationBundle.git",
+        "src/Modera/MJRThemeIntegrationBundle": "git@github.com:modera/MJRThemeIntegrationBundle.git",
+        "src/Modera/ModuleBundle": "git@github.com:modera/ModuleBundle.git",
+        "src/Modera/RoutingBundle": "git@github.com:modera/RoutingBundle.git",
+        "src/Modera/SecurityBundle": "git@github.com:modera/SecurityBundle.git",
+        "src/Modera/ServerCrudBundle": "git@github.com:modera/ServerCrudBundle.git",
+        "src/Modera/TranslationsBundle": "git@github.com:modera/TranslationsBundle.git",
+        "src/Modera/UpgradeBundle": "git@github.com:modera/UpgradeBundle.git"
+    }
+}
