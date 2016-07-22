@@ -1,0 +1,5 @@
+preset: symfony
+
+finder:
+  not-name:
+    - "font-awesome-icons.php"
