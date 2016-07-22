@@ -1,0 +1,40 @@
+{
+    "name": "modera/security-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "description": "Provides database aware implementation of Security model + some other perks",
+    "authors": [
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
+        },
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org",
+            "homepage": "http://sergei.lissovski.org/"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "doctrine/orm": "~2.2,>=2.2.3",
+        "symfony/framework-bundle": "~2.6",
+        "doctrine/doctrine-bundle": "~1.2",
+        "sergeil/extjsintegration-bundle": "~1.0",
+        "modera/foundation-bundle": "~1.0|~2.0"
+    },
+    "require-dev": {
+        "modera/foundation-bundle": "~1.0|~2.0",
+        "modera/languages-bundle": "~1.0|~2.0",
+        "phake/phake": "1.*",
+        "phpunit/phpunit": "3.*"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\SecurityBundle": "" }
+    },
+    "target-dir": "Modera/SecurityBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}
