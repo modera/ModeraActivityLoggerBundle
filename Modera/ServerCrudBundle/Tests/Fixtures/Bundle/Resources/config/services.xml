@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_server_crud_dummy_bundle.contributions.controller_action_interceptors_provider"
+                 class="Modera\ServerCrudBundle\Tests\Fixtures\Bundle\Contributions\ControllerActionInterceptorsProvider">
+
+            <tag name="modera_server_crud.intercepting.cai_provider" />
+        </service>
+    </services>
+</container>

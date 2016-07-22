@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_server_crud.generation.twig"
+                 class="Twig_Environment"
+                 factory-class="Modera\ServerCrudBundle\Generation\TwigFactory"
+                 factory-method="create"
+        />
+
+        <service id="modera_server_crud.validation.default_entity_validator"
+                 class="Modera\ServerCrudBundle\Validation\DefaultEntityValidator">
+
+            <argument type="service" id="validator" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="modera_server_crud.entity_factory.default_entity_factory"
+                 class="Modera\ServerCrudBundle\EntityFactory\DefaultEntityFactory"
+        />
+
+        <service id="modera_server_crud.data_mapping.default_data_mapper"
+                 class="Modera\ServerCrudBundle\DataMapping\DefaultDataMapper">
+
+            <argument type="service" id="sli.extjsintegration.entity_data_mapper" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service id="modera_server_crud.persistence.default_handler"
+                 class="Modera\ServerCrudBundle\Persistence\DoctrinePersistenceHandler">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="sli.extjsintegration.extjs_query_builder" />
+        </service>
+
+        <service id="modera_server_crud.persistence.model_manager"
+                 class="Modera\ServerCrudBundle\Persistence\DefaultModelManager"
+        />
+
+        <service id="modera_server_crud.hydration.hydration_service"
+                 class="Modera\ServerCrudBundle\Hydration\HydrationService">
+
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="modera_server_crud.exception_handling.env_aware_handler"
+                 class="Modera\ServerCrudBundle\ExceptionHandling\EnvAwareExceptionHandler">
+
+            <argument type="service" id="modera_server_crud.exception_handling.handlers_provider" />
+            <argument type="service" id="kernel" />
+        </service>
+
+        <service id="modera_server_crud.exception_handling.bypass_handler"
+                 class="Modera\ServerCrudBundle\ExceptionHandling\BypassExceptionHandler"
+        />
+
+        <service id="modera_server_crud.new_values_factory.default_new_values_factory"
+                 class="Modera\ServerCrudBundle\NewValuesFactory\DefaultNewValuesFactory">
+
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="modera_server_crud.intercepting.interceptors_manager"
+                 class="Modera\ServerCrudBundle\Intercepting\InterceptorsManager">
+
+            <argument type="service" id="modera_server_crud.intercepting.cai_provider" />
+        </service>
+
+        <service id="modera_server_crud.contributions.controller_action_interceptors_provider"
+                 class="Modera\ServerCrudBundle\Contributions\ControllerActionInterceptorsProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="modera_server_crud.intercepting.cai_provider" />
+        </service>
+    </services>
+</container>
