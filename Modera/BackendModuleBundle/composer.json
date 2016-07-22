@@ -1,0 +1,32 @@
+{
+    "name": "modera/backend-module-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org",
+            "homepage": "http://sergei.lissovski.org/"
+        },
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/framework-bundle": "~2.6",
+        "modera/backend-tools-bundle": "~2.0",
+        "modera/mjr-integration-bundle": "~1.1|~2.0",
+        "modera/module-bundle": "~1.0|~2.0"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\BackendModuleBundle": "" }
+    },
+    "target-dir": "Modera/BackendModuleBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}
