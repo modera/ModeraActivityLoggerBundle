@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="modera_translations.event_listener.language_translation_token_listener"
+                 class="Modera\TranslationsBundle\EventListener\LanguageTranslationTokenListener">
+
+            <tag name="doctrine.event_listener" event="postPersist" />
+            <tag name="doctrine.event_listener" event="postUpdate" />
+        </service>
+
+        <service id="modera_translations.service.translation_handlers_chain"
+                 class="Modera\TranslationsBundle\Service\TranslationHandlersChain">
+        </service>
+
+        <service id="modera_translations.token_extraction.php_class_token_extraction"
+                 class="Modera\TranslationsBundle\TokenExtraction\PhpClassTokenExtractor">
+        </service>
+
+        <service id="modera_translations.handling.php_classes_translation_handler"
+                 class="Modera\TranslationsBundle\Handling\PhpClassesTranslationHandler"
+                 abstract="true"
+                 public="false">
+
+            <argument type="service" id="kernel" />
+            <argument type="service" id="translation.loader" />
+            <argument type="service" id="modera_translations.token_extraction.php_class_token_extraction" />
+        </service>
+
+        <service id="modera_translations.handling.template_translation_handler"
+                 class="Modera\TranslationsBundle\Handling\TemplateTranslationHandler"
+                 abstract="true"
+                 public="false">
+
+            <argument type="service" id="kernel" />
+            <argument type="service" id="translation.loader" />
+            <argument type="service" id="translation.extractor" />
+        </service>
+
+        <service id="modera_translations.compiler.translations_compiler"
+                 class="Modera\TranslationsBundle\Compiler\TranslationsCompiler">
+
+            <argument type="service" id="kernel" />
+        </service>
+
+        <!--
+        <service parent="modera_translations.handling.template_translation_handler">
+
+            <argument>ModeraTranslationsBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+
+        <service parent="modera_translations.handling.php_classes_translation_handler">
+
+            <argument>ModeraTranslationsBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+        -->
+    </services>
+</container>

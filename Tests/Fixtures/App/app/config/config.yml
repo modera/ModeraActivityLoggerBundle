@@ -1,0 +1,27 @@
+parameters:
+    locale: en
+
+framework:
+    secret:          Hell yeah!
+    csrf_protection: true
+    session:         ~
+    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    default_locale:  "%locale%"
+    translator:      { fallback: %locale% }
+    templating:
+        engines: ['twig']
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     127.0.0.1
+        port:     3306
+        dbname:   modera_translations_bundle
+        user:     root
+        password:
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: true
+        auto_mapping: true
