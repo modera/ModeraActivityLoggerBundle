@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!--
+            "modera_mjr_cache_aware_class_loader.version_resolver" is created dynamically
+            in ModeraMJRCacheAwareClassLoaderExtension
+        -->
+
+        <service id="modera_mjr_cache_aware_class_loader.standard_version_resolver"
+                 class="Modera\MJRCacheAwareClassLoaderBundle\VersionResolving\StandardVersionResolver">
+
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="modera_mjr_cache_aware_class_loader.contributions.js_resources_provider"
+                 class="Modera\MJRCacheAwareClassLoaderBundle\Contributions\JsResourcesProvider">
+
+            <argument type="service" id="router" />
+
+            <tag name="modera_mjr_integration.js_resources_provider" />
+        </service>
+
+        <service id="modera_mjr_cache_aware_class_loader.contributions.routing_resources_provider"
+                 class="Modera\MJRCacheAwareClassLoaderBundle\Contributions\RoutingResourcesProvider">
+
+            <tag name="modera_routing.routing_resources_provider" />
+        </service>
+
+        <service id="modera_mjr_cache_aware_class_loader.event_listener.version_injector_event_listener"
+                 class="Modera\MJRCacheAwareClassLoaderBundle\EventListener\VersionInjectorEventListener">
+
+            <argument type="service" id="modera_mjr_cache_aware_class_loader.version_resolver" />
+            <argument type="string">%modera_mjr_cache_aware_class_loader.config%</argument>
+
+            <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
+        </service>
+    </services>
+</container>

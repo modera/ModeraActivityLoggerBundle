@@ -1,0 +1,20 @@
+# this is a sample .htaccess file that would enable caching for javascript files for 1 year period
+DirectoryIndex app.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    <IfModule mod_vhost_alias.c>
+        RewriteBase /
+    </IfModule>
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^(.*)$ app.php [QSA,L]
+</IfModule>
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/javascript "access plus 1 years"
+  ExpiresByType application/x-javascript "access plus 1 years"
+  ExpiresByType application/javascript "access plus 1 years"
+</IfModule>
