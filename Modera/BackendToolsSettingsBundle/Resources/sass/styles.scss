@@ -1,0 +1,57 @@
+@import 'compass';
+
+.modera-backend-tools-settings-icon {
+    background-image: url(../images/settings_32x32.png);
+}
+
+.modera-backend-tools-settings {
+
+    .tools-settings-toolbar {
+        .title, .text {
+            font-size: 18px !important;
+        }
+
+        .title {
+            font-weight: normal !important;
+        }
+
+        .section-separator {
+            color: #D0D0D0;
+            font-size: 10px;
+        }
+    }
+
+    .tools-settings-sections-grid {
+        .x-grid-td {
+            padding: 2px !important;
+
+            &.left {
+                font-size: 18px;
+                @include border-radius(3px 0px 0px 3px);
+                color: #DDDDDD;
+
+                div {
+                    text-align: center !important;
+                    padding-left: 0 !important;
+                    padding-right: 0 !important;
+                }
+            }
+            &.right {
+                font-size: 16px;
+                @include border-radius(0px 3px 3px 0px);
+            }
+          }
+
+          .x-grid-row-selected .x-grid-td {
+              &.left {
+                  color: #6093AA;
+              }
+        }
+    }
+
+    .container {
+        border-color: #B4D6E6 !important;
+        border-width: 1px !important;
+        padding: 10px;
+    }
+}
