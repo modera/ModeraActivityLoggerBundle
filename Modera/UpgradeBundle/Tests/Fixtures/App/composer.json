@@ -1,0 +1,12 @@
+{
+    "name": "modera/upgrade-bundle-test",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "http://packages.org"
+        }
+    ],
+    "require": {
+        "test/dependency_1": "dev-master"
+    }
+}

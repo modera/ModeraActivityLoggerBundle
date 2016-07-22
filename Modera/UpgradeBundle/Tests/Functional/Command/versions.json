@@ -1,0 +1,65 @@
+{
+    "0.1.0": {
+        "add-repositories": [
+            {
+                "type": "vcs",
+                "url": "ssh://git@dependency.git"
+            }
+        ],
+        "add-bundles": [
+            "new Test\\AddBundle\\TestAddBundle()"
+        ],
+        "dependencies": {
+            "test/dependency_1": "0.1.0",
+            "test/dependency_2": "0.1.0",
+            "test/dependency_3": "0.1.0"
+        }
+    },
+    "0.1.1": {
+        "rm-repositories": [
+            {
+                "type": "vcs",
+                "url": "ssh://git@dependency.git"
+            }
+        ],
+        "rm-bundles": [
+            "new Test\\RemoveBundle\\TestRemoveBundle()"
+        ],
+        "dependencies": {
+            "test/dependency_1": "0.1.1",
+            "test/dependency_2": "0.1.0"
+        },
+        "commands": [
+            "help --format=json"
+        ]
+    },
+    "0.1.2": {
+        "dependencies": {
+            "test/dependency_1": "0.1.1",
+            "test/dependency_2": "0.1.0",
+            "test/dependency_4": "0.1.0"
+        },
+        "commands": [
+            "help --format=txt"
+        ]
+    },
+    "0.1.3": {
+        "instructions": [
+            "Some foo instruction"
+        ]
+    },
+    "0.1.4": {
+        "instructions": [
+            "Some bar instruction"
+        ]
+    },
+    "0.1.5": {
+        "dependencies": {
+            "test/dependency_1": "0.1.1",
+            "test/dependency_4": "0.1.1"
+        },
+        "instructions": [
+            "Some baz instruction"
+        ]
+    }
+}
