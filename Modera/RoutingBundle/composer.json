@@ -1,0 +1,34 @@
+{
+    "name": "modera/routing-bundle",
+    "type": "symfony-bundle",
+    "description": "This bundle makes it possible for bundles to dynamically include routing files from within your bundles.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
+        },
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "~2.2",
+        "sergeil/expander-bundle": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "phake/phake": "1.*"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\RoutingBundle": "" }
+    },
+    "target-dir": "Modera/RoutingBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}

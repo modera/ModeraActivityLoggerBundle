@@ -1,0 +1,3 @@
+ModeraRoutingBundle:
+    type:  modera_routing
+    resource:  'modera_routing'
