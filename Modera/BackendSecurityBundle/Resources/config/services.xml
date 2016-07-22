@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_backend_security.contributions.tools_sections_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\ToolsSectionsProvider">
+
+            <argument type="service" id="security.authorization_checker" />
+
+            <tag name="modera_backend_tools.sections_provider" />
+        </service>
+
+        <service id="modera_backend_security.contributions.sections_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\SectionsProvider">
+
+            <tag name="modera_mjr_integration.sections_provider" />
+        </service>
+
+        <service id="modera_backend_security.contributions.css_resources_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\CssResourcesProvider">
+
+            <tag name="modera_mjr_integration.css_resources_provider" />
+        </service>
+
+        <service id="modera_backend_security.contributions.permissions_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\PermissionsProvider">
+
+            <tag name="modera_security.permissions_provider" />
+        </service>
+
+        <service id="modera_backend_security.contributions.client_di_service_definitions_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\ClientDiServiceDefinitionsProvider">
+
+            <tag name="modera_mjr_security_integration.client_di_service_defs_provider" />
+        </service>
+
+        <service id="modera_backend_security.contributions.permission_categories_provider"
+                 class="Modera\BackendSecurityBundle\Contributions\PermissionCategoriesProvider">
+
+            <tag name="modera_security.permission_categories_provider" />
+        </service>
+
+        <service id="modera_backend_security.service.default_mail_service"
+                 class="Modera\BackendSecurityBundle\Service\MailService">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="mailer" />
+            <argument>%locale%</argument>
+            <argument>%modera_backend_security.config.mail_sender%</argument>
+        </service>
+
+        <service parent="modera_translations.handling.php_classes_translation_handler">
+
+            <argument>ModeraBackendSecurityBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+
+        <service id="modera_backend_security.data_mapper.user_data_mapper"
+                 class="Modera\BackendSecurityBundle\DataMapper\UserDataMapper">
+
+            <argument type="service" id="sli.extjsintegration.entity_data_mapper" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+    </services>
+</container>

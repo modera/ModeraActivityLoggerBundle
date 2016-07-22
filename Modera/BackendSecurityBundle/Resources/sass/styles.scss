@@ -1,0 +1,75 @@
+@import 'compass';
+
+.modera-backend-security-tools-icon {
+    background-image: url(../images/security_32x32.png);
+}
+
+.modera-backend-security-icon-user-32 {
+    background-image: url(../images/user_32x32.png);
+}
+
+.modera-backend-security-icon-group-32 {
+    background-image: url(../images/group_32x32.png);
+}
+
+.modera-backend-security-icon-permission-32 {
+    background-image: url(../images/permission_32x32.png);
+}
+
+.modera-backend-security-icon-group-24 {
+    background-image: url(../images/group_24x24.png);
+}
+
+.modera-backend-security-icon-password-24 {
+    background-image: url(../images/password_24x24.png);
+}
+
+.modera-backend-security-btn-disabled {
+    opacity: 0.5;
+}
+
+.modera-backend-security-menu {
+    border-color: #68B1D2;
+    background-color: #68B1D2;
+    @include background-image(linear-gradient(#83CAEA, #68B1D2));
+    @include border-radius(5px);
+
+    .x-btn {
+        &.x-btn-over {
+            background-color: #60ADD0;
+            background-image: none;
+            border-color: #60ADD0;
+        }
+        &.x-btn-focus {
+            background-color: transparent;
+            background-image: none;
+            border-color: transparent;
+        }
+        &.x-btn-pressed {
+            background-color: #E8F0F5;
+            background-image: none;
+            border-color: #71AAC4;
+
+            .x-btn-inner {
+                color: #457D97;
+                @include single-text-shadow(darken(#E8F0F5, 10%), 1px, 0, 1px);
+            }
+        }
+        .x-btn-inner {
+            font-size: 18px;
+            color: #FFF;
+            @include single-text-shadow(#457D97, 1px, 0, 1px);
+        }
+    }
+}
+
+.modera-backend-security-box-status {
+    background-color: #B2B2B2;
+    color: #FFF;
+    padding: 0 6px 0 5px;
+}
+.x-grid-row-selected {
+    .modera-backend-security-box-status {
+        background-color: #457D97;
+    }
+}
