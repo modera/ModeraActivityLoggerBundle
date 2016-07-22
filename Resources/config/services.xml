@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_mjr_security_integration.contributions.service_definitions_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\ServiceDefinitionsProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="modera_mjr_integration.csdi.service_definitions_provider" />
+        </service>
+
+        <service id="modera_mjr_security_integration.contributions.class_loader_mappings_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\ClassLoaderMappingsProvider">
+
+            <tag name="modera_mjr_integration.class_loader_mappings_provider" />
+        </service>
+
+        <service id="modera_mjr_security_integration.contributions.config_mergers_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\ConfigMergersProvider">
+
+            <argument type="service" id="security.token_storage" />
+            <argument type="service" id="modera_mjr_security_integration.client_di_service_defs_provider" />
+
+            <tag name="modera_mjr_integration.config.config_mergers_provider" />
+        </service>
+
+        <service id="modera_mjr_security_integration.contributions.routing_resources_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\RoutingResourcesProvider">
+
+            <tag name="modera_routing.routing_resources_provider" />
+        </service>
+
+        <service id="modera_mjr_security_integration.contributions.permission_categories_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\PermissionCategoriesProvider">
+
+            <tag name="modera_security.permission_categories_provider" />
+        </service>
+
+        <service id="modera_mjr_security_integration.contributions.permissions_provider"
+                 class="Modera\MJRSecurityIntegrationBundle\Contributions\PermissionsProvider">
+
+            <tag name="modera_security.permissions_provider" />
+        </service>
+
+        <service class="Modera\MJRSecurityIntegrationBundle\EventListener\AjaxAuthenticationValidatingListener"
+                 id="modera_mjr_security_integration.event_listener.ajax_auth_validating_listener">
+
+            <argument type="string">%modera_mjr_integration.routes_prefix%</argument>
+
+            <tag name="kernel.event_listener" event="kernel.exception" priority="1000" />
+        </service>
+    </services>
+</container>

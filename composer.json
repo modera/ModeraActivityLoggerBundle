@@ -1,0 +1,37 @@
+{
+    "name": "modera/mjr-security-integration-bundle",
+    "type": "symfony-bundle",
+    "description": "Bundle provides integration layer which is necessary to make MJR to be security aware.",
+    "license": "MIT",
+    "homepage": "http://modera.org",
+    "keywords": ["mjr"],
+    "authors": [
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org",
+            "homepage": "http://sergei.lissovski.org/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/symfony": "~2.0",
+        "sergeil/expander-bundle": "~1.0",
+        "modera/mjr-integration-bundle": "~1.4|~2.0",
+        "modera/foundation-bundle": "~1.1|~2.0",
+        "modera/security-bundle": "~2.0",
+        "doctrine/orm": "~2.2,>=2.2.3,<2.5"
+    },
+    "require-dev": {
+        "phake/phake": "~2.0",
+        "phpunit/phpunit": "3.*"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\MJRSecurityIntegrationBundle": "" }
+    },
+    "target-dir": "Modera/MJRSecurityIntegrationBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}

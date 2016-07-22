@@ -1,0 +1,12 @@
+modera_mjr_security_integration:
+    resource: "@ModeraMJRSecurityIntegrationBundle/Controller/"
+    type:     annotation
+    prefix:   %modera_mjr_integration.routes_prefix%
+
+modera_mjr_security_integration.index.application:
+    path:      /%modera_mjr_integration.config.app_name%/Application.js
+    defaults:  { _controller: ModeraMJRSecurityIntegrationBundle:Index:application }
+
+modera_mjr_security_integration.index.is_authenticated:
+    path:      /%modera_mjr_integration.config.app_name%/is-authenticated
+    defaults:  { _controller: ModeraMJRSecurityIntegrationBundle:Index:isAuthenticated }
