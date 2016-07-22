@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_dynamically_configurable_app.contributions.config_entries_provider"
+                 class="Modera\DynamicallyConfigurableAppBundle\Contributions\ConfigEntriesProvider">
+
+            <tag name="modera_config.config_entries_provider" />
+        </service>
+
+        <service id="modera_dynamically_configurable_app.value_handling.kernel_config_writer"
+                 class="Modera\DynamicallyConfigurableAppBundle\ValueHandling\KernelConfigWriter"
+        />
+
+        <service parent="modera_translations.handling.php_classes_translation_handler">
+
+            <argument>ModeraDynamicallyConfigurableAppBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+    </services>
+</container>
