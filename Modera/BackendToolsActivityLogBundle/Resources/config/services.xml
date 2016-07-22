@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_backend_tools_activity_log.activity_author_resolver"
+                 class="Modera\BackendToolsActivityLogBundle\AuthorResolving\ActivityAuthorResolver">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+
+        <service parent="modera_translations.handling.php_classes_translation_handler">
+
+            <argument>ModeraBackendToolsActivityLogBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+
+        <service parent="modera_backend_translations_tool.handling.extjs_translation_handler">
+
+            <argument>ModeraBackendToolsActivityLogBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+
+        <service id="modera_backend_tools_activity_log.auto_suggest.filter_auto_suggest_service"
+                 class="Modera\BackendToolsActivityLogBundle\AutoSuggest\FilterAutoSuggestService">
+
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="modera_activity_logger.manager.activity_manager" />
+        </service>
+    </services>
+</container>
