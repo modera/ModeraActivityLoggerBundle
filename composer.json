@@ -1,0 +1,35 @@
+{
+    "name": "modera/module-bundle",
+    "type": "symfony-bundle",
+    "description": "Adds support for dynamical bundles installation.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
+        },
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/symfony": "~2.0",
+        "modera/module": "~1.0|~2.0",
+        "sensio/generator-bundle": "~2.3|~3.0"
+    },
+    "require-dev": {
+        "phake/phake": "2.*",
+        "phpunit/phpunit": "3.*"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\ModuleBundle": "" }
+    },
+    "target-dir": "Modera/ModuleBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}
