@@ -1,0 +1,31 @@
+{
+    "name": "modera/direct-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony 2 ExtDirect Bundle",
+    "keywords": ["ExtJS", "ExtDirect"],
+    "homepage": "https://github.com/modera/direct-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/finder": "~2.3",
+        "symfony/framework-bundle": "~2.3"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\DirectBundle": "" }
+    },
+    "target-dir": "Modera/DirectBundle",
+    "extra": {
+        "modera-module": {
+            "register-bundle": "Modera\\DirectBundle\\ModeraDirectBundle"
+        },
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}

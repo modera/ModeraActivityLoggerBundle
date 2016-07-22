@@ -1,0 +1,9 @@
+api:
+    pattern:  %modera_direct.routes_prefix%/api.js
+    defaults: { _controller: ModeraDirectBundle:Direct:getApi }
+remoting:
+    pattern:  %modera_direct.routes_prefix%/remoting.js
+    defaults: { _controller: ModeraDirectBundle:Direct:getRemoting }
+route:
+    pattern: %modera_direct.routes_prefix%/route
+    defaults: { _controller: ModeraDirectBundle:Direct:route }
