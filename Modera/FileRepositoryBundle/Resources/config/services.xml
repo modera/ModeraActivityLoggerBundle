@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_file_repository.event_listener.container_injector_listener"
+                 class="Modera\FileRepositoryBundle\EventListener\ContainerInjectorListener">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="doctrine.event_listener" event="postLoad" />
+        </service>
+
+        <service id="modera_file_repository.repository.uniqid_key_generator"
+                 class="Modera\FileRepositoryBundle\Repository\UniqidKeyGenerator">
+        </service>
+
+        <service id="modera_file_repository.repository.uniqid_key_generator_preserved_extension"
+                 class="Modera\FileRepositoryBundle\Repository\UniqidKeyGenerator">
+            <argument type="string">true</argument>
+        </service>
+
+        <service id="modera_file_repository.repository.file_repository"
+                 class="Modera\FileRepositoryBundle\Repository\FileRepository">
+
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="modera_file_repository.stored_file.url_generator"
+                 class="Modera\FileRepositoryBundle\StoredFile\UrlGenerator">
+
+            <argument type="service" id="router" />
+            <argument>%modera_file_repository.config.controller.get_file_route%</argument>
+        </service>
+
+        <service id="modera_file_repository.contributions.routing_resources_provider"
+                 class="Modera\FileRepositoryBundle\Contributions\RoutingResourcesProvider">
+
+            <tag name="modera_routing.routing_resources_provider" />
+        </service>
+
+        <service id="modera_file_repository.intercepting.default_interceptors_provider"
+                 class="Modera\FileRepositoryBundle\Intercepting\DefaultInterceptorsProvider">
+
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="modera_file_repository.validation.file_properties_validation_interceptor"
+                 class="Modera\FileRepositoryBundle\Validation\FilePropertiesValidationInterceptor">
+
+            <argument type="service" id="validator" />
+        </service>
+    </services>
+</container>
