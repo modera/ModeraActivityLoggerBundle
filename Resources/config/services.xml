@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_backend_tools.contributions.menu_items_provider"
+                 class="Modera\BackendToolsBundle\Contributions\MenuItemsProvider">
+
+            <argument type="service" id="security.authorization_checker" />
+            <argument>%modera_backend_tools.tab_order%</argument>
+
+            <tag name="modera_mjr_integration.menu.menu_items_provider" />
+        </service>
+
+        <service id="modera_backend_tools.contributions.css_resources_provider"
+                 class="Modera\BackendToolsBundle\Contributions\CssResourcesProvider">
+
+            <tag name="modera_mjr_integration.css_resources_provider" />
+        </service>
+
+        <service id="modera_backend_tools.contributions.permissions_provider"
+                 class="Modera\BackendToolsBundle\Contributions\PermissionsProvider">
+
+            <tag name="modera_security.permissions_provider" />
+        </service>
+    </services>
+</container>
