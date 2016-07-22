@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_file_uploader.uploading.web_uploader"
+                 class="Modera\FileUploaderBundle\Uploading\WebUploader">
+
+            <!-- defined in \Modera\FileUploaderBundle\ModeraFileUploaderBundle -->
+            <argument type="service" id="modera_file_uploader.uploading.gateways_provider" />
+        </service>
+
+        <service id="modera_file_uploader.contributions.routing_resources_provider"
+                 class="Modera\FileUploaderBundle\Contributions\RoutingResourcesProvider">
+
+            <tag name="modera_routing.routing_resources_provider" />
+        </service>
+    </services>
+</container>
