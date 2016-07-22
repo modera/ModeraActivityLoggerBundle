@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="direct.api.route_pattern">%modera_direct.routes_prefix%/route</parameter>
+        <parameter key="direct.api.type">remoting</parameter>
+        <parameter key="direct.api.namespace">Actions</parameter>
+        <parameter key="direct.api.id">API</parameter>
+        <parameter key="direct.api.remote_attribute">@Remote</parameter>
+        <parameter key="direct.api.form_attribute">@Form</parameter>
+        <parameter key="direct.api.safe_attribute">@Secure</parameter>
+        <parameter key="direct.api.unsafe_attribute">@Anonymous</parameter>
+        <parameter key="direct.api.default_access">anonymous</parameter>
+        <parameter key="direct.api.session_attribute">account</parameter>
+        <parameter key="direct.exception.message">Whoops, looks like something went wrong.</parameter>
+    </parameters>
+
+    <services>
+        <service id="modera_direct.contributions.routing_resources_provider"
+                 class="Modera\DirectBundle\Contributions\RoutingResourcesProvider">
+
+            <tag name="modera_routing.routing_resources_provider" />
+        </service>
+    </services>
+</container>
