@@ -1,0 +1,53 @@
+Ext.define('{{ config.app_name }}.Application', {
+    extend: '{{ config.app_base_class }}',
+
+    name: '{{ config.app_name }}',
+
+    requires: [
+        'MF.Util',
+        'MF.runtime.applications.authenticationaware.controller.Workbench'
+    ],
+{% if non_blocking_resources.css|length > 0 or  non_blocking_resources.js|length > 0 %}
+
+    // override
+    doLaunch: function(launch) {
+        var me = this;
+
+        launch(function(viewport) {
+            var c = me.getContainer();
+
+            var loaded = false;
+            c.get('non_blocking_assets_loader').startLoading(function() {
+                loaded = true;
+            });
+
+            // We are not going to finish workbench loading unless all assets are loaded. This
+            // piece of code makes even more sense if a user is already authenticated and
+            // won't see a logic screen, and will have a straight backend rendered, in this case missing css/js may
+            // affect user experience. By blocking workbench loading we are guaranteeing that before user sees anything
+            // (and can interact with backend) all files are preloaded.
+            c.get('event_bus').on('runtime.class_loader_configured', function() {
+                var plugin = c.get('plugin_manager').getPlugin('workbench_loading_blocking_plugin');
+
+                var interval = setInterval(function() {
+                    if (loaded) {
+                        clearInterval(interval);
+
+                        // "unfreezing" backend loading process
+                        plugin.markCompleted();
+                    }
+                }, 50);
+            });
+        });
+    },
+{% endif %}
+
+    // override
+    modifyContainerServiceDefinitions: function(services) {
+{% autoescape false %}
+        var newServices = {{ container_services|json_encode(constant('JSON_PRETTY_PRINT'))|mf_prepend_every_line(8, ' ', true) }};
+{% endautoescape %}
+
+        return Ext.Object.merge(services, newServices);
+    }
+});

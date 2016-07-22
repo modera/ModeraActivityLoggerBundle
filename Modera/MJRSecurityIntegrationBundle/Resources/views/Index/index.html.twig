@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <title>{{ config.deployment_name }}</title>
+
+    <link rel="shortcut icon" href="{{ asset('bundles/moderamjrsecurityintegration/favicon.ico') }}" />
+
+{% for resource in css_resources %}
+    <link href="{{ asset(resource) }}" rel="stylesheet" />
+{% endfor %}
+
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+</head>
+
+<body style="margin:0; padding:0; height:100%;">
+
+{# this will display a loading mask while extjs and runtime javascript code is being loaded #}
+<table style="width:100%; height:100%; background:#EAEAEA;" id="mjr-preloader">
+    <tr>
+        <td style="text-align:center;">
+            <div class="fa fa-spin fa-gear" style="font-size:54px; color:#4F4F4F;"></div>
+        </td>
+    </tr>
+</table>
+
+{#
+  it is important to keep "heavy" javascript files are loading mask above because loading javascript files would block
+  DOM engine execution
+#}
+{#<script type="text/javascript" src="{{ asset(config.extjs_path) }}/ext-all-debug-w-comments.js"></script>#}
+{% for resource in js_resources %}
+<script type="text/javascript" src="{{ asset(resource) }}"></script>
+{% endfor %}
+
+<script type="text/javascript">
+    Ext.Ajax.timeout = {{ config.extjs_ajax_timeout }};
+    Ext.override(Ext.form.Basic, { timeout: Ext.Ajax.timeout / 1000 });
+    Ext.override(Ext.data.proxy.Server, { timeout: Ext.Ajax.timeout });
+    Ext.override(Ext.data.Connection, { timeout: Ext.Ajax.timeout });
+
+    Ext.Loader.setConfig({
+        enabled: true,
+        disableCaching: {{ disable_caching ? 'true' : 'false' }},
+        paths: {
+            MFC: '{{ asset(config.runtime_path) }}/src/MFC',
+            MF: '{{ asset(config.runtime_path) }}/src/MF',
+{% for ns, path in config.class_loader_mappings %}
+            '{{ ns }}': '{{ path }}',
+{% endfor %}
+            {{ config.app_name }}: '{{ app_loading_path }}'
+        }
+    });
+
+    Ext.application('{{ config.app_name }}.Application');
+
+    Ext.onReady(function() {
+        Ext.get('mjr-preloader').remove();
+    });
+</script>
+
+</body>
+</html>
