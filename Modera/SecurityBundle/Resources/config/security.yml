@@ -1,0 +1,66 @@
+services:
+    modera_security.security.access_denied_handler:
+        class: Modera\SecurityBundle\Security\AccessDeniedHandler
+
+    modera_security.security.logout_success_handler:
+        class: Modera\SecurityBundle\Security\LogoutSuccessHandler
+        arguments:
+            - @security.http_utils
+            - /
+
+    # TODO Left for BC reasons, use "modera.user_provider" instead. Will be removed in MF 3.0 (modera/foundation)
+    security.user_provider:
+        alias: security.user.provider.concrete.modera_provider
+    modera.user_provider:
+        alias: security.user.provider.concrete.modera_provider
+
+security:
+    encoders:
+        Modera\SecurityBundle\Entity\User:
+            algorithm:        sha1
+            encode_as_base64: false
+            iterations:       1
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+        # From MF version 0.3 (or this bundle's version v2.2.1) we no longer rely on our
+        # own implementation of UserProviderInterface
+        modera_provider:
+            entity:
+                class: ModeraSecurityBundle:User
+                property: username
+
+    firewalls:
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern:  ^/login$
+            security: false
+
+        secured_area:
+            pattern:    ^/
+            anonymous: ~
+            context: modera_auth
+            provider: authenticator
+            access_denied_handler: modera_security.security.access_denied_handler
+            form_login:
+                provider:      modera_provider
+                check_path:    _security_check
+                login_path:    _security_login
+                failure_handler: modera_security.security.authenticator
+                success_handler: modera_security.security.authenticator
+            logout:
+                path:   _security_logout
+                success_handler: modera_security.security.logout_success_handler
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 days in seconds
+                path:     /
+                domain:   ~ # Defaults to the current domain from $_SERVER
+
+    access_control: %modera_security.config.access_control%
