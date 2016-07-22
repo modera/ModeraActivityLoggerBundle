@@ -1,0 +1,76 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+
+        <service id="modera_backend_translations_tool.php_file_cache"
+                 class="Doctrine\Common\Cache\PhpFileCache">
+
+            <argument>%kernel.root_dir%/cache/modera_backend_translations_tool/</argument>
+        </service>
+
+        <service id="modera_backend_translations_tool.apc_cache"
+                 class="Doctrine\Common\Cache\ApcCache">
+        </service>
+
+        <service id="modera_backend_translations_tool.contributions.filters_provider"
+                 class="Modera\BackendTranslationsToolBundle\Contributions\FiltersProvider">
+
+            <argument type="service" id="service_container" />
+
+            <tag name="modera_backend_translations_tool.filters_provider" />
+        </service>
+
+        <service id="modera_backend_translations_tool.contributions.config_mergers_provider"
+                 class="Modera\BackendTranslationsToolBundle\Contributions\ConfigMergersProvider">
+
+            <argument type="service" id="modera_backend_translations_tool.contributions.filters_provider" />
+
+            <tag name="modera_mjr_integration.config.config_mergers_provider" />
+        </service>
+
+        <service id="modera_backend_translations_tool.contributions.tools_sections_provider"
+                 class="Modera\BackendTranslationsToolBundle\Contributions\ToolsSectionsProvider">
+
+            <tag name="modera_backend_tools.sections_provider" />
+        </service>
+
+        <service id="modera_backend_translations_tool.contributions.sections_provider"
+                 class="Modera\BackendTranslationsToolBundle\Contributions\SectionsProvider">
+
+            <tag name="modera_mjr_integration.sections_provider" />
+        </service>
+
+        <service id="modera_backend_translations_tool.contributions.css_resources_provider"
+                 class="Modera\BackendTranslationsToolBundle\Contributions\CssResourcesProvider">
+
+            <tag name="modera_mjr_integration.css_resources_provider" />
+        </service>
+
+        <service id="modera_backend_translations_tool.extractor.extjs_extractor"
+                 class="Modera\BackendTranslationsToolBundle\Extractor\ExtjsExtractor">
+        </service>
+
+        <service id="modera_backend_translations_tool.handling.extjs_translation_handler"
+                 class="Modera\BackendTranslationsToolBundle\Handling\ExtjsTranslationHandler"
+                 abstract="true"
+                 public="false">
+
+            <argument type="service" id="kernel" />
+            <argument type="service" id="translation.loader" />
+            <argument type="service" id="modera_backend_translations_tool.extractor.extjs_extractor" />
+        </service>
+
+        <service parent="modera_backend_translations_tool.handling.extjs_translation_handler">
+
+            <argument>ModeraBackendTranslationsToolBundle</argument>
+
+            <tag name="modera_translations.translation_handler" />
+        </service>
+
+    </services>
+
+</container>
