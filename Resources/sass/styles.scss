@@ -1,0 +1,70 @@
+@import 'compass';
+
+.modera-backend-translations-tool-tools-icon {
+    background-image: url(../images/translations_32x32.png);
+}
+
+.modera-backend-translations-tool {
+
+    .icon-import-24 {
+        background-image: url(../images/import_24x24.png);
+    }
+
+    .x-grid-cell-inner {
+        height: 24px;
+    }
+
+    .x-grid-row-checked {
+        .x-grid-cell-special {
+            background-color: #E4F0F6 !important;
+        }
+    }
+
+    .obsolete {
+        .x-grid-td {
+            background-color: #FFF2F2;
+
+            &.x-grid-cell-selected {
+                background-color: #C6E0EC;
+            }
+        }
+
+        &.x-grid-row-over {
+            .x-grid-td {
+                background-color: darken(#FFF2F2, 2%);
+
+                &.x-grid-cell-selected {
+                    background-color: #C6E0EC;
+                }
+            }
+        }
+
+        &.x-grid-row-selected {
+            .x-grid-td {
+                background-color: #C6E0EC;
+            }
+        }
+    }
+
+    .new {
+        background-color: #FFFAE4;
+
+        &.x-grid-cell-selected {
+            background-color: #C6E0EC;
+        }
+    }
+    .x-grid-row-over {
+        .new {
+            background-color: darken(#FFFAE4, 2%);
+
+            &.x-grid-cell-selected {
+                background-color: #C6E0EC;
+            }
+        }
+    }
+    .x-grid-row-selected {
+        .new {
+            background-color: #C6E0EC;
+        }
+    }
+}
