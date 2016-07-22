@@ -1,0 +1,11 @@
+parameters:
+    locale: en
+
+framework:
+    validation: ~
+    secret:          Hell yeah!
+    csrf_protection: true
+    session:         ~
+    router:          { resource: "%kernel.root_dir%/config/routing.yml" }
+    templating:
+        engines: ['twig']

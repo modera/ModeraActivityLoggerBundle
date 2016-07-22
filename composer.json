@@ -1,0 +1,34 @@
+{
+    "name": "modera/file-uploader-bundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "tags": ["upload", "file"],
+    "authors": [
+        {
+            "name": "Sergei Lissovski",
+            "email": "sergei.lissovski@modera.org",
+            "homepage": "http://sergei.lissovski.org/"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "symfony/symfony": "~2.0",
+        "modera/file-repository-bundle": "~1.0|~2.0",
+        "sergeil/expander-bundle": "~1.0",
+        "modera/foundation-bundle": "~1.0|~2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "phake/phake": "1.*",
+        "sergeil/aux-bundle": "~1.0"
+    },
+    "autoload": {
+        "psr-0": { "Modera\\FileUploaderBundle": "" }
+    },
+    "target-dir": "Modera/FileUploaderBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "3.x-dev"
+        }
+    }
+}
