@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="modera_backend_dashboard.contributions.menu_items_provider" class="Modera\BackendDashboardBundle\Contributions\MenuItemsProvider">
+            <argument>%modera_backend_dashboard.tab_order%</argument>
+            <tag name="modera_mjr_integration.menu.menu_items_provider" />
+        </service>
+
+        <!--<service id="modera_backend_dashboard.contributions.dashboard_provider" class="Modera\BackendDashboardBundle\Contributions\DashboardProvider">-->
+            <!--<tag name="modera_backend_dashboard.dashboard_provider" />-->
+        <!--</service>-->
+
+        <service id="modera_backend_dashboard.dashboard_service" class="Modera\BackendDashboardBundle\Dashboard\DashboardService">
+            <argument type="service" id="modera_backend_dashboard.dashboard_provider" />
+        </service>
+
+        <service id="modera_backend_dashboard.contributions.config_mergers_provider"
+                 class="Modera\BackendDashboardBundle\Contributions\ConfigMergersProvider">
+
+            <argument type="service" id="service_container" />
+            <argument type="service" id="modera_backend_dashboard.dashboard_provider" />
+
+            <tag name="modera_mjr_integration.config.config_mergers_provider" />
+        </service>
+
+        <service id="modera_backend_dashboard.contributions.client_di_service_definitions_provider"
+                 class="Modera\BackendDashboardBundle\Contributions\ClientDiServiceDefinitionsProvider">
+
+            <tag name="modera_mjr_security_integration.client_di_service_defs_provider" />
+        </service>
+
+        <service id="modera_backend_dashboard.event_listener.user_settings_entity_managing_listener"
+                 class="Modera\BackendDashboardBundle\EventListener\SettingsEntityManagingListener">
+
+            <tag name="doctrine.event_listener" event="onFlush"  />
+        </service>
+
+        <service id="modera_backend_dashboard.contributions.css_resources_provider"
+                 class="Modera\BackendDashboardBundle\Contributions\CssResourcesProvider">
+
+            <tag name="modera_mjr_integration.css_resources_provider" />
+        </service>
+    </services>
+</container>
