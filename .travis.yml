@@ -13,4 +13,4 @@ php:
 
 before_script:
   - composer install
-  - mysql -e 'CREATE DATABASE modera_activity_logger'
+  - mysql -e 'CREATE DATABASE modera_activity_logger_bundle'

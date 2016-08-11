@@ -13,7 +13,7 @@ doctrine:
         port:     %db_port%
         user:     %db_user%
         password: %db_password%
-        dbname:   modera_activity_logger
+        dbname:   modera_activity_logger_bundle
         charset:  UTF8
 
     orm:
