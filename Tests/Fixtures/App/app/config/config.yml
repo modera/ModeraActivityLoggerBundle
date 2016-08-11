@@ -7,12 +7,13 @@ framework:
 # Doctrine Configuration
 doctrine:
     dbal:
+        # http://symfony.com/doc/current/configuration/external_parameters.html
         driver:   pdo_mysql
-        host:     127.0.0.1
-        port:     3306
-        dbname:   modera_activity_logger_bundle
-        user:     root
-        password:
+        host:     %db_host%
+        port:     %db_port%
+        user:     %db_user%
+        password: %db_password%
+        dbname:   modera_activity_logger
         charset:  UTF8
 
     orm:
