@@ -12,7 +12,7 @@ class ModeraActivityLoggerAppKernel extends \Modera\FoundationBundle\Testing\Abs
             new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Sli\ExtJsIntegrationBundle\SliExtJsIntegrationBundle(),
 
-            new Modera\ActivityLoggerBundle\ModeraActivityLoggerBundle()
+            new Modera\ActivityLoggerBundle\ModeraActivityLoggerBundle(),
         );
     }
 }

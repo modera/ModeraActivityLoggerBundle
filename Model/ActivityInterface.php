@@ -16,7 +16,7 @@ interface ActivityInterface
     public function getMessage();
 
     /**
-     * See \Psr\Log\LogLevel
+     * See \Psr\Log\LogLevel.
      *
      * @return string
      */

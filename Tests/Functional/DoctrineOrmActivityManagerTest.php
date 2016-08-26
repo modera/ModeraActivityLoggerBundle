@@ -7,7 +7,6 @@ use Modera\ActivityLoggerBundle\Entity\Activity;
 use Modera\ActivityLoggerBundle\Manager\DoctrineOrmActivityManager;
 use Modera\FoundationBundle\Testing\FunctionalTestCase;
 use Psr\Log\LogLevel;
-use Sli\AuxBundle\Util\Toolkit;
 
 /**
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
@@ -23,18 +22,17 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
     /**
      * @var SchemaTool
      */
-    static private $st;
+    private static $st;
 
     // override
-    static public function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
         self::$st->createSchema([self::$em->getClassMetadata(Activity::clazz())]);
-
     }
 
     // override
-    static public function doTearDownAfterClass()
+    public static function doTearDownAfterClass()
     {
         self::$st->dropSchema([self::$em->getClassMetadata(Activity::clazz())]);
     }
@@ -61,7 +59,7 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
         $cx = array(
             'author' => 'Joe',
             'type' => 'foo_type',
-            'meta' => array('foo', 'bar')
+            'meta' => array('foo', 'bar'),
         );
 
         $this->mgr->log(LogLevel::ALERT, 'testing it', $cx);
@@ -88,8 +86,8 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
 
         $result = $this->mgr->query(array(
             'filter' => array(
-                array('property' => 'type', 'value' => 'eq:' . $activity->getType())
-            )
+                array('property' => 'type', 'value' => 'eq:'.$activity->getType()),
+            ),
         ));
 
         $this->assertTrue(is_array($result));
@@ -100,4 +98,4 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
         $this->assertInstanceOf(Activity::clazz(), $result['items'][0]);
         $this->assertSame($activity->getId(), $result['items'][0]->getId());
     }
-} 
+}

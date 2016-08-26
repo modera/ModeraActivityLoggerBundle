@@ -37,7 +37,7 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function log($level, $message, array $context = array())
     {
@@ -60,7 +60,7 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function query(array $query)
     {
@@ -68,7 +68,7 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
 
         return array(
             'items' => $qb->getQuery()->getResult(),
-            'total' => $this->queryBuilder->buildCountQueryBuilder($qb)->getQuery()->getSingleScalarResult()
+            'total' => $this->queryBuilder->buildCountQueryBuilder($qb)->getQuery()->getSingleScalarResult(),
         );
     }
-} 
+}

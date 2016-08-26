@@ -16,4 +16,4 @@ class ActivityTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('DateTime', $a->getCreatedAt());
     }
-} 
+}

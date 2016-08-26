@@ -4,7 +4,6 @@ namespace Modera\ActivityLoggerBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Modera\ActivityLoggerBundle\DependencyInjection\ModeraActivityLoggerExtension;
 
 /**
  * Adds a service with ID "modera_activity_logger.manager.activity_manager" to service container
@@ -16,7 +15,7 @@ use Modera\ActivityLoggerBundle\DependencyInjection\ModeraActivityLoggerExtensio
 class ServiceAliasCompilerPass implements CompilerPassInterface
 {
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
     public function process(ContainerBuilder $container)
     {
@@ -28,4 +27,4 @@ class ServiceAliasCompilerPass implements CompilerPassInterface
 
         $container->addAliases($aliasConfig);
     }
-} 
+}

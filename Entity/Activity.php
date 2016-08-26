@@ -76,7 +76,7 @@ class Activity implements ActivityInterface
     /**
      * @return string
      */
-    static public function clazz()
+    public static function clazz()
     {
         return get_called_class();
     }
@@ -192,4 +192,4 @@ class Activity implements ActivityInterface
     {
         return $this->meta;
     }
-} 
+}
