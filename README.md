@@ -1,4 +1,4 @@
-# ModeraActivityLoggerBundle [![Build Status](https://travis-ci.org/modera/ModeraActivityLoggerBundle.svg?branch=master)](https://travis-ci.org/modera/ModeraActivityLoggerBundle)
+# ModeraActivityLoggerBundle [![Build Status](https://travis-ci.org/modera/foundation.svg?branch=master)](https://travis-ci.org/modera/foundation)
 
 Bundle provides facilities that let you to log different domain events that occur during your application logic execution,
 later you are able to query those logged events ( they are called Activities in scope of this bundle ). The point
