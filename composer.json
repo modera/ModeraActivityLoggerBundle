@@ -13,7 +13,7 @@
         "php": ">=5.4.0",
         "symfony/symfony": "~2.0 || ^3.0",
         "symfony/framework-bundle": "~2.0 || ^3.0",
-        "sergeil/extjsintegration-bundle": "~1.0",
+        "sergeil/extjsintegration-bundle": "dev-master",
         "doctrine/orm": "~2.2,>=2.2.3",
         "doctrine/doctrine-bundle": "~1.2"
     },
