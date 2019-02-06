@@ -6,7 +6,8 @@
 
     <services>
         <service id="modera_activity_logger.manager.doctrine_orm_activity_manager"
-                 class="Modera\ActivityLoggerBundle\Manager\DoctrineOrmActivityManager">
+                 class="Modera\ActivityLoggerBundle\Manager\DoctrineOrmActivityManager"
+                 public="true">
 
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="sli.extjsintegration.extjs_query_builder" />
