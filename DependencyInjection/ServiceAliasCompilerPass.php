@@ -21,10 +21,7 @@ class ServiceAliasCompilerPass implements CompilerPassInterface
     {
         $config = $container->getParameter(ModeraActivityLoggerExtension::CONFIG_KEY);
 
-        $aliasConfig = array();
-        // alias : id
-        $aliasConfig['modera_activity_logger.manager.activity_manager'] = $config['activity_manager'];
-
-        $container->addAliases($aliasConfig);
+        $container->setAlias('modera_activity_logger.manager.activity_manager', $config['activity_manager']);
+        $container->getAlias('modera_activity_logger.manager.activity_manager')->setPublic(true);
     }
 }

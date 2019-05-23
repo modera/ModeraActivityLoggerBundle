@@ -2,9 +2,9 @@
 
 namespace Modera\ActivityLoggerBundle\Manager;
 
+use Psr\Log\AbstractLogger;
 use Doctrine\Common\Persistence\ObjectManager;
 use Modera\ActivityLoggerBundle\Entity\Activity;
-use Psr\Log\AbstractLogger;
 use Sli\ExtJsIntegrationBundle\QueryBuilder\ExtjsQueryBuilder;
 
 /**
