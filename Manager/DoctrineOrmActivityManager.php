@@ -56,7 +56,7 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
         }
 
         $this->om->persist($activity);
-        $this->om->flush();
+        $this->om->flush($activity);
     }
 
     /**
