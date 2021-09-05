@@ -3,7 +3,7 @@
 namespace Modera\ActivityLoggerBundle\Manager;
 
 use Psr\Log\AbstractLogger;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Modera\ActivityLoggerBundle\Entity\Activity;
 use Sli\ExtJsIntegrationBundle\QueryBuilder\ExtjsQueryBuilder;
 
@@ -19,10 +19,10 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
     private $queryBuilder;
 
     /**
-     * @param ObjectManager     $om
-     * @param ExtjsQueryBuilder $queryBuilder
+     * @param EntityManagerInterface $om
+     * @param ExtjsQueryBuilder      $queryBuilder
      */
-    public function __construct(ObjectManager $om, ExtjsQueryBuilder $queryBuilder)
+    public function __construct(EntityManagerInterface $om, ExtjsQueryBuilder $queryBuilder)
     {
         $this->om = $om;
         $this->queryBuilder = $queryBuilder;
