@@ -15,8 +15,8 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('modera_activity_logger');
+        $treeBuilder = new TreeBuilder('modera_activity_logger');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()

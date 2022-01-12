@@ -14,7 +14,7 @@ class DummyContainerBuilder extends ContainerBuilder
  * @author    Sergei Lissovski <sergei.lissovski@modera.org>
  * @copyright 2014 Modera Foundation
  */
-class ServiceAliasCompilerPassTest extends \PHPUnit_Framework_TestCase
+class ServiceAliasCompilerPassTest extends \PHPUnit\Framework\TestCase
 {
     public function testProcess()
     {
