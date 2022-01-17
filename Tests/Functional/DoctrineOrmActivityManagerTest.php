@@ -28,13 +28,13 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
     public static function doSetUpBeforeClass()
     {
         self::$st = new SchemaTool(self::$em);
-        self::$st->createSchema([self::$em->getClassMetadata(Activity::clazz())]);
+        self::$st->createSchema([self::$em->getClassMetadata(Activity::class)]);
     }
 
     // override
     public static function doTearDownAfterClass()
     {
-        self::$st->dropSchema([self::$em->getClassMetadata(Activity::clazz())]);
+        self::$st->dropSchema([self::$em->getClassMetadata(Activity::class)]);
     }
 
     // override
@@ -48,7 +48,7 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
      */
     private function getLastCreatedActivity()
     {
-        $query = self::$em->createQuery(sprintf('SELECT a FROM %s a ORDER BY a.id DESC', Activity::clazz()));
+        $query = self::$em->createQuery(sprintf('SELECT a FROM %s a ORDER BY a.id DESC', Activity::class));
         $query->setMaxResults(1);
 
         return $query->getSingleResult();
@@ -95,7 +95,7 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
         $this->assertArrayHasKey('total', $result);
         $this->assertEquals(1, $result['total']);
         $this->assertEquals(1, count($result['items']));
-        $this->assertInstanceOf(Activity::clazz(), $result['items'][0]);
+        $this->assertInstanceOf(Activity::class, $result['items'][0]);
         $this->assertSame($activity->getId(), $result['items'][0]->getId());
     }
 }

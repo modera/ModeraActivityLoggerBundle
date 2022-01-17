@@ -64,7 +64,7 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
      */
     public function query(array $query)
     {
-        $qb = $this->queryBuilder->buildQueryBuilder(Activity::clazz(), $query);
+        $qb = $this->queryBuilder->buildQueryBuilder(Activity::class, $query);
 
         return array(
             'items' => $qb->getQuery()->getResult(),
