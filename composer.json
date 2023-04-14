@@ -5,27 +5,30 @@
     "authors": [
         {
             "name": "Sergei Lissovski",
-            "email": "sergei.lissovski@modera.org",
-            "homepage": "http://sergei.lissovski.org/"
+            "email": "sergei.lissovski@modera.org"
+        },
+        {
+            "name": "Sergei Vizel",
+            "email": "sergei.vizel@modera.org"
         }
     ],
     "require": {
         "php": ">=7.4",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^2.0",
-        "symfony/framework-bundle": "^4.4|^5.0",
-        "sergeil/extjsintegration-bundle": "^2.3|^3.0"
+        "symfony/framework-bundle": "^5.4|^6.0",
+        "sergeil/extjsintegration-bundle": "^3.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
-        "modera/foundation-bundle": "^4.0"
+        "modera/foundation-bundle": "^5.0"
     },
     "autoload": {
         "psr-4": { "Modera\\ActivityLoggerBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "4.x-dev"
+            "dev-master": "5.x-dev"
         }
     }
 }

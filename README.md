@@ -12,7 +12,7 @@ to log your activities.
 ### Step 1: Download the Bundle
 
 ``` bash
-composer require modera/activity-logger-bundle:4.x-dev
+composer require modera/activity-logger-bundle:5.x-dev
 ```
 
 This command requires you to have Composer installed globally, as explained
