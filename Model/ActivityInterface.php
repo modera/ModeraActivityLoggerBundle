@@ -10,40 +10,28 @@ namespace Modera\ActivityLoggerBundle\Model;
  */
 interface ActivityInterface
 {
-    /**
-     * @return string
-     */
-    public function getMessage();
+    public function getMessage(): string;
 
     /**
      * See \Psr\Log\LogLevel.
-     *
-     * @return string
      */
-    public function getLevel();
+    public function getLevel(): string;
 
     /**
      * In other words - category.
-     *
-     * @return string
      */
-    public function getType();
+    public function getType(): string;
 
     /**
      * Returned value could be anything that your logic can understand later and figure out who originally created this
      * activity - for example, it could contain an ID of your USER entity.
-     *
-     * @return string
      */
-    public function getAuthor();
+    public function getAuthor(): string;
 
     /**
-     * @return array
+     * @return array<mixed>
      */
-    public function getMeta();
+    public function getMeta(): array;
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt();
+    public function getCreatedAt(): \DateTimeInterface;
 }

@@ -25,22 +25,22 @@ class DoctrineOrmActivityManagerTest extends FunctionalTestCase
     private static $st;
 
     // override
-    public static function doSetUpBeforeClass()
+    public static function doSetUpBeforeClass(): void
     {
         self::$st = new SchemaTool(self::$em);
         self::$st->createSchema([self::$em->getClassMetadata(Activity::class)]);
     }
 
     // override
-    public static function doTearDownAfterClass()
+    public static function doTearDownAfterClass(): void
     {
         self::$st->dropSchema([self::$em->getClassMetadata(Activity::class)]);
     }
 
     // override
-    public function doSetUp()
+    public function doSetUp(): void
     {
-        $this->mgr = self::$container->get('modera_activity_logger.manager.doctrine_orm_activity_manager');
+        $this->mgr = self::getContainer()->get('modera_activity_logger.manager.doctrine_orm_activity_manager');
     }
 
     /**

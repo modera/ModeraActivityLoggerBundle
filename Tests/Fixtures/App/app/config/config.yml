@@ -5,10 +5,15 @@ parameters:
     db_password: '%env(SYMFONY__DB_PASSWORD)%'
 
 framework:
+    test: true
     secret:          Hell yeah!
     router:          { resource: "%kernel.project_dir%/app/config/routing.yml" }
     csrf_protection: true
     session:         ~
+
+    # important:
+    annotations: ~
+    validation: { enable_annotations: true }
 
 # Doctrine Configuration
 doctrine:

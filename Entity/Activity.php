@@ -15,188 +15,147 @@ use Modera\ActivityLoggerBundle\Model\ActivityInterface;
  * @copyright 2014 Modera Foundation
  *
  * @ORM\Entity
+ *
  * @ORM\Table(name="modera_activitylogger_activity")
  */
 class Activity implements ActivityInterface
 {
     /**
-     * @ORM\Column(type="integer")
      * @ORM\Id
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
+     *
+     * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string", nullable=true)
      */
-    private $author;
+    private ?string $author = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $type;
+    private ?string $type = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $level;
+    private ?string $level = null;
 
     /**
-     * @var string
-     *
      * @ORM\Column(type="string")
      */
-    private $message;
+    private ?string $message = null;
 
     /**
-     * @var \DateTime
-     *
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
+    private ?\DateTimeInterface $createdAt = null;
 
     /**
-     * @var array
+     * @var array<string, mixed>
      *
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="json")
      */
-    private $meta;
+    private ?array $meta = [];
 
     public function __construct()
     {
-        $this->createdAt = new \DateTime('now');
+        $this->getCreatedAt();
     }
 
     /**
      * @deprecated Use native ::class property
-     *
-     * @return string
      */
-    public static function clazz()
+    public static function clazz(): string
     {
-        @trigger_error(sprintf(
+        @\trigger_error(\sprintf(
             'The "%s()" method is deprecated. Use native ::class property.',
             __METHOD__
         ), \E_USER_DEPRECATED);
 
-        return get_called_class();
+        return \get_called_class();
     }
 
-    /**
-     * @param mixed $author
-     */
-    public function setAuthor($author)
+    public function setAuthor(?string $author): void
     {
         $this->author = $author;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAuthor()
+    public function getAuthor(): string
     {
-        return $this->author;
+        return $this->author ?? '';
     }
 
-    /**
-     * @param mixed $id
-     */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @param mixed $level
-     */
-    public function setLevel($level)
+    public function setLevel(string $level): void
     {
         $this->level = $level;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getLevel()
+    public function getLevel(): string
     {
-        return $this->level;
+        return $this->level ?? '';
     }
 
-    /**
-     * @param mixed $message
-     */
-    public function setMessage($message)
+    public function setMessage(string $message): void
     {
         $this->message = $message;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getMessage()
+    public function getMessage(): string
     {
-        return $this->message;
+        return $this->message ?? '';
     }
 
-    /**
-     * @param mixed $type
-     */
-    public function setType($type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getType()
+    public function getType(): string
     {
-        return $this->type;
+        return $this->type ?? '';
     }
 
-    /**
-     * @param \DateTime $createdAt
-     */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(\DateTimeInterface $createdAt): void
     {
         $this->createdAt = $createdAt;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getCreatedAt()
+    public function getCreatedAt(): \DateTimeInterface
     {
+        if (null === $this->createdAt) {
+            $this->createdAt = new \DateTime('now');
+        }
+
         return $this->createdAt;
     }
 
     /**
-     * @param array $meta
+     * @param array<string, mixed> $meta
      */
-    public function setMeta($meta)
+    public function setMeta(array $meta): void
     {
         $this->meta = $meta;
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getMeta()
+    public function getMeta(): array
     {
-        return $this->meta;
+        return $this->meta ?? [];
     }
 }

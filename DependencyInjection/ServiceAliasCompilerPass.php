@@ -14,14 +14,12 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
  */
 class ServiceAliasCompilerPass implements CompilerPassInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $config = $container->getParameter(ModeraActivityLoggerExtension::CONFIG_KEY);
-
-        $container->setAlias('modera_activity_logger.manager.activity_manager', $config['activity_manager']);
-        $container->getAlias('modera_activity_logger.manager.activity_manager')->setPublic(true);
+        if (\is_array($config) && \is_string($config['activity_manager'])) {
+            $container->setAlias('modera_activity_logger.manager.activity_manager', $config['activity_manager']);
+            $container->getAlias('modera_activity_logger.manager.activity_manager')->setPublic(true);
+        }
     }
 }

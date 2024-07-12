@@ -2,10 +2,10 @@
 
 namespace Modera\ActivityLoggerBundle\Manager;
 
-use Psr\Log\AbstractLogger;
 use Doctrine\ORM\EntityManagerInterface;
 use Modera\ActivityLoggerBundle\Entity\Activity;
-use Sli\ExtJsIntegrationBundle\QueryBuilder\ExtjsQueryBuilder;
+use Modera\ServerCrudBundle\QueryBuilder\ArrayQueryBuilder;
+use Psr\Log\AbstractLogger;
 
 /**
  * This implementation uses Doctrine's ORM to store activities to database.
@@ -15,43 +15,38 @@ use Sli\ExtJsIntegrationBundle\QueryBuilder\ExtjsQueryBuilder;
  */
 class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManagerInterface
 {
-    private $om;
-    private $queryBuilder;
+    private EntityManagerInterface $om;
+    private ArrayQueryBuilder $queryBuilder;
 
-    /**
-     * @param EntityManagerInterface $om
-     * @param ExtjsQueryBuilder      $queryBuilder
-     */
-    public function __construct(EntityManagerInterface $om, ExtjsQueryBuilder $queryBuilder)
+    public function __construct(EntityManagerInterface $om, ArrayQueryBuilder $queryBuilder)
     {
         $this->om = $om;
         $this->queryBuilder = $queryBuilder;
     }
 
-    /**
-     * @return Activity
-     */
-    protected function createActivity()
+    protected function createActivity(): Activity
     {
         return new Activity();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         $activity = $this->createActivity();
-        $activity->setLevel($level);
         $activity->setMessage($message);
 
-        if (isset($context['author'])) {
+        if (\is_string($level)) {
+            $activity->setLevel($level);
+        }
+
+        if (isset($context['author']) && \is_string($context['author'])) {
             $activity->setAuthor($context['author']);
         }
-        if (isset($context['type'])) {
+
+        if (isset($context['type']) && \is_string($context['type'])) {
             $activity->setType($context['type']);
         }
-        if (isset($context['meta']) && is_array($context)) {
+
+        if (isset($context['meta']) && \is_array($context)) {
             $activity->setMeta($context['meta']);
         }
 
@@ -59,16 +54,25 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
         $this->om->flush($activity);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function query(array $query)
+    public function query(array $query): array
     {
         $qb = $this->queryBuilder->buildQueryBuilder(Activity::class, $query);
 
-        return array(
-            'items' => $qb->getQuery()->getResult(),
-            'total' => $this->queryBuilder->buildCountQueryBuilder($qb)->getQuery()->getSingleScalarResult(),
-        );
+        /** @var int $total */
+        $total = $this->queryBuilder->buildCountQueryBuilder($qb)->getQuery()->getSingleScalarResult();
+        if ($total > 0) {
+            /** @var Activity[] $items */
+            $items = $qb->getQuery()->getResult();
+
+            return [
+                'items' => $items,
+                'total' => $total,
+            ];
+        }
+
+        return [
+            'items' => [],
+            'total' => 0,
+        ];
     }
 }

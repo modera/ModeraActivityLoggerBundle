@@ -6,14 +6,11 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * @see \Modera\ActivityLoggerBundle\DependencyInjection\ServiceAliasCompilerPass
+ * @see ServiceAliasCompilerPass
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('modera_activity_logger');
         $rootNode = $treeBuilder->getRootNode();

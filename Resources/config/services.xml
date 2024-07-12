@@ -10,7 +10,7 @@
                  public="true">
 
             <argument type="service" id="doctrine.orm.entity_manager" />
-            <argument type="service" id="sli.extjsintegration.extjs_query_builder" />
+            <argument type="service" id="modera_server_crud.array_query_builder" />
         </service>
     </services>
 </container>

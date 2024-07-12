@@ -20,9 +20,9 @@ interface ActivityManagerInterface extends LoggerInterface
     /**
      * Allows to query logged activities.
      *
-     * @param array $query
+     * @param array<mixed> $query
      *
-     * @return ActivityInterface[]
+     * @return array{items: ActivityInterface[], total: int}
      */
-    public function query(array $query);
+    public function query(array $query): array;
 }
