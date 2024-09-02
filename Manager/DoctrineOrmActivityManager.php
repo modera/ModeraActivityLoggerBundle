@@ -29,7 +29,7 @@ class DoctrineOrmActivityManager extends AbstractLogger implements ActivityManag
         return new Activity();
     }
 
-    public function log($level, $message, array $context = [])
+    public function log($level, $message, array $context = []): void
     {
         $activity = $this->createActivity();
         $activity->setMessage($message);
