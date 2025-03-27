@@ -16,7 +16,14 @@ use Modera\ActivityLoggerBundle\Model\ActivityInterface;
  *
  * @ORM\Entity
  *
- * @ORM\Table(name="modera_activitylogger_activity")
+ * @ORM\Table(
+ *     name="modera_activitylogger_activity",
+ *     indexes={
+ *
+ *         @ORM\Index(name="author_idx", columns={"author"}),
+ *         @ORM\Index(name="type_idx", columns={"type"})
+ *     }
+ * )
  */
 class Activity implements ActivityInterface
 {
